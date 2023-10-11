@@ -1,2 +1,5 @@
 /SEP3_Tier1/BlazorClient/obj/
 /SEP3_Tier1/BlazorClient/bin/
+/SEP3_Tier1/Application/obj/rider.project.restore.info
+/SEP3_Tier1/SEP3_Tier1/obj/
+*.info
