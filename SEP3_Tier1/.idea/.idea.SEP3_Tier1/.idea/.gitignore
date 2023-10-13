@@ -1,0 +1,19 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/contentModel.xml
+/.idea.SEP3_Tier1.iml
+/projectSettingsUpdater.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+/SEP3_Tier1/SEP3_Tier1/obj/
+/SEP3_Tier1/Application/obj/
+/SEP3_Tier1/Domain/obj/
+/SEP3_Tier1/HttpClients/obj/
+/SEP3_Tier1/HttpClients/bin/
+
