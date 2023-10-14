@@ -1,0 +1,13 @@
+{
+  "Users": [
+    {
+      "Name": "Emanuel",
+      "Age": null,
+      "Email": "emanuel.something@gmail.com",
+      "PhoneNumber": null,
+      "Password": "coachpro",
+      "Type": "PetOwner"
+    }
+  ],
+  "Announcements": []
+}

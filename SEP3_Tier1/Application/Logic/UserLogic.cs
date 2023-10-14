@@ -27,6 +27,9 @@ public class UserLogic : IUserLogic
             case "PetOwner":
                 toCreate = new PetOwner(dto.UserName, dto.Email, dto.Password, dto.Type);
                 break;
+            // Todo - change, not good code, coach!
+            // default is default, if you have specific cases you should mention them
+            // in default you can handle argument and throw exception
             default:
                 toCreate = new CareTaker(dto.UserName, dto.Email, dto.Password, dto.Type);
                 break;
