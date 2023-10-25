@@ -1,13 +1,55 @@
 {
   "Users": [
     {
-      "Name": "Emanuel",
+      "Name": "Dummy",
+      "UserName": null,
       "Age": null,
-      "Email": "emanuel.something@gmail.com",
+      "Email": "dummy1@gmail.com",
       "PhoneNumber": null,
-      "Password": "coachpro",
+      "Password": "dummypassword",
       "Type": "PetOwner"
     }
   ],
-  "Announcements": []
+  "Announcements": [
+    {
+      "Id": 1,
+      "petOwner": null,
+      "StartDate": "2023-10-25T11:49:18.892Z",
+      "EndDate": "2023-10-25T11:49:18.892Z",
+      "PostalCode": "8700",
+      "ServiceDescription": "sdtpghjeoighsirhbg"
+    },
+    {
+      "Id": 2,
+      "petOwner": null,
+      "StartDate": "2023-10-25T00:00:00+02:00",
+      "EndDate": "2023-10-28T00:00:00+02:00",
+      "PostalCode": null,
+      "ServiceDescription": "serviceDescription"
+    },
+    {
+      "Id": 3,
+      "petOwner": null,
+      "StartDate": "2023-10-25T00:00:00+02:00",
+      "EndDate": "2023-10-28T00:00:00+02:00",
+      "PostalCode": null,
+      "ServiceDescription": "serviceDescription"
+    },
+    {
+      "Id": 4,
+      "petOwner": null,
+      "StartDate": "2023-10-25T00:00:00+02:00",
+      "EndDate": "2023-10-28T00:00:00+02:00",
+      "PostalCode": null,
+      "ServiceDescription": "serviceDescription"
+    },
+    {
+      "Id": 5,
+      "petOwner": null,
+      "StartDate": "2023-10-25T00:00:00+02:00",
+      "EndDate": "2023-10-28T00:00:00+02:00",
+      "PostalCode": null,
+      "ServiceDescription": "serviceDescription"
+    }
+  ]
 }

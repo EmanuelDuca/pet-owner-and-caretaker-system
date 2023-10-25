@@ -1,4 +1,5 @@
 @inject IAnnouncementService AnnouncementService
+@inject IUserService UserService
 
 @page "/CreateAnnouncement"
 @using HttpClients.ClientInterfaces
@@ -23,6 +24,8 @@
         <label>Description: </label><br/>
         <textarea @bind="description"></textarea>
     </div>
+    
+    <button @onclick="TryCreateAnnouncement"></button>
 </div>
 
 @code {
@@ -60,8 +63,7 @@
         msg = "";
         try
         {
-            PetOwner dummyPetOwner = new PetOwner("Bob Bobson", "bob_bobson@gmail.com", "bobsonPassword");// todo replace with actual pet owner
-            AnnouncementCreationDto creationDto = new AnnouncementCreationDto(dummyPetOwner, startDate, 
+            AnnouncementCreationDto creationDto = new AnnouncementCreationDto("emanuel.something@gmail.com", startDate, 
                 endDate, "serviceDescription");
             await AnnouncementService.CreateAsync(creationDto);
         }

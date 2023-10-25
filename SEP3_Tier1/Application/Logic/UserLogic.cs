@@ -25,14 +25,25 @@ public class UserLogic : IUserLogic
         switch (dto.Type)
         {
             case "PetOwner":
-                toCreate = new PetOwner(dto.UserName, dto.Email, dto.Password, dto.Type);
+                toCreate = new PetOwner()
+                {
+                    UserName = dto.UserName,
+                    Email = dto.Email,
+                    Password = dto.Password,
+                    Type = dto.Type
+                };
                 break;
-            // Todo - change, not good code, coach!
-            // default is default, if you have specific cases you should mention them
-            // in default you can handle argument and throw exception
+            case "CareTaker":
+                toCreate = new CareTaker()
+                {
+                    UserName = dto.UserName,
+                    Email = dto.Email,
+                    Password = dto.Password,
+                    Type = dto.Type
+                };
+                break;
             default:
-                toCreate = new CareTaker(dto.UserName, dto.Email, dto.Password, dto.Type);
-                break;
+                throw new Exception("Wrong user type");
         }
         
         User created = await userDao.Create(toCreate);

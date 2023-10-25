@@ -18,15 +18,15 @@ public class PetOwnerLogic : IPetOwnerLogic
     
     public async Task<Announcement> CreateAnnouncementAsync(AnnouncementCreationDto dto)
     {
-        User? user = await userDao.GetByEmail(dto.petOwner.Email);
+        User? user = await userDao.GetByEmail(dto.OwnerEmail);
         if (user == null)
         {
-            throw new Exception($"User with email {dto.petOwner.Email} was not found.");
+            throw new Exception($"User with email {dto.OwnerEmail} was not found.");
         }
         
         Announcement announcement = new Announcement
         {
-            petOwner = dto.petOwner,
+            petOwner = await userDao.GetByEmail(dto.OwnerEmail),
             StartDate = dto.StartDate,
             EndDate = dto.EndDate,
             PostalCode = dto.PostalCode,

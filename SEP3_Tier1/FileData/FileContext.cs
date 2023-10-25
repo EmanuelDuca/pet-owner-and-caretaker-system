@@ -2,6 +2,8 @@
 using System.IO;
 using System.Text.Json;
 using Domain.Models;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace FileData;
 
