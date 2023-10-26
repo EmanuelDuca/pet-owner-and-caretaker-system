@@ -17,6 +17,15 @@
       "PhoneNumber": null,
       "Password": "hzhzhzhzhzhzhzhz",
       "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "Pollo",
+      "Age": null,
+      "Email": "someemail@gmail.com",
+      "PhoneNumber": null,
+      "Password": "oaeirgh8aeshg",
+      "Type": "CareTaker"
     }
   ],
   "Announcements": [
@@ -63,6 +72,23 @@
       "EndDate": "2023-10-28T00:00:00+02:00",
       "PostalCode": null,
       "ServiceDescription": "serviceDescription",
+      "CreationDateTime": "0001-01-01T00:00:00"
+    },
+    {
+      "Id": 6,
+      "petOwner": {
+        "Name": null,
+        "Username": "Michael",
+        "Age": null,
+        "Email": "dlinie.volocy@gmail.com",
+        "PhoneNumber": null,
+        "Password": "hzhzhzhzhzhzhzhz",
+        "Type": "PetOwner"
+      },
+      "StartDate": "2023-10-26T00:00:00+02:00",
+      "EndDate": "2023-10-29T00:00:00+02:00",
+      "PostalCode": "9842",
+      "ServiceDescription": "sfghsddznhxjtt",
       "CreationDateTime": "0001-01-01T00:00:00"
     }
   ]

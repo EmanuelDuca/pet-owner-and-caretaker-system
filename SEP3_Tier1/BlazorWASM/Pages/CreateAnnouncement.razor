@@ -4,23 +4,22 @@
 @page "/CreateAnnouncement"
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs
+@using System.Security.Claims
 @inject NotificationService notificationService
 @attribute [Authorize]
 
 <div class="content d-flex justify-content-center">
-    <RadzenCard class="card">
+    <div class="card">
         <h5>Fill the small form to create your announcement.</h5>
         <div class="field">
             <label>Start date: </label>
-            <input type="date" @bind="startDate"/>
-        </div>
-        <div class="field">
-            <label>Start date: </label>
-            <input type="date" @bind="startDate"/>
+            <RadzenDatePicker Style="width: 60%" class="input" TValue="DateTime" 
+                              Value="@startDate" DateFormat="dd/MM/yyyy" Change="@(args => startDate = args)"/>
         </div>
         <div class="field">
             <label>End date: </label>
-            <input type="date" @bind="endDate"/>
+            <RadzenDatePicker Style="width: 60%" bind class="input" TValue="DateTime" 
+                              Value="@endDate" DateFormat="dd/MM/yyyy" Change="@(args => endDate = args)"/>
         </div>
         <div class="field">
             <label>Postal code: </label>
@@ -31,51 +30,44 @@
             <textarea @bind="description"></textarea>
         </div>
         
-        <RadzenButton @onclick="TryCreateAnnouncement">Create announcement</RadzenButton>
-    </RadzenCard>
+        <RadzenButton Style="margin-top: 2rem" Click="TryCreateAnnouncement">Create announcement</RadzenButton>
+    </div>
 </div>
 
 
 @code {
-    private DateTime startDate;
-    private DateTime endDate;
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    
+    private DateTime? startDate;
+    private DateTime? endDate;
     private string ownerEmail;
     private string? description;
     private string? postalcode;
+    
+    private IEnumerable<Claim>? userClaims;
 
-    public EventCallback<DateTime> StartDateChanged { get; set; }
-    public EventCallback<DateTime> EndDateChanged { get; set; }
-
-    private string? msg = "";
-
-    protected override Task OnInitializedAsync()
+    
+    protected override async Task OnInitializedAsync()
     {
-        // set up of 2-way bindings
-        StartDateChanged = EventCallback.Factory.Create<DateTime>(this, value =>
-        {
-            startDate = value;
-        });
-        
-        EndDateChanged = EventCallback.Factory.Create<DateTime>(this, value =>
-        {
-            endDate = value;
-        });
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        userClaims = user.Claims;
+        ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
         
         startDate = DateTime.Today;
         endDate = DateTime.Today.AddDays(3);
-        return Task.CompletedTask;
     }
 
 
     private async Task TryCreateAnnouncement()
     {
-        msg = "";
         try
         {
             HandleEmptyFields();
             
             AnnouncementCreationDto creationDto = new AnnouncementCreationDto(
-                ownerEmail, startDate, endDate, description!, postalcode!);
+                ownerEmail, startDate!.Value, endDate!.Value, description!, postalcode!);
             await announcementService.CreateAsync(creationDto);
             
             notificationService.Notify(new NotificationMessage()
@@ -102,6 +94,16 @@
     {
         string msg = "";
         int emptyFieldsCounter = 0;
+
+        if (startDate == null)
+        {
+            msg += string.IsNullOrEmpty(msg) ? "Start date is not chosen" : ", start date is not chosen";
+        }
+        
+        if (endDate == null)
+        {
+            msg += string.IsNullOrEmpty(msg) ? "End date is not chosen" : ", end date is not chosen";
+        }
 
         if (string.IsNullOrEmpty(description))
         {

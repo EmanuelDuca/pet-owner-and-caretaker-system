@@ -1,5 +1,18 @@
 ﻿.card{
-    margin-top: 200px;
-    padding-inline: 5rem;
+    margin-top: 50px;
+    width: 30%;
+    padding-inline: 2rem;
+    text-align: center;
 }
 
+input, textarea{
+    width: 60%;
+}
+
+.field{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+}

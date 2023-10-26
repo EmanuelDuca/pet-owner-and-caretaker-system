@@ -1,7 +1,7 @@
 ﻿@namespace BlazorWASM.Pages.Components
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs
-@using Radzen
+@using Radzen.Blazor
 @inject IUserAuthService authService
 @inject NotificationService notificationService
 
@@ -37,12 +37,14 @@
     </div>
     @if (!isLoginView)
     {
-        <div class="field d-flex justify-content-evenly">
+        <div class="field d-flex justify-content-between align-items-center">
             <label>You are</label>
-            <select @bind="userType">
-                <option value="1">pet owner</option>
-                <option value="2">caretaker</option>
-            </select>
+            <RadzenSelectBar class="rounded-pill w-75" @bind-Value="userType" Size="ButtonSize.ExtraSmall" TValue="int">
+                <Items>
+                    <RadzenSelectBarItem  Text="pet owner" Value="1"/>
+                    <RadzenSelectBarItem Text="caretaker" Value="2"/>
+                </Items>
+            </RadzenSelectBar>
         </div>
     }
     <div class="login-option d-flex justify-content-evenly flex-row">
@@ -70,7 +72,7 @@
     private string? username;
     private string? email;
     private string? password;
-    private string? userType;
+    private int userType;
     private bool isLoginView = true;
 
 
@@ -84,7 +86,7 @@
                 await authService.LoginAsync(new UserLoginDto(email!, password!));
             else
             {
-                string type = int.Parse(userType) == 1 ? "PetOwner" : "CareTaker";
+                string type = userType == 1 ? "PetOwner" : "CareTaker";
                 await authService.RegisterAsync(new UserCreationDto(email!, username!, password!, type));
             }
         }
@@ -119,12 +121,6 @@
         if (string.IsNullOrEmpty(username) && !isLoginView)
         {
             msg += string.IsNullOrEmpty(msg) ? "Username" : ", username";
-            emptyFieldsCounter++;
-        }
-
-        if (string.IsNullOrEmpty(userType) && !isLoginView)
-        {
-            msg += string.IsNullOrEmpty(msg) ? "User type" : ", user type";
             emptyFieldsCounter++;
         }
         
