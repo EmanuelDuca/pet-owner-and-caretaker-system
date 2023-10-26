@@ -18,7 +18,7 @@ public class AnnouncementLogic : IAnnouncementLogic
     }
     public async Task<Announcement> CreateAsync(AnnouncementCreationDto creationDto)
     {
-        User? existing = await userDao.GetByEmail(creationDto.OwnerEmail);
+        User? existing = await userDao.GetByEmailAsync(creationDto.OwnerEmail);
         if (existing == null)
         {
             throw new UserNotFoundException(creationDto.OwnerEmail);

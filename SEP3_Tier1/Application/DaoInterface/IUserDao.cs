@@ -4,6 +4,6 @@ namespace Application.DaoInterface;
 
 public interface IUserDao
 {
-    Task<User> Create(User user);
-    Task<User?> GetByEmail(string email);
+    Task<User> CreateAsync(User user);
+    Task<User?> GetByEmailAsync(string email);
 }

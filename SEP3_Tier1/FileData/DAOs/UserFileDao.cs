@@ -13,7 +13,7 @@ public class UserFileDao : IUserDao
     {
         this.context = context;
     }
-    public Task<User> Create(User user)
+    public Task<User> CreateAsync(User user)
     {
         context.Users.Add(user);
         context.SaveChanges();
@@ -21,7 +21,7 @@ public class UserFileDao : IUserDao
         return Task.FromResult(user);
     }
 
-    public Task<User?> GetByEmail(string email)
+    public Task<User?> GetByEmailAsync(string email)
     {
         User? existing = context.Users.FirstOrDefault(u =>
             u.Email.Equals(email));
