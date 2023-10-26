@@ -14,8 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<FileContext>();
 builder.Services.AddScoped<IUserDao, UserFileDao>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
-builder.Services.AddScoped<IPetOwnerDao, PetOwnerFileDao>();
-builder.Services.AddScoped<IPetOwnerLogic, PetOwnerLogic>();
 builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
 builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
 builder.Services.AddControllers();

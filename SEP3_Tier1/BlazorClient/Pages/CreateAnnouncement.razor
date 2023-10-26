@@ -4,33 +4,40 @@
 @page "/CreateAnnouncement"
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs
-@using Domain.Models
 
-<div class="card-box">
-    <p>Fill the small form to create your announcement.</p>
-    <div form-input-field>
-        <label>Start date: </label>
-        <input type="date" @bind="startDate"/>
-    </div>
-    <div form-input-field>
-        <label>End date: </label>
-        <input type="date" @bind="endDate"/>
-    </div>
-    <div form-input-field>
-        <label>Postal code: </label>
-        <input type="number" @bind="postalcode"/>
-    </div>
-    <div form-input-field>
-        <label>Description: </label><br/>
-        <textarea @bind="description"></textarea>
-    </div>
-    
-    <button @onclick="TryCreateAnnouncement"></button>
+<div class="content d-flex justify-content-center">
+    <RadzenCard class="card">
+        <h5>Fill the small form to create your announcement.</h5>
+        <div class="form-input-field">
+            <label>Start date: </label>
+            <input type="date" @bind="startDate"/>
+        </div>
+        <div class="form-input-field">
+            <label>Start date: </label>
+            <input type="date" @bind="startDate"/>
+        </div>
+        <div class="form-input-field">
+            <label>End date: </label>
+            <input type="date" @bind="endDate"/>
+        </div>
+        <div class="form-input-field">
+            <label>Postal code: </label>
+            <input type="number" @bind="postalcode"/>
+        </div>
+        <div class="form-input-field">
+            <label>Description: </label><br/>
+            <textarea @bind="description"></textarea>
+        </div>
+        
+        <RadzenButton @onclick="TryCreateAnnouncement">Create announcement</RadzenButton>
+    </RadzenCard>
 </div>
+
 
 @code {
     private DateTime startDate;
     private DateTime endDate;
+    private string ownerEmail;
     private string? description;
     private string? postalcode;
 
@@ -41,7 +48,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // sett up of 2-way bindings
+        // set up of 2-way bindings
         StartDateChanged = EventCallback.Factory.Create<DateTime>(this, value =>
         {
             startDate = value;
@@ -52,7 +59,6 @@
             endDate = value;
         });
         
-        // initialization staf
         startDate = DateTime.Today;
         endDate = DateTime.Today.AddDays(3);
     }
@@ -63,15 +69,50 @@
         msg = "";
         try
         {
-            AnnouncementCreationDto creationDto = new AnnouncementCreationDto("emanuel.something@gmail.com", startDate, 
-                endDate, "serviceDescription");
+            HandleEmptyFields();
+            
+            AnnouncementCreationDto creationDto = new AnnouncementCreationDto(
+                ownerEmail, startDate, endDate, description!, postalcode!);
             await AnnouncementService.CreateAsync(creationDto);
+            
+            notificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Success,
+                Duration = 6000,
+                Detail = "Announcement is created"
+            });
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            msg = e.Message;
+            notificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Duration = 6000,
+                Detail = e.Message
+            });
         }
         
+    }
+    
+    private void HandleEmptyFields()
+    {
+        string msg = "";
+        int emptyFieldsCounter = 0;
+
+        if (string.IsNullOrEmpty(description))
+        {
+            msg += string.IsNullOrEmpty(msg) ? "Description" : ", description";
+            emptyFieldsCounter++;
+        }
+
+        if (string.IsNullOrEmpty(postalcode))
+        {
+            msg += string.IsNullOrEmpty(msg) ? "Postal code" : ", postal code";
+            emptyFieldsCounter++;
+        }
+
+        if (!string.IsNullOrEmpty(msg))
+            throw new Exception(emptyFieldsCounter > 1 ? $"{msg} fields are empty." : $"{msg} field is empty.");
     }
 }

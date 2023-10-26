@@ -5,10 +5,10 @@ namespace Domain.Models;
 public class User
 {
     public string? Name { get; set; }
-    public string UserName { get; set; }
+    public string UserName { get; init; }
     public int? Age { get; set; }
-    public string Email { get; set; }
+    public string Email { get; init; }
     public int? PhoneNumber { get; set; }
-    public string Password { get; set; }
-    public string Type { get; set; }
+    public string Password { get; init; }
+    public string Type { get; init; }
 }
