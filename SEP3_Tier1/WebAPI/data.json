@@ -2,11 +2,20 @@
   "Users": [
     {
       "Name": "Dummy",
-      "UserName": null,
+      "Username": null,
       "Age": null,
       "Email": "dummy1@gmail.com",
       "PhoneNumber": null,
       "Password": "dummypassword",
+      "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "Michael",
+      "Age": null,
+      "Email": "dlinie.volocy@gmail.com",
+      "PhoneNumber": null,
+      "Password": "hzhzhzhzhzhzhzhz",
       "Type": "PetOwner"
     }
   ],
@@ -17,7 +26,8 @@
       "StartDate": "2023-10-25T11:49:18.892Z",
       "EndDate": "2023-10-25T11:49:18.892Z",
       "PostalCode": "8700",
-      "ServiceDescription": "sdtpghjeoighsirhbg"
+      "ServiceDescription": "sdtpghjeoighsirhbg",
+      "CreationDateTime": "0001-01-01T00:00:00"
     },
     {
       "Id": 2,
@@ -25,7 +35,8 @@
       "StartDate": "2023-10-25T00:00:00+02:00",
       "EndDate": "2023-10-28T00:00:00+02:00",
       "PostalCode": null,
-      "ServiceDescription": "serviceDescription"
+      "ServiceDescription": "serviceDescription",
+      "CreationDateTime": "0001-01-01T00:00:00"
     },
     {
       "Id": 3,
@@ -33,7 +44,8 @@
       "StartDate": "2023-10-25T00:00:00+02:00",
       "EndDate": "2023-10-28T00:00:00+02:00",
       "PostalCode": null,
-      "ServiceDescription": "serviceDescription"
+      "ServiceDescription": "serviceDescription",
+      "CreationDateTime": "0001-01-01T00:00:00"
     },
     {
       "Id": 4,
@@ -41,7 +53,8 @@
       "StartDate": "2023-10-25T00:00:00+02:00",
       "EndDate": "2023-10-28T00:00:00+02:00",
       "PostalCode": null,
-      "ServiceDescription": "serviceDescription"
+      "ServiceDescription": "serviceDescription",
+      "CreationDateTime": "0001-01-01T00:00:00"
     },
     {
       "Id": 5,
@@ -49,7 +62,8 @@
       "StartDate": "2023-10-25T00:00:00+02:00",
       "EndDate": "2023-10-28T00:00:00+02:00",
       "PostalCode": null,
-      "ServiceDescription": "serviceDescription"
+      "ServiceDescription": "serviceDescription",
+      "CreationDateTime": "0001-01-01T00:00:00"
     }
   ]
 }

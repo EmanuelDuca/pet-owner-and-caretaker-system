@@ -45,12 +45,12 @@
     }
 
 .nav-item ::deep a.active {
-    background-color: rgba(var(--accent-color), 0.1);
+    background-color: rgba(var(--accent-color-raw), 0.1);
     color: var(--text-primary-color);
 }
 
 .nav-item ::deep a:hover {
-    background-color: rgba(var(--accent-color), 0.2);
+    background-color: rgba(var(--accent-color-raw), 0.2);
     color: var(--text-primary-color);
 }
 

@@ -65,13 +65,13 @@ public class UserController : ControllerBase
         return serializedToken;
     }
 
-    [HttpPost("register")]
+    [HttpPost, Route("register")]
     public async Task<ActionResult<User>> Register(UserCreationDto dto)
     {
         try
         {
             User user = await userLogic.RegisterAsync(dto);
-            return Created($"/users/{user.Email}", user);
+            return Ok(GenerateJwt(user));
         }
         catch (Exception e)
         {
@@ -80,13 +80,13 @@ public class UserController : ControllerBase
         }
     }
     
-    [HttpPost("login")]
+    [HttpPost, Route("login")]
     public async Task<ActionResult<User>> Login(UserLoginDto dto)
     {
         try
         {
             User user = await userLogic.LoginAsync(dto);
-            return Created($"/users/{user.Email}", user);
+            return Ok(GenerateJwt(user));
         }
         catch (Exception e)
         {
