@@ -20,15 +20,19 @@ builder.Services.AddScoped<FileContext>();
 
 //When savind to file
 //builder.Services.AddScoped<IUserDao, UserFileDao>();
-//builder.Services.AddScoped<IUserLogic, UserLogic>();
+//builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
+
+builder.Services.AddScoped<IUserLogic, UserLogic>();
+builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
 
 //When using GRPc
 // Experimental code {
 builder.Services.AddScoped<IUserDao, GrpcUser>();
+builder.Services.AddScoped<IAnnouncementDao, GrpcLogic>();
 // Experimental code }
 
-builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
-builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
