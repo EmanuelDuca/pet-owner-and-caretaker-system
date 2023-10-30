@@ -6,6 +6,7 @@ using Application.LogicInterface;
 using Domain.Auth;
 using FileData;
 using FileData.DAOs;
+using GrpcClient.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,8 +17,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<FileContext>();
-builder.Services.AddScoped<IUserDao, UserFileDao>();
-builder.Services.AddScoped<IUserLogic, UserLogic>();
+
+//When savind to file
+//builder.Services.AddScoped<IUserDao, UserFileDao>();
+//builder.Services.AddScoped<IUserLogic, UserLogic>();
+
+//When using GRPc
+// Experimental code {
+builder.Services.AddScoped<IUserDao, GrpcUser>();
+// Experimental code }
+
 builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
 builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
 builder.Services.AddControllers();

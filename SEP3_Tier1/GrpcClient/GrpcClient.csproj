@@ -16,4 +16,13 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+        <Protobuf Include="Protos\protobuf.proto" GrpcServices="Client"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Application\Application.csproj" />
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
 </Project>
