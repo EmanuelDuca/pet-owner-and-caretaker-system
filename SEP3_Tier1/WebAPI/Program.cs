@@ -6,6 +6,7 @@ using Application.LogicInterface;
 using Domain.Auth;
 using FileData;
 using FileData.DAOs;
+using GrpcClient;
 using GrpcClient.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -33,10 +34,17 @@ builder.Services.AddScoped<IAnnouncementDao, GrpcLogic>();
 
 
 
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-;
+
+builder.Services.AddGrpcClient<PetOwnerService.PetOwnerServiceClient>(o =>
+{
+    o.Address = new Uri("http://localhost:9090");
+});
+
+
 
 builder.Services.AddSwaggerGen();
 

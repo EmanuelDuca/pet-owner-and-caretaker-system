@@ -13,7 +13,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7230") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5123") });
 builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementHttpClient>();
 builder.Services.AddScoped<IUserAuthService, JwtUserAuthAuthHttpService>();

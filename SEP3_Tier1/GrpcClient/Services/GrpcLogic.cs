@@ -14,7 +14,7 @@ public class GrpcLogic : IAnnouncementDao
     {
         try
         {
-            using var channel = GrpcChannel.ForAddress("https://localhost:5001");
+            using var channel = GrpcChannel.ForAddress("https://localhost:9090");
             var client = new AnnouncementService.AnnouncementServiceClient(channel);
 
             var reply = client.CreateAnnouncement(new Announcement

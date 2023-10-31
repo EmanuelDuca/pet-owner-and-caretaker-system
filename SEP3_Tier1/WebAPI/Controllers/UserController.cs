@@ -76,7 +76,7 @@ public class UserController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return StatusCode(500, e.Message);
+            return StatusCode(500, e.StackTrace);
         }
     }
     

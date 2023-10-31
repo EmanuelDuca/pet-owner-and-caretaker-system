@@ -1,6 +1,9 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+namespace GrpcClient;
 
-app.MapGet("/", () => "Hello World!");
-
-app.Run();
+public class Program
+{
+    static void Main(string[] args)
+    {
+        
+    }
+}

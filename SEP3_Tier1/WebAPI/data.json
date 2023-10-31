@@ -10,6 +10,15 @@
       "Type": "PetOwner"
     },
     {
+      "Name": "Ion",
+      "Username": "ionVasile",
+      "Age": null,
+      "Email": "ionv@gmail.com",
+      "PhoneNumber": null,
+      "Password": "1111",
+      "Type": "PetOwner"
+    },
+    {
       "Name": null,
       "Username": "Michael",
       "Age": null,
@@ -26,6 +35,15 @@
       "PhoneNumber": null,
       "Password": "oaeirgh8aeshg",
       "Type": "CareTaker"
+    },
+    {
+      "Name": null,
+      "Username": "emanuel",
+      "Age": null,
+      "Email": "emanuel@gmail.com",
+      "PhoneNumber": null,
+      "Password": "1111",
+      "Type": "PetOwner"
     }
   ],
   "Announcements": [
@@ -89,6 +107,23 @@
       "EndDate": "2023-10-29T00:00:00+02:00",
       "PostalCode": "9842",
       "ServiceDescription": "sfghsddznhxjtt",
+      "CreationDateTime": "0001-01-01T00:00:00"
+    },
+    {
+      "Id": 7,
+      "petOwner": {
+        "Name": null,
+        "Username": "emanuel",
+        "Age": null,
+        "Email": "emanuel@gmail.com",
+        "PhoneNumber": null,
+        "Password": "1111",
+        "Type": "PetOwner"
+      },
+      "StartDate": "2023-10-30T00:00:00+01:00",
+      "EndDate": "2023-11-02T00:00:00+01:00",
+      "PostalCode": "8700",
+      "ServiceDescription": "some description",
       "CreationDateTime": "0001-01-01T00:00:00"
     }
   ]
