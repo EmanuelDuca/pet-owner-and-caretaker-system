@@ -1,8 +1,9 @@
-﻿using Domain.Models;
+﻿using Domain.DTOs;
+using Domain.Models;
 
 namespace Application.DaoInterface;
 
 public interface IAnnouncementDao
 {
-    Task<Announcement> CreateAsync(Announcement announcement);
+    Task<AnnouncementCreationDto> CreateAsync(AnnouncementCreationDto announcement);
 }

@@ -1,4 +1,5 @@
 ﻿using Application.DaoInterface;
+using Domain.DTOs;
 using Domain.Models;
 
 namespace FileData.DAOs;
@@ -10,6 +11,11 @@ public class AnnouncementFileDao : IAnnouncementDao
     public AnnouncementFileDao(FileContext context)
     {
         this.context = context;
+    }
+
+    public Task<AnnouncementCreationDto> CreateAsync(AnnouncementCreationDto announcement)
+    {
+        throw new NotImplementedException();
     }
 
     public Task<Announcement> CreateAsync(Announcement announcement)

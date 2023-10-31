@@ -31,7 +31,7 @@ message LoginUser{
 }
 
 message Announcement{
-  string petOwnerUsername = 1;
+  string petOwnerEmail = 1;
   string description = 2;
   TimeInterval timeInterval = 3;
   Pet pet = 4;
@@ -50,6 +50,7 @@ message Pet{
   int32 weight = 3;
   bool isVaccinated = 4;
   string description =5;
+  int32 id = 6;
 }
 
 message TimeInterval{

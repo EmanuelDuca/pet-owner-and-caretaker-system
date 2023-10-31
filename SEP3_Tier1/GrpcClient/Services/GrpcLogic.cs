@@ -1,3 +1,4 @@
+using System.Globalization;
 using Application.DaoInterface;
 using Grpc.Net.Client;
 using Domain.Models;
@@ -10,58 +11,66 @@ using GrpcClient;
 
 public class GrpcLogic : IAnnouncementDao
 {
-    public Task<Domain.Models.Announcement> CreateAsync(Domain.Models.Announcement announcement)
+    private AnnouncementService.AnnouncementServiceClient announcementServiceClient;
+
+    public GrpcLogic(AnnouncementService.AnnouncementServiceClient announcementServiceClient)
     {
-        try
-        {
-            using var channel = GrpcChannel.ForAddress("https://localhost:9090");
-            var client = new AnnouncementService.AnnouncementServiceClient(channel);
+        this.announcementServiceClient = announcementServiceClient;
+    }
 
-            var reply = client.CreateAnnouncement(new Announcement
-            {
-                PetOwnerUsername = "ionV",
-                Description = "some description",
-                TimeInterval = new TimeInterval
-                {
-                    StartDate = "12/10/2023",
-                    FinishDate = "28/10/2023"
-                },
-                Pet = new Pet
-                {
-                    PetName = "Max",
-                    PetType = "dog",
-                    Weight = 15,
-                    IsVaccinated = true,
-                    Description = "some description",
-                },
-                PostalCode = "8700",
-                DateOfCreation = "10/10/2023 16:00"
-            });
-            Console.WriteLine(reply);
-            Domain.Models.Announcement announce = new Domain.Models.Announcement
-            {
-                Id = reply.Id,
-                CreationDateTime = DateTime.Parse(reply.DateOfCreation),
-                EndDate = DateTime.Parse(reply.TimeInterval.FinishDate),
-                petOwner = new Domain.Models.PetOwner
-                {
-                    Email = "defaul@gmai.com",
-                    Password = "1111",
-                    Username = "defaultUser"
-                },
-                PostalCode = reply.PostalCode,
-                ServiceDescription = reply.Description,
-                StartDate = DateTime.Parse(reply.TimeInterval.StartDate)
-            };
-
-            return Task.FromResult(announce);
-        }
-        catch (Exception e)
+    public Task<AnnouncementCreationDto> CreateAsync(AnnouncementCreationDto dto)
+    {
+        Console.WriteLine($"Print DateOfCreation Before {dto.CreationDateTime.ToShortDateString()}");
+        var request = new Announcement
         {
-            throw e;
-        }
+            PetOwnerEmail = dto.OwnerEmail,
+            Description = dto.ServiceDescription,
+            TimeInterval = new TimeInterval
+            {
+                StartDate = dto.StartDate.ToShortDateString(),
+                FinishDate = dto.EndDate.ToShortDateString()
+            },
+            Pet = new Pet
+            {
+                PetName = dto.Pet.PetName,
+                PetType = dto.Pet.PetType,
+                Weight = dto.Pet.Weight,
+                IsVaccinated = dto.Pet.IsVaccinated,
+                Description = dto.Pet.Description,
+            },
+            PostalCode = dto.PostalCode,
+            DateOfCreation = dto.CreationDateTime.ToShortDateString()
+        };
         
-        
+        Announcement grpcAnnouncementToCreate = announcementServiceClient.CreateAnnouncement(request);
+        PrintAnnouncement(grpcAnnouncementToCreate);
+        Console.WriteLine($"Java returned new Announcement made by {grpcAnnouncementToCreate.PetOwnerEmail}");
+
+        return Task.FromResult(ConvertAnnouncementFromGrpc(grpcAnnouncementToCreate));
+
+    }
+
+
+    private AnnouncementCreationDto ConvertAnnouncementFromGrpc(Announcement dto)
+    {
+        Console.WriteLine($"Date of Creation it is[{dto.DateOfCreation}]");
+
+        var announcement = new AnnouncementCreationDto
+        {
+            Id = dto.Id,
+            CreationDateTime = DateTime.Parse(dto.DateOfCreation),
+            EndDate = DateTime.Parse(dto.TimeInterval.FinishDate),
+            OwnerEmail = dto.PetOwnerEmail,
+            PostalCode = dto.PostalCode,
+            ServiceDescription = dto.Description,
+            StartDate = DateTime.Parse(dto.TimeInterval.StartDate)
+        };
+        return announcement;
+    }
+
+    private void PrintAnnouncement(Announcement dto)
+    {
+        Console.WriteLine($"Email: {dto.PetOwnerEmail} \ndateOfCreation: {dto.DateOfCreation}\nPostalCode: {dto.PostalCode}");
     }
 }
     

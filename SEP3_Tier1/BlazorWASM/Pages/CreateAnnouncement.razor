@@ -65,9 +65,15 @@
         try
         {
             HandleEmptyFields();
-            
-            AnnouncementCreationDto creationDto = new AnnouncementCreationDto(
-                ownerEmail, startDate!.Value, endDate!.Value, description!, postalcode!);
+
+            AnnouncementCreationDto creationDto = new AnnouncementCreationDto
+            {
+                OwnerEmail = ownerEmail,
+                StartDate = startDate.Value,
+                EndDate = endDate.Value,
+                ServiceDescription = description,
+                PostalCode = postalcode
+            };
             await announcementService.CreateAsync(creationDto);
             
             notificationService.Notify(new NotificationMessage()

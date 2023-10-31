@@ -66,7 +66,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost, Route("register")]
-    public async Task<ActionResult<User>> Register(UserCreationDto dto)
+    public async Task<ActionResult<User>> Register([FromBody] UserCreationDto dto)
     {
         try
         {

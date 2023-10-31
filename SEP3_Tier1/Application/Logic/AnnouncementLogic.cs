@@ -18,23 +18,33 @@ public class AnnouncementLogic : IAnnouncementLogic
     }
     public async Task<Announcement> CreateAsync(AnnouncementCreationDto creationDto)
     {
+        /*
         User? existing = await userDao.GetByEmailAsync(creationDto.OwnerEmail);
         if (existing == null)
         {
             throw new UserNotFoundException(creationDto.OwnerEmail);
         }
+        */
         
         ValidateData(creationDto.StartDate, creationDto.EndDate, creationDto.PostalCode);
+        AnnouncementCreationDto createdAnnouncement = await announcementDao.CreateAsync(creationDto);
         
-        Announcement announcement = new Announcement()
+        //At this moment we don't have a method to get user by email.
+        Announcement announcement = new Announcement
         {
             EndDate = creationDto.EndDate,
             StartDate = creationDto.StartDate,
-            petOwner = existing,
+            petOwner = new PetOwner
+            {
+                Email = creationDto.OwnerEmail,
+                Username = "Random username---",
+                Password = "1111",
+                Type = "PetOwner"
+            },
             ServiceDescription = creationDto.ServiceDescription,
             PostalCode = creationDto.PostalCode
         };
-        return await announcementDao.CreateAsync(announcement);
+        return announcement;
     }
 
     private void ValidateData(DateTime startDate, DateTime endDate, string? postalCode)

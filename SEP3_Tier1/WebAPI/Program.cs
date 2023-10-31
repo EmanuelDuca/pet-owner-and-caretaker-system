@@ -43,6 +43,11 @@ builder.Services.AddGrpcClient<PetOwnerService.PetOwnerServiceClient>(o =>
 {
     o.Address = new Uri("http://localhost:9090");
 });
+builder.Services.AddGrpcClient<AnnouncementService.AnnouncementServiceClient>(o =>
+{
+    o.Address = new Uri("http://localhost:9090");
+});
+
 
 
 
