@@ -3,8 +3,9 @@ syntax = "proto3";
 option java_multiple_files = true;
 option csharp_namespace = "GrpcClient";
 
-service PetOwnerService{
-  rpc CreatePetOwner(PetOwner) returns (PetOwner);
+service UserService{
+  //rpc CreatePetOwner(PetOwner) returns (PetOwner); //This method is no neded anymore
+  rpc CreatUser(User) returns (User);
   //rpc LoginPetOwner(LoginUser) returns (PetOwner);
   //rpc FindPetOwner(SearchField) returns (PetOwner);  // return with password, so be careful
   //rpc UpdatePetOwnerInformation(PetOwnerInfo) returns (Void); // not sure about void
@@ -23,6 +24,15 @@ message PetOwner{
   int32 age = 3;
   string phone = 4;
   string email = 5;
+}
+
+message User{
+  string email = 1;
+  string username = 2;
+  string password = 3;
+  int32 age = 4;
+  string phone = 5;
+  string type = 6;
 }
 
 message LoginUser{

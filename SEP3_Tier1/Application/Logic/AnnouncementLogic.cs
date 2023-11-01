@@ -40,7 +40,6 @@ public class AnnouncementLogic : IAnnouncementLogic
                 Email = creationDto.OwnerEmail,
                 Username = "Random username---",
                 Password = "1111",
-                Type = "PetOwner"
             },
             Pet = creationDto.Pet,
             ServiceDescription = creationDto.ServiceDescription,

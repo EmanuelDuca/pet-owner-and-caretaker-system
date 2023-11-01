@@ -32,12 +32,11 @@ public class UserController : ControllerBase
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
             new Claim(ClaimTypes.Name, user.Username),
-            new Claim("Type", user.Type),
             new Claim("Email", user.Email),
             new Claim("Password", user.Password),
             new Claim("RealName", user.Name ?? string.Empty),
             new Claim("Age", user.Age.ToString() ?? string.Empty),
-            new Claim("PhoneNumber", user.PhoneNumber.ToString() ?? string.Empty)
+            new Claim("PhoneNumber", user.PhoneNumber ?? string.Empty)
         };
 
         return claims.ToList();
