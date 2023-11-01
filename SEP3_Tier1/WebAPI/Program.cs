@@ -28,8 +28,8 @@ builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
 
 //When using GRPc
 // Experimental code {
-builder.Services.AddScoped<IUserDao, GrpcUser>();
-builder.Services.AddScoped<IAnnouncementDao, GrpcLogic>();
+builder.Services.AddScoped<IUserDao, GrpcUserService>();
+builder.Services.AddScoped<IAnnouncementDao, GrpcAnnouncementService>();
 // Experimental code }
 
 

@@ -9,11 +9,11 @@ using Grpc.Core;
 using Grpc.Net.Client;
 using GrpcClient;
 
-public class GrpcLogic : IAnnouncementDao
+public class GrpcAnnouncementService : IAnnouncementDao
 {
     private AnnouncementService.AnnouncementServiceClient announcementServiceClient;
 
-    public GrpcLogic(AnnouncementService.AnnouncementServiceClient announcementServiceClient)
+    public GrpcAnnouncementService(AnnouncementService.AnnouncementServiceClient announcementServiceClient)
     {
         this.announcementServiceClient = announcementServiceClient;
     }
@@ -21,16 +21,16 @@ public class GrpcLogic : IAnnouncementDao
     public Task<AnnouncementCreationDto> CreateAsync(AnnouncementCreationDto dto)
     {
         Console.WriteLine($"Print DateOfCreation Before {dto.CreationDateTime.ToShortDateString()}");
-        var request = new Announcement
+        var request = new AnnouncementProto
         {
             PetOwnerEmail = dto.OwnerEmail,
             Description = dto.ServiceDescription,
-            TimeInterval = new TimeInterval
+            TimeInterval = new TimeIntervalProto
             {
                 StartDate = dto.StartDate.ToShortDateString(),
                 FinishDate = dto.EndDate.ToShortDateString()
             },
-            Pet = new Pet
+            Pet = new PetProto
             {
                 PetName = dto.Pet.PetName,
                 PetType = dto.Pet.PetType,
@@ -42,7 +42,7 @@ public class GrpcLogic : IAnnouncementDao
             DateOfCreation = dto.CreationDateTime.ToShortDateString()
         };
         
-        Announcement grpcAnnouncementToCreate = announcementServiceClient.CreateAnnouncement(request);
+        AnnouncementProto grpcAnnouncementToCreate = announcementServiceClient.CreateAnnouncement(request);
         PrintAnnouncement(grpcAnnouncementToCreate);
         Console.WriteLine($"Java returned new Announcement made by {grpcAnnouncementToCreate.PetOwnerEmail}");
 
@@ -51,7 +51,7 @@ public class GrpcLogic : IAnnouncementDao
     }
 
 
-    private AnnouncementCreationDto ConvertAnnouncementFromGrpc(Announcement dto)
+    private AnnouncementCreationDto ConvertAnnouncementFromGrpc(AnnouncementProto dto)
     {
         Console.WriteLine($"Date of Creation it is[{dto.DateOfCreation}]");
 
@@ -70,7 +70,7 @@ public class GrpcLogic : IAnnouncementDao
 
     public Task<IEnumerable<AnnouncementCreationDto>> GetAsync(SearchAnnouncementDto dto)
     {
-        var request = new SearchField
+        var request = new SearchFieldProto
         {
             StartTime = dto.StartTime,
             EndTime = dto.EndTime,
@@ -81,7 +81,7 @@ public class GrpcLogic : IAnnouncementDao
         throw new NotImplementedException();
     }
 
-    private void PrintAnnouncement(Announcement dto)
+    private void PrintAnnouncement(AnnouncementProto dto)
     {
         Console.WriteLine($"Email: {dto.PetOwnerEmail} \ndateOfCreation: {dto.DateOfCreation}\nPostalCode: {dto.PostalCode}");
     }

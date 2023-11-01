@@ -5,20 +5,20 @@ option csharp_namespace = "GrpcClient";
 
 service UserService{
   //rpc CreatePetOwner(PetOwner) returns (PetOwner); //This method is no neded anymore
-  rpc CreatUser(User) returns (User);
+  rpc CreatUser(UserProto) returns (UserProto);
   //rpc LoginPetOwner(LoginUser) returns (PetOwner);
   //rpc FindPetOwner(SearchField) returns (PetOwner);  // return with password, so be careful
   //rpc UpdatePetOwnerInformation(PetOwnerInfo) returns (Void); // not sure about void
 }
 
 service AnnouncementService{
-  rpc CreateAnnouncement(Announcement) returns (Announcement); // maybe createAnnouncement message would be better
-  rpc FindAnnouncements(SearchField) returns (Announcements);
+  rpc CreateAnnouncement(AnnouncementProto) returns (AnnouncementProto); // maybe createAnnouncement message would be better
+  rpc FindAnnouncements(SearchFieldProto) returns (Announcements);
   //rpc UpdateAnnouncement(Announcement) returns (Void);  // not sure about void
   //rpc DeleteAnnouncement(Announcement) returns (Void);  // not sure about void
 }
 
-message User{
+message UserProto{
   string email = 1;
   string username = 2;
   string password = 3;
@@ -27,26 +27,26 @@ message User{
   string type = 6;
 }
 
-message LoginUser{
+message LoginUserProto{
   string email = 1;
   string password = 2;
 }
 
-message Announcement{
+message AnnouncementProto{
   string petOwnerEmail = 1;
   string description = 2;
-  TimeInterval timeInterval = 3;
-  Pet pet = 4;
+  TimeIntervalProto timeInterval = 3;
+  PetProto pet = 4;
   string postalCode = 5;
   string dateOfCreation = 6;
   int32 id = 7;
 }
 
 message Announcements{
-  repeated Announcement announcements = 1;
+  repeated AnnouncementProto announcements = 1;
 }
 
-message Pet{
+message PetProto{
   string petName = 1;
   string petType = 2;  // dog, cat ....
   int32 weight = 3;
@@ -55,12 +55,12 @@ message Pet{
   int32 id = 6;
 }
 
-message TimeInterval{
+message TimeIntervalProto{
   string startDate = 1;
   string finishDate = 2;
 }
 
-message SearchField{
+message SearchFieldProto{
   string startTime = 1;
   string endTime = 2;
   string description = 3;

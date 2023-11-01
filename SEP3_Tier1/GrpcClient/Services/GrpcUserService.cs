@@ -8,20 +8,20 @@ using Grpc.Net.Client;
 using GrpcClient;
 using Microsoft.AspNetCore.Mvc;
 
-public class GrpcUser : IUserDao
+public class GrpcUserService : IUserDao
 {
     private UserService.UserServiceClient userServiceClient;
 
-    public GrpcUser(UserService.UserServiceClient userServiceClient)
+    public GrpcUserService(UserService.UserServiceClient userServiceClient)
     {
         this.userServiceClient = userServiceClient;
     }
     
-    public async Task<Domain.Models.User> CreateAsync(Domain.Models.User user)
+    public async Task<User> CreateAsync(User user)
     {
         string type = "";
         //Should check wich type of user it is
-        if (user is Domain.Models.PetOwner)
+        if (user is PetOwner)
         {
             type = "PetOwner";
         }else if (user is CareTaker)
@@ -29,7 +29,7 @@ public class GrpcUser : IUserDao
             type = "CareTaker";
         }
         
-        var request = new User
+        var request = new UserProto
         {
             Username = user.Username,
             Password = user.Password,
@@ -39,12 +39,12 @@ public class GrpcUser : IUserDao
             Type = type
         };
         
-        User grpcUserToCreate = userServiceClient.CreatUser(request);
+        UserProto grpcUserToCreate = userServiceClient.CreatUser(request);
         Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
         return ConvertUserFromGrps(grpcUserToCreate);
     }
     
-    private Domain.Models.User ConvertUserFromGrps(User dto)
+    private Domain.Models.User ConvertUserFromGrps(UserProto dto)
     {
         Domain.Models.User user;
         switch (dto.Type)
