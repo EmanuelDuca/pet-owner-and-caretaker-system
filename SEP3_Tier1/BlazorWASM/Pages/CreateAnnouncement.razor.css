@@ -1,13 +1,10 @@
 ﻿.card{
     margin-top: 50px;
-    width: 30%;
+    /*width: 30%;*/
     padding-inline: 2rem;
     text-align: center;
 }
 
-input, textarea{
-    width: 60%;
-}
 
 .field{
     display: flex;
@@ -15,4 +12,18 @@ input, textarea{
     justify-content: space-between;
     align-items: center;
     margin-top: 1em;
+}
+
+.field input, .field textarea{
+    width: 60%;
+    border-radius: var(--rz-input-border-radius);
+    outline: none;
+    border-width: 1px;
+    transition: var(--rz-input-transition);
+}
+
+.field input:focus, .field textarea:focus{
+    border: var(--rz-input-focus-border);
+    box-shadow: var(--rz-input-focus-shadow);
+    transition: var(--rz-input-transition);
 }

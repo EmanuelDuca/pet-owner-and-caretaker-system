@@ -1,4 +1,5 @@
-﻿using Application.DaoInterface;
+﻿using System.Text.Json;
+using Application.DaoInterface;
 using Application.LogicInterface;
 using Domain.DTOs;
 using Domain.Exceptions;
@@ -27,7 +28,7 @@ public class AnnouncementLogic : IAnnouncementLogic
         */
         
         ValidateData(creationDto.StartDate, creationDto.EndDate, creationDto.PostalCode);
-        AnnouncementCreationDto createdAnnouncement = await announcementDao.CreateAsync(creationDto);
+        // AnnouncementCreationDto createdAnnouncement = await announcementDao.CreateAsync(creationDto);
         
         //At this moment we don't have a method to get user by email.
         Announcement announcement = new Announcement
@@ -41,9 +42,14 @@ public class AnnouncementLogic : IAnnouncementLogic
                 Password = "1111",
                 Type = "PetOwner"
             },
+            Pet = creationDto.Pet,
             ServiceDescription = creationDto.ServiceDescription,
             PostalCode = creationDto.PostalCode
         };
+        Console.WriteLine(JsonSerializer.Serialize(announcement, new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        }));
         return announcement;
     }
 

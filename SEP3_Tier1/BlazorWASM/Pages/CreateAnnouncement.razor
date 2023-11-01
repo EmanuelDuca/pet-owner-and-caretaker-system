@@ -4,56 +4,106 @@
 @page "/CreateAnnouncement"
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs
-@using System.Security.Claims
-@inject NotificationService notificationService
-@attribute [Authorize]
+@using Domain.Models
+@* @attribute [Authorize] *@
 
-<div class="content d-flex justify-content-center">
-    <div class="card">
-        <h5>Fill the small form to create your announcement.</h5>
-        <div class="field">
+
+<div class="content container-fluid p-0 col-xxl-5 col-lg-6 col-md-10 col-sm-12">
+    <div class="card w-100">
+        <h5 class="fw-bold mb-4">Your announcement</h5>
+        <fieldset class="field">
             <label>Start date: </label>
             <RadzenDatePicker Style="width: 60%" class="input" TValue="DateTime" 
                               Value="@startDate" DateFormat="dd/MM/yyyy" Change="@(args => startDate = args)"/>
-        </div>
-        <div class="field">
+        </fieldset>
+        <fieldset class="field">
             <label>End date: </label>
             <RadzenDatePicker Style="width: 60%" bind class="input" TValue="DateTime" 
                               Value="@endDate" DateFormat="dd/MM/yyyy" Change="@(args => endDate = args)"/>
-        </div>
-        <div class="field">
+        </fieldset>
+        <fieldset class="field">
             <label>Postal code: </label>
-            <input type="number" @bind="postalcode"/>
-        </div>
-        <div class="field">
+            <input aria-required="true" min="1000" max="9999" type="number" @bind="postalcode" required/>
+        </fieldset>
+        <fieldset class="field">
             <label>Description: </label><br/>
-            <textarea @bind="description"></textarea>
+            <textarea @bind="description" maxlength="2000" required></textarea>
+        </fieldset>
+        
+        
+        <b class="mt-4">Pet:</b>
+        <RadzenSelectBar class="rounded-pill w-100 m-auto d-block" @bind-Value="isNewPet" Size="ButtonSize.ExtraSmall" TValue="bool">
+            <Items>
+                <RadzenSelectBarItem Text="Create new pet" Value="true"/>
+                <RadzenSelectBarItem Text="Choose your pet" Value="false"/>
+            </Items>
+        </RadzenSelectBar>
+        
+        <div class="pet-part mt-3">
+            @if (!isNewPet)
+            {
+                <PetList OwnerEmail="@ownerEmail" @ref="PetList"/>
+            }
+            else
+            {
+                <fieldset class="field mt-0">
+                    <label>Type:</label>
+                    <input type="text" maxlength="50" @bind="petType" required>
+                </fieldset>
+            
+                <fieldset class="field">
+                    <label>Name:</label>
+                    <input type="text" maxlength="50" @bind="petName" required/>
+                </fieldset>
+            
+                <fieldset class="field">
+                    <label>Description:</label>
+                    <textarea type="text" maxlength="500" @bind="petDescription"></textarea>
+                </fieldset>
+            
+                <fieldset class="field">
+                    <label>Weight:</label>
+                    <input type="number" maxlength="500" @bind="petWeight"/>
+                </fieldset>
+            }
         </div>
         
-        <RadzenButton Style="margin-top: 2rem" Click="TryCreateAnnouncement">Create announcement</RadzenButton>
+        <RadzenButton ButtonType="ButtonType.Submit" Style="margin-top: 2rem" Click="TryCreateAnnouncement">Create announcement</RadzenButton>
     </div>
 </div>
 
 
 @code {
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    // [CascadingParameter]
+    // public Task<AuthenticationState> AuthState { get; set; } = null!;
     
     private DateTime? startDate;
     private DateTime? endDate;
     private string ownerEmail;
     private string? description;
     private string? postalcode;
+    private string? petName;
+    private string? petType;
+    private string? petDescription;
+    private int? petWeight;
+
+    private PetList PetList;
+
+    private bool isNewPet;
     
-    private IEnumerable<Claim>? userClaims;
+    // private IEnumerable<Claim>? userClaims;
 
     
     protected override async Task OnInitializedAsync()
     {
-        AuthenticationState authState = await AuthState;
-        ClaimsPrincipal user = authState.User;
-        userClaims = user.Claims;
-        ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+        // AuthenticationState authState = await AuthState;
+        // ClaimsPrincipal user = authState.User;
+        // userClaims = user.Claims;
+        // ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+        // userPets = ..
+
+        ownerEmail = "someemail@gmail.com";
+        //TODO add proper validation, link: https://www.pragimtech.com/blog/blazor/blazor-form-validation/
         
         startDate = DateTime.Today;
         endDate = DateTime.Today.AddDays(3);
@@ -66,13 +116,30 @@
         {
             HandleEmptyFields();
 
+            Pet pet;
+
+            if (isNewPet)
+                pet = new Pet
+                {
+                    Id = 34,
+                    PetName = "Pollo",
+                    PetType = "Dog",
+                    Weight = 3,
+                    Description = "Who did this field required?!?!"
+                };
+            else
+            {
+                pet = PetList.Value;
+            }
+
             AnnouncementCreationDto creationDto = new AnnouncementCreationDto
             {
                 OwnerEmail = ownerEmail,
                 StartDate = startDate.Value,
                 EndDate = endDate.Value,
                 ServiceDescription = description,
-                PostalCode = postalcode
+                PostalCode = postalcode,
+                Pet = pet
             };
             await announcementService.CreateAsync(creationDto);
             
