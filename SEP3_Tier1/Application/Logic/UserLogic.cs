@@ -22,7 +22,7 @@ public class UserLogic : IUserLogic
             throw new Exception("Email already taken");
         }
         */
-
+        
         User toCreate;
         switch (dto.Type)
         {
@@ -32,7 +32,6 @@ public class UserLogic : IUserLogic
                     Username = dto.UserName,
                     Email = dto.Email,
                     Password = dto.Password,
-                    Type = dto.Type
                 };
                 break;
             case "CareTaker":
@@ -41,7 +40,6 @@ public class UserLogic : IUserLogic
                     Username = dto.UserName,
                     Email = dto.Email,
                     Password = dto.Password,
-                    Type = dto.Type
                 };
                 break;
             default:

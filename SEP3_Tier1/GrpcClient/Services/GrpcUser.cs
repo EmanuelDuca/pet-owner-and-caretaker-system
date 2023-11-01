@@ -10,44 +10,81 @@ using Microsoft.AspNetCore.Mvc;
 
 public class GrpcUser : IUserDao
 {
-    private PetOwnerService.PetOwnerServiceClient petOwnerServiceClient;
+    private UserService.UserServiceClient userServiceClient;
 
-    public GrpcUser(PetOwnerService.PetOwnerServiceClient petOwnerServiceClient)
+    public GrpcUser(UserService.UserServiceClient userServiceClient)
     {
-        this.petOwnerServiceClient = petOwnerServiceClient;
+        this.userServiceClient = userServiceClient;
     }
     
-    public async Task<User> CreateAsync(User user)
+    public async Task<Domain.Models.User> CreateAsync(Domain.Models.User user)
     {
+        string type = "";
         //Should check wich type of user it is
-        var request = new PetOwner
+        if (user is Domain.Models.PetOwner)
+        {
+            type = "PetOwner";
+        }else if (user is CareTaker)
+        {
+            type = "CareTaker";
+        }
+        
+        var request = new User
         {
             Username = user.Username,
             Password = user.Password,
-            Email = user.Email
+            Email = user.Email,
+            Age = user.Age.HasValue ? user.Age.Value : 200,
+            Phone = user.PhoneNumber,
+            Type = type
         };
-
-        PetOwner grpcUserToCreate = petOwnerServiceClient.CreatePetOwner(request);
+        
+        User grpcUserToCreate = userServiceClient.CreatUser(request);
         Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
         return ConvertUserFromGrps(grpcUserToCreate);
     }
-
-    private User ConvertUserFromGrps(PetOwner dto)
+    
+    private Domain.Models.User ConvertUserFromGrps(User dto)
     {
-        var user = new Domain.Models.PetOwner
+        Domain.Models.User user;
+        switch (dto.Type)
         {
-            Username = dto.Username,
-            Email = dto.Email,
-            Password = dto.Password,
-            Age = dto.Age,
-            Name = dto.Username,
-            Type = "PetOwner",
-        };
+            case "PetOwner":
+                user = new Domain.Models.PetOwner
+                {
+                    Username = dto.Username,
+                    Email = dto.Email,
+                    Password = dto.Password,
+                    Age = dto.Age,
+                    Name = dto.Username,
+                };
+                break;
+            case "CareTaker":
+                user = new CareTaker
+                {
+                    Username = dto.Username,
+                    Email = dto.Email,
+                    Password = dto.Password,
+                    Age = dto.Age,
+                    Name = dto.Username,
+                };
+                break;
+            default:
+                user = new Domain.Models.PetOwner
+                {
+                    Username = "Demo User",
+                    Email = "demo",
+                    Password = "demo",
+                    Age = 20,
+                    Name = "demo"
+                };
+                break;
+        }
         return user;
     }
     
 
-    public Task<User?> GetByEmailAsync(string email)
+    public Task<Domain.Models.User?> GetByEmailAsync(string email)
     {
         return null;
     }
