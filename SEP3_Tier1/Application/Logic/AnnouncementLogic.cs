@@ -28,7 +28,7 @@ public class AnnouncementLogic : IAnnouncementLogic
         */
         
         ValidateData(creationDto.StartDate, creationDto.EndDate, creationDto.PostalCode);
-        // AnnouncementCreationDto createdAnnouncement = await announcementDao.CreateAsync(creationDto);
+        AnnouncementCreationDto createdAnnouncement = await announcementDao.CreateAsync(creationDto);
         
         //At this moment we don't have a method to get user by email.
         Announcement announcement = new Announcement
