@@ -5,6 +5,6 @@ namespace Application.DaoInterface;
 
 public interface IAnnouncementDao
 {
-    Task<AnnouncementCreationDto> CreateAsync(AnnouncementCreationDto announcement);
-    Task<IEnumerable<AnnouncementCreationDto>> GetAsync(SearchAnnouncementDto dto);
+    Task<Announcement> CreateAsync(AnnouncementCreationDto announcement);
+    Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto dto);
 }

@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using Domain;
 using Domain.DTOs;
 using Domain.Models;
 using HttpClients.ClientInterfaces;
@@ -19,7 +20,7 @@ public class AnnouncementHttpClient : IAnnouncementService
     public async Task<Announcement> CreateAsync(AnnouncementCreationDto dto)
     {
         HttpResponseMessage response = await client.PostAsJsonAsync(START_URI, dto);
-        string content = await ClientHelper.HandleResponse(response);
-        return await ClientHelper.GenerateObjectFromJson<Announcement>(content);
+        string content = await HttpClientHelper.HandleResponse(response);
+        return await HttpClientHelper.GenerateObjectFromJson<Announcement>(content);
     }
 }

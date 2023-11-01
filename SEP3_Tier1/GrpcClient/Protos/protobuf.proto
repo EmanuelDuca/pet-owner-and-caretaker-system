@@ -5,15 +5,15 @@ option csharp_namespace = "GrpcClient";
 
 service UserService{
   //rpc CreatePetOwner(PetOwner) returns (PetOwner); //This method is no neded anymore
-  rpc CreatUser(UserProto) returns (UserProto);
-  //rpc LoginPetOwner(LoginUser) returns (PetOwner);
-  //rpc FindPetOwner(SearchField) returns (PetOwner);  // return with password, so be careful
+  rpc CreateUser(UserProto) returns (UserProto);
+//  rpc LoginUserProto() returns (UserProto);
+  rpc FindUser(SearchFieldProto) returns (UserProto);  // return with password, so be careful
   //rpc UpdatePetOwnerInformation(PetOwnerInfo) returns (Void); // not sure about void
 }
 
 service AnnouncementService{
   rpc CreateAnnouncement(AnnouncementProto) returns (AnnouncementProto); // maybe createAnnouncement message would be better
-  rpc FindAnnouncements(SearchFieldProto) returns (Announcements);
+  rpc FindAnnouncements(SearchFieldProto) returns (AnnouncementsProto);
   //rpc UpdateAnnouncement(Announcement) returns (Void);  // not sure about void
   //rpc DeleteAnnouncement(Announcement) returns (Void);  // not sure about void
 }
@@ -26,6 +26,7 @@ message UserProto{
   string phone = 5;
   string type = 6;
 }
+
 
 message LoginUserProto{
   string email = 1;
@@ -42,7 +43,7 @@ message AnnouncementProto{
   int32 id = 7;
 }
 
-message Announcements{
+message AnnouncementsProto{
   repeated AnnouncementProto announcements = 1;
 }
 
@@ -61,10 +62,7 @@ message TimeIntervalProto{
 }
 
 message SearchFieldProto{
-  string startTime = 1;
-  string endTime = 2;
-  string description = 3;
-  string postalCode =4;
+  string query = 1;
 }
 
 message Void{}

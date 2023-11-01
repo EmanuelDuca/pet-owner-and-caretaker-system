@@ -28,33 +28,14 @@ public class AnnouncementLogic : IAnnouncementLogic
         */
         
         ValidateData(creationDto.StartDate, creationDto.EndDate, creationDto.PostalCode);
-        AnnouncementCreationDto createdAnnouncement = await announcementDao.CreateAsync(creationDto);
+        Announcement announcement = await announcementDao.CreateAsync(creationDto);
         
-        //At this moment we don't have a method to get user by email.
-        Announcement announcement = new Announcement
-        {
-            EndDate = creationDto.EndDate,
-            StartDate = creationDto.StartDate,
-            petOwner = new PetOwner
-            {
-                Email = creationDto.OwnerEmail,
-                Username = "Random username---",
-                Password = "1111",
-            },
-            Pet = creationDto.Pet,
-            ServiceDescription = creationDto.ServiceDescription,
-            PostalCode = creationDto.PostalCode
-        };
-        Console.WriteLine(JsonSerializer.Serialize(announcement, new JsonSerializerOptions()
-        {
-            WriteIndented = true
-        }));
         return announcement;
     }
 
-    public Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto searchAnnouncementDto)
+    public async Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto searchAnnouncementDto)
     {
-        throw new NotImplementedException();
+        return (await announcementDao.GetAsync(searchAnnouncementDto)).OrderByDescending(a => a.CreationDateTime);
     }
 
     private void ValidateData(DateTime startDate, DateTime endDate, string? postalCode)

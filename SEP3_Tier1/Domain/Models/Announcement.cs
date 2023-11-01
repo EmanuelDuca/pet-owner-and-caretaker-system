@@ -3,7 +3,7 @@
 public class Announcement
 {
     public int Id { get; set; }
-    public User petOwner { get; init; }
+    public PetOwner? PetOwner { get; init; }
     public DateTime StartDate { get; init; }
     public DateTime EndDate { get; init; }
     public string PostalCode { get; init; }

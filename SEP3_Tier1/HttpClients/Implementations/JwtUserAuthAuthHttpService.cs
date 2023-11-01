@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text.Json;
+using Domain;
 using Domain.DTOs;
 using Domain.Models;
 using HttpClients.ClientInterfaces;
@@ -22,7 +23,7 @@ public class JwtUserAuthAuthHttpService : IUserAuthService
     public async Task LoginAsync(UserLoginDto loginDto)
     {
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/login", loginDto);
-        string responseContent = await ClientHelper.HandleResponse(responseMessage);
+        string responseContent = await HttpClientHelper.HandleResponse(responseMessage);
         
         Jwt = responseContent;
 
@@ -42,7 +43,7 @@ public class JwtUserAuthAuthHttpService : IUserAuthService
     {
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/register", registrationDto);
 
-        string responseContent = await ClientHelper.HandleResponse(responseMessage);
+        string responseContent = await HttpClientHelper.HandleResponse(responseMessage);
         
         Jwt = responseContent;
 

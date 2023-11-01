@@ -1,7 +1,10 @@
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using Application.DaoInterface;
+using Domain;
 using Grpc.Net.Client;
 using Domain.Models;
+using HttpClients.ClientInterfaces;
 
 namespace GrpcClient.Services;
 using Domain.DTOs;
@@ -12,13 +15,15 @@ using GrpcClient;
 public class GrpcAnnouncementService : IAnnouncementDao
 {
     private AnnouncementService.AnnouncementServiceClient announcementServiceClient;
+    private GrpcUserService userService;
 
-    public GrpcAnnouncementService(AnnouncementService.AnnouncementServiceClient announcementServiceClient)
+    public GrpcAnnouncementService(AnnouncementService.AnnouncementServiceClient announcementServiceClient, GrpcUserService userService)
     {
         this.announcementServiceClient = announcementServiceClient;
+        this.userService = userService;
     }
 
-    public Task<AnnouncementCreationDto> CreateAsync(AnnouncementCreationDto dto)
+    public Task<Announcement> CreateAsync(AnnouncementCreationDto dto)
     {
         Console.WriteLine($"Print DateOfCreation Before {dto.CreationDateTime.ToShortDateString()}");
         var request = new AnnouncementProto
@@ -46,21 +51,21 @@ public class GrpcAnnouncementService : IAnnouncementDao
         PrintAnnouncement(grpcAnnouncementToCreate);
         Console.WriteLine($"Java returned new Announcement made by {grpcAnnouncementToCreate.PetOwnerEmail}");
 
-        return Task.FromResult(ConvertAnnouncementFromGrpc(grpcAnnouncementToCreate));
+        return ConvertAnnouncementFromProto(grpcAnnouncementToCreate);
 
     }
 
 
-    private AnnouncementCreationDto ConvertAnnouncementFromGrpc(AnnouncementProto dto)
+    private async Task<Announcement> ConvertAnnouncementFromProto(AnnouncementProto dto)
     {
         Console.WriteLine($"Date of Creation it is[{dto.DateOfCreation}]");
 
-        var announcement = new AnnouncementCreationDto
+        var announcement = new Announcement
         {
             Id = dto.Id,
             CreationDateTime = DateTime.Parse(dto.DateOfCreation),
             EndDate = DateTime.Parse(dto.TimeInterval.FinishDate),
-            OwnerEmail = dto.PetOwnerEmail,
+            PetOwner = (PetOwner) (await userService.GetByEmailAsync(dto.PetOwnerEmail))!,
             PostalCode = dto.PostalCode,
             ServiceDescription = dto.Description,
             StartDate = DateTime.Parse(dto.TimeInterval.StartDate)
@@ -68,17 +73,14 @@ public class GrpcAnnouncementService : IAnnouncementDao
         return announcement;
     }
 
-    public Task<IEnumerable<AnnouncementCreationDto>> GetAsync(SearchAnnouncementDto dto)
+    public async Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto dto)
     {
         var request = new SearchFieldProto
         {
-            StartTime = dto.StartTime,
-            EndTime = dto.EndTime,
-            Description = dto.Description,
-            PostalCode = dto.PostalCode
+            Query = await HttpClientHelper.ConstructQuery(dto)
         };
-        Announcements list = announcementServiceClient.FindAnnouncements(request);
-        throw new NotImplementedException();
+        AnnouncementsProto announcements = announcementServiceClient.FindAnnouncements(request);
+        return await ConvertAnnouncementListFromProto(announcements);
     }
 
     private void PrintAnnouncement(AnnouncementProto dto)
@@ -86,9 +88,10 @@ public class GrpcAnnouncementService : IAnnouncementDao
         Console.WriteLine($"Email: {dto.PetOwnerEmail} \ndateOfCreation: {dto.DateOfCreation}\nPostalCode: {dto.PostalCode}");
     }
 
-    private IEnumerable<AnnouncementCreationDto> ConvertAnnouncementList(Announcements announcements)
+    private async Task<IEnumerable<Announcement>> ConvertAnnouncementListFromProto(AnnouncementsProto announcements)
     {
-        throw new NotImplementedException();
+        return await Task.WhenAll(announcements.Announcements
+            .Select(async announcement => await ConvertAnnouncementFromProto(announcement)));
     }
 }
     

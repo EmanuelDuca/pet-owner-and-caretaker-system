@@ -1,5 +1,7 @@
 using Application.DaoInterface;
+using Domain;
 using Domain.Models;
+using HttpClients.ClientInterfaces;
 
 namespace GrpcClient.Services;
 using Domain.DTOs;
@@ -20,7 +22,6 @@ public class GrpcUserService : IUserDao
     public async Task<User> CreateAsync(User user)
     {
         string type = "";
-        //Should check wich type of user it is
         if (user is PetOwner)
         {
             type = "PetOwner";
@@ -39,18 +40,18 @@ public class GrpcUserService : IUserDao
             Type = type
         };
         
-        UserProto grpcUserToCreate = userServiceClient.CreatUser(request);
+        UserProto grpcUserToCreate = userServiceClient.CreateUser(request);
         Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
-        return ConvertUserFromGrps(grpcUserToCreate);
+        return await ConvertUserFromGrps(grpcUserToCreate);
     }
     
-    private Domain.Models.User ConvertUserFromGrps(UserProto dto)
+    private Task<User> ConvertUserFromGrps(UserProto dto)
     {
-        Domain.Models.User user;
+        User user;
         switch (dto.Type)
         {
             case "PetOwner":
-                user = new Domain.Models.PetOwner
+                user = new PetOwner
                 {
                     Username = dto.Username,
                     Email = dto.Email,
@@ -70,7 +71,7 @@ public class GrpcUserService : IUserDao
                 };
                 break;
             default:
-                user = new Domain.Models.PetOwner
+                user = new PetOwner
                 {
                     Username = "Demo User",
                     Email = "demo",
@@ -80,12 +81,19 @@ public class GrpcUserService : IUserDao
                 };
                 break;
         }
-        return user;
+        return Task.FromResult(user);
     }
     
 
-    public Task<Domain.Models.User?> GetByEmailAsync(string email)
+    public async Task<User?> GetByEmailAsync(string email)
     {
-        return null;
+        SearchUserDto searchDto = new SearchUserDto(email);
+        string query = await HttpClientHelper.ConstructQuery(searchDto);
+        UserProto receivedUser = await userServiceClient.FindUserAsync(new SearchFieldProto
+        {
+            Query = query
+        });
+
+        return await ConvertUserFromGrps(receivedUser);
     }
 }

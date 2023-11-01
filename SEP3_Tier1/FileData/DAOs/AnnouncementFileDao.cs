@@ -13,12 +13,12 @@ public class AnnouncementFileDao : IAnnouncementDao
         this.context = context;
     }
 
-    public Task<AnnouncementCreationDto> CreateAsync(AnnouncementCreationDto announcement)
+    public Task<Announcement> CreateAsync(AnnouncementCreationDto announcement)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<AnnouncementCreationDto>> GetAsync(SearchAnnouncementDto dto)
+    public Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto dto)
     {
         throw new NotImplementedException();
     }

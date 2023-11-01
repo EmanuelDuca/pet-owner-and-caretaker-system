@@ -2,9 +2,9 @@
 using System.Text.Json;
 using Domain.DTOs;
 
-namespace HttpClients.ClientInterfaces;
+namespace Domain;
 
-public abstract class ClientHelper
+public abstract class HttpClientHelper
 {
     public static async Task<string> HandleResponse(HttpResponseMessage response)
     {
