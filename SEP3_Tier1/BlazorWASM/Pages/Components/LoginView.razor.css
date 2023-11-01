@@ -1,0 +1,119 @@
+﻿
+
+.card{
+    font-size: 16px;
+}
+
+.symbol-input{
+    position: absolute;
+    margin: 5px;
+    margin-left: 20px;
+}
+
+
+.login-option{
+    width: 100%;
+    margin-top: 20px;
+    font-size: .8rem;
+}
+
+.login-option > a{
+    color: #c2c2c2;
+    transition: .2s;
+    cursor: pointer;
+    user-select: none;
+}
+
+.login-option > a:hover{
+    color: var(--accent-color);
+    transition: .2s;
+    user-select: none;
+}
+
+.login-button{
+    background-color: var(--accent-color);
+    color: white;
+    padding: 5px 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    border: 0;
+    transition: .4s;
+}
+
+.login-button:hover{
+    color: var(--text-primary-color);
+    background-color: rgba(var(--accent-color-raw), 0.5);
+    padding: 5px 30px;
+    transition: .4s;
+}
+
+.field{
+    margin-top: 15px;
+    width: 100%;
+}
+
+.icon{
+    width: 30px;
+    cursor: pointer;
+}
+
+
+.field{
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    border-radius: 16px;
+}
+
+input, textarea, select, option{
+    display: block;
+    padding: 5px 5px 5px 55px;
+    outline: none;
+    width: 100%;
+    border-radius: 25px;
+    border: 0;
+    background-color: rgb(232, 240, 254);
+    transition: .5s;
+}
+
+.focus-input{
+    display: block;
+    position: absolute;
+    border-radius: 25px;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0;
+    color: var(--accent-color);
+}
+
+input:focus +.focus-input,
+textarea:focus+.focus-input{
+    animation: neon-anim .5s ease-in-out forwards;
+}
+
+input:focus+.focus-input+.symbol-input{
+    color: var(--accent-color);
+    transition: transform .5s;
+    transform: translateX(-5px);
+}
+
+input+.focus-input+.symbol-input{
+    transition: transform .5s;
+}
+
+input:focus{
+    transition: .5s;
+}
+
+@keyframes neon-anim {
+    to {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 70px 25px;
+        opacity: 0;
+    }
+}

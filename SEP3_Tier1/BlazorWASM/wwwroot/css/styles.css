@@ -1,0 +1,30 @@
+﻿*{
+    --bg-primary-color: #FEFBEC;
+    --primary-color: #B0DD47;
+    --text-primary-color: #090702;
+    --secondary-color: #F1E7B7;
+    --accent-color-raw: 73, 10, 209;
+    --accent-color: #490ad1;
+}
+
+.card{
+    position: relative;
+    margin: auto;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 16px;
+    border-color: lightgray;
+    background-color: white;
+}
+
+main{
+    background-color: var(--bg-primary-color)!important;
+}
+
+
+.error-label{
+    color: red;
+    display: block;
+}
+
+

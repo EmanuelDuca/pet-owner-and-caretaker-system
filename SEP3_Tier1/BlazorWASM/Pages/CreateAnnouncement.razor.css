@@ -1,0 +1,29 @@
+﻿.card{
+    --inputs-width: 60%;
+}
+
+.card{
+    margin-top: 50px;
+    /*width: 30%;*/
+    padding-inline: 2rem;
+    text-align: center;
+}
+
+
+.field{
+    display: flex !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-top: 1em !important;
+}
+
+.input, textarea{
+    width: 60% !important;
+}
+
+/*.field input:focus, .field textarea:focus{*/
+/*    border: var(--rz-input-focus-border);*/
+/*    box-shadow: var(--rz-input-focus-shadow);*/
+/*    transition: var(--rz-input-transition);*/
+/*}*/

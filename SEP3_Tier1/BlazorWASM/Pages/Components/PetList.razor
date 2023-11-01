@@ -1,0 +1,49 @@
+﻿@using Domain.Models
+
+
+<RadzenDropDown @bind-Value=@Value TValue="Pet" Placeholder="@(Pets.Any()? $"Choose" : "Empty")" Data="@Pets" TextProperty="PetName" Change="() => Console.WriteLine(Value.PetName)"/>
+
+
+@code {
+    public IEnumerable<Pet> Pets { get; set; }
+    // [Inject]
+    // public IPetService PetService { get; set; }
+    
+    [Parameter]
+    public string OwnerEmail{ get; set; }
+    
+    public Pet Value { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine(OwnerEmail);
+        Pets = new List<Pet>
+        {
+            new()
+            {
+                Id = 1,
+                IsVaccinated = true,
+                PetName = "Cherry",
+                PetType = "Dog",
+                Description = "Finwaropigrg"
+            },
+            new()
+            {
+                Id = 1,
+                IsVaccinated = true,
+                PetName = "X",
+                PetType = "Car",
+                Description = "Fat cat"
+            },
+            new()
+            {
+                Id = 1,
+                IsVaccinated = true,
+                PetName = "Pollo",
+                PetType = "Chicken",
+                Description = "It's Hugo"
+            }
+        };
+    // Pets = await PetService.GetPetsByOwnerEmailAsync(OwnerEmail);
+    }
+}

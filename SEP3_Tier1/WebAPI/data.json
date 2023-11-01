@@ -1,0 +1,130 @@
+{
+  "Users": [
+    {
+      "Name": "Dummy",
+      "Username": null,
+      "Age": null,
+      "Email": "dummy1@gmail.com",
+      "PhoneNumber": null,
+      "Password": "dummypassword",
+      "Type": "PetOwner"
+    },
+    {
+      "Name": "Ion",
+      "Username": "ionVasile",
+      "Age": null,
+      "Email": "ionv@gmail.com",
+      "PhoneNumber": null,
+      "Password": "1111",
+      "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "Michael",
+      "Age": null,
+      "Email": "dlinie.volocy@gmail.com",
+      "PhoneNumber": null,
+      "Password": "hzhzhzhzhzhzhzhz",
+      "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "Pollo",
+      "Age": null,
+      "Email": "someemail@gmail.com",
+      "PhoneNumber": null,
+      "Password": "oaeirgh8aeshg",
+      "Type": "CareTaker"
+    },
+    {
+      "Name": null,
+      "Username": "emanuel",
+      "Age": null,
+      "Email": "emanuel@gmail.com",
+      "PhoneNumber": null,
+      "Password": "1111",
+      "Type": "PetOwner"
+    }
+  ],
+  "Announcements": [
+    {
+      "Id": 1,
+      "petOwner": null,
+      "StartDate": "2023-10-25T11:49:18.892Z",
+      "EndDate": "2023-10-25T11:49:18.892Z",
+      "PostalCode": "8700",
+      "ServiceDescription": "sdtpghjeoighsirhbg",
+      "CreationDateTime": "0001-01-01T00:00:00"
+    },
+    {
+      "Id": 2,
+      "petOwner": null,
+      "StartDate": "2023-10-25T00:00:00+02:00",
+      "EndDate": "2023-10-28T00:00:00+02:00",
+      "PostalCode": null,
+      "ServiceDescription": "serviceDescription",
+      "CreationDateTime": "0001-01-01T00:00:00"
+    },
+    {
+      "Id": 3,
+      "petOwner": null,
+      "StartDate": "2023-10-25T00:00:00+02:00",
+      "EndDate": "2023-10-28T00:00:00+02:00",
+      "PostalCode": null,
+      "ServiceDescription": "serviceDescription",
+      "CreationDateTime": "0001-01-01T00:00:00"
+    },
+    {
+      "Id": 4,
+      "petOwner": null,
+      "StartDate": "2023-10-25T00:00:00+02:00",
+      "EndDate": "2023-10-28T00:00:00+02:00",
+      "PostalCode": null,
+      "ServiceDescription": "serviceDescription",
+      "CreationDateTime": "0001-01-01T00:00:00"
+    },
+    {
+      "Id": 5,
+      "petOwner": null,
+      "StartDate": "2023-10-25T00:00:00+02:00",
+      "EndDate": "2023-10-28T00:00:00+02:00",
+      "PostalCode": null,
+      "ServiceDescription": "serviceDescription",
+      "CreationDateTime": "0001-01-01T00:00:00"
+    },
+    {
+      "Id": 6,
+      "petOwner": {
+        "Name": null,
+        "Username": "Michael",
+        "Age": null,
+        "Email": "dlinie.volocy@gmail.com",
+        "PhoneNumber": null,
+        "Password": "hzhzhzhzhzhzhzhz",
+        "Type": "PetOwner"
+      },
+      "StartDate": "2023-10-26T00:00:00+02:00",
+      "EndDate": "2023-10-29T00:00:00+02:00",
+      "PostalCode": "9842",
+      "ServiceDescription": "sfghsddznhxjtt",
+      "CreationDateTime": "0001-01-01T00:00:00"
+    },
+    {
+      "Id": 7,
+      "petOwner": {
+        "Name": null,
+        "Username": "emanuel",
+        "Age": null,
+        "Email": "emanuel@gmail.com",
+        "PhoneNumber": null,
+        "Password": "1111",
+        "Type": "PetOwner"
+      },
+      "StartDate": "2023-10-30T00:00:00+01:00",
+      "EndDate": "2023-11-02T00:00:00+01:00",
+      "PostalCode": "8700",
+      "ServiceDescription": "some description",
+      "CreationDateTime": "0001-01-01T00:00:00"
+    }
+  ]
+}

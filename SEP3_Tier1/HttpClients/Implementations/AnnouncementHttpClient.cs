@@ -8,7 +8,7 @@ namespace HttpClients.Implementations;
 public class AnnouncementHttpClient : IAnnouncementService
 {
     private readonly HttpClient client;
-    private readonly string START_URI = "/announcements/";
+    private readonly string START_URI = "/announcements";
 
     public AnnouncementHttpClient(HttpClient client)
     {

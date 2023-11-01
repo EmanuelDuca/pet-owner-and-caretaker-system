@@ -1,0 +1,5 @@
+POST http://localhost:5123/users/register
+Content-Type: application/json
+{"userName": "ionV", "email": "ion@gmai.com","password": "1111","type": "PetOwner"}
+
+###

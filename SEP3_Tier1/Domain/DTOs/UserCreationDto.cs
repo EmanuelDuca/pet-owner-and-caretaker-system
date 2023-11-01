@@ -2,14 +2,14 @@
 
 public class UserCreationDto
 {
-    public string UserName { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
-    public string Type { get; set; }
+    public string UserName { get; }
+    public string Email { get; }
+    public string Password { get; }
+    public string Type { get; }
 
-    public UserCreationDto(string name, string email,string password , string type)
+    public UserCreationDto(string email, string userName, string password, string type)
     {
-        UserName = name;
+        UserName = userName;
         Email = email;
         Password = password;
         Type = type;

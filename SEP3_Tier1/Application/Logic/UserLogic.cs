@@ -14,25 +14,51 @@ public class UserLogic : IUserLogic
         this.userDao = userDao;
     }
 
-    public async Task<User> CreateAsync(UserCreationDto dto)
+    public async Task<User> RegisterAsync(UserCreationDto dto)
     {
-        User? existing = await userDao.GetByEmail(dto.Email);
+        /*
+        User? existing = await userDao.GetByEmailAsync(dto.Email);
         if (existing != null) {
             throw new Exception("Email already taken");
         }
-
+        */
+        
         User toCreate;
         switch (dto.Type)
         {
             case "PetOwner":
-                toCreate = new PetOwner(dto.UserName, dto.Email, dto.Password, dto.Type);
+                toCreate = new PetOwner()
+                {
+                    Username = dto.UserName,
+                    Email = dto.Email,
+                    Password = dto.Password,
+                };
+                break;
+            case "CareTaker":
+                toCreate = new CareTaker()
+                {
+                    Username = dto.UserName,
+                    Email = dto.Email,
+                    Password = dto.Password,
+                };
                 break;
             default:
-                toCreate = new CareTaker(dto.UserName, dto.Email, dto.Password, dto.Type);
-                break;
+                throw new Exception("Wrong user type");
         }
         
-        User created = await userDao.Create(toCreate);
+        User created = await userDao.CreateAsync(toCreate);
         return created;
+    }
+
+    public async Task<User> LoginAsync(UserLoginDto loginDto)
+    {
+        User? existing = await userDao.GetByEmailAsync(loginDto.Email);
+        if (existing is null)
+            throw new Exception("Wrong email, user not found.");
+
+        if (!loginDto.Password.Equals(existing.Password))
+            throw new Exception("Wrong password or email.");
+
+        return existing;
     }
 }

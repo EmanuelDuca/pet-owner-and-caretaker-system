@@ -1,38 +1,13 @@
-﻿namespace Domain.Models;
+﻿using System.Text.Json.Serialization;
 
-public abstract class User
+namespace Domain.Models;
+
+public class User
 {
-    public string Name { get; set; }
+    public string? Name { get; set; }
+    public string Username { get; init; }
     public int? Age { get; set; }
-    public string Email { get; set; }
-    public int? PhoneNumber { get; set; }
-    public string Password { get; set; }
-    public string Type { get; }
-
-    public User(string name, string email, string password)
-    {
-        Name = name;
-        Email = email;
-        Password = password;
-    }
-    
-    public User(string name, string email, string password, string type)
-    {
-        Name = name;
-        Email = email;
-        Password = password;
-        Type = type;
-    }
-
-    public User(string name, string email, string password, string type, int age, int phonenumber)
-    {
-        Name = name;
-        Email = email;
-        Password = password;
-        Type = type;
-        Age = age;
-        PhoneNumber = phonenumber;
-    }
-
-    public abstract string toString();
+    public string Email { get; init; }
+    public string? PhoneNumber { get; set; }
+    public string Password { get; init; }
 }

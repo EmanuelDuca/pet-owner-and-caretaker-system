@@ -4,19 +4,14 @@ namespace Domain.DTOs;
 
 public class AnnouncementCreationDto
 {
-    public PetOwner petOwner { get; }
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
-    public string? PostalCode { get; set; }
-    public string ServiceDescription { get; set; }
-
+    public int Id { get; set; }
+    public string OwnerEmail { get; init; }
+    public DateTime StartDate { get; init; }
+    public DateTime EndDate { get; init; }
+    public string PostalCode { get; init; }
+    public string ServiceDescription { get; init; }
+    public DateTime CreationDateTime { get; init; }
+    public Pet Pet { get; init; }
     
-    public AnnouncementCreationDto(PetOwner petOwner, DateTime startDate,
-        DateTime endDate, string serviceDescription)
-    {
-        this.petOwner = petOwner;
-        StartDate = startDate;
-        EndDate = endDate;
-        ServiceDescription = serviceDescription;
-    }
+    
 }

@@ -1,0 +1,227 @@
+@inject IAnnouncementService announcementService
+@inject IUserAuthService UserAuthService
+
+@page "/CreateAnnouncement"
+@using HttpClients.ClientInterfaces
+@using Domain.DTOs
+@using Domain.Models
+@using BlazorWASM.Validators
+@using BlazorWASM.PreloadData
+@* @attribute [Authorize] *@
+
+
+<div class="content container-fluid p-0 col-xxl-5 col-lg-6 col-md-10 col-sm-12">
+    <RadzenTemplateForm TItem="AnnouncementInputValidators"
+                        Data="@announcementInputs" Submit="TryCreateAnnouncement">
+        <div class="card w-100">
+            <h5 class="fw-bold mb-4">Your announcement</h5>
+            <fieldset class="field">
+                <label>Start date: </label>
+                <RadzenDatePicker TValue="DateTime"
+                                  Style="width: var(--inputs-width)"
+                                  Name="StartDate"
+                                  Value="@announcementInputs.StartDate" DateFormat="dd/MM/yyyy"
+                                  Change="@(args => { if (args.HasValue) { announcementInputs.StartDate = args.Value; } })"/>
+            </fieldset>
+            <RadzenRequiredValidator Style="@ValidatorStyles" Component="StartDate" Popup="true"/>
+
+            <fieldset class="field">
+                <label>End date: </label>
+                <RadzenDatePicker TValue="DateTime"
+                                  Name="EndDate"
+                                  Style="width: var(--inputs-width)"
+                                  Value="@announcementInputs.EndDate" DateFormat="dd/MM/yyyy"
+                                  Change="@(args => { if (args.HasValue) { announcementInputs.EndDate = args.Value; } })"/>
+            </fieldset>
+            <RadzenRequiredValidator Style="@ValidatorStyles" Component="EndDate" Popup="true"/>
+
+            <fieldset class="field">
+                <label>Postal code: </label>
+                <RadzenNumeric Min="1000" Name="PostalCode" Max="9999"
+                               @bind-Value="announcementInputs.Postalcode"
+                               Style="width: var(--inputs-width)"/>
+            </fieldset>
+            <RadzenRequiredValidator Style="@ValidatorStyles" Component="PostalCode" Popup="true"/>
+
+            <fieldset class="field">
+                <label>Description: </label><br/>
+                <RadzenTextArea Name="Description" @bind-Value="announcementInputs.Description"
+                                Style="width: var(--inputs-width)"/>
+            </fieldset>
+            <RadzenRequiredValidator Style="@ValidatorStyles" Component="Description" Popup="true"/>
+
+
+            <b class="mt-4">Pet:</b>
+
+            <RadzenSelectBar class="rounded-pill w-100 m-auto d-block" @bind-Value="isNewPet"
+                             Size="ButtonSize.ExtraSmall" TValue="bool"
+                             Style=".valid.modified:not([type=checkbox]) {
+                                        outline: none;
+                                    }">
+                <Items>
+                    <RadzenSelectBarItem Text="Create new pet" Value="true"/>
+                    <RadzenSelectBarItem Text="Choose your pet" Value="false"/>
+                </Items>
+            </RadzenSelectBar>
+
+            <div class="pet-part  mt-3">
+                @if (!isNewPet)
+                {
+                    <PetList OwnerEmail="@ownerEmail" @ref="PetList"/>
+                }
+                else
+                {
+                    <fieldset class="field mt-0">
+                        <label>Type:</label>
+                        <RadzenDropDown Data="@PetTypes.PetSpecies" @bind-Value="announcementInputs.PetType"
+                                        Style="width: var(--inputs-width)"
+                                        Name="PetType"/>
+                    </fieldset>
+                    <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetType" Popup="true"/>
+
+                    <fieldset class="field">
+                        <label>Name:</label>
+                        <RadzenTextBox @bind-Value="announcementInputs.PetName"
+                                       Style="width: var(--inputs-width)"
+                                       Name="PetName"/>
+
+                    </fieldset>
+                    <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetName" Popup="true"/>
+
+                    <fieldset class="field">
+                        <label>Description:</label>
+                        <RadzenTextArea @bind-Value="announcementInputs.PetDescription"
+                                        Style="width: var(--inputs-width)"
+                                        Name="PetDescription"/>
+                    </fieldset>
+
+                    <fieldset class="field">
+                        <label>Weight:</label>
+                        <RadzenNumeric @bind-Value="announcementInputs.PetWeight"
+                                       Style="width: var(--inputs-width)"
+                                       Name="PetWeight"/>
+                    </fieldset>
+                }
+            </div>
+
+            <RadzenButton ButtonType="ButtonType.Submit" Style="margin-top: 2rem">Create announcement</RadzenButton>
+        </div>
+    </RadzenTemplateForm>
+</div>
+
+
+@code {
+    // [CascadingParameter]
+    // public Task<AuthenticationState> AuthState { get; set; } = null!;
+
+    private AnnouncementInputValidators announcementInputs;
+    private string ownerEmail;
+
+    private PetList PetList;
+
+    private string ValidatorStyles = "position: relative; width: 20%; margin-left: auto; display: block;";
+
+    private bool isNewPet;
+
+    // private IEnumerable<Claim>? userClaims;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+    // AuthenticationState authState = await AuthState;
+    // ClaimsPrincipal user = authState.User;
+    // userClaims = user.Claims;
+    // ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+    // userPets = ..
+
+        announcementInputs = new();
+        ownerEmail = "someemail@gmail.com";
+    //TODO add proper validation, link: https://www.pragimtech.com/blog/blazor/blazor-form-validation/
+
+        announcementInputs.StartDate = DateTime.Today;
+        announcementInputs.EndDate = DateTime.Today.AddDays(3);
+    }
+
+
+    private async Task TryCreateAnnouncement()
+    {
+        try
+        {
+    // HandleEmptyFields();
+
+            Pet pet;
+
+            if (isNewPet)
+                pet = new Pet
+                {
+                    PetName = announcementInputs.PetName,
+                    PetType = announcementInputs.PetType,
+                    Weight = announcementInputs.PetWeight,
+                    Description = announcementInputs.PetDescription
+                };
+            else
+            {
+                pet = PetList.Value;
+            }
+
+            AnnouncementCreationDto creationDto = new AnnouncementCreationDto
+            {
+                OwnerEmail = ownerEmail,
+                StartDate = announcementInputs.StartDate,
+                EndDate = announcementInputs.EndDate,
+                ServiceDescription = announcementInputs.Description,
+                PostalCode = announcementInputs.Postalcode,
+                Pet = pet
+            };
+            await announcementService.CreateAsync(creationDto);
+
+            notificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Success,
+                Duration = 6000,
+                Detail = "Announcement is created"
+            });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            notificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Duration = 6000,
+                Detail = e.Message
+            });
+        }
+    }
+
+    // private void HandleEmptyFields()
+    // {
+    //     string msg = "";
+    //     int emptyFieldsCounter = 0;
+    //
+    //     if (announcementInputs.StartDate == null)
+    //     {
+    //         msg += string.IsNullOrEmpty(msg) ? "Start date is not chosen" : ", start date is not chosen";
+    //     }
+    //     
+    //     if (announcementInputs.EndDate == null)
+    //     {
+    //         msg += string.IsNullOrEmpty(msg) ? "End date is not chosen" : ", end date is not chosen";
+    //     }
+    //
+    //     if (string.IsNullOrEmpty(announcementInputs.Description))
+    //     {
+    //         msg += string.IsNullOrEmpty(msg) ? "Description" : ", description";
+    //         emptyFieldsCounter++;
+    //     }
+    //
+    //     if (string.IsNullOrEmpty(announcementInputs.Postalcode))
+    //     {
+    //         msg += string.IsNullOrEmpty(msg) ? "Postal code" : ", postal code";
+    //         emptyFieldsCounter++;
+    //     }
+    //
+    //     if (!string.IsNullOrEmpty(msg))
+    //         throw new Exception(emptyFieldsCounter > 1 ? $"{msg} fields are empty." : $"{msg} field is empty.");
+    // }
+}
