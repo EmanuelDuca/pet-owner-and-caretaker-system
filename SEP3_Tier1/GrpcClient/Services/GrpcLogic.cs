@@ -68,9 +68,27 @@ public class GrpcLogic : IAnnouncementDao
         return announcement;
     }
 
+    public Task<IEnumerable<AnnouncementCreationDto>> GetAsync(SearchAnnouncementDto dto)
+    {
+        var request = new SearchField
+        {
+            StartTime = dto.StartTime,
+            EndTime = dto.EndTime,
+            Description = dto.Description,
+            PostalCode = dto.PostalCode
+        };
+        Announcements list = announcementServiceClient.FindAnnouncements(request);
+        throw new NotImplementedException();
+    }
+
     private void PrintAnnouncement(Announcement dto)
     {
         Console.WriteLine($"Email: {dto.PetOwnerEmail} \ndateOfCreation: {dto.DateOfCreation}\nPostalCode: {dto.PostalCode}");
+    }
+
+    private IEnumerable<AnnouncementCreationDto> ConvertAnnouncementList(Announcements announcements)
+    {
+        throw new NotImplementedException();
     }
 }
     

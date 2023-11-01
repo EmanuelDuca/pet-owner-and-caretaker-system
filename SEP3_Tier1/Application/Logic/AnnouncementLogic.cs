@@ -52,6 +52,11 @@ public class AnnouncementLogic : IAnnouncementLogic
         return announcement;
     }
 
+    public Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto searchAnnouncementDto)
+    {
+        throw new NotImplementedException();
+    }
+
     private void ValidateData(DateTime startDate, DateTime endDate, string? postalCode)
     {
         if (startDate < DateTime.Today || startDate > endDate || endDate > startDate + TimeSpan.FromDays(30)) 

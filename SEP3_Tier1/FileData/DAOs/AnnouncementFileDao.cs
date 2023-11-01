@@ -18,6 +18,11 @@ public class AnnouncementFileDao : IAnnouncementDao
         throw new NotImplementedException();
     }
 
+    public Task<IEnumerable<AnnouncementCreationDto>> GetAsync(SearchAnnouncementDto dto)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<Announcement> CreateAsync(Announcement announcement)
     {
         int id = 1;

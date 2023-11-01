@@ -13,17 +13,9 @@ service UserService{
 
 service AnnouncementService{
   rpc CreateAnnouncement(Announcement) returns (Announcement); // maybe createAnnouncement message would be better
-  //rpc FindAnnouncements(SearchField) returns (Announcements);
+  rpc FindAnnouncements(SearchField) returns (Announcements);
   //rpc UpdateAnnouncement(Announcement) returns (Void);  // not sure about void
   //rpc DeleteAnnouncement(Announcement) returns (Void);  // not sure about void
-}
-
-message PetOwner{
-  string username = 1;
-  string password = 2;
-  int32 age = 3;
-  string phone = 4;
-  string email = 5;
 }
 
 message User{
@@ -69,7 +61,10 @@ message TimeInterval{
 }
 
 message SearchField{
-  string search = 1;
+  string startTime = 1;
+  string endTime = 2;
+  string description = 3;
+  string postalCode =4;
 }
 
 message Void{}
