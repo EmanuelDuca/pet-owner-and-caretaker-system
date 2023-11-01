@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "origin.protobuf";
+
+service PetOwnerService{
+  rpc CreatePetOwner(PetOwner) returns (PetOwner);
+  rpc LoginPetOwner(LoginUser) returns (PetOwner);
+  rpc FindPetOwner(SearchField) returns (PetOwner);
+}
+
+service AnnouncementService{
+  rpc CreateAnnouncement(Announcement) returns (Announcement);
+  rpc FindAnnouncements(SearchField) returns (Announcements);
+  rpc UpdateAnnouncement(Announcement) returns (Void);
+  rpc DeleteAnnouncement(Announcement) returns (Void);
+}
+
+message PetOwner{
+  string username = 1;
+  string password = 2;
+  int32 age = 3;
+  string phone = 4;
+  string email = 5;
+}
+
+message LoginUser{
+  string email = 1; // username->email
+  string password = 2;
+}
+
+message Announcement{
+  string petOwnerEmail = 1;
+  string description = 2;
+  TimeInterval timeInterval = 3;
+  Pet pet = 4;
+  string postalCode = 5; // address->string postal code
+  string dateOfCreation = 6;
+  int32 Id = 7;
+}
+
+message Announcements{
+  repeated Announcement announcements = 1;
+}
+
+message Pet{
+  string petName = 1;
+  string petType = 2;  // dog, cat ....
+  int32 weight = 3;
+  bool isVaccinated = 4;
+  string dietDescription =5;
+}
+
+message TimeInterval{
+   string startDate = 1;
+   string finishDate = 2;
+}
+
+message SearchField{
+  string search = 1;
+}
+
+message Void{}
+
