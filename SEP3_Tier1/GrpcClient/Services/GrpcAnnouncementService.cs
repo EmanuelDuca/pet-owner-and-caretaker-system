@@ -15,9 +15,9 @@ using GrpcClient;
 public class GrpcAnnouncementService : IAnnouncementDao
 {
     private AnnouncementService.AnnouncementServiceClient announcementServiceClient;
-    private GrpcUserService userService;
+    private IUserDao userService;
 
-    public GrpcAnnouncementService(AnnouncementService.AnnouncementServiceClient announcementServiceClient, GrpcUserService userService)
+    public GrpcAnnouncementService(AnnouncementService.AnnouncementServiceClient announcementServiceClient, IUserDao userService)
     {
         this.announcementServiceClient = announcementServiceClient;
         this.userService = userService;

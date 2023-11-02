@@ -79,8 +79,8 @@ public class UserController : ControllerBase
         }
     }
     
-    [HttpPost, Route("login")]
-    public async Task<ActionResult<User>> Login(UserLoginDto dto)
+    [HttpPost("login")]
+    public async Task<ActionResult<User>> Login([FromBody] UserLoginDto dto)
     {
         try
         {

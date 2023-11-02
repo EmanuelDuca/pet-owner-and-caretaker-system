@@ -13,7 +13,7 @@
             <input type="text" @bind="username" placeholder="Username"/>
             <span class="focus-input"></span>
             <span class="symbol-input">
-                <i class="fa fa-key" aria-hidden="true"></i>
+                <i class="fa fa-user" aria-hidden="true"></i>
             </span>
         </div>
     }
@@ -72,13 +72,12 @@
     private string? username;
     private string? email;
     private string? password;
-    private int userType;
+    private int userType = 1;
     private bool isLoginView = true;
 
 
     private async Task LoginAsync()
     {
-        Console.WriteLine("log");
         try
         {
             HandleEmptyFields();

@@ -12,7 +12,7 @@ public class JwtUserAuthAuthHttpService : IUserAuthService
 {
     private readonly HttpClient client;
     public static string? Jwt { get; private set; }
-    private readonly string START_URI = "/users";
+    private readonly string START_URI = "users";
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
 
     public JwtUserAuthAuthHttpService(HttpClient client)

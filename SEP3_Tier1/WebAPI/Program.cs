@@ -72,6 +72,7 @@ AuthorizationPolicies.AddPolicies(builder.Services);
 
 var app = builder.Build();
 
+app.UseAuthorization();
 app.UseAuthentication();
 app.UseHttpsRedirection();
 
@@ -93,7 +94,6 @@ app.UseCors(x => x
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 
 app.MapControllers();
 

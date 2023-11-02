@@ -35,8 +35,6 @@ public class GrpcUserService : IUserDao
             Username = user.Username,
             Password = user.Password,
             Email = user.Email,
-            Age = user.Age.HasValue ? user.Age.Value : 200,
-            Phone = user.PhoneNumber,
             Type = type
         };
         
@@ -88,10 +86,10 @@ public class GrpcUserService : IUserDao
     public async Task<User?> GetByEmailAsync(string email)
     {
         SearchUserDto searchDto = new SearchUserDto(email);
-        string query = await HttpClientHelper.ConstructQuery(searchDto);
+        // string query = await HttpClientHelper.ConstructQuery(searchDto);
         UserProto receivedUser = await userServiceClient.FindUserAsync(new SearchFieldProto
         {
-            Query = query
+            Query = email
         });
 
         return await ConvertUserFromGrps(receivedUser);
