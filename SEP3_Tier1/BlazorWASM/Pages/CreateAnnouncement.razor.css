@@ -3,11 +3,15 @@
 }
 
 .card{
-    margin-top: 50px;
-    /*width: 30%;*/
     padding-inline: 2rem;
     text-align: center;
+    backdrop-filter: blur(14px);
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 0;
+    backface-visibility: hidden !important;
 }
+
+
 
 
 .field{

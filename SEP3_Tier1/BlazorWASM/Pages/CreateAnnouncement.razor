@@ -1,5 +1,6 @@
 @inject IAnnouncementService announcementService
 @inject IUserAuthService UserAuthService
+@inject IPexelsService pexelsService
 
 @page "/CreateAnnouncement"
 @using HttpClients.ClientInterfaces
@@ -8,10 +9,22 @@
 @using BlazorWASM.Validators
 @using BlazorWASM.PreloadData
 @using System.Security.Claims
+@using PexelsDotNetSDK.Api
+@using PexelsDotNetSDK.Models
 @attribute [Authorize]
 
+<style>
+    .content{
+        background: url(@backgroundImageUrl);
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
+</style>
 
-<div class="content container-fluid p-0 col-xxl-5 col-lg-6 col-md-10 col-sm-12">
+<div class="container-fluid p-0 col-xxl-5 col-lg-6 col-md-10 col-sm-12">
     <RadzenTemplateForm TItem="AnnouncementInputValidators"
                         Data="@announcementInputs" Submit="TryCreateAnnouncement">
         <div class="card w-100">
@@ -58,7 +71,7 @@
                              Size="ButtonSize.ExtraSmall" TValue="bool"
                              Style=".valid.modified:not([type=checkbox]) {
                                         outline: none;
-                                    }">
+                                    } ">
                 <Items>
                     <RadzenSelectBarItem Text="Create new pet" Value="true"/>
                     <RadzenSelectBarItem Text="Choose your pet" Value="false"/>
@@ -125,17 +138,22 @@
     private bool isNewPet;
 
     private IEnumerable<Claim>? userClaims;
+    private string backgroundImageUrl;
 
+   
 
     protected override async Task OnInitializedAsync()
     {
-    AuthenticationState authState = await AuthState;
-    ClaimsPrincipal user = authState.User;
-    userClaims = user.Claims;
-    ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+        announcementInputs = new();
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        userClaims = user.Claims;
+        ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+
+        backgroundImageUrl = await pexelsService.SearchPetImage();
+        Console.WriteLine(backgroundImageUrl);
     // userPets = ..
 
-        announcementInputs = new();
 
         announcementInputs.StartDate = DateTime.Today;
         announcementInputs.EndDate = DateTime.Today.AddDays(3);
@@ -192,35 +210,4 @@
             });
         }
     }
-
-    // private void HandleEmptyFields()
-    // {
-    //     string msg = "";
-    //     int emptyFieldsCounter = 0;
-    //
-    //     if (announcementInputs.StartDate == null)
-    //     {
-    //         msg += string.IsNullOrEmpty(msg) ? "Start date is not chosen" : ", start date is not chosen";
-    //     }
-    //     
-    //     if (announcementInputs.EndDate == null)
-    //     {
-    //         msg += string.IsNullOrEmpty(msg) ? "End date is not chosen" : ", end date is not chosen";
-    //     }
-    //
-    //     if (string.IsNullOrEmpty(announcementInputs.Description))
-    //     {
-    //         msg += string.IsNullOrEmpty(msg) ? "Description" : ", description";
-    //         emptyFieldsCounter++;
-    //     }
-    //
-    //     if (string.IsNullOrEmpty(announcementInputs.Postalcode))
-    //     {
-    //         msg += string.IsNullOrEmpty(msg) ? "Postal code" : ", postal code";
-    //         emptyFieldsCounter++;
-    //     }
-    //
-    //     if (!string.IsNullOrEmpty(msg))
-    //         throw new Exception(emptyFieldsCounter > 1 ? $"{msg} fields are empty." : $"{msg} field is empty.");
-    // }
 }
