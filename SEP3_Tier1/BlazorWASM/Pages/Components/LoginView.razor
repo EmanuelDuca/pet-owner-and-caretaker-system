@@ -2,8 +2,20 @@
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs
 @using Radzen.Blazor
+@using Blazored.LocalStorage
 @inject IUserAuthService authService
 @inject NotificationService notificationService
+@inject IPexelsService pexelsService
+@inject ILocalStorageService localStorageService
+
+
+
+<style>
+    article::before{
+        background-size: cover;
+        background-image: url("@backgroundImageUrl") !important;
+    }
+</style>
 
 <div class="card d-flex justify-content-center align-items-center text-center">
     @if (!isLoginView)
@@ -74,6 +86,17 @@
     private string? password;
     private int userType = 1;
     private bool isLoginView = true;
+    
+    private bool backgroundIsLoaded;
+    private string backgroundImageUrl;
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        backgroundImageUrl = await pexelsService.SearchPetImage();
+        await localStorageService.SetItemAsStringAsync("backgroundImage", backgroundImageUrl);
+        Console.WriteLine(backgroundImageUrl);
+    }
 
 
     private async Task LoginAsync()

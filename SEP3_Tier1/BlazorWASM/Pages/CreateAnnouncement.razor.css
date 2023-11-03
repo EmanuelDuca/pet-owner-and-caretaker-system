@@ -11,7 +11,12 @@
     backface-visibility: hidden !important;
 }
 
-
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
 
 
 .field{
@@ -25,9 +30,3 @@
 .input, textarea{
     width: 60% !important;
 }
-
-/*.field input:focus, .field textarea:focus{*/
-/*    border: var(--rz-input-focus-border);*/
-/*    box-shadow: var(--rz-input-focus-shadow);*/
-/*    transition: var(--rz-input-transition);*/
-/*}*/
