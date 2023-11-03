@@ -15,7 +15,9 @@
     border-radius: 16px;
     border-color: lightgray;
     background-color: white;
+    z-index: 6;
 }
+
 
 main{
     background-color: var(--bg-primary-color)!important;

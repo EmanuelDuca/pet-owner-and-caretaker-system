@@ -29,6 +29,18 @@ a, .btn-link {
     height: 100%;
 }
 
+article::before {
+    content: "";
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 5;
+    opacity: 0;
+}
+
 
 .validation-message {
     color: red;

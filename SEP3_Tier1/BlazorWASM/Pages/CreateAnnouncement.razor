@@ -1,6 +1,7 @@
 @inject IAnnouncementService announcementService
 @inject IUserAuthService UserAuthService
-@inject IPexelsService pexelsService
+@inject IJSRuntime JsRuntime
+@inject ILocalStorageService localStorageService
 
 @page "/CreateAnnouncement"
 @using HttpClients.ClientInterfaces
@@ -9,119 +10,122 @@
 @using BlazorWASM.Validators
 @using BlazorWASM.PreloadData
 @using System.Security.Claims
-@using PexelsDotNetSDK.Api
-@using PexelsDotNetSDK.Models
+@using Blazored.LocalStorage
 @attribute [Authorize]
 
-<style>
-    .content{
-        background: url(@backgroundImageUrl);
+ <style>
+        article{
         background-size: cover;
+        background-image: url("@backgroundImageUrl") !important;
+        opacity: 1;
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 0;
     }
-</style>
-
-<div class="container-fluid p-0 col-xxl-5 col-lg-6 col-md-10 col-sm-12">
-    <RadzenTemplateForm TItem="AnnouncementInputValidators"
-                        Data="@announcementInputs" Submit="TryCreateAnnouncement">
-        <div class="card w-100">
-            <h5 class="fw-bold mb-4">Your announcement</h5>
-            <fieldset class="field">
-                <label>Start date: </label>
-                <RadzenDatePicker TValue="DateTime"
-                                  Style="width: var(--inputs-width)"
-                                  Name="StartDate"
-                                  Value="@announcementInputs.StartDate" DateFormat="dd/MM/yyyy"
-                                  Change="@(args => { if (args.HasValue) { announcementInputs.StartDate = args.Value; } })"/>
-            </fieldset>
-            <RadzenRequiredValidator Style="@ValidatorStyles" Component="StartDate" Popup="true"/>
-
-            <fieldset class="field">
-                <label>End date: </label>
-                <RadzenDatePicker TValue="DateTime"
-                                  Name="EndDate"
-                                  Style="width: var(--inputs-width)"
-                                  Value="@announcementInputs.EndDate" DateFormat="dd/MM/yyyy"
-                                  Change="@(args => { if (args.HasValue) { announcementInputs.EndDate = args.Value; } })"/>
-            </fieldset>
-            <RadzenRequiredValidator Style="@ValidatorStyles" Component="EndDate" Popup="true"/>
-
-            <fieldset class="field">
-                <label>Postal code: </label>
-                <RadzenNumeric Min="1000" Name="PostalCode" Max="9999"
-                               @bind-Value="announcementInputs.Postalcode"
-                               Style="width: var(--inputs-width)"/>
-            </fieldset>
-            <RadzenRequiredValidator Style="@ValidatorStyles" Component="PostalCode" Popup="true"/>
-
-            <fieldset class="field">
-                <label>Description: </label><br/>
-                <RadzenTextArea Name="Description" @bind-Value="announcementInputs.Description"
-                                Style="width: var(--inputs-width)"/>
-            </fieldset>
-            <RadzenRequiredValidator Style="@ValidatorStyles" Component="Description" Popup="true"/>
+    </style>
 
 
-            <b class="mt-4">Pet:</b>
 
-            <RadzenSelectBar class="rounded-pill w-100 m-auto d-block" @bind-Value="isNewPet"
-                             Size="ButtonSize.ExtraSmall" TValue="bool"
-                             Style=".valid.modified:not([type=checkbox]) {
+   
+    <div class="container-fluid p-0 col-xxl-5 col-lg-6 col-md-10 col-sm-12">
+        <RadzenTemplateForm TItem="AnnouncementInputValidators"
+                            Data="@announcementInputs" Submit="TryCreateAnnouncement">
+            <div class="card w-100">
+                <h5 class="fw-bold mb-4">Your announcement</h5>
+                <fieldset class="field">
+                    <label>Start date: </label>
+                    <RadzenDatePicker TValue="DateTime"
+                                      Style="width: var(--inputs-width)"
+                                      Name="StartDate"
+                                      Value="@announcementInputs.StartDate" DateFormat="dd/MM/yyyy"
+                                      Change="@(args => { if (args.HasValue) { announcementInputs.StartDate = args.Value; } })"/>
+                </fieldset>
+                <RadzenRequiredValidator Style="@ValidatorStyles" Component="StartDate" Popup="true"/>
+
+                <fieldset class="field">
+                    <label>End date: </label>
+                    <RadzenDatePicker TValue="DateTime"
+                                      Name="EndDate"
+                                      Style="width: var(--inputs-width)"
+                                      Value="@announcementInputs.EndDate" DateFormat="dd/MM/yyyy"
+                                      Change="@(args => { if (args.HasValue) { announcementInputs.EndDate = args.Value; } })"/>
+                </fieldset>
+                <RadzenRequiredValidator Style="@ValidatorStyles" Component="EndDate" Popup="true"/>
+
+                <fieldset class="field">
+                    <label>Postal code: </label>
+                    <RadzenNumeric Min="1000" Name="PostalCode" Max="9999"
+                                   @bind-Value="announcementInputs.Postalcode"
+                                   Style="width: var(--inputs-width)"/>
+                </fieldset>
+                <RadzenRequiredValidator Style="@ValidatorStyles" Component="PostalCode" Popup="true"/>
+
+                <fieldset class="field">
+                    <label>Description: </label><br/>
+                    <RadzenTextArea Name="Description" @bind-Value="announcementInputs.Description"
+                                    Style="width: var(--inputs-width)"/>
+                </fieldset>
+                <RadzenRequiredValidator Style="@ValidatorStyles" Component="Description" Popup="true"/>
+
+
+                <b class="mt-4">Pet:</b>
+
+                <RadzenSelectBar class="rounded-pill w-100 m-auto d-block" @bind-Value="isNewPet"
+                                 Size="ButtonSize.ExtraSmall" TValue="bool"
+                                 Style=".valid.modified:not([type=checkbox]) {
                                         outline: none;
                                     } ">
-                <Items>
-                    <RadzenSelectBarItem Text="Create new pet" Value="true"/>
-                    <RadzenSelectBarItem Text="Choose your pet" Value="false"/>
-                </Items>
-            </RadzenSelectBar>
+                    <Items>
+                        <RadzenSelectBarItem Text="Create new pet" Value="true"/>
+                        <RadzenSelectBarItem Text="Choose your pet" Value="false"/>
+                    </Items>
+                </RadzenSelectBar>
 
-            <div class="pet-part  mt-3">
-                @if (!isNewPet)
-                {
-                    <PetDropDown OwnerEmail="@ownerEmail" @ref="PetList"/>
-                }
-                else
-                {
-                    <fieldset class="field mt-0">
-                        <label>Type:</label>
-                        <RadzenDropDown Data="@PetTypes.PetSpecies" @bind-Value="announcementInputs.PetType"
-                                        Style="width: var(--inputs-width)"
-                                        Name="PetType"/>
-                    </fieldset>
-                    <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetType" Popup="true"/>
+                <div class="pet-part  mt-3">
+                    @if (!isNewPet)
+                    {
+                        <PetDropDown OwnerEmail="@ownerEmail" @ref="PetList"/>
+                    }
+                    else
+                    {
+                        <fieldset class="field mt-0">
+                            <label>Type:</label>
+                            <RadzenDropDown Data="@PetTypes.PetSpecies" @bind-Value="announcementInputs.PetType"
+                                            Style="width: var(--inputs-width)"
+                                            Name="PetType"/>
+                        </fieldset>
+                        <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetType" Popup="true"/>
 
-                    <fieldset class="field">
-                        <label>Name:</label>
-                        <RadzenTextBox @bind-Value="announcementInputs.PetName"
-                                       Style="width: var(--inputs-width)"
-                                       Name="PetName"/>
+                        <fieldset class="field">
+                            <label>Name:</label>
+                            <RadzenTextBox @bind-Value="announcementInputs.PetName"
+                                           Style="width: var(--inputs-width)"
+                                           Name="PetName"/>
 
-                    </fieldset>
-                    <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetName" Popup="true"/>
+                        </fieldset>
+                        <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetName" Popup="true"/>
 
-                    <fieldset class="field">
-                        <label>Description:</label>
-                        <RadzenTextArea @bind-Value="announcementInputs.PetDescription"
-                                        Style="width: var(--inputs-width)"
-                                        Name="PetDescription"/>
-                    </fieldset>
+                        <fieldset class="field">
+                            <label>Description:</label>
+                            <RadzenTextArea @bind-Value="announcementInputs.PetDescription"
+                                            Style="width: var(--inputs-width)"
+                                            Name="PetDescription"/>
+                        </fieldset>
 
-                    <fieldset class="field">
-                        <label>Weight:</label>
-                        <RadzenNumeric @bind-Value="announcementInputs.PetWeight"
-                                       Style="width: var(--inputs-width)"
-                                       Name="PetWeight"/>
-                    </fieldset>
-                }
+                        <fieldset class="field">
+                            <label>Weight:</label>
+                            <RadzenNumeric @bind-Value="announcementInputs.PetWeight"
+                                           Style="width: var(--inputs-width)"
+                                           Name="PetWeight"/>
+                        </fieldset>
+                    }
+                </div>
+
+                <RadzenButton ButtonType="ButtonType.Submit" Style="margin-top: 2rem">Create announcement</RadzenButton>
             </div>
-
-            <RadzenButton ButtonType="ButtonType.Submit" Style="margin-top: 2rem">Create announcement</RadzenButton>
-        </div>
-    </RadzenTemplateForm>
-</div>
+        </RadzenTemplateForm>
+    </div>
 
 
 @code {
@@ -140,18 +144,18 @@
     private IEnumerable<Claim>? userClaims;
     private string backgroundImageUrl;
 
-   
+
+    
 
     protected override async Task OnInitializedAsync()
     {
         announcementInputs = new();
+        backgroundImageUrl = await localStorageService.GetItemAsStringAsync("backgroundImage");
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
         userClaims = user.Claims;
         ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
 
-        backgroundImageUrl = await pexelsService.SearchPetImage();
-        Console.WriteLine(backgroundImageUrl);
     // userPets = ..
 
 
@@ -164,8 +168,6 @@
     {
         try
         {
-    // HandleEmptyFields();
-
             Pet pet;
 
             if (isNewPet)
