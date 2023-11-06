@@ -19,7 +19,7 @@ public class StartServer {
         TimeIntervalEntity tm = new TimeIntervalEntity("dfvrf", "rggrvr");
         System.out.println(tm.toString());
         server.awaitTermination();
-
+        System.out.print("TEst");
     }
 
 
