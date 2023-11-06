@@ -1,0 +1,21 @@
+﻿@page "/ViewAnnouncements"
+
+@* <div class="d-flex flex-row flex-wrap"> *@
+@*     @foreach (var item in posts) *@
+@*     { *@
+@*         <div class="card" @onclick="() => OpenPost(item.postId)"> *@
+@*             <h3>@item.title</h3> *@
+@*             <div>@item.body</div> *@
+@*             <div class="author_caption">Posted by @item.authorUsername</div> *@
+@*         </div> *@
+@*     } *@
+@* </div> *@
+
+@code {
+    // private IEnumerable<>? posts;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        // posts = await postService.GetAsync();
+    }
+}

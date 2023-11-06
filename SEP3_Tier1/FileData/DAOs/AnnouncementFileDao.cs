@@ -18,9 +18,20 @@ public class AnnouncementFileDao : IAnnouncementDao
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto dto)
+    public Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto searchParameters)
     {
-        throw new NotImplementedException();
+        IEnumerable<Announcement> announcements = context.Announcements.AsEnumerable();
+        if (!string.IsNullOrEmpty(searchParameters.StartTime))
+        {
+            announcements = announcements.Where(t => t.StartDate.Equals(DateTime.Parse(searchParameters.StartTime)));
+        }
+        
+        if (!string.IsNullOrEmpty(searchParameters.StartTime))
+        {
+            announcements = announcements.Where(t => t.StartDate.Equals(DateTime.Parse(searchParameters.StartTime)));
+        }
+
+        return Task.FromResult(announcements);
     }
 
     public Task<Announcement> CreateAsync(Announcement announcement)

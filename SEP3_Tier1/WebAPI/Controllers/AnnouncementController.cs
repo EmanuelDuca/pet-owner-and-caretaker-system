@@ -29,4 +29,20 @@ public class AnnouncementController: ControllerBase
             return StatusCode(404, e.Message);
         }
     }
+    
+    [HttpGet]
+    public async Task<ActionResult> GetAsync([FromQuery] string? startTime, [FromQuery] string? endTime, [FromQuery] string? description, [FromQuery] string? postalCode)
+    {
+        try
+        {
+            SearchAnnouncementDto parameters = new (startTime, endTime, description, postalCode);
+            var announcements = await logic.GetAsync(parameters);
+            return Ok(announcements);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }
