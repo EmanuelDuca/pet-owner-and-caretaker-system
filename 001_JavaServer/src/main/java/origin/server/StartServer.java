@@ -17,7 +17,7 @@ public class StartServer {
         server.start();
         System.out.println("Server is running on port:" + server.getPort());
         TimeIntervalEntity tm = new TimeIntervalEntity("dfvrf", "rggrvr");
-        System.out.println(tm.toString());
+        System.out.println(tm);
         server.awaitTermination();
         System.out.print("TEst");
     }

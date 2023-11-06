@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class FileServer implements Serializable
 {
     private ObjectMapper json;
-    private final String filepath = "DatabaseList.bin";
+    private final String filepath = "../001_JavaServer/DatabaseList.bin";
 
     private static FileServer obj;
     private ArrayList<UserEntity> userList;
