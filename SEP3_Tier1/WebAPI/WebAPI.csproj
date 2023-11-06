@@ -17,7 +17,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
-      <ProjectReference Include="..\FileData\FileData.csproj" />
+      <ProjectReference Include="..\obsolete_FileData\obsolete_FileData.csproj" />
       <ProjectReference Include="..\GrpcClient\GrpcClient.csproj" />
     </ItemGroup>
 

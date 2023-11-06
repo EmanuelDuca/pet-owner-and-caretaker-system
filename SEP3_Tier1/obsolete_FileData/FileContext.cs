@@ -5,7 +5,7 @@ using Domain.Models;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace FileData;
+namespace obsolete_FileData;
 
 public class FileContext
 {

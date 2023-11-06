@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Application.DaoInterface;
 using Domain.Models;
 
-namespace FileData.DAOs;
+namespace obsolete_FileData.DAOs;
 
 public class UserFileDao : IUserDao
 {

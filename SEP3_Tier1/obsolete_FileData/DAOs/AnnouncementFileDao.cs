@@ -2,7 +2,7 @@
 using Domain.DTOs;
 using Domain.Models;
 
-namespace FileData.DAOs;
+namespace obsolete_FileData.DAOs;
 
 public class AnnouncementFileDao : IAnnouncementDao
 {

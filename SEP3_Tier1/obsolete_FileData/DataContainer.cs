@@ -2,7 +2,7 @@
 using Domain.Models;
 using Newtonsoft.Json;
 
-namespace FileData;
+namespace obsolete_FileData;
 
 public class DataContainer
 {

@@ -1,4 +1,8 @@
 ﻿@page "/ViewAnnouncements"
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@using Domain.DTOs
+@inject IAnnouncementService announcementService
 
 @* <div class="d-flex flex-row flex-wrap"> *@
 @*     @foreach (var item in posts) *@
@@ -12,10 +16,12 @@
 @* </div> *@
 
 @code {
-    // private IEnumerable<>? posts;
+    private IEnumerable<Announcement>? announcements;
     
     protected override async Task OnInitializedAsync()
     {
+        SearchAnnouncementDto searchParameters = new(null, null, null, null);
+        announcements  = await announcementService.GetAsync(searchParameters);
         // posts = await postService.GetAsync();
     }
 }
