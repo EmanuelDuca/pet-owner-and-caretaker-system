@@ -25,13 +25,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\HttpClients\HttpClients.csproj" />
-        
-
-
-
-
-
-
     </ItemGroup>
 
 

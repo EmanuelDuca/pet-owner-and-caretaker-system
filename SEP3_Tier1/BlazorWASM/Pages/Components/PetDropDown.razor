@@ -1,7 +1,11 @@
 ﻿@using Domain.Models
 
 
-<RadzenDropDown @bind-Value=@Value TValue="Pet" Placeholder="@(Pets.Any()? $"Choose" : "Empty")" Data="@Pets" TextProperty="PetName" Change="() => Console.WriteLine(Value.PetName)"/>
+<RadzenDropDown 
+    @bind-Value=@Value TValue="Pet" 
+    Placeholder="@(Pets.Any()? $"Choose" : "Empty")" 
+    Data="@Pets" TextProperty="PetName" 
+    Change="() => Console.WriteLine(Value.PetName)"/>
 
 
 @code {
@@ -24,7 +28,7 @@
                 Id = 1,
                 IsVaccinated = true,
                 PetName = "Cherry",
-                PetType = "Dog",
+                PetType = PetType.Dog,
                 Description = "Finwaropigrg"
             },
             new()
@@ -32,7 +36,7 @@
                 Id = 1,
                 IsVaccinated = true,
                 PetName = "X",
-                PetType = "Car",
+                PetType = PetType.Canary,
                 Description = "Fat cat"
             },
             new()
@@ -40,7 +44,7 @@
                 Id = 1,
                 IsVaccinated = true,
                 PetName = "Pollo",
-                PetType = "Chicken",
+                PetType = PetType.Chinchilla,
                 Description = "It's Hugo"
             }
         };

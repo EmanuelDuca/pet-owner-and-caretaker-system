@@ -1,10 +1,15 @@
 @using Domain.Models
 
 <div class="card">
-    <div class="top-section text-start">
-        <label>@Announcement.PetOwner.Username</label>
+    <div class="author-caption text-start">
+        <label>Posted by: @Announcement.PetOwner.Username</label>
     </div>
-    <div></div>
+    <div>
+        <div>@Announcement.ServiceDescription</div>
+        <p><b>Postal code: </b> @Announcement.PostalCode</p>
+        <p><b>Pet type: </b> @Announcement.Pet.PetType.ToString()</p>
+        <p><b>Pet name: </b> @Announcement.Pet.PetName</p>
+    </div>
 </div>
 
 @code {

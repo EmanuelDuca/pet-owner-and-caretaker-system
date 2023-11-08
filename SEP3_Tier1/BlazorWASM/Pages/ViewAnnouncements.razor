@@ -1,27 +1,35 @@
-﻿@page "/ViewAnnouncements"
-@using Domain.Models
+@page "/ViewAnnouncements"
 @using HttpClients.ClientInterfaces
+@using System.Collections.ObjectModel
 @using Domain.DTOs
-@inject IAnnouncementService announcementService
+@using Domain.Models
+@inject IAnnouncementService AnnouncementService
 
-@* <div class="d-flex flex-row flex-wrap"> *@
-@*     @foreach (var item in posts) *@
-@*     { *@
-@*         <div class="card" @onclick="() => OpenPost(item.postId)"> *@
-@*             <h3>@item.title</h3> *@
-@*             <div>@item.body</div> *@
-@*             <div class="author_caption">Posted by @item.authorUsername</div> *@
-@*         </div> *@
-@*     } *@
-@* </div> *@
+<div class="d-flex flex-row">
+    <div class="sidebar filter-area">
+        
+    </div>
+    
+    <div class="content">
+        @if (announcements == null)
+        {
+            <label>Loading...</label>
+        }
+        
+        @foreach (var announcement in announcements!)
+        {
+            <AnnouncementComponent Announcement="announcement"/>
+        }
+    </div>
+</div>
+
 
 @code {
-    private IEnumerable<Announcement>? announcements;
-    
+    private List<Announcement>? announcements;
+
     protected override async Task OnInitializedAsync()
     {
-        SearchAnnouncementDto searchParameters = new(null, null, null, null);
-        announcements  = await announcementService.GetAsync(searchParameters);
-        // posts = await postService.GetAsync();
+        announcements = (await AnnouncementService.GetAsync(new SearchAnnouncementDto())).ToList();
     }
+
 }

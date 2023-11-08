@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using BlazorWASM.PreloadData;
+using Domain.Models;
 
 namespace BlazorWASM.Validators;
 
@@ -14,7 +14,7 @@ public class AnnouncementInputValidators
     public string Description { get; set; }
     [Required(ErrorMessage = "Pet name is required")]
     public string PetName { get; set; }
-    public string PetType { get; set; }
+    public PetType PetType { get; set; }
     public string PetDescription { get; set; }
     public int PetWeight { get; set; }
 }

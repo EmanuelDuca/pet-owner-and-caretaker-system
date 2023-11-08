@@ -8,7 +8,6 @@
 @using Domain.DTOs
 @using Domain.Models
 @using BlazorWASM.Validators
-@using BlazorWASM.PreloadData
 @using System.Security.Claims
 @using Blazored.LocalStorage
 @attribute [Authorize]
@@ -91,9 +90,14 @@
                     {
                         <fieldset class="field mt-0">
                             <label>Type:</label>
-                            <RadzenDropDown Data="@PetTypes.PetSpecies" @bind-Value="announcementInputs.PetType"
-                                            Style="width: var(--inputs-width)"
-                                            Name="PetType"/>
+                            @{
+
+                                var types = Enum.GetValues(typeof(PetType)).Cast<PetType>();
+                                <RadzenDropDown Data="types"
+                                                @bind-Value="announcementInputs.PetType"
+                                                Style="width: var(--inputs-width)"
+                                                Name="PetType"/>
+                            }
                         </fieldset>
                         <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetType" Popup="true"/>
 
