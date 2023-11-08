@@ -99,14 +99,39 @@ public class GrpcAnnouncementService : IAnnouncementDao
             Id = dto.Id,
             TimeStart = dto.StartDate.ToShortDateString(),
             TimeFinish = dto.EndDate.ToShortDateString(),
-            PostalCode = dto.PostalCode
+            PostalCode = dto.PostalCode,
+            Description = dto.ServiceDescription,
+            Pet = new PetProto
+            {
+                PetName = dto.Pet.PetName,
+                PetType = dto.Pet.PetType,
+                Weight = dto.Pet.Weight,
+                IsVaccinated = dto.Pet.IsVaccinated,
+                Description = dto.Pet.Description,
+                Id = dto.Pet.Id
+            }
         };
-        throw new NotImplementedException();
+        AnnouncementProto updated = announcementServiceClient.UpdateAnnouncement(request);
+        if (updated.Id == request.Id)
+        {
+            return Task.CompletedTask;
+        }
+        return null;
     }
 
     public Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        FindAnnouncementProto request = new FindAnnouncementProto
+        {
+            Id = id
+        };
+
+        ResponseStatus status = announcementServiceClient.DeleteAnnouncement(request);
+        if (int.Parse(status.ResponseStatus_) == 404)
+        {
+            throw new Exception($"Announcement was not deleted -- response status {status} from Java");
+        }
+        return Task.CompletedTask;
     }
 }
     

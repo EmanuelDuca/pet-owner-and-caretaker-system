@@ -7,7 +7,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("announcements")]
-public class AnnouncementController: ControllerBase
+public class AnnouncementController : ControllerBase
 {
     private readonly IAnnouncementLogic logic;
 
@@ -15,6 +15,7 @@ public class AnnouncementController: ControllerBase
     {
         this.logic = logic;
     }
+
     [HttpPost]
     public async Task<ActionResult<Announcement>> CreateAnnouncement(AnnouncementCreationDto creationDto)
     {
@@ -29,15 +30,46 @@ public class AnnouncementController: ControllerBase
             return StatusCode(404, e.Message);
         }
     }
-    
+
     [HttpGet]
-    public async Task<ActionResult> GetAsync([FromQuery] string? startTime, [FromQuery] string? endTime, [FromQuery] string? description, [FromQuery] string? postalCode)
+    public async Task<ActionResult> GetAsync([FromQuery] string? startTime, [FromQuery] string? endTime,
+        [FromQuery] string? description, [FromQuery] string? postalCode)
     {
         try
         {
-            SearchAnnouncementDto parameters = new (startTime, endTime, description, postalCode);
+            SearchAnnouncementDto parameters = new(startTime, endTime, description, postalCode);
             var announcements = await logic.GetAsync(parameters);
             return Ok(announcements);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpPatch]
+    public async Task<ActionResult> UpdateAsync([FromBody] AnnouncementUpdateDto dto)
+    {
+        try
+        {
+            await logic.UpdateAsync(dto);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpDelete("{id: int}")]
+    public async Task<ActionResult> DeleteAsync([FromQuery] int id)
+    {
+        try
+        {
+            await logic.DeleteAsync(id);
+            return Ok();
         }
         catch (Exception e)
         {
