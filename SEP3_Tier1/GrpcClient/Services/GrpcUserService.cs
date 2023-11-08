@@ -87,11 +87,11 @@ public class GrpcUserService : IUserDao
     {
         SearchUserDto searchDto = new SearchUserDto(email);
         // string query = await HttpClientHelper.ConstructQuery(searchDto);
-        UserProto receivedUser = await userServiceClient.FindUserAsync(new SearchFieldProto
+        UserProto receivedUser = await userServiceClient.FindUserAsync(new FindUserProto
         {
-            Query = email
+            Email = email
         });
-
+        
         return await ConvertUserFromGrps(receivedUser);
     }
 }

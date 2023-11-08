@@ -50,4 +50,46 @@ public class AnnouncementFileDao : IAnnouncementDao
 
         return Task.FromResult(announcement);
     }
+
+    public Task UpdateAsync(AnnouncementUpdateDto announcement)
+    {
+        Announcement? existing = context.Announcements.FirstOrDefault(a => a.Id == announcement.Id);
+        if (existing == null)
+        {
+            throw new Exception($"Announcement with id {announcement.Id} does not exist!");
+        }
+
+        Announcement createdAnnouncement = new Announcement
+        {
+            Id = announcement.Id,
+            PetOwner = existing.PetOwner,
+            CreationDateTime = existing.CreationDateTime,
+            EndDate = announcement.EndDate,
+            StartDate = announcement.StartDate,
+            Pet = announcement.Pet ?? existing.Pet,
+            PostalCode = announcement.PostalCode == null ? existing.PostalCode : announcement.PostalCode,
+            ServiceDescription = announcement.ServiceDescription == null ? existing.PostalCode : announcement.ServiceDescription
+        };
+        context.Announcements.Remove(existing);
+        context.Announcements.Add(createdAnnouncement);
+        
+        context.SaveChanges();
+
+        return Task.CompletedTask;
+    }
+
+    public Task DeleteAsync(int id)
+    {
+        Announcement? existing = context.Announcements.FirstOrDefault(announcement =>
+            announcement.Id == id);
+        if (existing == null)
+        {
+            throw new Exception($"Announcement with id {id} does not exist!");
+        }
+
+        context.Announcements.Remove(existing);
+        context.SaveChanges();
+        
+        return Task.CompletedTask;
+    }
 }

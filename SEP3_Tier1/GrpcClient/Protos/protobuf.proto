@@ -4,18 +4,20 @@ option java_multiple_files = true;
 option csharp_namespace = "GrpcClient";
 
 service UserService{
-  //rpc CreatePetOwner(PetOwner) returns (PetOwner); //This method is no neded anymore
   rpc CreateUser(UserProto) returns (UserProto);
-//  rpc LoginUserProto() returns (UserProto);
-  rpc FindUser(SearchFieldProto) returns (UserProto);  // return with password, so be careful
-  //rpc UpdatePetOwnerInformation(PetOwnerInfo) returns (Void); // not sure about void
+  rpc LogIn(LoginUserProto) returns (UserProto);
+  rpc FindUser(FindUserProto) returns (UserProto);
+  rpc SearchUser(SearchUsersProto) returns (UsersProto);
+  rpc UpdateUser(UserProto) returns (UserProto);
+  rpc DeleteUser(FindUserProto) returns (ResponseStatus);
 }
 
 service AnnouncementService{
-  rpc CreateAnnouncement(AnnouncementProto) returns (AnnouncementProto); // maybe createAnnouncement message would be better
-  rpc FindAnnouncements(SearchFieldProto) returns (AnnouncementsProto);
-  //rpc UpdateAnnouncement(Announcement) returns (Void);  // not sure about void
-  //rpc DeleteAnnouncement(Announcement) returns (Void);  // not sure about void
+  rpc CreateAnnouncement(AnnouncementProto) returns (AnnouncementProto);
+  rpc FindAnnouncements(SearchAnnouncementProto) returns (AnnouncementsProto);
+  rpc GetAnnouncement(FindAnnouncementProto) returns (AnnouncementProto);
+  rpc UpdateAnnouncement(AnnouncementProto) returns (AnnouncementProto);
+  rpc DeleteAnnouncement(FindAnnouncementProto) returns (ResponseStatus);
 }
 
 message UserProto{
@@ -27,6 +29,17 @@ message UserProto{
   string type = 6;
 }
 
+message UsersProto{
+  repeated UserProto users = 1;
+}
+
+message FindUserProto{
+  string email = 1;
+}
+
+message SearchUsersProto{
+  string type = 1;
+}
 
 message LoginUserProto{
   string email = 1;
@@ -36,33 +49,45 @@ message LoginUserProto{
 message AnnouncementProto{
   string petOwnerEmail = 1;
   string description = 2;
-  TimeIntervalProto timeInterval = 3;
-  PetProto pet = 4;
-  string postalCode = 5;
-  string dateOfCreation = 6;
-  int32 id = 7;
+  string timeStart = 3;
+  string timeFinish = 4;
+  PetProto pet = 5;
+  string postalCode = 6;
+  string dateOfCreation = 7;
+  int32 id = 8;
 }
 
 message AnnouncementsProto{
   repeated AnnouncementProto announcements = 1;
 }
 
+message FindAnnouncementProto{
+  int32 id=1;
+}
+
+message SearchAnnouncementProto{
+  string petOwnerEmail = 1;
+  string timeStart = 2;
+  string timeFinish = 3;
+  string postalCode = 4;
+  int32 id = 5;
+  string petType = 6;
+  int32 petWeight = 7;
+  bool petIsVaccinated = 8;
+}
+
 message PetProto{
   string petName = 1;
-  string petType = 2;  // dog, cat ....
+  string petType = 2;
   int32 weight = 3;
   bool isVaccinated = 4;
   string description =5;
   int32 id = 6;
+  string ownerEmail = 7;
 }
 
-message TimeIntervalProto{
-  string startDate = 1;
-  string finishDate = 2;
-}
-
-message SearchFieldProto{
-  string query = 1;
+message ResponseStatus{
+  string responseStatus =1;
 }
 
 message Void{}
