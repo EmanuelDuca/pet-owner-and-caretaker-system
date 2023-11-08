@@ -13,9 +13,20 @@ public class AnnouncementFileDao : IAnnouncementDao
         this.context = context;
     }
 
-    public Task<Announcement> CreateAsync(AnnouncementCreationDto announcement)
+    public Task<Announcement> CreateAsync(AnnouncementCreationDto dto)
     {
-        throw new NotImplementedException();
+        Console.WriteLine($"Print DateOfCreation Before {dto.CreationDateTime.ToShortDateString()}");
+        var announcement = new Announcement
+        {
+            PetOwner = new PetOwner(context.Users.First(u => u.Email.Equals(dto.OwnerEmail))),
+            ServiceDescription = dto.ServiceDescription,
+            PostalCode = dto.PostalCode,
+            StartDate = dto.StartDate,
+            Pet = dto.Pet,
+            CreationDateTime = dto.CreationDateTime,
+            EndDate = dto.EndDate
+        };
+        return CreateAsync(announcement);
     }
 
     public Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto searchParameters)
@@ -34,7 +45,7 @@ public class AnnouncementFileDao : IAnnouncementDao
         return Task.FromResult(announcements);
     }
 
-    public Task<Announcement> CreateAsync(Announcement announcement)
+    private Task<Announcement> CreateAsync(Announcement announcement)
     {
         int id = 1;
         if (context.Announcements.Any())
