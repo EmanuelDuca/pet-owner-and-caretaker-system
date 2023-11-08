@@ -5,3 +5,9 @@
 .filter-area{
     flex-grow: 1;
 }
+
+.column {
+    flex: 1;
+    padding: 20px; !important;
+    margin: 10px;
+}
