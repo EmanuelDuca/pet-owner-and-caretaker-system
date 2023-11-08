@@ -1,6 +1,5 @@
 @page "/ViewAnnouncements"
 @using HttpClients.ClientInterfaces
-@using System.Collections.ObjectModel
 @using Domain.DTOs
 @using Domain.Models
 @inject IAnnouncementService AnnouncementService
@@ -15,10 +14,13 @@
         {
             <label>Loading...</label>
         }
-        
-        @foreach (var announcement in announcements!)
+        else
         {
-            <AnnouncementComponent Announcement="announcement"/>
+
+            @foreach (var announcement in announcements!)
+            {
+                <AnnouncementComponent Announcement="announcement"/>
+            }
         }
     </div>
 </div>
