@@ -48,4 +48,15 @@ public class AnnouncementLogic : IAnnouncementLogic
             throw new InvalidDataException("Postal code should be 4 characters long and consist from digits.");
         }
     }
+    
+    public async Task UpdateAsync(AnnouncementUpdateDto dto)
+    {
+        ValidateData(dto.StartDate,dto.EndDate,dto.PostalCode);
+        await announcementDao.UpdateAsync(dto);
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        await announcementDao.DeleteAsync(id);
+    }
 }

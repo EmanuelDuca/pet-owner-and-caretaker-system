@@ -30,11 +30,8 @@ public class GrpcAnnouncementService : IAnnouncementDao
         {
             PetOwnerEmail = dto.OwnerEmail,
             Description = dto.ServiceDescription,
-            TimeInterval = new TimeIntervalProto
-            {
-                StartDate = dto.StartDate.ToShortDateString(),
-                FinishDate = dto.EndDate.ToShortDateString()
-            },
+            TimeStart = dto.StartDate.ToShortDateString(),
+            TimeFinish = dto.EndDate.ToShortDateString(),
             Pet = new PetProto
             {
                 PetName = dto.Pet.PetName,
@@ -52,7 +49,6 @@ public class GrpcAnnouncementService : IAnnouncementDao
         Console.WriteLine($"Java returned new Announcement made by {grpcAnnouncementToCreate.PetOwnerEmail}");
 
         return ConvertAnnouncementFromProto(grpcAnnouncementToCreate);
-
     }
 
 
@@ -64,20 +60,22 @@ public class GrpcAnnouncementService : IAnnouncementDao
         {
             Id = dto.Id,
             CreationDateTime = DateTime.Parse(dto.DateOfCreation),
-            EndDate = DateTime.Parse(dto.TimeInterval.FinishDate),
+            StartDate = DateTime.Parse(dto.TimeStart),
+            EndDate = DateTime.Parse(dto.TimeFinish),
             PetOwner = (PetOwner) (await userService.GetByEmailAsync(dto.PetOwnerEmail))!,
             PostalCode = dto.PostalCode,
             ServiceDescription = dto.Description,
-            StartDate = DateTime.Parse(dto.TimeInterval.StartDate)
         };
         return announcement;
     }
 
     public async Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto dto)
     {
-        var request = new SearchFieldProto
+        var request = new SearchAnnouncementProto
         {
-            Query = await HttpClientHelper.ConstructQuery(dto)
+            TimeStart = dto.StartTime,
+            TimeFinish = dto.EndTime,
+            PostalCode = dto.PostalCode
         };
         AnnouncementsProto announcements = announcementServiceClient.FindAnnouncements(request);
         return await ConvertAnnouncementListFromProto(announcements);
@@ -92,6 +90,23 @@ public class GrpcAnnouncementService : IAnnouncementDao
     {
         return await Task.WhenAll(announcements.Announcements
             .Select(async announcement => await ConvertAnnouncementFromProto(announcement)));
+    }
+
+    public Task UpdateAsync(AnnouncementUpdateDto dto)
+    {
+        var request = new AnnouncementProto
+        {
+            Id = dto.Id,
+            TimeStart = dto.StartDate.ToShortDateString(),
+            TimeFinish = dto.EndDate.ToShortDateString(),
+            PostalCode = dto.PostalCode
+        };
+        throw new NotImplementedException();
+    }
+
+    public Task DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
     }
 }
     
