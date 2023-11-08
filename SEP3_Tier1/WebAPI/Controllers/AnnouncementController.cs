@@ -63,8 +63,8 @@ public class AnnouncementController : ControllerBase
         }
     }
     
-    [HttpDelete("{id: int}")]
-    public async Task<ActionResult> DeleteAsync([FromQuery] int id)
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> DeleteAsync([FromRoute] int id)
     {
         try
         {
