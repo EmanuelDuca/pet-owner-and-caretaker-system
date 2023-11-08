@@ -3,10 +3,9 @@
 @using Domain.DTOs
 @using Radzen.Blazor
 @using Blazored.LocalStorage
-@inject IUserAuthService authService
-@inject NotificationService notificationService
-@inject IPexelsService pexelsService
-@inject ILocalStorageService localStorageService
+@inject IUserAuthService AuthService
+@inject IPexelsService PexelsService
+@inject ILocalStorageService LocalStorageService
 
 
 
@@ -93,8 +92,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        backgroundImageUrl = await pexelsService.SearchPetImage();
-        await localStorageService.SetItemAsStringAsync("backgroundImage", backgroundImageUrl);
+        backgroundImageUrl = await PexelsService.SearchPetImage();
+        await LocalStorageService.SetItemAsStringAsync("backgroundImage", backgroundImageUrl);
         Console.WriteLine(backgroundImageUrl);
     }
 
@@ -105,17 +104,17 @@
         {
             HandleEmptyFields();
             if (isLoginView)
-                await authService.LoginAsync(new UserLoginDto(email!, password!));
+                await AuthService.LoginAsync(new UserLoginDto(email!, password!));
             else
             {
                 string type = userType == 1 ? "PetOwner" : "CareTaker";
-                await authService.RegisterAsync(new UserCreationDto(email!, username!, password!, type));
+                await AuthService.RegisterAsync(new UserCreationDto(email!, username!, password!, type));
             }
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            notificationService.Notify(new NotificationMessage()
+            NotificationService.Notify(new NotificationMessage()
             {
                 Severity = NotificationSeverity.Error,
                 Duration = 6000,

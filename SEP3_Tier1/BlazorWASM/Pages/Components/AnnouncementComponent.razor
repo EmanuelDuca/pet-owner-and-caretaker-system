@@ -1,0 +1,12 @@
+@using Domain.Models
+
+<div class="card">
+    <div class="top-section text-start">
+        <label>@Announcement.PetOwner.Username</label>
+    </div>
+    <div></div>
+</div>
+
+@code {
+    [Parameter] public Announcement Announcement { get; set; }
+}

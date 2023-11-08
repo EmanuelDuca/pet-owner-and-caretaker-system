@@ -1,0 +1,7 @@
+.content{
+    flex-grow: 5;
+}
+
+.filter-area{
+    flex-grow: 1;
+}

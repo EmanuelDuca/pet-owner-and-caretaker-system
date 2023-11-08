@@ -3,10 +3,10 @@ namespace Domain.DTOs;
 
 public class SearchAnnouncementDto: SearchDto
 {
-    public string? StartTime { get; }
-    public string? EndTime { get; }
-    public string? Description { get; }
-    public string? PostalCode { get; }
+    public string? StartTime { get; } = null;
+    public string? EndTime { get; } = null;
+    public string? Description { get; } = null;
+    public string? PostalCode { get; } = null;
 
     public SearchAnnouncementDto(string? startTime, string? endTime, string? description, string? postalCode)
     {
@@ -14,5 +14,10 @@ public class SearchAnnouncementDto: SearchDto
         EndTime = endTime;
         Description = description;
         PostalCode = postalCode;
+    }
+
+    public SearchAnnouncementDto()
+    {
+        
     }
 }

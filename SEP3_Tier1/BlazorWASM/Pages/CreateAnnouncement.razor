@@ -194,7 +194,7 @@
             };
             await announcementService.CreateAsync(creationDto);
 
-            notificationService.Notify(new NotificationMessage()
+            NotificationService.Notify(new NotificationMessage()
             {
                 Severity = NotificationSeverity.Success,
                 Duration = 6000,
@@ -204,7 +204,7 @@
         catch (Exception e)
         {
             Console.WriteLine(e);
-            notificationService.Notify(new NotificationMessage()
+            NotificationService.Notify(new NotificationMessage()
             {
                 Severity = NotificationSeverity.Error,
                 Duration = 6000,
