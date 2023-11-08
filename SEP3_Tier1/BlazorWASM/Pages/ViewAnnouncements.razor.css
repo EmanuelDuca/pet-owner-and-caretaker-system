@@ -8,6 +8,5 @@
 
 .column {
     flex: 1;
-    padding: 20px; !important;
-    margin: 10px;
+    padding: 5px; !important;
 }

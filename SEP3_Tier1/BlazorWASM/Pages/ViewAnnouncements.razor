@@ -4,6 +4,10 @@
 @using Domain.Models
 @inject IAnnouncementService AnnouncementService
 
+<div>
+    <MdTextField></MdTextField>
+</div>
+
 <div class="d-flex flex-row">
     <div class="sidebar filter-area">
         
@@ -39,7 +43,7 @@
                     <h3>Announcement @i</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 </div>
-                <MdButton style="--md-elevated-button-container-shape: 0">Request service</MdButton>
+                @* <MdButton style="--md-elevated-button-container-color: var(--primary-color); --md-elevated-button-label-text-color: #000000">Request service</MdButton> *@
             </div>
         </div>
     }
