@@ -1,0 +1,38 @@
+{
+  "Users": [
+    {
+      "Name": null,
+      "Username": "Sevastian",
+      "Age": null,
+      "Email": "sevastian@gmail.com",
+      "PhoneNumber": null,
+      "Password": "password"
+    }
+  ],
+  "Announcements": [
+    {
+      "Id": 1,
+      "PetOwner": {
+        "Name": null,
+        "Username": null,
+        "Age": null,
+        "Email": "sevastian@gmail.com",
+        "PhoneNumber": null,
+        "Password": "password"
+      },
+      "StartDate": "2023-11-08T14:02:16.023Z",
+      "EndDate": "2023-11-08T14:02:16.023Z",
+      "PostalCode": "4683",
+      "ServiceDescription": "oubhawfgiawugegiuagwrhaghuo",
+      "CreationDateTime": "2023-11-08T14:02:16.023Z",
+      "Pet": {
+        "Id": 8,
+        "PetName": "pollo",
+        "PetType": 5,
+        "Weight": 3,
+        "IsVaccinated": true,
+        "Description": "3f2eg2g"
+      }
+    }
+  ]
+}
