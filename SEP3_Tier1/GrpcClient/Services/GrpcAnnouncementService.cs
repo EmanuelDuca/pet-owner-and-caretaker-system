@@ -133,6 +133,11 @@ public class GrpcAnnouncementService : IAnnouncementDao
         }
         return Task.CompletedTask;
     }
+
+    public Task<Announcement> CreateAsync(Announcement announcement)
+    {
+        throw new NotImplementedException();
+    }
 }
     
 

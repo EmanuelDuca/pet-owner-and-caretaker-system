@@ -17,7 +17,7 @@ public class AnnouncementController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Announcement>> CreateAnnouncement(AnnouncementCreationDto creationDto)
+    public async Task<ActionResult<Announcement>> CreateAsync([FromBody] AnnouncementCreationDto creationDto)
     {
         try
         {
