@@ -104,7 +104,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
             Pet = new PetProto
             {
                 PetName = dto.Pet.PetName,
-                PetType = dto.Pet.PetType,
+                PetType = dto.Pet.PetType.ToString(),
                 Weight = dto.Pet.Weight,
                 IsVaccinated = dto.Pet.IsVaccinated,
                 Description = dto.Pet.Description,
