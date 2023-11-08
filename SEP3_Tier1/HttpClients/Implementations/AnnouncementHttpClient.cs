@@ -29,10 +29,18 @@ public class AnnouncementHttpClient : IAnnouncementService
     {
         HttpResponseMessage response = await client.GetAsync(START_URI);
         string content = await HttpClientHelper.HandleResponse(response);
-        IEnumerable<Announcement> announcements = JsonSerializer.Deserialize<IEnumerable<Announcement>>(content, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-        return announcements;
+        return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<Announcement>>(content);
+    }
+
+    public async Task UpdateAsync(AnnouncementUpdateDto dto)
+    {
+        HttpResponseMessage response = await client.PatchAsJsonAsync(START_URI, dto);
+        await HttpClientHelper.HandleResponse(response);
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        HttpResponseMessage response = await client.DeleteAsync($"{START_URI}/{id}");
+        await HttpClientHelper.HandleResponse(response);    
     }
 }
