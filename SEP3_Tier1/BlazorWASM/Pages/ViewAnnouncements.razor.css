@@ -10,3 +10,21 @@
     flex: 1;
     padding: 5px; !important;
 }
+
+.search-container {
+    position: relative;
+    max-width: 400px;
+    width: 40%;
+}
+
+#searchInput {
+    padding-right: 30px;
+}
+
+#searchIcon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

@@ -4,33 +4,24 @@
 @using Domain.Models
 @inject IAnnouncementService AnnouncementService
 
-<div>
-    <RadzenTextBox Placeholder="Search..." Icon="oi oi-magnifying-glass">
-        <span class="oi oi-magnifying-glass" aria-hidden="true"></span>
-    </RadzenTextBox>
+<div style="width: 100%" class="d-flex flex-row">
+    <div class="search-container">
+        <RadzenTextBox Placeholder="Search..." id="searchInput" class="w-100"/>
+        <span class="oi oi-magnifying-glass" id="searchIcon" @onclick="Search"></span>
+    </div>
+    
     <RadzenDropDown
-        @bind-Value=@Value
+        @bind-Value=@petType
         Data=@Enum.GetNames(typeof(PetType))
         AllowClear=true
         Multiple=true
         Placeholder="Select pet types"
         Chips=true
         SelectAllText="Select all types"
-        Style="width: 100%; max-width: 400px;" />
-    <RadzenTextBox Placeholder="Search...">
-        <Template>
-            <div class="input-group">
-                <input class="form-control" />
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" @onclick="Search">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </Template>
-    </RadzenTextBox>
+        Style="width: 40%; max-width: 400px;"
+        @onchange="OnDropDownChange"
+        @onclick="OnDropDownChange"/>
 </div>
-
 
 <div class="d-flex flex-row">
     <div class="sidebar filter-area">
@@ -81,12 +72,17 @@
     }
 
     // DROPDOWN
-    public Pet Value { get; set; }
-
-    public Dictionary<PetType, int> petDictionary = new Dictionary<PetType, int>();
-
+    public List<String> petType = new List<String>();
+    
     public void Search()
     {
-        
+        Console.WriteLine("pressed");   
+        Console.WriteLine(petType.Count);   
+    }
+    
+    public void OnDropDownChange()
+    {
+        Console.WriteLine(petType);   
+        Console.WriteLine("petType");   
     }
 }
