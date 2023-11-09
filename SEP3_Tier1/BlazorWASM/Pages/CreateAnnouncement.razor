@@ -91,7 +91,6 @@
                         <fieldset class="field mt-0">
                             <label>Type:</label>
                             @{
-
                                 var types = Enum.GetValues(typeof(PetType)).Cast<PetType>();
                                 <RadzenDropDown Data="types"
                                                 @bind-Value="announcementInputs.PetType"
@@ -147,8 +146,6 @@
 
     private IEnumerable<Claim>? userClaims;
     private string backgroundImageUrl;
-
-
     
 
     protected override async Task OnInitializedAsync()

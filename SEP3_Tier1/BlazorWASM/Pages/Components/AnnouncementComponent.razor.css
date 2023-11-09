@@ -1,0 +1,20 @@
+.ann-image-col{
+    display: flex;
+    justify-content: start;
+}
+
+.column {
+    display: flex;
+    padding: 5px;
+}
+
+@media all and (max-width: 950px) {
+    .card{
+        flex-direction: column;
+    }
+
+    .rounded-image{
+        width: 100% !important;
+        max-width: 550px;
+    }
+}
