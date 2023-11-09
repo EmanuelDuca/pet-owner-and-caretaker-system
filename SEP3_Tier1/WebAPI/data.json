@@ -49,6 +49,30 @@
         "IsVaccinated": true,
         "Description": "3f2eg2g"
       }
+    },
+    {
+      "Id": 2,
+      "PetOwner": {
+        "Name": null,
+        "Username": null,
+        "Age": null,
+        "Email": "sevastian@gmail.com",
+        "PhoneNumber": null,
+        "Password": "password"
+      },
+      "StartDate": "2023-11-09T00:00:00+01:00",
+      "EndDate": "2023-11-12T00:00:00+01:00",
+      "PostalCode": "3323",
+      "ServiceDescription": "My pet is a pollo, just like me",
+      "CreationDateTime": "0001-01-01T00:00:00",
+      "Pet": {
+        "Id": 1,
+        "PetName": "Pollo",
+        "PetType": 18,
+        "Weight": 0,
+        "IsVaccinated": true,
+        "Description": "It\u0027s Hugo"
+      }
     }
   ]
 }

@@ -90,10 +90,15 @@
                     {
                         <fieldset class="field mt-0">
                             <label>Type:</label>
-                            <RadzenDropDown Data="Enum.GetNames(typeof(PetType))"
-                                            @bind-Value="announcementInputs.PetType"
-                                            Style="width: var(--inputs-width)"
-                                            Name="PetType"/>
+                            @{
+                                // var types = Enum.GetValues(typeof(PetType)).Cast<PetType>();
+                                <RadzenDropDown Data="PetType.PetTypesWithNames"
+                                                @bind-Value="announcementInputs.PetType"
+                                                Style="width: var(--inputs-width)"
+                                                Name="PetType"
+                                                TextProperty="Name"
+                                                ValueProperty="Value"/>
+                            }
                         </fieldset>
                         <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetType" Popup="true"/>
 
@@ -143,7 +148,6 @@
 
     private IEnumerable<Claim>? userClaims;
     private string backgroundImageUrl;
-    
 
     protected override async Task OnInitializedAsync()
     {

@@ -9,12 +9,13 @@
         <span class="oi oi-magnifying-glass" aria-hidden="true"></span>
     </RadzenTextBox>
     <RadzenDropDown
-        @bind-Value=@Value
-        Data=@Enum.GetNames(typeof(PetType))
-        AllowClear=true
+        @bind-Value=filteredPetTypes
+        Data="PetType.PetTypesWithNames"
         Multiple=true
         Placeholder="Select pet types"
-        Chips=true
+        TextProperty="Name"
+        Chips="true"
+        ValueProperty="Value"
         SelectAllText="Select all types"
         Style="width: 100%; max-width: 400px;" />
     <RadzenTextBox Placeholder="Search...">
@@ -50,27 +51,6 @@
     </div>
 </div>
 
-<div class="d-flex flex-wrap flex-row">
-    @for (int i = 1; i < 6; i++)
-    {
-        <div class="card d-flex flex-row container-fluid row">
-            <div class="column">
-                  <div class="rounded-image">
-                      <img src="https://www.petspyjamas.com/uploads/2020/04/shutterstock_189642425-690x460.jpg"/>
-                  </div>
-            </div>
-            <div class="column">
-                <div style="padding: 10px">
-                    <h3>Announcement @i</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-                <RadzenButton Style="margin-top: 2rem">Create announcement</RadzenButton>
-                @* <MdButton style="--md-elevated-button-container-color: var(--primary-color); --md-elevated-button-label-text-color: #000000">Request service</MdButton> *@
-            </div>
-        </div>
-    }
-</div>
-
 
 @code {
     private List<Announcement>? announcements;
@@ -81,9 +61,7 @@
     }
 
     // DROPDOWN
-    public Pet Value { get; set; }
-
-    public Dictionary<PetType, int> petDictionary = new Dictionary<PetType, int>();
+    private List<PetType.Type> filteredPetTypes = new();
 
     public void Search()
     {
