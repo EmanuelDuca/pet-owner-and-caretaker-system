@@ -5,8 +5,13 @@
 @inject IAnnouncementService AnnouncementService
 
 <div>
-    
+    <RadzenTextBox Placeholder="Search..." Icon="oi oi-magnifying-glass">
+        <span class="oi oi-magnifying-glass" aria-hidden="true"></span>
+    </RadzenTextBox>
+    <RadzenDropDown @bind-Value=@values Data=@Enum.GetNames(typeof(PetType)) TextProperty="" ValueProperty="ProductID" 
+            Multiple=true AllowClear=true Placeholder="Select products" Chips=true Style="width: 100%; max-width: 400px;" />
 </div>
+
 
 <div class="d-flex flex-row">
     <div class="sidebar filter-area">
@@ -43,6 +48,7 @@
                     <h3>Announcement @i</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 </div>
+                <RadzenButton Style="margin-top: 2rem">Create announcement</RadzenButton>
                 @* <MdButton style="--md-elevated-button-container-color: var(--primary-color); --md-elevated-button-label-text-color: #000000">Request service</MdButton> *@
             </div>
         </div>
@@ -58,4 +64,5 @@
         announcements = (await AnnouncementService.GetAsync(new SearchAnnouncementDto())).ToList();
     }
 
+    IList<int> values = new int[] { 1, 2 };
 }
