@@ -1,0 +1,33 @@
+.card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 97%;
+}
+
+.column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.announcement-data{
+    width: 60% !important;
+    padding-left: 6rem;
+}
+
+@media all and (max-width: 950px) {
+    .card{
+        flex-direction: column !important;
+    }
+    
+    .column{
+        padding-inline: 0;
+    }
+
+    .rounded-image{
+        width: 100% !important;
+        max-width: 550px;
+    }
+}

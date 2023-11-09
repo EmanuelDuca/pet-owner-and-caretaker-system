@@ -1,15 +1,17 @@
 @using Domain.Models
 
-<div class="card">
-    <div class="author-caption text-start">
-        <label>Posted by: @Announcement.PetOwner.Username</label>
-    </div>
-    <div>
-        <div>@Announcement.ServiceDescription</div>
-        <p><b>Postal code: </b> @Announcement.PostalCode</p>
-        <p><b>Pet type: </b> @Announcement.Pet.PetType.ToString()</p>
-        <p><b>Pet name: </b> @Announcement.Pet.PetName</p>
-    </div>
+<div class="card d-flex flex-row">
+        <div class="column">
+            <div class="rounded-image">
+                <img src="https://www.petspyjamas.com/uploads/2020/04/shutterstock_189642425-690x460.jpg"/>
+            </div>
+        </div>
+        <div class="column announcement-data">
+            <div style="padding: 10px">
+                <p>@Announcement.ServiceDescription</p>
+                <RadzenButton Style="margin-top: 2rem">Create announcement</RadzenButton>
+            </div>
+        </div>
 </div>
 
 @code {

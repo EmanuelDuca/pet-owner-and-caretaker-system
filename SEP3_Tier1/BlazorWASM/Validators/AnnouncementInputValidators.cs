@@ -14,7 +14,7 @@ public class AnnouncementInputValidators
     public string Description { get; set; }
     [Required(ErrorMessage = "Pet name is required")]
     public string PetName { get; set; }
-    public PetType PetType { get; set; }
+    public PetType.Type PetType { get; set; }
     public string PetDescription { get; set; }
     public int PetWeight { get; set; }
 }

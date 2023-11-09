@@ -1,34 +1,66 @@
 ﻿namespace Domain.Models;
 
-public enum PetType
+
+public class PetType
 {
-    Dog,
-    Cat,
-    Parrot,
-    Hamster,
-    Rabbit,
-    GuineaPig,
-    Fish,
-    Turtle,
-    Ferret,
-    Iguana,
-    Snake,
-    Lizard,
-    Finch,
-    Canary,
-    Budgerigar,
-    Cockatoo,
-    Horse,
-    Gerbil,
-    Chinchilla,
-    HermitCrab,
-    Tarantula,
-    Frog,
-    Gecko,
-    Hedgehog,
-    Axolotl,
-    SugarGlider,
-    BettaFish,
-    Mouse,
-    Rat
+    public Type Value { get; set; }
+    public string Name
+    {
+        get
+        { 
+            string name = Value.ToString();
+            if (name.Count(char.IsUpper) > 1)
+            {
+                name = string.Join("",
+                    name.Select((c, i) => i > 0 && char.IsUpper(c)
+                        ? $" {c.ToString().ToLower()}"
+                        : c.ToString()));
+            }
+
+            return name;
+        }
+    }
+    public static List<PetType> PetTypesWithNames
+    {
+        get
+        {
+            return Enum.GetValues<Type>().Select(t => new PetType { Value = t }).ToList();
+        }
+    }
+
+    public enum Type
+    {
+        Dog,
+        Cat,
+        Parrot,
+        Hamster,
+        Rabbit,
+        GuineaPig,
+        Fish,
+        Turtle,
+        Ferret,
+        Iguana,
+        Snake,
+        Lizard,
+        Finch,
+        Canary,
+        Budgerigar,
+        Cockatoo,
+        Horse,
+        Gerbil,
+        Chinchilla,
+        HermitCrab,
+        Tarantula,
+        Frog,
+        Gecko,
+        Hedgehog,
+        Axolotl,
+        SugarGlider,
+        BettaFish,
+        Mouse,
+        Rat
+    }
 }
+
+
+
