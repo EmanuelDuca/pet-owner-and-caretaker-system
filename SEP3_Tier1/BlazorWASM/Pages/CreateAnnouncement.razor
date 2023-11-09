@@ -90,13 +90,10 @@
                     {
                         <fieldset class="field mt-0">
                             <label>Type:</label>
-                            @{
-                                var types = Enum.GetValues(typeof(PetType)).Cast<PetType>();
-                                <RadzenDropDown Data="types"
-                                                @bind-Value="announcementInputs.PetType"
-                                                Style="width: var(--inputs-width)"
-                                                Name="PetType"/>
-                            }
+                            <RadzenDropDown Data="Enum.GetNames(typeof(PetType))"
+                                            @bind-Value="announcementInputs.PetType"
+                                            Style="width: var(--inputs-width)"
+                                            Name="PetType"/>
                         </fieldset>
                         <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetType" Popup="true"/>
 
