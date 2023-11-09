@@ -8,16 +8,33 @@
     <RadzenTextBox Placeholder="Search..." Icon="oi oi-magnifying-glass">
         <span class="oi oi-magnifying-glass" aria-hidden="true"></span>
     </RadzenTextBox>
-    <RadzenDropDown @bind-Value=@values Data=@Enum.GetNames(typeof(PetType)) TextProperty="" ValueProperty="ProductID" 
-            Multiple=true AllowClear=true Placeholder="Select products" Chips=true Style="width: 100%; max-width: 400px;" />
+    <RadzenDropDown
+        @bind-Value=@Value
+        Data=@Enum.GetNames(typeof(PetType))
+        AllowClear=true
+        Multiple=true
+        Placeholder="Select pet types"
+        Chips=true
+        SelectAllText="Select all types"
+        Style="width: 100%; max-width: 400px;" />
+    <RadzenTextBox Placeholder="Search...">
+        <Template>
+            <div class="input-group">
+                <input class="form-control" />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" @onclick="Search">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </Template>
+    </RadzenTextBox>
 </div>
 
 
 <div class="d-flex flex-row">
     <div class="sidebar filter-area">
-        
     </div>
-    
     <div class="content">
         @if (announcements == null)
         {
@@ -25,7 +42,6 @@
         }
         else
         {
-
             @foreach (var announcement in announcements!)
             {
                 <AnnouncementComponent Announcement="announcement"/>
@@ -64,5 +80,13 @@
         announcements = (await AnnouncementService.GetAsync(new SearchAnnouncementDto())).ToList();
     }
 
-    IList<int> values = new int[] { 1, 2 };
+    // DROPDOWN
+    public Pet Value { get; set; }
+
+    public Dictionary<PetType, int> petDictionary = new Dictionary<PetType, int>();
+
+    public void Search()
+    {
+        
+    }
 }
