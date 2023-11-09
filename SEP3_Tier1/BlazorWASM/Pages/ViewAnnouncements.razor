@@ -21,6 +21,17 @@
         Style="width: 40%; max-width: 400px;"
         @onchange="OnDropDownChange"
         @onclick="OnDropDownChange"/>
+    
+    @* <RadzenDropDown *@
+    @*         @bind-Value=filteredPetTypes *@
+    @*         Data="PetType.PetTypesWithNames" *@
+    @*         Multiple=true *@
+    @*         Placeholder="Select pet types" *@
+    @*         TextProperty="Name" *@
+    @*         Chips="true" *@
+    @*         ValueProperty="Value" *@
+    @*         SelectAllText="Select all types" *@
+    @*         Style="width: 100%; max-width: 400px;" /> *@
 </div>
 
 <div class="d-flex flex-row">
@@ -73,6 +84,7 @@
 
     // DROPDOWN
     public List<String> petType = new List<String>();
+    private List<PetType.Type> filteredPetTypes = new();
     
     public void Search()
     {
