@@ -7,6 +7,22 @@
       "Email": "sevastian@gmail.com",
       "PhoneNumber": null,
       "Password": "password"
+    },
+    {
+      "Name": null,
+      "Username": "cubeco",
+      "Age": null,
+      "Email": "cubeco",
+      "PhoneNumber": null,
+      "Password": "password"
+    },
+    {
+      "Name": null,
+      "Username": "cubeco",
+      "Age": null,
+      "Email": "michael.leo.dk@gmail.com",
+      "PhoneNumber": null,
+      "Password": "password"
     }
   ],
   "Announcements": [

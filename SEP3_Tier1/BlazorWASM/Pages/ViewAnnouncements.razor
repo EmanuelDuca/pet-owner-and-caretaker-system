@@ -5,14 +5,36 @@
 @inject IAnnouncementService AnnouncementService
 
 <div>
-    
+    <RadzenTextBox Placeholder="Search..." Icon="oi oi-magnifying-glass">
+        <span class="oi oi-magnifying-glass" aria-hidden="true"></span>
+    </RadzenTextBox>
+    <RadzenDropDown
+        @bind-Value=@Value
+        Data=@Enum.GetNames(typeof(PetType))
+        AllowClear=true
+        Multiple=true
+        Placeholder="Select pet types"
+        Chips=true
+        SelectAllText="Select all types"
+        Style="width: 100%; max-width: 400px;" />
+    <RadzenTextBox Placeholder="Search...">
+        <Template>
+            <div class="input-group">
+                <input class="form-control" />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" @onclick="Search">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </Template>
+    </RadzenTextBox>
 </div>
 
+
 <div class="d-flex flex-row">
-    @* <div class="sidebar filter-area"> *@
-    @*      *@
-    @* </div> *@
-    
+    <div class="sidebar filter-area">
+    </div>
     <div class="content">
         @if (announcements == null)
         {
@@ -20,7 +42,6 @@
         }
         else
         {
-
             @foreach (var announcement in announcements!)
             {
                 <AnnouncementComponent Announcement="announcement"/>
@@ -32,17 +53,19 @@
 <div class="d-flex flex-wrap flex-row">
     @for (int i = 1; i < 6; i++)
     {
-        <div class="card d-flex flex-row">
-            <div class="column ann-image-col">
-                <div class="rounded-image">
-                    <img src="https://www.petspyjamas.com/uploads/2020/04/shutterstock_189642425-690x460.jpg"/>
-                </div>
+        <div class="card d-flex flex-row container-fluid row">
+            <div class="column">
+                  <div class="rounded-image">
+                      <img src="https://www.petspyjamas.com/uploads/2020/04/shutterstock_189642425-690x460.jpg"/>
+                  </div>
             </div>
             <div class="column">
                 <div style="padding: 10px">
                     <h3>Announcement @i</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 </div>
+                <RadzenButton Style="margin-top: 2rem">Create announcement</RadzenButton>
+                @* <MdButton style="--md-elevated-button-container-color: var(--primary-color); --md-elevated-button-label-text-color: #000000">Request service</MdButton> *@
             </div>
         </div>
     }
@@ -57,4 +80,13 @@
         announcements = (await AnnouncementService.GetAsync(new SearchAnnouncementDto())).ToList();
     }
 
+    // DROPDOWN
+    public Pet Value { get; set; }
+
+    public Dictionary<PetType, int> petDictionary = new Dictionary<PetType, int>();
+
+    public void Search()
+    {
+        
+    }
 }
