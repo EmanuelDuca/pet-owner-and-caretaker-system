@@ -83,8 +83,12 @@
     }
 
     // DROPDOWN
-    public List<String> petType = new List<String>();
-    private List<PetType.Type> filteredPetTypes = new();
+    public List<String> petType = new List<String>(); // прийдется список стрингов превратить в энам
+    private List<PetType.Type> filteredPetTypes = new(); 
+    // или же оставить так и тогда напрямую отдавать список в SearchAnnouncemntDto,
+    // ведь теперь для использования энама, нужно всего навсего указать Text & ValueProperties
+    // + в случае если энам состоить из двух слов то его строчный вид будет типа такой БляПиздец
+    // а я сделал, чтобы было так: Бля пиздец
     
     public void Search()
     {

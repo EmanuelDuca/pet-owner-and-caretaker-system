@@ -38,7 +38,7 @@ public class AnnouncementLogic : IAnnouncementLogic
         return (await announcementDao.GetAsync(searchAnnouncementDto)).OrderByDescending(a => a.CreationDateTime);
     }
 
-    private void ValidateData(DateTime startDate, DateTime endDate, string? postalCode)
+    private void ValidateData(DateTime? startDate, DateTime? endDate, string? postalCode)
     {
         if (startDate < DateTime.Today || startDate > endDate || endDate > startDate + TimeSpan.FromDays(30)) 
             throw new InvalidDataException("Chosen date is invalid, check that end date is after start date.");

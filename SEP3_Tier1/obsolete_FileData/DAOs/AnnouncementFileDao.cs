@@ -90,11 +90,11 @@ public class AnnouncementFileDao : IAnnouncementDao
             Id = announcement.Id,
             PetOwner = existing.PetOwner,
             CreationDateTime = existing.CreationDateTime,
-            EndDate = announcement.EndDate,
-            StartDate = announcement.StartDate,
+            EndDate = announcement.EndDate ?? existing.EndDate,
+            StartDate = announcement.StartDate ?? existing.EndDate,
             Pet = announcement.Pet ?? existing.Pet,
-            PostalCode = announcement.PostalCode == null ? existing.PostalCode : announcement.PostalCode,
-            ServiceDescription = announcement.ServiceDescription == null ? existing.PostalCode : announcement.ServiceDescription
+            PostalCode = announcement.PostalCode ?? existing.PostalCode,
+            ServiceDescription = announcement.ServiceDescription ?? existing.PostalCode
         };
         context.Announcements.Remove(existing);
         context.Announcements.Add(createdAnnouncement);
