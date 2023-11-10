@@ -33,11 +33,18 @@ public class AnnouncementController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult> GetAsync([FromQuery] string? startTime, [FromQuery] string? endTime,
-        [FromQuery] string? description, [FromQuery] string? postalCode)
+        [FromQuery] string? description, [FromQuery] string? postalCode, [FromQuery] IEnumerable<PetType.Type> types)
     {
         try
         {
-            SearchAnnouncementDto parameters = new(startTime, endTime, description, postalCode);
+            SearchAnnouncementDto parameters = new SearchAnnouncementDto
+            {
+                StartTime = startTime,
+                EndTime = endTime,
+                DescriptionContains = description,
+                PostalCode = postalCode,
+                PetTypes = types
+            };
             var announcements = await logic.GetAsync(parameters);
             return Ok(announcements);
         }

@@ -42,6 +42,21 @@ public class AnnouncementFileDao : IAnnouncementDao
             announcements = announcements.Where(t => t.StartDate.Equals(DateTime.Parse(searchParameters.StartTime)));
         }
 
+        if (!string.IsNullOrEmpty(searchParameters.DescriptionContains))
+        {
+            announcements = announcements.Where(t => t.ServiceDescription.Contains(searchParameters.DescriptionContains, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (!string.IsNullOrEmpty(searchParameters.PostalCode))
+        {
+            announcements = announcements.Where(t => t.PostalCode.Equals(searchParameters.PostalCode));
+        }
+
+        if (searchParameters.PetTypes != null && searchParameters.PetTypes.Any())
+        {
+            announcements = announcements.Where(t => searchParameters.PetTypes.Contains(t.Pet.PetType));
+        }
+
         return Task.FromResult(announcements);
     }
 

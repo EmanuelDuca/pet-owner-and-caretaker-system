@@ -1,23 +1,14 @@
 
+using Domain.Models;
+
 namespace Domain.DTOs;
 
 public class SearchAnnouncementDto: SearchDto
 {
-    public string? StartTime { get; } = null;
-    public string? EndTime { get; } = null;
-    public string? Description { get; } = null;
-    public string? PostalCode { get; } = null;
+    public string? StartTime { get; set; }
+    public string? EndTime { get; set; }
+    public string? DescriptionContains { get; set; }
+    public string? PostalCode { get; set; }
 
-    public SearchAnnouncementDto(string? startTime, string? endTime, string? description, string? postalCode)
-    {
-        StartTime = startTime;
-        EndTime = endTime;
-        Description = description;
-        PostalCode = postalCode;
-    }
-
-    public SearchAnnouncementDto()
-    {
-        
-    }
+    public IEnumerable<PetType.Type>? PetTypes { get; set; }
 }
