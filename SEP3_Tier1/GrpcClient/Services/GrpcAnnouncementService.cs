@@ -94,11 +94,14 @@ public class GrpcAnnouncementService : IAnnouncementDao
 
     public Task UpdateAsync(AnnouncementUpdateDto dto)
     {
+        // Announcement? existing = await GetByIdAsync(dto.Id);
+        // todo: need to be implemented!
+        
         var request = new AnnouncementProto
         {
             Id = dto.Id,
-            TimeStart = dto.StartDate.ToShortDateString(),
-            TimeFinish = dto.EndDate.ToShortDateString(),
+            TimeStart = dto.StartDate?.ToShortDateString(),
+            TimeFinish = dto.EndDate?.ToShortDateString(),
             PostalCode = dto.PostalCode,
             Description = dto.ServiceDescription,
             Pet = new PetProto
