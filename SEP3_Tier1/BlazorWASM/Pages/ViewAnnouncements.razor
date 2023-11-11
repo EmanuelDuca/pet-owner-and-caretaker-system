@@ -6,7 +6,7 @@
 
 <div style="width: 100%" class="d-flex flex-row">
     <div class="search-container">
-        <RadzenTextBox style="margin-right: 5px" Placeholder="Search..." id="searchInput" class="w-100"/>
+        <RadzenTextBox Placeholder="Search..." id="searchInput" class="w-100"/>
         <span class="oi oi-magnifying-glass" id="searchIcon" @onclick="Search"></span>
     </div>
     
@@ -23,16 +23,25 @@
     @*     @onchange="OnDropDownChange" *@
     @*     @onclick="OnDropDownChange"/> *@
     
-    <RadzenDropDown
-            @bind-Value=filteredPetTypes
-            Data="PetType.PetTypesWithNames"
-            Multiple=true
-            Placeholder="Select pet types"
-            TextProperty="Name"
-            Chips="true"
-            ValueProperty="Value"
-            SelectAllText="Select all types"
-            Style="width: 100%; max-width: 400px;" />
+    <div class="dropdown">
+        <RadzenButton Style="margin-left: 8px">Apply filters</RadzenButton>
+        <div class="dropdown-content">
+              <RadzenDropDown
+                          @bind-Value=filteredPetTypes
+                          Data="PetType.PetTypesWithNames"
+                          Multiple=true
+                          Placeholder="Select pet types"
+                          TextProperty="Name"
+                          Chips="true"
+                          ValueProperty="Value"
+                          SelectAllText="Select all types"
+                          Style="width: 100%; max-width: 400px;" />
+        
+              <RadzenCheckBox Style="margin-top: 8px" Name="CheckBox1" @bind-Value=@isVaccinatedFilter/>
+              <RadzenLabel Text="Vaccinated" Component="CheckBox1" Style="margin-left: 8px; vertical-align: middle;" />
+        </div>
+    </div>
+    
 </div>
 
 <div class="d-flex flex-row">
@@ -86,7 +95,8 @@
     // DROPDOWN
     public List<String> petType = new List<String>(); // прийдется список стрингов превратить в энам
     //зачем если в этом списке хранятся только уже выбранные элементы. Они уже выбраны из энама, и обратно в энам их конвертировать не нужно
-    private List<PetType.Type> filteredPetTypes = new(); 
+    private List<PetType.Type> filteredPetTypes = new();
+    private bool isVaccinatedFilter;
     // или же оставить так и тогда напрямую отдавать список в SearchAnnouncemntDto,
     // ведь теперь для использования энама, нужно всего навсего указать Text & ValueProperties
     // + в случае если энам состоить из двух слов то его строчный вид будет типа такой БляПиздец
