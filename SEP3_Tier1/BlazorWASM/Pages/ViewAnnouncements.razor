@@ -6,32 +6,33 @@
 
 <div style="width: 100%" class="d-flex flex-row">
     <div class="search-container">
-        <RadzenTextBox Placeholder="Search..." id="searchInput" class="w-100"/>
+        <RadzenTextBox style="margin-right: 5px" Placeholder="Search..." id="searchInput" class="w-100"/>
         <span class="oi oi-magnifying-glass" id="searchIcon" @onclick="Search"></span>
     </div>
     
-    <RadzenDropDown
-        @bind-Value=@petType
-        Data=@Enum.GetNames(typeof(PetType))
-        AllowClear=true
-        Multiple=true
-        Placeholder="Select pet types"
-        Chips=true
-        SelectAllText="Select all types"
-        Style="width: 40%; max-width: 400px;"
-        @onchange="OnDropDownChange"
-        @onclick="OnDropDownChange"/>
-    
+    @* OBVIOSLY this dropdown requires the previous version of PetType (beeing enum) *@
     @* <RadzenDropDown *@
-    @*         @bind-Value=filteredPetTypes *@
-    @*         Data="PetType.PetTypesWithNames" *@
-    @*         Multiple=true *@
-    @*         Placeholder="Select pet types" *@
-    @*         TextProperty="Name" *@
-    @*         Chips="true" *@
-    @*         ValueProperty="Value" *@
-    @*         SelectAllText="Select all types" *@
-    @*         Style="width: 100%; max-width: 400px;" /> *@
+    @*     @bind-Value=@petType *@
+    @*     Data=@Enum.GetNames(typeof(PetType)) *@
+    @*     AllowClear=true *@
+    @*     Multiple=true *@
+    @*     Placeholder="Select pet types" *@
+    @*     Chips=true *@
+    @*     SelectAllText="Select all types" *@
+    @*     Style="width: 40%; max-width: 400px;" *@
+    @*     @onchange="OnDropDownChange" *@
+    @*     @onclick="OnDropDownChange"/> *@
+    
+    <RadzenDropDown
+            @bind-Value=filteredPetTypes
+            Data="PetType.PetTypesWithNames"
+            Multiple=true
+            Placeholder="Select pet types"
+            TextProperty="Name"
+            Chips="true"
+            ValueProperty="Value"
+            SelectAllText="Select all types"
+            Style="width: 100%; max-width: 400px;" />
 </div>
 
 <div class="d-flex flex-row">
@@ -84,11 +85,14 @@
 
     // DROPDOWN
     public List<String> petType = new List<String>(); // прийдется список стрингов превратить в энам
+    //зачем если в этом списке хранятся только уже выбранные элементы. Они уже выбраны из энама, и обратно в энам их конвертировать не нужно
     private List<PetType.Type> filteredPetTypes = new(); 
     // или же оставить так и тогда напрямую отдавать список в SearchAnnouncemntDto,
     // ведь теперь для использования энама, нужно всего навсего указать Text & ValueProperties
     // + в случае если энам состоить из двух слов то его строчный вид будет типа такой БляПиздец
     // а я сделал, чтобы было так: Бля пиздец
+    //
+    //я видел ты это сделал какимто ЖУТКО сложнвм стринг джоином, и он кажется не работает
     
     public void Search()
     {

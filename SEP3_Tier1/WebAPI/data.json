@@ -73,6 +73,30 @@
         "IsVaccinated": true,
         "Description": "It\u0027s Hugo"
       }
+    },
+    {
+      "Id": 3,
+      "PetOwner": {
+        "Name": null,
+        "Username": null,
+        "Age": null,
+        "Email": "michael.leo.dk@gmail.com",
+        "PhoneNumber": null,
+        "Password": "password"
+      },
+      "StartDate": "2023-11-10T00:00:00+01:00",
+      "EndDate": "2023-11-13T00:00:00+01:00",
+      "PostalCode": "8700",
+      "ServiceDescription": "blabla",
+      "CreationDateTime": "0001-01-01T00:00:00",
+      "Pet": {
+        "Id": 1,
+        "PetName": "Cherry",
+        "PetType": 0,
+        "Weight": 0,
+        "IsVaccinated": true,
+        "Description": "Finwaropigrg"
+      }
     }
   ]
 }

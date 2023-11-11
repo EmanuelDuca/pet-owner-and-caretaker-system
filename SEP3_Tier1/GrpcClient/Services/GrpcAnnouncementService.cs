@@ -2,12 +2,12 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using Application.DaoInterface;
 using Domain;
+using Domain.DTOs;
 using Grpc.Net.Client;
 using Domain.Models;
 using HttpClients.ClientInterfaces;
 
 namespace GrpcClient.Services;
-using Domain.DTOs;
 using Grpc.Core;
 using Grpc.Net.Client;
 using GrpcClient;

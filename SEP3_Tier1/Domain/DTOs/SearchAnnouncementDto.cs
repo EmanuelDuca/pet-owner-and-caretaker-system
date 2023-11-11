@@ -3,7 +3,7 @@ using Domain.Models;
 
 namespace Domain.DTOs;
 
-public class SearchAnnouncementDto: SearchDto
+public class SearchAnnouncementDto : SearchDto
 {
     public string? StartTime { get; set; }
     public string? EndTime { get; set; }
