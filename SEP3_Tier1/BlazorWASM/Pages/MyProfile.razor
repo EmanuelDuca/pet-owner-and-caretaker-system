@@ -1,0 +1,13 @@
+﻿@page "/MyProfile"
+@using System.Security.Claims
+
+<AuthorizeView>
+    <div>@context.User.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value</div>
+</AuthorizeView>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+}

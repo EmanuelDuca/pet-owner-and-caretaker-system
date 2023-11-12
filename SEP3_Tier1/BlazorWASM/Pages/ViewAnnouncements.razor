@@ -4,8 +4,8 @@
 @using Domain.Models
 @inject IAnnouncementService AnnouncementService
 
-<div style="width: 100%" class="d-flex flex-row">
-    <div class="search-container">
+<div class="d-flex flex-row">
+    <div class="search-container w-100">
         <RadzenTextBox Placeholder="Search..." id="searchInput" class="w-100"/>
         <span class="oi oi-magnifying-glass" id="searchIcon" @onclick="Search"></span>
     </div>
@@ -24,7 +24,7 @@
     @*     @onclick="OnDropDownChange"/> *@
     
     <div class="dropdown">
-        <RadzenButton Style="margin-left: 8px">Apply filters</RadzenButton>
+        <RadzenButton Style="margin-left: 8px; min-width: 160px;">Apply filters</RadzenButton>
         <div class="dropdown-content">
               <RadzenDropDown
                           @bind-Value=filteredPetTypes
@@ -35,10 +35,10 @@
                           Chips="true"
                           ValueProperty="Value"
                           SelectAllText="Select all types"
-                          Style="width: 100%; max-width: 400px;" />
+                          Style="width: 100%; max-width: 400px; margin-bottom: 8px" />
         
-              <RadzenCheckBox Style="margin-top: 8px" Name="CheckBox1" @bind-Value=@isVaccinatedFilter/>
-              <RadzenLabel Text="Vaccinated" Component="CheckBox1" Style="margin-left: 8px; vertical-align: middle;" />
+              <RadzenCheckBox @bind-Value=@isVaccinatedFilter/>
+              <RadzenLabel Text="Vaccinated" Style="margin-left: 8px; vertical-align: middle;" />
         </div>
     </div>
     
