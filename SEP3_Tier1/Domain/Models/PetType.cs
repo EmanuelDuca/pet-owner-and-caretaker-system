@@ -4,22 +4,22 @@
 public class PetType
 {
     public Type Value { get; set; }
-    public string Name
-    {
-        get
-        { 
-            string name = Value.ToString();
-            if (name.Count(char.IsUpper) > 1)
-            {
-                name = string.Join("",
-                    name.Select((c, i) => i > 0 && char.IsUpper(c)
-                        ? $" {c.ToString().ToLower()}"
-                        : c.ToString()));
-            }
+    public string Name => NameFromPetType(Value);
 
-            return name;
+    public static string NameFromPetType(Type type)
+    {
+        string name = type.ToString();
+        if (name.Count(char.IsUpper) > 1)
+        {
+            name = string.Join("",
+                name.Select((c, i) => i > 0 && char.IsUpper(c)
+                    ? $" {c.ToString().ToLower()}"
+                    : c.ToString()));
         }
+
+        return name;
     }
+
     public static List<PetType> PetTypesWithNames
     {
         get

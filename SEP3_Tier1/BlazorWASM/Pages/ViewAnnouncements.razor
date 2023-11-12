@@ -2,7 +2,11 @@
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs
 @using Domain.Models
+@using Blazored.LocalStorage
 @inject IAnnouncementService AnnouncementService
+@inject ILocalStorageService LocalStorageService
+@inject IPexelsService ImageService
+@* @attribute [Authorize] *@
 
 <div style="width: 100%" class="d-flex flex-row">
     <div class="search-container">
@@ -35,7 +39,7 @@
                           Chips="true"
                           ValueProperty="Value"
                           SelectAllText="Select all types"
-                          Style="width: 100%; max-width: 400px;" />
+                          Style="width: 100%; max-width: 400px;"/>
         
               <RadzenCheckBox Style="margin-top: 8px" Name="CheckBox1" @bind-Value=@isVaccinatedFilter/>
               <RadzenLabel Text="Vaccinated" Component="CheckBox1" Style="margin-left: 8px; vertical-align: middle;" />
@@ -56,63 +60,58 @@
         {
             @foreach (var announcement in announcements!)
             {
-                <AnnouncementComponent Announcement="announcement"/>
+                <AnnouncementComponent 
+                    Announcement="announcement"/>
             }
         }
     </div>
 </div>
 
-<div class="d-flex flex-wrap flex-row">
-    @for (int i = 1; i < 6; i++)
-    {
-        <div class="card d-flex flex-row container-fluid row">
-            <div class="column">
-                  <div class="rounded-image">
-                      <img src="https://www.petspyjamas.com/uploads/2020/04/shutterstock_189642425-690x460.jpg"/>
-                  </div>
-            </div>
-            <div class="column">
-                <div style="padding: 10px">
-                    <h3>Announcement @i</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-                <RadzenButton Style="margin-top: 2rem">Create announcement</RadzenButton>
-                @* <MdButton style="--md-elevated-button-container-color: var(--primary-color); --md-elevated-button-label-text-color: #000000">Request service</MdButton> *@
-            </div>
-        </div>
-    }
-</div>
-
+@* <div class="d-flex flex-wrap flex-row"> *@
+@*     @for (int i = 1; i < 6; i++) *@
+@*     { *@
+@*         <div class="card d-flex flex-row container-fluid row"> *@
+@*             <div class="column"> *@
+@*                 <div class="rounded-image"> *@
+@*                     <img src="https://www.petspyjamas.com/uploads/2020/04/shutterstock_189642425-690x460.jpg"/> *@
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="column"> *@
+@*                 <div style="padding: 10px"> *@
+@*                     <h3>Announcement @i</h3> *@
+@*                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> *@
+@*                 </div> *@
+@*                 <RadzenButton Style="margin-top: 2rem">Create announcement</RadzenButton> *@
+@*                 $1$ <MdButton style="--md-elevated-button-container-color: var(--primary-color); --md-elevated-button-label-text-color: #000000">Request service</MdButton> #1# *@
+@*             </div> *@
+@*         </div> *@
+@*     } *@
+@* </div> *@
 
 @code {
     private List<Announcement>? announcements;
+    private List<PetType.Type> filteredPetTypes = new();
+    private bool isVaccinatedFilter;
+}
 
+@functions
+{
     protected override async Task OnInitializedAsync()
     {
         announcements = (await AnnouncementService.GetAsync(new SearchAnnouncementDto())).ToList();
     }
-
-    // DROPDOWN
-    public List<String> petType = new List<String>(); // прийдется список стрингов превратить в энам
-    //зачем если в этом списке хранятся только уже выбранные элементы. Они уже выбраны из энама, и обратно в энам их конвертировать не нужно
-    private List<PetType.Type> filteredPetTypes = new();
-    private bool isVaccinatedFilter;
-    // или же оставить так и тогда напрямую отдавать список в SearchAnnouncemntDto,
-    // ведь теперь для использования энама, нужно всего навсего указать Text & ValueProperties
-    // + в случае если энам состоить из двух слов то его строчный вид будет типа такой БляПиздец
-    // а я сделал, чтобы было так: Бля пиздец
-    //
-    //я видел ты это сделал какимто ЖУТКО сложнвм стринг джоином, и он кажется не работает
     
     public void Search()
     {
         Console.WriteLine("pressed");   
-        Console.WriteLine(petType.Count);   
+        Console.WriteLine(filteredPetTypes.Count);   
     }
     
     public void OnDropDownChange()
     {
-        Console.WriteLine(petType);   
+        Console.WriteLine(filteredPetTypes);   
         Console.WriteLine("petType");   
     }
 }
+
+

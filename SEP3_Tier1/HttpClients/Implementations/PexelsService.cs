@@ -12,9 +12,21 @@ public class PexelsService : IPexelsService
         this.client = client;
     }
 
-    public async Task<string> SearchPetImage()
+    public async Task<string> SearchPetImage(string query = "Pet", int pageSize = 25)
     {
-        var photo = await client.SearchPhotosAsync("Pet", "landscape", pageSize: 25);
-        return photo.photos[new Random().Next(25)].source.original;
+        var photo = await client.SearchPhotosAsync(query, "landscape", pageSize: pageSize);
+        return photo.photos[new Random().Next(photo.photos.Count - 1)].source.original;
+    }
+    
+    public async Task<List<string>> SearchPetImageSet(int imageNumber)
+    {
+        var photo = await client.SearchPhotosAsync("Pet", "landscape", pageSize: imageNumber);
+        return photo.photos.Select(p => p.source.original).ToList();
+    }
+    
+    public async Task<List<string>> CustomSearch(string query, string orientation = "landscape", int pageSize = 1)
+    {
+        var photo = await client.SearchPhotosAsync(query, orientation, pageSize: pageSize);
+        return photo.photos.Select(p => p.source.original).ToList();
     }
 }

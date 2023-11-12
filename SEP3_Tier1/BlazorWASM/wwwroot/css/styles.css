@@ -18,8 +18,11 @@
 }
 
 .rounded-image {
+    position: relative;
+    height: 100%;
     width: 300px;
     overflow: hidden;
+    border-radius: 10px;
 }
 
 .rounded-image img{
@@ -38,6 +41,38 @@ main{
 .error-label{
     color: red;
     display: block;
+}
+
+.skeleton{
+    position: relative;
+    overflow: hidden;
+    background-color: #ECECEC;
+
+}
+
+.skeleton:before {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    width: 300%;
+    height: 100%;
+    background: #d1d1d1;
+
+    transform: rotate(-45deg);
+    animation: image_is_not_showing_anim 1.3s linear infinite;
+    box-shadow: 0 0 100px rgba(0,0,0, 0.2);
+    top: 0;
+    left: -100%;
+}
+
+@keyframes image_is_not_showing_anim {
+    from {
+        transform: translateY(-300%) rotate(-45deg);
+    }
+
+    to {
+        transform: translateY(300%) rotate(-45deg);
+    }
 }
 
 
