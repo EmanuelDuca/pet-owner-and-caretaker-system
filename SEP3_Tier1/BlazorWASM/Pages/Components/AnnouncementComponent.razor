@@ -1,10 +1,19 @@
 @using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject IPexelsService ImageService
 
 <div class="card d-flex flex-row">
     <div class="column">
-        <div class="rounded-image">
-            <img src="https://www.petspyjamas.com/uploads/2020/04/shutterstock_189642425-690x460.jpg"/>
-        </div>
+        @if (string.IsNullOrEmpty(ImageSrc))
+        {
+            <div class="rounded-image skeleton"></div>
+        }
+        else
+        {
+            <div class="rounded-image">
+                <img src="@ImageSrc" loading="lazy"/>
+            </div>
+        }
     </div>
     <div class="column announcement-data d-flex flex-column flex-grow-1">
         <div class="inside-card">
@@ -24,4 +33,14 @@
 
 @code {
     [Parameter] public Announcement Announcement { get; set; }
+
+    [Parameter]
+    public string ImageSrc { get; set; } = null;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        ImageSrc = await ImageService.SearchPetImage(PetType.NameFromPetType(Announcement.Pet.PetType), 10);
+    }
+
 }

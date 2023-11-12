@@ -4,7 +4,7 @@
 @using Radzen.Blazor
 @using Blazored.LocalStorage
 @inject IUserAuthService AuthService
-@inject IPexelsService PexelsService
+@inject IPexelsService ImageService
 @inject ILocalStorageService LocalStorageService
 
 
@@ -92,7 +92,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        backgroundImageUrl = await PexelsService.SearchPetImage();
+        backgroundImageUrl = await ImageService.SearchPetImage();
         await LocalStorageService.SetItemAsStringAsync("backgroundImage", backgroundImageUrl);
         Console.WriteLine(backgroundImageUrl);
     }
