@@ -1,13 +1,59 @@
 ﻿@page "/MyProfile"
 @using System.Security.Claims
+@using Domain.DTOs
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject IAnnouncementService AnnouncementService
+@attribute [Authorize]
 
-<AuthorizeView>
-    <div>@context.User.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value</div>
-</AuthorizeView>
+@if (username == null)
+{
+    <label>Loading...</label>
+}
+else
+{
+    <AuthorizeView>
+        <div class="card">
+            <RadzenImage Path="https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-16-512.png" Style="width: 100px; height: 100px; border-radius: 50%;" />
+            <div class="column" Gap="0">
+                <h3>Salutations, @username !</h3>
+            </div>
+        </div>
+        <div></div>
+    </AuthorizeView>
+    <div class="d-flex flex-row">
+        <div class="sidebar filter-area">
+        </div>
+        <div class="content">
+            @if (announcements == null)
+            {
+                <label>Loading...</label>
+            }
+            else
+            {
+                @foreach (var announcement in announcements!)
+                {
+                    <AnnouncementComponent 
+                        Announcement="announcement"/>
+                }
+            }
+        </div>
+    </div>
+}
+
 
 @code {
+    private List<Announcement>? announcements;
+    
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+
+    public string? username;
 
     protected override async Task OnInitializedAsync()
     {
+        AuthenticationState authState = await AuthState;
+        username = authState.User.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value;
+        announcements = (await AnnouncementService.GetAsync(new SearchAnnouncementDto(){Username = username})).ToList();
     }
 }

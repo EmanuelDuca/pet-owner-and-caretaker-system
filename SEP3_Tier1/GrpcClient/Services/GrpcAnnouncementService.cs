@@ -101,14 +101,14 @@ public class GrpcAnnouncementService : IAnnouncementDao
         var request = new AnnouncementProto
         {
             Id = dto.Id,
-            TimeStart = dto.StartDate.ToShortDateString(),
-            TimeFinish = dto.EndDate.ToShortDateString(),
+            TimeStart = dto.StartDate?.ToShortDateString(),
+            TimeFinish = dto.EndDate?.ToShortDateString(),
             PostalCode = dto.PostalCode,
             Description = dto.ServiceDescription,
             Pet = new PetProto
             {
                 PetName = dto.Pet.PetName,
-                PetType = dto.Pet.PetType,
+                PetType = dto.Pet.PetType.ToString(),
                 Weight = dto.Pet.Weight,
                 IsVaccinated = dto.Pet.IsVaccinated,
                 Description = dto.Pet.Description,

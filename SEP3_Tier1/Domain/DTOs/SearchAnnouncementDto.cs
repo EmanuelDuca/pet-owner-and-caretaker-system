@@ -9,6 +9,7 @@ public class SearchAnnouncementDto : SearchDto
     public string? EndTime { get; set; }
     public string? DescriptionContains { get; set; }
     public string? PostalCode { get; set; }
+    public string? Username { get; set; }
 
     public IEnumerable<PetType.Type>? PetTypes { get; set; }
 }

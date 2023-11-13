@@ -33,7 +33,7 @@ public class AnnouncementController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult> GetAsync([FromQuery] string? startTime, [FromQuery] string? endTime,
-        [FromQuery] string? description, [FromQuery] string? postalCode, [FromQuery] IEnumerable<PetType.Type> types)
+        [FromQuery] string? description, [FromQuery] string? postalCode, [FromQuery] string? username, [FromQuery] IEnumerable<PetType.Type> types)
     {
         try
         {
@@ -43,6 +43,7 @@ public class AnnouncementController : ControllerBase
                 EndTime = endTime,
                 DescriptionContains = description,
                 PostalCode = postalCode,
+                Username = username,
                 PetTypes = types
             };
             var announcements = await logic.GetAsync(parameters);
