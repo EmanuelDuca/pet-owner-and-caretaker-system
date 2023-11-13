@@ -8,6 +8,7 @@ using Domain.Models;
 using HttpClients.ClientInterfaces;
 
 namespace GrpcClient.Services;
+using Domain.DTOs;
 using Grpc.Core;
 using Grpc.Net.Client;
 using GrpcClient;
@@ -100,14 +101,14 @@ public class GrpcAnnouncementService : IAnnouncementDao
         var request = new AnnouncementProto
         {
             Id = dto.Id,
-            TimeStart = dto.StartDate?.ToShortDateString(),
-            TimeFinish = dto.EndDate?.ToShortDateString(),
+            TimeStart = dto.StartDate.ToShortDateString(),
+            TimeFinish = dto.EndDate.ToShortDateString(),
             PostalCode = dto.PostalCode,
             Description = dto.ServiceDescription,
             Pet = new PetProto
             {
                 PetName = dto.Pet.PetName,
-                PetType = dto.Pet.PetType.ToString(),
+                PetType = dto.Pet.PetType,
                 Weight = dto.Pet.Weight,
                 IsVaccinated = dto.Pet.IsVaccinated,
                 Description = dto.Pet.Description,
@@ -135,6 +136,11 @@ public class GrpcAnnouncementService : IAnnouncementDao
             throw new Exception($"Announcement was not deleted -- response status {status} from Java");
         }
         return Task.CompletedTask;
+    }
+
+    public Task<Announcement> CreateAsync(Announcement announcement)
+    {
+        throw new NotImplementedException();
     }
 }
     

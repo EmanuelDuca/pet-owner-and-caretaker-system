@@ -32,6 +32,7 @@ public class UserLogic : IUserLogic
                     Username = dto.UserName,
                     Email = dto.Email,
                     Password = dto.Password,
+                    Type = dto.Type
                 };
                 break;
             case "CareTaker":
@@ -40,6 +41,7 @@ public class UserLogic : IUserLogic
                     Username = dto.UserName,
                     Email = dto.Email,
                     Password = dto.Password,
+                    Type = dto.Type
                 };
                 break;
             default:

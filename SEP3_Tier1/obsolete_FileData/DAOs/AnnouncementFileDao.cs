@@ -13,20 +13,44 @@ public class AnnouncementFileDao : IAnnouncementDao
         this.context = context;
     }
 
-    public Task<Announcement> CreateAsync(AnnouncementCreationDto dto)
+    public Task<Announcement> CreateAsync(AnnouncementCreationDto announcement)
     {
-        Console.WriteLine($"Print DateOfCreation Before {dto.CreationDateTime.ToShortDateString()}");
-        var announcement = new Announcement
+        int id = 1;
+        if (context.Announcements.Any())
         {
-            PetOwner = new PetOwner(context.Users.First(u => u.Email.Equals(dto.OwnerEmail))),
-            ServiceDescription = dto.ServiceDescription,
-            PostalCode = dto.PostalCode,
+            id = context.Announcements.Max(a => a.Id);
+            id++;
+        }
+        dto.Id = id;
+
+        User? user = context.Users.FirstOrDefault(u => 
+            u.Email.Equals(dto.OwnerEmail, StringComparison.OrdinalIgnoreCase));
+        
+        PetOwner existingOwner;
+        if (user.Type.Equals("PetOwner", StringComparison.OrdinalIgnoreCase))
+        {
+            existingOwner = User.TransformToPetOwner(user);
+        }else {
+            Console.WriteLine("User is not a petOwner");
+            throw new Exception("Invalid email");
+        }
+        
+        Announcement announcement = new Announcement
+        {
+            Id = dto.Id,
+            PetOwner = existingOwner,
+            CreationDateTime = dto.CreationDateTime,
+            EndDate = dto.EndDate,
             StartDate = dto.StartDate,
             Pet = dto.Pet,
-            CreationDateTime = dto.CreationDateTime,
-            EndDate = dto.EndDate
+            PostalCode = dto.PostalCode,
+            ServiceDescription = dto.ServiceDescription
         };
-        return CreateAsync(announcement);
+        
+        context.Announcements.Add(announcement);
+        context.SaveChanges();
+        
+        return Task.FromResult(announcement);
     }
 
     public Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto searchParameters)
@@ -60,7 +84,7 @@ public class AnnouncementFileDao : IAnnouncementDao
         return Task.FromResult(announcements);
     }
 
-    private Task<Announcement> CreateAsync(Announcement announcement)
+    public Task<Announcement> CreateAsync(Announcement announcement)
     {
         int id = 1;
         if (context.Announcements.Any())
