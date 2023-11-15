@@ -52,10 +52,8 @@ public class UserDAO implements UserDAOInterface {
             System.out.println(user.getAge());
             return user;
         }
-        else
-        {
-            return null;
-        }
+
+        return null;
     }
 
     @Override

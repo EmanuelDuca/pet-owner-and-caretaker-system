@@ -47,6 +47,6 @@
     border-radius: 6px;
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
+.show{
+    display: block !important;
 }

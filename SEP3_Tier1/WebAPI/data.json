@@ -6,7 +6,8 @@
       "Age": null,
       "Email": "sevastian@gmail.com",
       "PhoneNumber": null,
-      "Password": "password"
+      "Password": "password",
+      "Type": null
     },
     {
       "Name": null,
@@ -14,7 +15,8 @@
       "Age": null,
       "Email": "cubeco",
       "PhoneNumber": null,
-      "Password": "password"
+      "Password": "password",
+      "Type": null
     },
     {
       "Name": null,
@@ -22,7 +24,17 @@
       "Age": null,
       "Email": "michael.leo.dk@gmail.com",
       "PhoneNumber": null,
-      "Password": "password"
+      "Password": "password",
+      "Type": null
+    },
+    {
+      "Name": null,
+      "Username": "Sevastian",
+      "Age": null,
+      "Email": "sevastian@gmail.com",
+      "PhoneNumber": null,
+      "Password": "password",
+      "Type": "PetOwner"
     }
   ],
   "Announcements": [
@@ -34,7 +46,8 @@
         "Age": null,
         "Email": "sevastian@gmail.com",
         "PhoneNumber": null,
-        "Password": "password"
+        "Password": "password",
+        "Type": null
       },
       "StartDate": "2023-11-08T14:02:16.023Z",
       "EndDate": "2023-11-08T14:02:16.023Z",
@@ -58,7 +71,8 @@
         "Age": null,
         "Email": "sevastian@gmail.com",
         "PhoneNumber": null,
-        "Password": "password"
+        "Password": "password",
+        "Type": null
       },
       "StartDate": "2023-11-09T00:00:00+01:00",
       "EndDate": "2023-11-12T00:00:00+01:00",
@@ -82,7 +96,8 @@
         "Age": null,
         "Email": "michael.leo.dk@gmail.com",
         "PhoneNumber": null,
-        "Password": "password"
+        "Password": "password",
+        "Type": null
       },
       "StartDate": "2023-11-10T00:00:00+01:00",
       "EndDate": "2023-11-13T00:00:00+01:00",
