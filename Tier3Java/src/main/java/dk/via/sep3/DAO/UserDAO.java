@@ -47,10 +47,8 @@ public class UserDAO implements UserDAOInterface {
         {
             return userRepository.getReferenceById(email);
         }
-        else
-        {
-            return null;
-        }
+
+        return null;
     }
 
     @Override

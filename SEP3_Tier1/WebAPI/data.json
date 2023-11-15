@@ -29,12 +29,12 @@
     },
     {
       "Name": null,
-      "Username": "test",
+      "Username": "Sevastian",
       "Age": null,
-      "Email": "test@gmail.com",
+      "Email": "sevastian@gmail.com",
       "PhoneNumber": null,
       "Password": "password",
-      "Type": "CareTaker"
+      "Type": "PetOwner"
     }
   ],
   "Announcements": [
