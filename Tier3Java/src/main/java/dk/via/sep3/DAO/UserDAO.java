@@ -9,66 +9,57 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserDAO implements UserDAOInterface {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public UserDAO() {
+    @Autowired
+    public UserDAO(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserEntity registerUser(UserEntity userEntity)
     {
-        if ( !userRepository.existsById(userEntity.getEmail()))
-        {
-            userRepository.save(userEntity);
-            return userEntity;
-        }
-        return null;
+        if (userRepository.existsById(userEntity.getEmail()))
+            return null;
+
+        userRepository.save(userEntity);
+        return userEntity;
     }
 
     @Override
     public UserEntity loginUser(String email, String password)
     {
-        if ( userRepository.existsById(email)) {
-            if (userRepository.getReferenceById(email).getPassword().equals(password)) {
-                return userRepository.getReferenceById(email);
-            }
-        }
-        return null;
+        if (!userRepository.existsById(email))
+            return null;
+
+        if(!userRepository.getReferenceById(email).getPassword().equals(password))
+            return null;
+
+        return userRepository.getReferenceById(email);
     }
 
 
     @Override
     public UserEntity findUser(String email)
     {
-        if ( userRepository.existsById(email))
-        {
-            System.out.println(email);
-            UserEntity user = userRepository.getReferenceById(email);
-            System.out.println(user.getAge());
-            return user;
-        }
+        if (!userRepository.existsById(email))
+            return null;
 
-        return null;
+        return userRepository.getReferenceById(email);
     }
 
     @Override
     public Collection<UserEntity> getUsers(String searchType)
     {
-        Collection<UserEntity> users = userRepository.findAll();
-        Collection<UserEntity> usersResult = new ArrayList<UserEntity>();
-        for (var user : users)
-        {
-            if (user.getType().equals(searchType))
-            {
-                usersResult.add(user);
-            }
-        }
-        return usersResult;
+        return userRepository.findAll()
+                .stream()
+                .filter(u -> u.getType().equals(searchType))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Override
@@ -80,15 +71,13 @@ public class UserDAO implements UserDAOInterface {
     @Override
     public String deleteUser(String email)
     {
-       if ( userRepository.existsById(email))
-       {
-           userRepository.deleteById(email);
-           return "User Deleted";
-       }
-       else
-       {
+        if (!userRepository.existsById(email))
            return "User Not Found";
-       }
+
+
+        userRepository.deleteById(email);
+        return "User Deleted";
+
     }
 
     @Override

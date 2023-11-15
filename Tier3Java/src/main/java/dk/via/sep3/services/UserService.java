@@ -1,14 +1,13 @@
 package dk.via.sep3.services;
 
-import dk.via.sep3.DAO.UserDAO;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.UserMapper;
 import dk.via.sep3.shared.UserEntity;
+import io.grpc.Status;
+import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import origin.protobuf.UserProto;
-import origin.protobuf.UserServiceGrpc;
-import origin.protobuf.UsersProto;
+import origin.protobuf.*;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -17,15 +16,16 @@ import java.util.Collection;
 @GRpcService
 public class UserService extends UserServiceGrpc.UserServiceImplBase
 {
-    @Autowired
-    private UserDAOInterface userDAO;
+    private final UserDAOInterface userDAO;
 
-    public UserService()
+    @Autowired
+    public UserService(UserDAOInterface userDAO)
     {
+        this.userDAO = userDAO;
     }
 
     @Transactional
-    public void createUser(origin.protobuf.UserProto request, io.grpc.stub.StreamObserver<origin.protobuf.UserProto> responseObserver) {
+    public void createUser(UserProto request, StreamObserver<UserProto> responseObserver) {
         UserEntity user = new UserEntity(
                 request.getEmail(),
                 request.getUsername(),
@@ -34,53 +34,56 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
                 request.getPhone(),
                 request.getType()
         );
-        if (userDAO.findUser(user.getEmail())==null)
+        if (userDAO.findUser(user.getEmail()) == null)
         {
             UserEntity createdUser = userDAO.registerUser(user);
             responseObserver.onNext(UserMapper.mapProto(createdUser));
             responseObserver.onCompleted();
+            return;
         }
-        else
-        {
-            responseObserver.onError(new Exception("User with this email already exists"));
-        }
+
+
+        responseObserver.onError(GrpcError.constructException("User with this email already exists"));
+        responseObserver.onCompleted();
     }
     @Transactional
     @Override
-    public void logIn(origin.protobuf.LoginUserProto request, io.grpc.stub.StreamObserver<origin.protobuf.UserProto> responseObserver) {
+    public void logIn(LoginUserProto request, StreamObserver<UserProto> responseObserver) {
         UserEntity loginUser = userDAO.loginUser(request.getEmail(), request.getPassword());
         if (loginUser != null)
         {
             responseObserver.onNext(UserMapper.mapProto(loginUser));
             responseObserver.onCompleted();
+            return;
         }
-        else
-        {
-            responseObserver.onError(new Exception("LogIn denied"));
-        }
+
+        responseObserver.onError(GrpcError.constructException("Username or password are incorrect."));
+        responseObserver.onCompleted();
 
     }
     @Transactional
     @Override
-    public void findUser(origin.protobuf.FindUserProto request, io.grpc.stub.StreamObserver<origin.protobuf.UserProto> responseObserver) {
+    public void findUser(FindUserProto request, StreamObserver<UserProto> responseObserver) {
         UserEntity userToFind = userDAO.findUser(request.getEmail());
         if (userToFind != null)
         {
             responseObserver.onNext(UserMapper.mapProto(userToFind));
             responseObserver.onCompleted();
+            return;
         }
-        else
-        {
-            responseObserver.onError(new Exception("There is no user with such an email"));
-        }
+
+        responseObserver.onError(GrpcError.constructException("There is no user with such an email"));
+        responseObserver.onCompleted();
+
+
     }
     @Transactional
     @Override
-    public void searchUser(origin.protobuf.SearchUsersProto request, io.grpc.stub.StreamObserver<origin.protobuf.UsersProto> responseObserver) {
+    public void searchUser(SearchUsersProto request, StreamObserver<UsersProto> responseObserver) {
         Collection<UserEntity> users = userDAO.getUsers(request.getType());
 
         if (users.isEmpty()) {
-            responseObserver.onError(new Exception("No such users"));
+            responseObserver.onError(GrpcError.constructException("No such users"));
             return;
         }
 
@@ -99,12 +102,12 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     }
 
     @Override
-    public void updateUser(origin.protobuf.UserProto request, io.grpc.stub.StreamObserver<origin.protobuf.UserProto> responseObserver) {
+    public void updateUser(UserProto request, StreamObserver<UserProto> responseObserver) {
 
     }
 
     @Override
-    public void deleteUser(origin.protobuf.FindUserProto request, io.grpc.stub.StreamObserver<origin.protobuf.ResponseStatus> responseObserver) {
+    public void deleteUser(FindUserProto request, StreamObserver<ResponseStatus> responseObserver) {
 
     }
 

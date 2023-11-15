@@ -85,11 +85,17 @@ public class GrpcUserService : IUserDao
 
     public async Task<User?> GetByEmailAsync(string email)
     {
-        UserProto receivedUser = await userServiceClient.FindUserAsync(new FindUserProto
+        try
         {
-            Email = email
-        });
-        
-        return await ConvertUserFromGrps(receivedUser);
+            UserProto receivedUser = await userServiceClient.FindUserAsync(new FindUserProto
+            {
+                Email = email
+            });
+            return await ConvertUserFromGrps(receivedUser);
+        }
+        catch (RpcException e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 }

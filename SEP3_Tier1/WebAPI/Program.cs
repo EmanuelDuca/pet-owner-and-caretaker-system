@@ -20,11 +20,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<FileContext>();
 
 //When savind to file
-        // builder.Services.AddScoped<IUserDao, UserFileDao>();
-        // builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
+        builder.Services.AddScoped<IUserDao, UserFileDao>();
+        builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
 
-builder.Services.AddScoped<IUserLogic, UserLogic>();
-builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
+// builder.Services.AddScoped<IUserLogic, UserLogic>();
+// builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
 
 //When using GRPc
 // Experimental code {

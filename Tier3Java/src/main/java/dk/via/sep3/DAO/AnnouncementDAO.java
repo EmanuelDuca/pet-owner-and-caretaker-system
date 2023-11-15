@@ -1,15 +1,14 @@
 package dk.via.sep3.DAO;
 
+import com.google.common.base.Strings;
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.repository.AnnouncementRepository;
 import dk.via.sep3.repository.PetRepository;
-import dk.via.sep3.repository.UserRepository;
 import dk.via.sep3.shared.AnnouncementEntity;
-import dk.via.sep3.shared.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import origin.protobuf.SearchAnnouncementProto;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -17,32 +16,35 @@ import java.util.Optional;
 public class AnnouncementDAO implements AnnouncementDAOInterface
 {
 
-    @Autowired
-    private AnnouncementRepository announcementRepository;
+    private final AnnouncementRepository announcementRepository;
+
+    private final PetRepository petRepository;
 
     @Autowired
-    private PetRepository petRepository;
-
-    public AnnouncementDAO() {
+    public AnnouncementDAO(AnnouncementRepository announcementRepository, PetRepository petRepository) {
+        this.announcementRepository = announcementRepository;
+        this.petRepository = petRepository;
     }
 
     @Override
     public AnnouncementEntity createAnnouncement(AnnouncementEntity announcementEntity)
     {
-        if ( !announcementRepository.existsById(announcementEntity.getId()))
-        {
-            petRepository.save(announcementEntity.getPetEntity());
-            announcementRepository.save(announcementEntity);
-            return announcementEntity;
-        }
-        return null;
+        if (announcementRepository.existsById(announcementEntity.getId()))
+            return null;
+
+
+        petRepository.save(announcementEntity.getPetEntity());
+        announcementRepository.save(announcementEntity);
+        return announcementEntity;
     }
 
     @Override
     public AnnouncementEntity updateAnnouncement(AnnouncementEntity announcementEntity)
     {
         Optional<AnnouncementEntity> a = announcementRepository.findById(announcementEntity.getId());
-        AnnouncementEntity announcement = a.get();
+        AnnouncementEntity announcement = a.orElseThrow(() ->
+                new RuntimeException("Announcement with id " + announcementEntity.getId() + " doesn't exist."));
+
         announcement.setPet(announcementEntity.getPet());
         announcement.setDescription((announcementEntity.getDescription()));
         announcement.setStartDate(announcementEntity.getStartDate());
@@ -55,14 +57,11 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     @Override
     public AnnouncementEntity getAnnouncement(int announcementId)
     {
-        if ( announcementRepository.existsById(announcementId))
-        {
-            return announcementRepository.getReferenceById(announcementId);
-        }
-        else
-        {
+        if (!announcementRepository.existsById(announcementId))
             return null;
-        }
+
+
+        return announcementRepository.getReferenceById(announcementId);
     }
 
     @Override
@@ -72,32 +71,29 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     }
 
     @Override
-    public Collection<AnnouncementEntity> getAnnouncements(String petOwnerEmail, String timeStart, String timeFinish, String postalCode, String petType, int petWeight, boolean petIsVaccinated)
+    public Collection<AnnouncementEntity> getAnnouncements(SearchAnnouncementProto searchDto)
     {
-//        Collection<AnnouncementEntity> announcements = announcementRepository.findAll();
-//        Collection<AnnouncementEntity> announcementResult = new ArrayList<AnnouncementEntity>();
-//        for (var announcement : announcements)
-//        {
-//            if ()
-//            {
-//                announcementResult.add(announcement);
-//            }
-//        }
-//        return announcementResult;
-        return null;
+        return announcementRepository.findAll()
+                .stream()
+                .filter(a -> Strings.isNullOrEmpty(searchDto.getPetOwnerEmail()) || searchDto.getPetOwnerEmail().equals(a.getPetOwner().getEmail()))
+                .filter(a -> Strings.isNullOrEmpty(searchDto.getPetType()) || searchDto.getPetType().equals(a.getPetOwner().getType()))
+                .filter(a -> Strings.isNullOrEmpty(searchDto.getTimeFinish()) || searchDto.getTimeFinish().equals(a.getFinishDate()))
+                .filter(a -> Strings.isNullOrEmpty(searchDto.getTimeStart()) || searchDto.getTimeStart().equals(a.getStartDate()))
+                .filter(a -> Strings.isNullOrEmpty(searchDto.getPostalCode()) || searchDto.getPostalCode().equals(a.getPostalCode()))
+                .toList();
+//                .filter(a -> searchDto.getPetWeight() <= 0 || searchDto.getPetWeight() == a.getPet().getWeight())
+//                .filter(a -> searchDto.getPetIsVaccinated() <= 0 || searchDto.getPetWeight() == a.getPet().getWeight())
     }
 
     @Override
-    public String deleteAnnouncement(AnnouncementEntity announcementEntity)
+    public boolean deleteAnnouncement(AnnouncementEntity announcementEntity)
     {
-        if ( announcementRepository.existsById(announcementEntity.getId()))
+        if (announcementRepository.existsById(announcementEntity.getId()))
         {
             announcementRepository.deleteById(announcementEntity.getId());
-            return "User Deleted";
+            return true;
         }
-        else
-        {
-            return "User Not Found";
-        }
+
+        return false;
     }
 }

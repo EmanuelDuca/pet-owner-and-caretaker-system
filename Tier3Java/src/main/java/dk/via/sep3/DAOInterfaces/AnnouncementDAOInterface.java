@@ -1,6 +1,7 @@
 package dk.via.sep3.DAOInterfaces;
 
 import dk.via.sep3.shared.AnnouncementEntity;
+import origin.protobuf.SearchAnnouncementProto;
 
 import java.util.Collection;
 
@@ -13,14 +14,7 @@ public interface AnnouncementDAOInterface {
 
     Collection<AnnouncementEntity> getAllAnnouncements();
 
-    Collection<AnnouncementEntity> getAnnouncements(
-                                          String petOwnerEmail,
-                                          String timeStart,
-                                          String timeFinish,
-                                          String postalCode,
-                                          String petType,
-                                          int petWeight,
-                                          boolean petIsVaccinated);
+    Collection<AnnouncementEntity> getAnnouncements(SearchAnnouncementProto announcementProto);
 
-    String deleteAnnouncement(AnnouncementEntity announcementEntity);
+    boolean deleteAnnouncement(AnnouncementEntity announcementEntity);
 }

@@ -7,7 +7,7 @@ import origin.protobuf.*;
 public class mainTest
 {
 
-        public static void main(String[] args)
+    public static void main(String[] args)
     {
         ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("localhost", 9091) .usePlaintext() .build();
         UserServiceGrpc.UserServiceBlockingStub userStub = UserServiceGrpc.newBlockingStub(managedChannel);
@@ -15,12 +15,12 @@ public class mainTest
 
         // Test create user
         UserProto user = UserProto.newBuilder()
-                .setEmail("allan10@gmail.com")
+                .setEmail("allan2@gmail.com")
                 .setUsername("Allan")
                 .setPassword("via123")
                 .setAge(40)
                 .setPhone("078830013")
-                .setType("careTaker")
+                .setType("CareTaker")
                 .build();
         try {
             UserProto response = userStub.createUser(user);
@@ -32,6 +32,7 @@ public class mainTest
         }
 
 
+
         //Test find user by email
         UserProto userGet = userStub.findUser(FindUserProto.newBuilder().setEmail("allan@gmail.com").build());
         System.out.println(userGet.getPassword());
@@ -41,9 +42,9 @@ public class mainTest
         System.out.println(userLogIn.getPassword());
 
         //Test search by type
-        UsersProto users1 = userStub.searchUser(SearchUsersProto.newBuilder().setType("petOwner").build());
+        UsersProto users1 = userStub.searchUser(SearchUsersProto.newBuilder().setType("PetOwner").build());
         System.out.println(users1.getUsersCount());
-        UsersProto users2 = userStub.searchUser(SearchUsersProto.newBuilder().setType("careTaker").build());
+        UsersProto users2 = userStub.searchUser(SearchUsersProto.newBuilder().setType("CareTaker").build());
         System.out.println(users2.getUsersCount());
 
         //Create announcement
