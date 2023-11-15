@@ -30,19 +30,21 @@
     <div class="dropdown">
         <RadzenButton Style="margin-left: 8px; min-width: 160px;">Apply filters</RadzenButton>
         <div class="dropdown-content">
-              <RadzenDropDown
-                          @bind-Value=filteredPetTypes
-                          Data="PetType.PetTypesWithNames"
-                          Multiple=true
-                          Placeholder="Select pet types"
-                          TextProperty="Name"
-                          Chips="true"
-                          ValueProperty="Value"
-                          SelectAllText="Select all types"
-                          Style="width: 100%; max-width: 400px; margin-bottom: 8px" />
+            <RadzenDropDown
+                @bind-Value=filteredPetTypes
+                Data="PetType.PetTypesWithNames"
+                Multiple=true
+                Placeholder="Select pet types"
+                TextProperty="Name"
+                Chips="true"
+                ValueProperty="Value"
+                SelectAllText="Select all types"
+                Style="width: 100%; max-width: 400px; margin-bottom: 8px; .RadzenDropDown:hover .dropdown-content{
+                                                                             display: block;
+                                                                         }" />
         
               <RadzenCheckBox @bind-Value=@isVaccinatedFilter/>
-              <RadzenLabel Text="Vaccinated" Style="margin-left: 8px; vertical-align: middle;" />
+            <RadzenLabel Text="Vaccinated" Style="margin-left: 8px; vertical-align: middle"/>
         </div>
     </div>
     

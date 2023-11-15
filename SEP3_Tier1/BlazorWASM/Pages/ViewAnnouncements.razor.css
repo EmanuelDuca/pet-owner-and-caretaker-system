@@ -47,6 +47,7 @@
     border-radius: 6px;
 }
 
-.dropdown:hover .dropdown-content {
+.rz-popup:hover .dropdown-content {
     display: block;
 }
+

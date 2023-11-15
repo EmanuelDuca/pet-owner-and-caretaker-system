@@ -33,8 +33,20 @@ else
             {
                 @foreach (var announcement in announcements!)
                 {
-                    <AnnouncementComponent 
-                        Announcement="announcement"/>
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="card small-card">
+                            <button class="icon-button">
+                                <span class="oi oi-pencil"></span>
+                            </button>
+                            <button class="icon-button">
+                                <span class="oi oi-trash"></span>
+                            </button>
+                            <button class="icon-button">
+                                <span class="oi oi-share"></span>
+                            </button>
+                        </div>
+                        <AnnouncementComponent Announcement="announcement"/>
+                    </div>
                 }
             }
         </div>
