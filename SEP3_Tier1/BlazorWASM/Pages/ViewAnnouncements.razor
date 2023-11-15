@@ -28,8 +28,8 @@
     @*     @onclick="OnDropDownChange"/> *@
     
     <div class="dropdown">
-        <RadzenButton Style="margin-left: 8px; min-width: 160px;">Apply filters</RadzenButton>
-        <div class="dropdown-content">
+        <RadzenButton Style="margin-left: 8px; min-width: 160px;" Click="@(_ => ShowDropDownContent())">Apply filters</RadzenButton>
+        <div class="@classDropDown">
               <RadzenDropDown
                           @bind-Value=filteredPetTypes
                           Data="PetType.PetTypesWithNames"
@@ -67,44 +67,44 @@
     </div>
 </div>
 
-@* <div class="d-flex flex-wrap flex-row"> *@
-@*     @for (int i = 1; i < 6; i++) *@
-@*     { *@
-@*         <div class="card d-flex flex-row container-fluid row"> *@
-@*             <div class="column"> *@
-@*                 <div class="rounded-image"> *@
-@*                     <img src="https://www.petspyjamas.com/uploads/2020/04/shutterstock_189642425-690x460.jpg"/> *@
-@*                 </div> *@
-@*             </div> *@
-@*             <div class="column"> *@
-@*                 <div style="padding: 10px"> *@
-@*                     <h3>Announcement @i</h3> *@
-@*                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> *@
-@*                 </div> *@
-@*                 <RadzenButton Style="margin-top: 2rem">Create announcement</RadzenButton> *@
-@*                 $1$ <MdButton style="--md-elevated-button-container-color: var(--primary-color); --md-elevated-button-label-text-color: #000000">Request service</MdButton> #1# *@
-@*             </div> *@
-@*         </div> *@
-@*     } *@
-@* </div> *@
 
 @code {
     private List<Announcement>? announcements;
     private List<PetType.Type> filteredPetTypes = new();
+    private string classDropDown = "dropdown-content";
     private bool isVaccinatedFilter;
+    private bool isFilterShown;
+
+    private bool IsFilterShown
+    {
+        get => isFilterShown;
+        set
+        {
+            isFilterShown = value;
+            classDropDown = "dropdown-content";
+            if (isFilterShown)
+                classDropDown += " show";
+            Console.WriteLine(classDropDown);
+        }
+    }
 }
 
 @functions
 {
     protected override async Task OnInitializedAsync()
     {
-        announcements = (await AnnouncementService.GetAsync(new SearchAnnouncementDto())).ToList();
+        announcements = (await AnnouncementService.GetAsync(null)).ToList();
     }
     
     public void Search()
     {
         Console.WriteLine("pressed");   
         Console.WriteLine(filteredPetTypes.Count);   
+    }
+
+    public void ShowDropDownContent()
+    {
+        IsFilterShown = !IsFilterShown;
     }
     
     public void OnDropDownChange()

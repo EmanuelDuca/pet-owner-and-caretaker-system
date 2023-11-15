@@ -22,6 +22,9 @@ public class mainTest
         UserProto response = userStub.createUser(user);
         System.out.println(response.getEmail());
 
+        UserProto user1 = userStub.findUser(FindUserProto.newBuilder().setEmail("allan@gmail.com").build());
+        System.out.println(user1.getPhone());
+
         managedChannel.shutdown();
     }
 }
