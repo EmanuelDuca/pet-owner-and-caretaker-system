@@ -15,12 +15,12 @@ public class mainTest
 
         // Test create user
         UserProto user = UserProto.newBuilder()
-                .setEmail("allan10@gmail.com")
+                .setEmail("allan@gmail.com")
                 .setUsername("Allan")
                 .setPassword("via123")
                 .setAge(40)
                 .setPhone("078830013")
-                .setType("careTaker")
+                .setType("petOwner")
                 .build();
         try {
             UserProto response = userStub.createUser(user);
