@@ -16,15 +16,15 @@ import java.util.Collection;
 @GRpcService
 public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementServiceImplBase {
 
-    private final UserDAOInterface userDAO;
-
-    private final AnnouncementDAOInterface announcementDAO;
+    @Autowired
+    private UserDAOInterface userDAO;
 
     @Autowired
-    public AnnouncementService(AnnouncementDAOInterface announcementDAO, UserDAOInterface userDAO)
+    private AnnouncementDAOInterface announcementDAO;
+
+
+    public AnnouncementService()
     {
-        this.announcementDAO = announcementDAO;
-        this.userDAO = userDAO;
     }
     @Transactional
     public void createAnnouncement(AnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)

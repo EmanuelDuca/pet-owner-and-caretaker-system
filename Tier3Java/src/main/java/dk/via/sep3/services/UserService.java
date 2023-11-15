@@ -16,12 +16,11 @@ import java.util.Collection;
 @GRpcService
 public class UserService extends UserServiceGrpc.UserServiceImplBase
 {
-    private final UserDAOInterface userDAO;
-
     @Autowired
-    public UserService(UserDAOInterface userDAO)
+    private UserDAOInterface userDAO;
+
+    public UserService()
     {
-        this.userDAO = userDAO;
     }
 
     @Transactional

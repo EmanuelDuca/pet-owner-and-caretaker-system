@@ -15,7 +15,7 @@ public class mainTest
 
         // Test create user
         UserProto user = UserProto.newBuilder()
-                .setEmail("allan2@gmail.com")
+                .setEmail("allan5@gmail.com")
                 .setUsername("Allan")
                 .setPassword("via123")
                 .setAge(40)
