@@ -42,7 +42,6 @@ public class AnnouncementFileDao : IAnnouncementDao
             EndDate = dto.EndDate,
             StartDate = dto.StartDate,
             Pet = dto.Pet,
-            AuthorUsername = dto.AuthorUsername,
             CreationDateTime = dto.CreationDateTime,
             PostalCode = dto.PostalCode,
             ServiceDescription = dto.ServiceDescription
@@ -70,11 +69,6 @@ public class AnnouncementFileDao : IAnnouncementDao
         if (!string.IsNullOrEmpty(searchParameters.DescriptionContains))
         {
             announcements = announcements.Where(t => t.ServiceDescription.Contains(searchParameters.DescriptionContains, StringComparison.OrdinalIgnoreCase));
-        }
-        
-        if (!string.IsNullOrEmpty(searchParameters.Username))
-        {
-            announcements = announcements.Where(t => t.AuthorUsername.ToString()!.Equals(searchParameters.Username));
         }
 
         if (!string.IsNullOrEmpty(searchParameters.PostalCode))
