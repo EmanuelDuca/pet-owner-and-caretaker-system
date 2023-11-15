@@ -3,16 +3,13 @@ package dk.via.sep3.services;
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.AnnouncementMapper;
-import dk.via.sep3.mappers.UserMapper;
 import dk.via.sep3.shared.AnnouncementEntity;
 import dk.via.sep3.shared.PetEntity;
-import dk.via.sep3.shared.PetOwnerEntity;
-import dk.via.sep3.shared.UserEntity;
-import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import origin.protobuf.*;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -28,11 +25,11 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
     public AnnouncementService()
     {
     }
-
+    @Transactional
     public void createAnnouncement(origin.protobuf.AnnouncementProto request, io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementProto> responseObserver)
     {
         AnnouncementEntity announcement = new AnnouncementEntity(
-                (PetOwnerEntity) userDAO.getUsers(request.getPetOwnerEmail()),
+                userDAO.findUser(request.getPetOwnerEmail()),
                 request.getDescription(),
                 request.getTimeStart(),
                 request.getTimeFinish(),
@@ -42,7 +39,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
                         request.getPet().getWeight(),
                         request.getPet().getIsVaccinated(),
                         request.getPet().getDescription(),
-                        (PetOwnerEntity) userDAO.findUser(request.getPetOwnerEmail())
+                        userDAO.findUser(request.getPetOwnerEmail())
                 ),
                 request.getPostalCode()
         );
@@ -51,7 +48,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         responseObserver.onNext(AnnouncementMapper.mapToProto(announcementRespond));
         responseObserver.onCompleted();
     }
-
+    @Transactional
     public void findAnnouncements(origin.protobuf.SearchAnnouncementProto request, io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementsProto> responseObserver)
     {
         Collection<AnnouncementEntity> announcements = announcementDAO.getAnnouncements(
@@ -76,15 +73,14 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         responseObserver.onNext(announcementsProtoItems);
         responseObserver.onCompleted();
     }
-
+    @Transactional
     public void getAnnouncement(origin.protobuf.FindAnnouncementProto request, io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementProto> responseObserver)
     {
         responseObserver.onNext(AnnouncementMapper.mapToProto(announcementDAO.getAnnouncement(request.getId())));
         responseObserver.onCompleted();
     }
 
-    /**
-     */
+    @Transactional
     public void updateAnnouncement(origin.protobuf.AnnouncementProto request, io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementProto> responseObserver)
     {
         AnnouncementEntity announcement = announcementDAO.getAnnouncement(request.getId());
@@ -102,8 +98,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         responseObserver.onCompleted();
     }
 
-    /**
-     */
+    @Transactional
     public void deleteAnnouncement(origin.protobuf.FindAnnouncementProto request, io.grpc.stub.StreamObserver<origin.protobuf.ResponseStatus> responseObserver)
     {
         String response = announcementDAO.deleteAnnouncement(announcementDAO.getAnnouncement(request.getId()));

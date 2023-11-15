@@ -20,6 +20,9 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     @Autowired
     private AnnouncementRepository announcementRepository;
 
+    @Autowired
+    private PetRepository petRepository;
+
     public AnnouncementDAO() {
     }
 
@@ -28,6 +31,7 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     {
         if ( !announcementRepository.existsById(announcementEntity.getId()))
         {
+            petRepository.save(announcementEntity.getPetEntity());
             announcementRepository.save(announcementEntity);
             return announcementEntity;
         }

@@ -1,8 +1,6 @@
 package dk.via.sep3.mappers;
 
 import dk.via.sep3.shared.AnnouncementEntity;
-import dk.via.sep3.shared.PetOwnerEntity;
-import org.springframework.stereotype.Repository;
 import origin.protobuf.AnnouncementProto;
 
 

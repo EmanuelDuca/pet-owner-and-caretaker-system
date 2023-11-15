@@ -1,10 +1,7 @@
 package dk.via.sep3.mappers;
 
 
-import dk.via.sep3.DAO.UserDAO;
-import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.shared.PetEntity;
-import dk.via.sep3.shared.PetOwnerEntity;
 import origin.protobuf.*;
 
 public class PetMapper

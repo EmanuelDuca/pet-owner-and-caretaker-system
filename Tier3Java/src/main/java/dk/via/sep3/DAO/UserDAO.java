@@ -6,6 +6,7 @@ import dk.via.sep3.shared.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -40,12 +41,16 @@ public class UserDAO implements UserDAOInterface {
         return null;
     }
 
+
     @Override
     public UserEntity findUser(String email)
     {
         if ( userRepository.existsById(email))
         {
-            return userRepository.getReferenceById(email);
+            System.out.println(email);
+            UserEntity user = userRepository.getReferenceById(email);
+            System.out.println(user.getAge());
+            return user;
         }
         else
         {

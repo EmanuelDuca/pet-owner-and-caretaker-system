@@ -11,7 +11,7 @@ public class AnnouncementEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    private PetOwnerEntity petOwner;
+    private UserEntity petOwner;
     private String description;
     private String startDate;
     private String finishDate;
@@ -23,7 +23,7 @@ public class AnnouncementEntity {
     public AnnouncementEntity() {
     }
 
-    public AnnouncementEntity(int id, PetOwnerEntity petOwner, String description, String startDate, String finishDate, PetEntity petEntity, String postalCode) {
+    public AnnouncementEntity(int id, UserEntity petOwner, String description, String startDate, String finishDate, PetEntity petEntity, String postalCode) {
         this.id = id;
         this.petOwner = petOwner;
         this.description = description;
@@ -33,7 +33,7 @@ public class AnnouncementEntity {
         this.postalCode = postalCode;
     }
 
-    public AnnouncementEntity(PetOwnerEntity petOwner, String description, String startDate, String finishDate, PetEntity petEntity, String postalCode) {
+    public AnnouncementEntity(UserEntity petOwner, String description, String startDate, String finishDate, PetEntity petEntity, String postalCode) {
         this.petOwner = petOwner;
         this.description = description;
         this.startDate = startDate;
@@ -116,12 +116,11 @@ public class AnnouncementEntity {
         this.dateOfCreation = dateOfCreation;
     }
 
-
-    public PetOwnerEntity getPetOwner() {
+    public UserEntity getPetOwner() {
         return petOwner;
     }
 
-    public void setPetOwner(PetOwnerEntity petOwner) {
+    public void setPetOwner(UserEntity petOwner) {
         this.petOwner = petOwner;
     }
 }
