@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "origin.protobuf";
+
+service UserService{
+  rpc CreateUser(UserProto) returns (UserProto);
+  rpc LogIn(LoginUserProto) returns (UserProto);
+  rpc FindUser(FindUserProto) returns (UserProto);
+  rpc SearchUser(SearchUsersProto) returns (UsersProto);
+  rpc UpdateUser(UserProto) returns (UserProto);
+  rpc DeleteUser(FindUserProto) returns (ResponseStatus);
+
+}
+
+service AnnouncementService{
+  rpc CreateAnnouncement(AnnouncementProto) returns (AnnouncementProto);
+  rpc FindAnnouncements(SearchAnnouncementProto) returns (AnnouncementsProto);
+  rpc GetAnnouncement(FindAnnouncementProto) returns (AnnouncementProto);
+  rpc UpdateAnnouncement(AnnouncementProto) returns (AnnouncementProto);
+  rpc DeleteAnnouncement(FindAnnouncementProto) returns (ResponseStatus);
+}
+
+
+message UserProto{
+  string email = 1;
+  string username = 2;
+  string password = 3;
+  int32 age = 4;
+  string phone = 5;
+  string type = 6;
+}
+
+message UsersProto{
+  repeated UserProto users = 1;
+}
+
+message FindUserProto{
+  string email = 1;
+}
+
+message SearchUsersProto{
+  string type = 1;
+}
+
+
+message LoginUserProto{
+  string email = 1;
+  string password = 2;
+}
+
+message AnnouncementProto{
+  string petOwnerEmail = 1;
+  string description = 2;
+  string timeStart = 3;
+  string timeFinish = 4;
+  PetProto pet = 5;
+  string postalCode = 6;
+  string dateOfCreation = 7;
+  int32 id = 8;
+}
+
+message AnnouncementsProto{
+  repeated AnnouncementProto announcements = 1;
+}
+
+message FindAnnouncementProto{
+  int32 id=1;
+}
+
+message SearchAnnouncementProto{
+  string petOwnerEmail = 1;
+  string timeStart = 2;
+  string timeFinish = 3;
+  string postalCode = 4;
+  string petType = 5;
+  int32 petWeight = 6;
+  bool petIsVaccinated = 7;
+}
+
+message PetProto{
+  string petName = 1;
+  string petType = 2;
+  int32 weight = 3;
+  bool isVaccinated = 4;
+  string description =5;
+  int32 id = 6;
+  string ownerEmail = 7;
+}
+
+message ResponseStatus{
+  string responseStatus =1;
+}
+
+message Void{}
