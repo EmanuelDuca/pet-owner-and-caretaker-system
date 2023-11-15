@@ -73,14 +73,14 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     {
         return announcementRepository.findAll()
                 .stream()
-                .filter(a -> Strings.isNullOrEmpty(searchDto.getPetOwnerEmail()) || searchDto.getPetOwnerEmail().equals(a.getPetOwner().getEmail()))
-                .filter(a -> Strings.isNullOrEmpty(searchDto.getPetType()) || searchDto.getPetType().equals(a.getPetOwner().getType()))
-                .filter(a -> Strings.isNullOrEmpty(searchDto.getTimeFinish()) || searchDto.getTimeFinish().equals(a.getFinishDate()))
-                .filter(a -> Strings.isNullOrEmpty(searchDto.getTimeStart()) || searchDto.getTimeStart().equals(a.getStartDate()))
-                .filter(a -> Strings.isNullOrEmpty(searchDto.getPostalCode()) || searchDto.getPostalCode().equals(a.getPostalCode()))
+                .filter(a -> !searchDto.getPetOwnerUsername().isInitialized() || searchDto.getPetOwnerUsername().getStr().equals(a.getPetOwner().getEmail()))
+                .filter(a -> !searchDto.getPetType().isInitialized() || searchDto.getPetType().getStr().equals(a.getPetOwner().getType()))
+                .filter(a -> !searchDto.getTimeFinish().isInitialized() || searchDto.getTimeFinish().getStr().equals(a.getFinishDate()))
+                .filter(a -> !searchDto.getTimeStart().isInitialized() || searchDto.getTimeStart().getStr().equals(a.getStartDate()))
+                .filter(a -> !searchDto.getPostalCode().isInitialized() || searchDto.getPostalCode().getStr().equals(a.getPostalCode()))
+                .filter(a -> !searchDto.getPetWeight().isInitialized()|| searchDto.getPetWeight().getInt() == a.getPet().getWeight())
+                .filter(a -> !searchDto.getPetIsVaccinated().isInitialized() || searchDto.getPetIsVaccinated().getBool() == a.getPet().isVaccinated())
                 .toList();
-//                .filter(a -> searchDto.getPetWeight() <= 0 || searchDto.getPetWeight() == a.getPet().getWeight())
-//                .filter(a -> searchDto.getPetIsVaccinated() <= 0 || searchDto.getPetWeight() == a.getPet().getWeight())
     }
 
     @Override

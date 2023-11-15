@@ -1,5 +1,6 @@
 package dk.via.sep3.server;
 
+import dk.via.sep3.services.AnnouncementService;
 import dk.via.sep3.services.UserService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -10,6 +11,7 @@ public  class ServerServicesGrpc {
         Server server = ServerBuilder
                 .forPort(9091)
                 .addService(new UserService())
+                .addService(new AnnouncementService())
                 .build();
         server.start();
         System.out.println("Server is running on port:" + server.getPort());

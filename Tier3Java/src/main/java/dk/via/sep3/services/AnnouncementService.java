@@ -26,7 +26,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
     public AnnouncementService()
     {
     }
-    @Transactional
+
     public void createAnnouncement(AnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
     {
         AnnouncementEntity announcement = new AnnouncementEntity(
@@ -49,10 +49,11 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         responseObserver.onNext(AnnouncementMapper.mapToProto(announcementRespond));
         responseObserver.onCompleted();
     }
-    @Transactional
+
     public void findAnnouncements(SearchAnnouncementProto request, StreamObserver<AnnouncementsProto> responseObserver)
     {
-        Collection<AnnouncementEntity> announcements = announcementDAO.getAnnouncements(request);
+        Collection<AnnouncementEntity> announcements = request == null? announcementDAO.getAllAnnouncements() : announcementDAO.getAnnouncements(request);
+
         if (announcements.isEmpty())
         {
             responseObserver.onError(GrpcError.constructException("No such announcements"));
@@ -67,14 +68,14 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         responseObserver.onNext(announcementsProtoItems);
         responseObserver.onCompleted();
     }
-    @Transactional
+
     public void getAnnouncement(FindAnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
     {
         responseObserver.onNext(AnnouncementMapper.mapToProto(announcementDAO.getAnnouncement(request.getId())));
         responseObserver.onCompleted();
     }
 
-    @Transactional
+
     public void updateAnnouncement(AnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
     {
         AnnouncementEntity announcement = announcementDAO.getAnnouncement(request.getId());
@@ -92,7 +93,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         responseObserver.onCompleted();
     }
 
-    @Transactional
+
     public void deleteAnnouncement(FindAnnouncementProto request, StreamObserver<ResponseStatus> responseObserver)
     {
         String response = announcementDAO.deleteAnnouncement(announcementDAO.getAnnouncement(request.getId()))? "User is deleted" : "User not found";

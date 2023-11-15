@@ -23,7 +23,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     {
     }
 
-    @Transactional
+
     public void createUser(UserProto request, StreamObserver<UserProto> responseObserver) {
         UserEntity user = new UserEntity(
                 request.getEmail(),
@@ -45,6 +45,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         responseObserver.onError(GrpcError.constructException("User with this email already exists"));
         responseObserver.onCompleted();
     }
+
     @Transactional
     @Override
     public void logIn(LoginUserProto request, StreamObserver<UserProto> responseObserver) {

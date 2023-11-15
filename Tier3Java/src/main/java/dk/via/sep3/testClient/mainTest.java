@@ -4,6 +4,8 @@ package dk.via.sep3.testClient;
 import io.grpc.*;
 import origin.protobuf.*;
 
+import java.lang.String;
+
 public class mainTest
 {
 
@@ -12,6 +14,7 @@ public class mainTest
         ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("localhost", 9091) .usePlaintext() .build();
         UserServiceGrpc.UserServiceBlockingStub userStub = UserServiceGrpc.newBlockingStub(managedChannel);
         AnnouncementServiceGrpc.AnnouncementServiceBlockingStub announcementStub = AnnouncementServiceGrpc.newBlockingStub(managedChannel);
+
 
         // Test create user
         UserProto user = UserProto.newBuilder()
@@ -32,6 +35,8 @@ public class mainTest
         }
 
 
+        System.out.println(announcementStub.findAnnouncements(null));
+
 
         //Test find user by email
         UserProto userGet = userStub.findUser(FindUserProto.newBuilder().setEmail("allan@gmail.com").build());
@@ -46,6 +51,8 @@ public class mainTest
         System.out.println(users1.getUsersCount());
         UsersProto users2 = userStub.searchUser(SearchUsersProto.newBuilder().setType("CareTaker").build());
         System.out.println(users2.getUsersCount());
+
+
 
         //Create announcement
         AnnouncementProto announcementProto = AnnouncementProto.newBuilder()
@@ -69,6 +76,8 @@ public class mainTest
 
         UserProto user1 = userStub.findUser(FindUserProto.newBuilder().setEmail("allan@gmail.com").build());
         System.out.println(user1.getPhone());
+
+
 
         managedChannel.shutdown();
     }

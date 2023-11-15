@@ -69,13 +69,13 @@ message FindAnnouncementProto{
 }
 
 message SearchAnnouncementProto{
-  string petOwnerEmail = 1;
-  string timeStart = 2;
-  string timeFinish = 3;
-  string postalCode = 4;
-  string petType = 5;
-  int32 petWeight = 6;
-  bool petIsVaccinated = 7;
+  StringValue petOwnerUsername = 1;
+  StringValue timeStart = 2;
+  StringValue timeFinish = 3;
+  StringValue postalCode = 4;
+  StringValue petType = 5;
+  Int32Value petWeight = 6;
+  BoolValue petIsVaccinated = 7;
 }
 
 message PetProto{
@@ -93,3 +93,23 @@ message ResponseStatus{
 }
 
 message Void{}
+
+message StringValue
+{
+  string str = 1;
+}
+
+message Int32Value
+{
+  int32 int = 1;
+}
+
+message BoolValue
+{
+  bool bool = 1;
+}
+
+message DoubleValue
+{
+  double double = 1;
+}

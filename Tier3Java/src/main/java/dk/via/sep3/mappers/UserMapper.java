@@ -1,7 +1,6 @@
 package dk.via.sep3.mappers;
 
 import dk.via.sep3.shared.UserEntity;
-import origin.protobuf.UserProto;
 
 public class UserMapper {
     public static UserProto mapProto(UserEntity user)

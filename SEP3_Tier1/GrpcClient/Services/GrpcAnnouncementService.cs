@@ -74,6 +74,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
     {
         var request = new SearchAnnouncementProto
         {
+            
             TimeStart = dto.StartTime,
             TimeFinish = dto.EndTime,
             PostalCode = dto.PostalCode
