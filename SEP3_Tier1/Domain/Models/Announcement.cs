@@ -9,7 +9,5 @@ public class Announcement
     public string PostalCode { get; init; }
     public string ServiceDescription { get; init; }
     public DateTime CreationDateTime { get; init; }
-    
-    public User AuthorUsername { get; set; }
     public Pet Pet { get; init; }
 }

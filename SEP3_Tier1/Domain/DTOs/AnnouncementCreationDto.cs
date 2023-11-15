@@ -10,8 +10,6 @@ public class AnnouncementCreationDto
     public DateTime EndDate { get; init; }
     public string PostalCode { get; init; }
     public string ServiceDescription { get; init; }
-    //TODO usages
-    public User AuthorUsername { get; init; }
     public DateTime CreationDateTime { get; init; }
     public Pet Pet { get; init; }
     
