@@ -85,8 +85,6 @@ public class GrpcUserService : IUserDao
 
     public async Task<User?> GetByEmailAsync(string email)
     {
-        SearchUserDto searchDto = new SearchUserDto(email);
-        // string query = await HttpClientHelper.ConstructQuery(searchDto);
         UserProto receivedUser = await userServiceClient.FindUserAsync(new FindUserProto
         {
             Email = email
