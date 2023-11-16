@@ -88,9 +88,9 @@ public class GrpcAnnouncementService : IAnnouncementDao
     {
         var request = new SearchAnnouncementProto
         {
-            // TimeStart = dto.StartTime,
-            // TimeFinish = dto.EndTime,
-            // PostalCode = dto.PostalCode
+            TimeStart = dto.StartTime,
+            TimeFinish = dto.EndTime,
+            PostalCode = dto.PostalCode
         };
         AnnouncementsProto announcements = announcementServiceClient.FindAnnouncements(request);
         return await ConvertAnnouncementListFromProto(announcements);
