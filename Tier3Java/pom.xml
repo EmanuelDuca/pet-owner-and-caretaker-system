@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>3.16.3</version>
+			<version>3.21.4</version>
 		</dependency>
 
 		<dependency>
@@ -78,6 +78,12 @@
 			<groupId>org.hibernate.common</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>
 			<version>5.1.2.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.os72</groupId>
+			<artifactId>protoc-jar</artifactId>
+			<version>3.11.4</version>
 		</dependency>
 	</dependencies>
 
@@ -101,7 +107,8 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<protocVersion>3.16.3</protocVersion>
+							<protocArtifact>com.google.protobuf:protoc:3.21.4</protocArtifact>
+							<protocVersion>3.11.4</protocVersion>
 							<inputDirectories>
 								<include>src/main/proto</include>
 							</inputDirectories>

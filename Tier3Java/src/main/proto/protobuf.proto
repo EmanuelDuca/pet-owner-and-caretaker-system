@@ -1,5 +1,5 @@
 syntax = "proto3";
-
+import "wrappers.proto";
 option java_multiple_files = true;
 option java_package = "origin.protobuf";
 
@@ -69,13 +69,13 @@ message FindAnnouncementProto{
 }
 
 message SearchAnnouncementProto{
-  StringValue petOwnerUsername = 1;
-  StringValue timeStart = 2;
-  StringValue timeFinish = 3;
-  StringValue postalCode = 4;
-  StringValue petType = 5;
-  Int32Value petWeight = 6;
-  BoolValue petIsVaccinated = 7;
+  google.protobuf.StringValue petOwnerUsername = 1;
+  google.protobuf.StringValue timeStart = 2;
+  google.protobuf.StringValue timeFinish = 3;
+  google.protobuf.StringValue postalCode = 4;
+  google.protobuf.StringValue petType = 5;
+  google.protobuf.Int32Value petWeight = 6;
+  google.protobuf.BoolValue petIsVaccinated = 7;
 }
 
 message PetProto{
@@ -94,22 +94,22 @@ message ResponseStatus{
 
 message Void{}
 
-message StringValue
-{
-  string str = 1;
-}
-
-message Int32Value
-{
-  int32 int = 1;
-}
-
-message BoolValue
-{
-  bool bool = 1;
-}
-
-message DoubleValue
-{
-  double double = 1;
-}
+//message StringValue
+//{
+//  string str = 1;
+//}
+//
+//message Int32Value
+//{
+//  int32 int = 1;
+//}
+//
+//message BoolValue
+//{
+//  bool bool = 1;
+//}
+//
+//message DoubleValue
+//{
+//  double double = 1;
+//}

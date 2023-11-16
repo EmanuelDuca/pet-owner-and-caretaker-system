@@ -1,6 +1,5 @@
 package dk.via.sep3.DAO;
 
-import com.google.common.base.Strings;
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.repository.AnnouncementRepository;
 import dk.via.sep3.repository.PetRepository;
@@ -71,16 +70,17 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     @Override
     public Collection<AnnouncementEntity> getAnnouncements(SearchAnnouncementProto searchDto)
     {
-        return announcementRepository.findAll()
-                .stream()
-                .filter(a -> !searchDto.getPetOwnerUsername().isInitialized() || searchDto.getPetOwnerUsername().getStr().equals(a.getPetOwner().getEmail()))
-                .filter(a -> !searchDto.getPetType().isInitialized() || searchDto.getPetType().getStr().equals(a.getPetOwner().getType()))
-                .filter(a -> !searchDto.getTimeFinish().isInitialized() || searchDto.getTimeFinish().getStr().equals(a.getFinishDate()))
-                .filter(a -> !searchDto.getTimeStart().isInitialized() || searchDto.getTimeStart().getStr().equals(a.getStartDate()))
-                .filter(a -> !searchDto.getPostalCode().isInitialized() || searchDto.getPostalCode().getStr().equals(a.getPostalCode()))
-                .filter(a -> !searchDto.getPetWeight().isInitialized()|| searchDto.getPetWeight().getInt() == a.getPet().getWeight())
-                .filter(a -> !searchDto.getPetIsVaccinated().isInitialized() || searchDto.getPetIsVaccinated().getBool() == a.getPet().isVaccinated())
-                .toList();
+        return announcementRepository.findAll();
+//        return announcementRepository.findAll()
+//                .stream()
+//                .filter(a -> !searchDto.getPetOwnerUsername().|| searchDto.getPetOwnerUsername().getValue().equals(a.getPetOwner().getEmail()))
+//                .filter(a -> !searchDto.getPetType().get || searchDto.getPetType().getValue().equals(a.getPetOwner().getType()))
+//                .filter(a -> !searchDto.getTimeFinish().isInitialized() || searchDto.getTimeFinish().getValue().equals(a.getFinishDate()))
+//                .filter(a -> !searchDto.getTimeStart().isInitialized() || searchDto.getTimeStart().getValue().equals(a.getStartDate()))
+//                .filter(a -> !searchDto.getPostalCode().isInitialized() || searchDto.getPostalCode().getValue().equals(a.getPostalCode()))
+//                .filter(a -> !searchDto.getPetWeight().getDefaultInstanceForType().|| searchDto.getPetWeight().getValue() == a.getPet().getWeight())
+//                .filter(a -> !searchDto.getPetIsVaccinated().isInitialized() || searchDto.getPetIsVaccinated().getValue() == a.getPet().isVaccinated())
+//                .toList();
     }
 
     @Override

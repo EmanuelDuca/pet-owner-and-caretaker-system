@@ -52,20 +52,34 @@ public class GrpcAnnouncementService : IAnnouncementDao
         return ConvertAnnouncementFromProto(grpcAnnouncementToCreate);
     }
 
-
-    private async Task<Announcement> ConvertAnnouncementFromProto(AnnouncementProto dto)
+    private async Task<Pet> ConvertPetFromProto(PetProto proto)
     {
-        Console.WriteLine($"Date of Creation it is[{dto.DateOfCreation}]");
+        return new Pet()
+        {
+            Id = proto.Id,
+            Description = proto.Description,
+            IsVaccinated = proto.IsVaccinated,
+            Weight = proto.Weight,
+            PetName = proto.PetName,
+            PetType = Enum.Parse<PetType.Type>(proto.PetType)
+        };
+    }
+
+
+    private async Task<Announcement> ConvertAnnouncementFromProto(AnnouncementProto proto)
+    {
+        Console.WriteLine($"Date of Creation it is[{proto.DateOfCreation}]");
 
         var announcement = new Announcement
         {
-            Id = dto.Id,
-            CreationDateTime = DateTime.Parse(dto.DateOfCreation),
-            StartDate = DateTime.Parse(dto.TimeStart),
-            EndDate = DateTime.Parse(dto.TimeFinish),
-            PetOwner = (PetOwner) (await userService.GetByEmailAsync(dto.PetOwnerEmail))!,
-            PostalCode = dto.PostalCode,
-            ServiceDescription = dto.Description,
+            Id = proto.Id,
+            CreationDateTime = DateTime.Parse(proto.DateOfCreation),
+            StartDate = DateTime.Parse(proto.TimeStart),
+            EndDate = DateTime.Parse(proto.TimeFinish),
+            PetOwner = (PetOwner) (await userService.GetByEmailAsync(proto.PetOwnerEmail))!,
+            PostalCode = proto.PostalCode,
+            ServiceDescription = proto.Description,
+            Pet = await ConvertPetFromProto(proto.Pet)
         };
         return announcement;
     }
@@ -74,10 +88,9 @@ public class GrpcAnnouncementService : IAnnouncementDao
     {
         var request = new SearchAnnouncementProto
         {
-            
-            TimeStart = dto.StartTime,
-            TimeFinish = dto.EndTime,
-            PostalCode = dto.PostalCode
+            // TimeStart = dto.StartTime,
+            // TimeFinish = dto.EndTime,
+            // PostalCode = dto.PostalCode
         };
         AnnouncementsProto announcements = announcementServiceClient.FindAnnouncements(request);
         return await ConvertAnnouncementListFromProto(announcements);
