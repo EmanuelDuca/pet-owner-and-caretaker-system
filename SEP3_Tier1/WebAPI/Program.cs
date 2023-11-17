@@ -19,18 +19,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddScoped<FileContext>();
 
-//When savind to file
-        // builder.Services.AddScoped<IUserDao, UserFileDao>();
-        // builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
+
 
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
 
 //When using GRPc
-// Experimental code {
 builder.Services.AddScoped<IUserDao, GrpcUserService>();
 builder.Services.AddScoped<IAnnouncementDao, GrpcAnnouncementService>();
-// Experimental code }
+
+//When savind to file
+// builder.Services.AddScoped<IUserDao, UserFileDao>();
+// builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
 
 
 

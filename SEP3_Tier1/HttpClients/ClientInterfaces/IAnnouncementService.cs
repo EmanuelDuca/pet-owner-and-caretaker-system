@@ -6,7 +6,7 @@ namespace HttpClients.ClientInterfaces;
 public interface IAnnouncementService
 {
     Task<Announcement> CreateAsync(AnnouncementCreationDto dto);
-    Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto dto);
+    Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto? dto);
     Task UpdateAsync(AnnouncementUpdateDto dto);
     Task DeleteAsync(int id);
 }

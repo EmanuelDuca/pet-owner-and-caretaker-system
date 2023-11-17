@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Application.DaoInterface;
 using Application.LogicInterface;
 using Domain.DTOs;
@@ -19,16 +20,25 @@ public class AnnouncementLogic : IAnnouncementLogic
     }
     public async Task<Announcement> CreateAsync(AnnouncementCreationDto creationDto)
     {
-        /*
         User? existing = await userDao.GetByEmailAsync(creationDto.OwnerEmail);
-        if (existing == null)
+        if (existing == null || existing.Type != "PetOwner")
         {
             throw new UserNotFoundException(creationDto.OwnerEmail);
         }
-        */
+    
         
         ValidateData(creationDto.StartDate, creationDto.EndDate, creationDto.PostalCode);
-        Announcement announcement = await announcementDao.CreateAsync(creationDto);
+        Announcement toCreate = new Announcement
+        {
+            EndDate = creationDto.EndDate,
+            StartDate = creationDto.StartDate,
+            PostalCode = creationDto.PostalCode,
+            ServiceDescription = creationDto.ServiceDescription,
+            CreationDateTime = creationDto.CreationDateTime,
+            PetOwner = new PetOwner(existing),
+            Pet = creationDto.Pet
+        };
+        Announcement announcement = await announcementDao.CreateAsync(toCreate);
         
         return announcement;
     }

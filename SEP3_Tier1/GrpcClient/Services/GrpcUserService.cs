@@ -21,41 +21,50 @@ public class GrpcUserService : IUserDao
     
     public async Task<User> CreateAsync(User user)
     {
-        string type = "";
-        if (user is PetOwner)
+        try
         {
-            type = "PetOwner";
-        }else if (user is CareTaker)
-        {
-            type = "CareTaker";
+            string type = "";
+            if (user is PetOwner)
+            {
+                type = "PetOwner";
+            }else if (user is CareTaker)
+            {
+                type = "CareTaker";
+            }
+        
+            var request = new UserProto
+            {
+                Username = user.Username,
+                Password = user.Password,
+                Email = user.Email,
+                Type = type
+            };
+        
+            UserProto grpcUserToCreate = userServiceClient.CreateUser(request);
+            Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
+            return await ConvertUserFromGrps(grpcUserToCreate);
         }
-        
-        var request = new UserProto
+        catch (RpcException e)
         {
-            Username = user.Username,
-            Password = user.Password,
-            Email = user.Email,
-            Type = type
-        };
-        
-        UserProto grpcUserToCreate = userServiceClient.CreateUser(request);
-        Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
-        return await ConvertUserFromGrps(grpcUserToCreate);
+            throw new Exception(e.Message);
+        }
     }
     
-    private Task<User> ConvertUserFromGrps(UserProto dto)
+    private static Task<User> ConvertUserFromGrps(UserProto dto)
     {
         User user;
         switch (dto.Type)
         {
             case "PetOwner":
-                user = new PetOwner
+                user = new PetOwner()
                 {
                     Username = dto.Username,
                     Email = dto.Email,
                     Password = dto.Password,
                     Age = dto.Age,
                     Name = dto.Username,
+                    Type = dto.Type,
+                    PhoneNumber = dto.Phone
                 };
                 break;
             case "CareTaker":
@@ -66,6 +75,8 @@ public class GrpcUserService : IUserDao
                     Password = dto.Password,
                     Age = dto.Age,
                     Name = dto.Username,
+                    Type = dto.Type,
+                    PhoneNumber = dto.Phone
                 };
                 break;
             default:
