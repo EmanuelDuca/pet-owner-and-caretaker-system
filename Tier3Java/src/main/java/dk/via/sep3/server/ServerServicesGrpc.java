@@ -10,8 +10,8 @@ public  class ServerServicesGrpc {
     public static void configServicesGrpc() throws IOException, InterruptedException {
         Server server = ServerBuilder
                 .forPort(9091)
-                .addService(new UserService())
-                .addService(new AnnouncementService())
+//                .addService(new UserService())
+//                .addService(new AnnouncementService())
                 .build();
         server.start();
         System.out.println("Server is running on port:" + server.getPort());

@@ -14,11 +14,12 @@ import java.util.stream.Collectors;
 @Repository
 public class UserDAO implements UserDAOInterface {
 
+    private final UserRepository userRepository;
+
     @Autowired
-    private  UserRepository userRepository;
+    public UserDAO(UserRepository userRepository) {
 
-    public UserDAO() {
-
+        this.userRepository = userRepository;
     }
 
     @Override

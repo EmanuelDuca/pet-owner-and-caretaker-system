@@ -14,13 +14,14 @@ import java.util.Optional;
 @Repository
 public class AnnouncementDAO implements AnnouncementDAOInterface
 {
-    @Autowired
-    private AnnouncementRepository announcementRepository;
-    @Autowired
-    private PetRepository petRepository;
+    private final AnnouncementRepository announcementRepository;
+    private final PetRepository petRepository;
 
 
-    public AnnouncementDAO() {
+    @Autowired
+    public AnnouncementDAO(AnnouncementRepository announcementRepository, PetRepository petRepository) {
+        this.announcementRepository = announcementRepository;
+        this.petRepository = petRepository;
     }
 
     @Override
