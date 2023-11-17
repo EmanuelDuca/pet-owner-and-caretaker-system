@@ -9,8 +9,7 @@ import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import origin.protobuf.*;
-import javax.transaction.Transactional;
-import java.util.ArrayList;
+
 import java.util.Collection;
 
 @GRpcService
@@ -46,6 +45,10 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         );
         announcement.setDateOfCreation(request.getDateOfCreation());
         AnnouncementEntity announcementRespond = announcementDAO.createAnnouncement(announcement);
+
+        if(announcementRespond == null)
+            responseObserver.onError(GrpcError.constructException("Announcement with such id already exists"));
+
         responseObserver.onNext(AnnouncementMapper.mapToProto(announcementRespond));
         responseObserver.onCompleted();
     }
@@ -57,7 +60,6 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         if (announcements.isEmpty())
         {
             responseObserver.onError(GrpcError.constructException("No such announcements"));
-            responseObserver.onCompleted();
             return;
         }
 

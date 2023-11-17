@@ -1,5 +1,5 @@
 syntax = "proto3";
-import "wrappers.proto";
+import "google/protobuf/wrappers.proto";
 option java_multiple_files = true;
 option java_package = "origin.protobuf";
 

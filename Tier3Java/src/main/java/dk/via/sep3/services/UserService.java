@@ -43,7 +43,6 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
 
 
         responseObserver.onError(GrpcError.constructException("User with this email already exists"));
-        responseObserver.onCompleted();
     }
 
     @Transactional
@@ -58,7 +57,6 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         }
 
         responseObserver.onError(GrpcError.constructException("Username or password are incorrect."));
-        responseObserver.onCompleted();
 
     }
     @Transactional
@@ -73,7 +71,6 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         }
 
         responseObserver.onError(GrpcError.constructException("There is no user with such an email"));
-        responseObserver.onCompleted();
 
 
     }
