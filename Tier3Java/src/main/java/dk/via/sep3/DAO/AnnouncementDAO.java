@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import origin.protobuf.SearchAnnouncementProto;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -37,17 +38,16 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     }
 
     @Override
+    @Transactional
     public AnnouncementEntity updateAnnouncement(AnnouncementEntity announcementEntity)
     {
-        Optional<AnnouncementEntity> a = announcementRepository.findById(announcementEntity.getId());
-        AnnouncementEntity announcement = a.orElseThrow(() ->
-                new RuntimeException("Announcement with id " + announcementEntity.getId() + " doesn't exist."));
-
+        var announcement = getAnnouncement(announcementEntity.getId());
         announcement.setPet(announcementEntity.getPet());
         announcement.setDescription((announcementEntity.getDescription()));
         announcement.setStartDate(announcementEntity.getStartDate());
         announcement.setFinishDate(announcementEntity.getFinishDate());
         announcement.setPostalCode(announcementEntity.getPostalCode());
+        petRepository.save(announcementEntity.getPet());
         announcementRepository.save(announcement);
         return announcement;
     }
@@ -57,8 +57,6 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     {
         if (!announcementRepository.existsById(announcementId))
             return null;
-
-
         return announcementRepository.getReferenceById(announcementId);
     }
 

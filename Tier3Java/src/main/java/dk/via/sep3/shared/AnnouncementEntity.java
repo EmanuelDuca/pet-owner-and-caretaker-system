@@ -15,7 +15,7 @@ public class AnnouncementEntity {
     private String description;
     private String startDate;
     private String finishDate;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PetEntity petEntity;
     private String postalCode;
     private String dateOfCreation;

@@ -85,7 +85,8 @@ public class GrpcAnnouncementService : IAnnouncementDao
     public async Task UpdateAsync(AnnouncementUpdateDto dto)
     {
         try
-        {var request = new AnnouncementProto
+        {
+            var request = new AnnouncementProto
             {
                 Id = dto.Id,
                 TimeStart = dto.StartDate?.ToShortDateString(),

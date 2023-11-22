@@ -1,5 +1,6 @@
 package dk.via.sep3.services;
 
+import com.google.common.base.Strings;
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.AnnouncementMapper;
@@ -10,6 +11,7 @@ import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import origin.protobuf.*;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 
 @GRpcService
@@ -71,28 +73,50 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         responseObserver.onNext(announcementsProtoItems);
         responseObserver.onCompleted();
     }
-
+    @Transactional
     public void getAnnouncement(FindAnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
     {
         responseObserver.onNext(AnnouncementMapper.mapToProto(announcementDAO.getAnnouncement(request.getId())));
         responseObserver.onCompleted();
     }
 
-
+    @Transactional
     public void updateAnnouncement(AnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
     {
         AnnouncementEntity announcement = announcementDAO.getAnnouncement(request.getId());
-        announcement.setDescription(request.getDescription());
-        announcement.setStartDate(request.getTimeStart());
-        announcement.setFinishDate(request.getTimeFinish());
-        announcement.setPet(new PetEntity(
-                request.getPet().getPetName(),
-                request.getPet().getPetType(),
-                request.getPet().getWeight(),
-                request.getPet().getIsVaccinated(),
-                request.getPet().getDescription()
-        ));
-        responseObserver.onNext(AnnouncementMapper.mapToProto(announcementDAO.updateAnnouncement(announcement)));
+
+        if(!Strings.isNullOrEmpty(request.getDescription()))
+            announcement.setDescription(request.getDescription());
+
+        if(!Strings.isNullOrEmpty(request.getTimeStart()))
+            announcement.setStartDate(request.getTimeStart());
+
+        if(!Strings.isNullOrEmpty(request.getTimeFinish()))
+            announcement.setFinishDate(request.getTimeFinish());
+
+        if(request.getPet().getId() != 0)
+        {
+            PetEntity pet = new PetEntity(
+                    request.getPet().getPetName(),
+                    request.getPet().getPetType(),
+                    request.getPet().getWeight(),
+                    request.getPet().getIsVaccinated(),
+                    request.getPet().getDescription(),
+                    userDAO.findUser(request.getPetOwnerEmail()));
+
+            announcement.setPet(pet);
+        }
+
+        System.out.println("#####LOG#####" + announcement.getDescription());
+        System.out.println("#####LOG#####" + announcement.getPet().getPetType());
+        System.out.println("#####LOG#####" + announcement.getPet().getPetOwner().getUsername());
+        var announcementEntity = announcementDAO.updateAnnouncement(announcement);
+        if(announcementEntity == null)
+        {
+            responseObserver.onError(GrpcError.constructException("Announcement was not updated"));
+            return;
+        }
+        responseObserver.onNext(AnnouncementMapper.mapToProto(announcementEntity));
         responseObserver.onCompleted();
     }
 

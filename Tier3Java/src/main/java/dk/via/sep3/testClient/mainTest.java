@@ -1,6 +1,7 @@
 package dk.via.sep3.testClient;
 
 
+import dk.via.sep3.mappers.AnnouncementMapper;
 import io.grpc.*;
 import origin.protobuf.*;
 
@@ -15,19 +16,17 @@ public class mainTest
         UserServiceGrpc.UserServiceBlockingStub userStub = UserServiceGrpc.newBlockingStub(managedChannel);
         AnnouncementServiceGrpc.AnnouncementServiceBlockingStub announcementStub = AnnouncementServiceGrpc.newBlockingStub(managedChannel);
 
-
-        // Test create user
-        UserProto user = UserProto.newBuilder()
-                .setEmail("allan5@gmail.com")
-                .setUsername("Allan")
-                .setPassword("via123")
-                .setAge(40)
-                .setPhone("078830013")
-                .setType("CareTaker")
-                .build();
-        try {
-            UserProto response = userStub.createUser(user);
-            System.out.println(response.getEmail());
+        try
+        {
+            var getannouncement = announcementStub.getAnnouncement(FindAnnouncementProto.newBuilder().setId(1).build());
+            var updatedAnnouncement = announcementStub.updateAnnouncement(AnnouncementProto
+                    .newBuilder()
+                    .setId(1)
+                    .setPostalCode("8700")
+                    .setDescription("Not uraaa")
+                    .build()
+            );
+            System.out.println(updatedAnnouncement);
         }
         catch (Exception e)
         {
@@ -35,7 +34,26 @@ public class mainTest
         }
 
 
-        System.out.println(announcementStub.findAnnouncements(null));
+        // Test create user
+//        UserProto user = UserProto.newBuilder()
+//                .setEmail("allan6@gmail.com")
+//                .setUsername("Allan")
+//                .setPassword("via123")
+//                .setAge(40)
+//                .setPhone("078830013")
+//                .setType("CareTaker")
+//                .build();
+//        try {
+//            UserProto response = userStub.createUser(user);
+//            System.out.println(response.getEmail());
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println(e.getMessage());
+//        }
+//
+//
+//        System.out.println(announcementStub.findAnnouncements(null));
 
 
         //Test find user by email
