@@ -1,6 +1,7 @@
 using Application.DaoInterface;
 using Domain;
 using Domain.Models;
+using GrpcClient.Mappers;
 using HttpClients.ClientInterfaces;
 
 namespace GrpcClient.Services;
@@ -13,83 +14,58 @@ using Microsoft.AspNetCore.Mvc;
 public class GrpcUserService : IUserDao
 {
     private UserService.UserServiceClient userServiceClient;
+    private UserMapper mapper;
 
     public GrpcUserService(UserService.UserServiceClient userServiceClient)
     {
         this.userServiceClient = userServiceClient;
+        mapper = new UserMapper();
     }
     
     public async Task<User> CreateAsync(User user)
     {
-        string type = "";
-        if (user is PetOwner)
+        try
         {
-            type = "PetOwner";
-        }else if (user is CareTaker)
-        {
-            type = "CareTaker";
-        }
+            string type = "";
+            if (user is PetOwner)
+            {
+                type = "PetOwner";
+            }else if (user is CareTaker)
+            {
+                type = "CareTaker";
+            }
         
-        var request = new UserProto
-        {
-            Username = user.Username,
-            Password = user.Password,
-            Email = user.Email,
-            Type = type
-        };
+            var request = new UserProto
+            {
+                Username = user.Username,
+                Password = user.Password,
+                Email = user.Email,
+                Type = type
+            };
         
-        UserProto grpcUserToCreate = userServiceClient.CreateUser(request);
-        Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
-        return await ConvertUserFromGrps(grpcUserToCreate);
-    }
-    
-    private Task<User> ConvertUserFromGrps(UserProto dto)
-    {
-        User user;
-        switch (dto.Type)
-        {
-            case "PetOwner":
-                user = new PetOwner
-                {
-                    Username = dto.Username,
-                    Email = dto.Email,
-                    Password = dto.Password,
-                    Age = dto.Age,
-                    Name = dto.Username,
-                };
-                break;
-            case "CareTaker":
-                user = new CareTaker
-                {
-                    Username = dto.Username,
-                    Email = dto.Email,
-                    Password = dto.Password,
-                    Age = dto.Age,
-                    Name = dto.Username,
-                };
-                break;
-            default:
-                user = new PetOwner
-                {
-                    Username = "Demo User",
-                    Email = "demo",
-                    Password = "demo",
-                    Age = 20,
-                    Name = "demo"
-                };
-                break;
+            UserProto grpcUserToCreate = userServiceClient.CreateUser(request);
+            Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
+            return await mapper.MapToEntity(grpcUserToCreate);
         }
-        return Task.FromResult(user);
+        catch (RpcException e)
+        {
+            throw new Exception(e.Message);
+        }
     }
-    
 
     public async Task<User?> GetByEmailAsync(string email)
     {
-        UserProto receivedUser = await userServiceClient.FindUserAsync(new FindUserProto
+        try
         {
-            Email = email
-        });
-        
-        return await ConvertUserFromGrps(receivedUser);
+            UserProto receivedUser = await userServiceClient.FindUserAsync(new FindUserProto
+            {
+                Email = email
+            });
+            return await mapper.MapToEntity(receivedUser);
+        }
+        catch (RpcException e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 }

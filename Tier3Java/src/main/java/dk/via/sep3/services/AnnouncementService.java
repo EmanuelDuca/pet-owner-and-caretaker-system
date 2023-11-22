@@ -3,36 +3,34 @@ package dk.via.sep3.services;
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.AnnouncementMapper;
-import dk.via.sep3.mappers.UserMapper;
 import dk.via.sep3.shared.AnnouncementEntity;
 import dk.via.sep3.shared.PetEntity;
-import dk.via.sep3.shared.PetOwnerEntity;
-import dk.via.sep3.shared.UserEntity;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import origin.protobuf.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @GRpcService
 public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementServiceImplBase {
 
-    @Autowired
-    private UserDAOInterface userDAO;
+    private final UserDAOInterface userDAO;
+
+    private final AnnouncementDAOInterface announcementDAO;
+
 
     @Autowired
-    private AnnouncementDAOInterface announcementDAO;
-
-    public AnnouncementService()
+    public AnnouncementService(AnnouncementDAOInterface announcementDAO, UserDAOInterface userDAO)
     {
+        this.announcementDAO = announcementDAO;
+        this.userDAO = userDAO;
     }
 
-    public void createAnnouncement(origin.protobuf.AnnouncementProto request, io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementProto> responseObserver)
+    public void createAnnouncement(AnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
     {
         AnnouncementEntity announcement = new AnnouncementEntity(
-                (PetOwnerEntity) userDAO.getUsers(request.getPetOwnerEmail()),
+                userDAO.findUser(request.getPetOwnerEmail()),
                 request.getDescription(),
                 request.getTimeStart(),
                 request.getTimeFinish(),
@@ -42,50 +40,46 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
                         request.getPet().getWeight(),
                         request.getPet().getIsVaccinated(),
                         request.getPet().getDescription(),
-                        (PetOwnerEntity) userDAO.findUser(request.getPetOwnerEmail())
+                        userDAO.findUser(request.getPetOwnerEmail())
                 ),
                 request.getPostalCode()
         );
         announcement.setDateOfCreation(request.getDateOfCreation());
         AnnouncementEntity announcementRespond = announcementDAO.createAnnouncement(announcement);
+
+        if(announcementRespond == null)
+            responseObserver.onError(GrpcError.constructException("Announcement with such id already exists"));
+
         responseObserver.onNext(AnnouncementMapper.mapToProto(announcementRespond));
         responseObserver.onCompleted();
     }
 
-    public void findAnnouncements(origin.protobuf.SearchAnnouncementProto request, io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementsProto> responseObserver)
+    public void findAnnouncements(SearchAnnouncementProto request, StreamObserver<AnnouncementsProto> responseObserver)
     {
-        Collection<AnnouncementEntity> announcements = announcementDAO.getAnnouncements(
-                request.getPetOwnerEmail(),
-                request.getTimeStart(),
-                request.getTimeFinish(),
-                request.getPostalCode(),
-                request.getPetType(),
-                request.getPetWeight(),
-                request.getPetIsVaccinated()
-        );
-        if (announcements.isEmpty()) {
-            responseObserver.onError(new Exception("No such announcements"));
+        Collection<AnnouncementEntity> announcements = request == null? announcementDAO.getAllAnnouncements() : announcementDAO.getAnnouncements(request);
+
+        if (announcements.isEmpty())
+        {
+            responseObserver.onError(GrpcError.constructException("No such announcements"));
             return;
         }
-        Collection<AnnouncementProto> announcementCollection = new ArrayList<>();
-        for (var announcement : announcements)
-        {
-            announcementCollection.add(AnnouncementMapper.mapToProto(announcement));
-        }
+
+        Collection<AnnouncementProto> announcementCollection = announcements
+                .stream().map(AnnouncementMapper::mapToProto).toList();
+
         AnnouncementsProto announcementsProtoItems = AnnouncementsProto.newBuilder().addAllAnnouncements(announcementCollection).build();
         responseObserver.onNext(announcementsProtoItems);
         responseObserver.onCompleted();
     }
 
-    public void getAnnouncement(origin.protobuf.FindAnnouncementProto request, io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementProto> responseObserver)
+    public void getAnnouncement(FindAnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
     {
         responseObserver.onNext(AnnouncementMapper.mapToProto(announcementDAO.getAnnouncement(request.getId())));
         responseObserver.onCompleted();
     }
 
-    /**
-     */
-    public void updateAnnouncement(origin.protobuf.AnnouncementProto request, io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementProto> responseObserver)
+
+    public void updateAnnouncement(AnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
     {
         AnnouncementEntity announcement = announcementDAO.getAnnouncement(request.getId());
         announcement.setDescription(request.getDescription());
@@ -102,11 +96,10 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         responseObserver.onCompleted();
     }
 
-    /**
-     */
-    public void deleteAnnouncement(origin.protobuf.FindAnnouncementProto request, io.grpc.stub.StreamObserver<origin.protobuf.ResponseStatus> responseObserver)
+
+    public void deleteAnnouncement(FindAnnouncementProto request, StreamObserver<ResponseStatus> responseObserver)
     {
-        String response = announcementDAO.deleteAnnouncement(announcementDAO.getAnnouncement(request.getId()));
+        String response = announcementDAO.deleteAnnouncement(announcementDAO.getAnnouncement(request.getId()))? "User is deleted" : "User not found";
         responseObserver.onNext(ResponseStatus.newBuilder().setResponseStatus(response).build());
         responseObserver.onCompleted();
     }

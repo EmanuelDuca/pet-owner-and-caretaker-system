@@ -14,7 +14,7 @@ public class User
 
     public static PetOwner TransformToPetOwner(User user)
     {
-        PetOwner petOwner = new PetOwner
+        return new PetOwner
         {
             Name = user.Name,
             Username = user.Username,
@@ -23,7 +23,6 @@ public class User
             Password = user.Email,
             PhoneNumber = user.PhoneNumber
         };
-        return petOwner;
     }
     
     

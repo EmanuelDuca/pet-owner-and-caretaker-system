@@ -1,7 +1,7 @@
 syntax = "proto3";
-
+import "google/protobuf/wrappers.proto";
 option java_multiple_files = true;
-option csharp_namespace = "GrpcClient";
+option java_package = "origin.protobuf";
 
 service UserService{
   rpc CreateUser(UserProto) returns (UserProto);
@@ -10,6 +10,7 @@ service UserService{
   rpc SearchUser(SearchUsersProto) returns (UsersProto);
   rpc UpdateUser(UserProto) returns (UserProto);
   rpc DeleteUser(FindUserProto) returns (ResponseStatus);
+
 }
 
 service AnnouncementService{
@@ -19,6 +20,7 @@ service AnnouncementService{
   rpc UpdateAnnouncement(AnnouncementProto) returns (AnnouncementProto);
   rpc DeleteAnnouncement(FindAnnouncementProto) returns (ResponseStatus);
 }
+
 
 message UserProto{
   string email = 1;
@@ -41,6 +43,7 @@ message SearchUsersProto{
   string type = 1;
 }
 
+
 message LoginUserProto{
   string email = 1;
   string password = 2;
@@ -57,6 +60,7 @@ message AnnouncementProto{
   int32 id = 8;
 }
 
+
 message AnnouncementsProto{
   repeated AnnouncementProto announcements = 1;
 }
@@ -66,14 +70,13 @@ message FindAnnouncementProto{
 }
 
 message SearchAnnouncementProto{
-  string petOwnerEmail = 1;
-  string timeStart = 2;
-  string timeFinish = 3;
-  string postalCode = 4;
-  int32 id = 5;
-  string petType = 6;
-  int32 petWeight = 7;
-  bool petIsVaccinated = 8;
+  google.protobuf.StringValue petOwnerUsername = 1;
+  google.protobuf.StringValue timeStart = 2;
+  google.protobuf.StringValue timeFinish = 3;
+  google.protobuf.StringValue postalCode = 4;
+  google.protobuf.StringValue petType = 5;
+  google.protobuf.Int32Value petWeight = 6;
+  google.protobuf.BoolValue petIsVaccinated = 7;
 }
 
 message PetProto{
@@ -91,3 +94,23 @@ message ResponseStatus{
 }
 
 message Void{}
+
+//message StringValue
+//{
+//  string str = 1;
+//}
+//
+//message Int32Value
+//{
+//  int32 int = 1;
+//}
+//
+//message BoolValue
+//{
+//  bool bool = 1;
+//}
+//
+//message DoubleValue
+//{
+//  double double = 1;
+//}

@@ -2,15 +2,6 @@
   "Users": [
     {
       "Name": null,
-      "Username": "Sevastian",
-      "Age": null,
-      "Email": "sevastian@gmail.com",
-      "PhoneNumber": null,
-      "Password": "password",
-      "Type": null
-    },
-    {
-      "Name": null,
       "Username": "cubeco",
       "Age": null,
       "Email": "cubeco",
@@ -114,6 +105,31 @@
         "Weight": 0,
         "IsVaccinated": true,
         "Description": "Finwaropigrg"
+      }
+    },
+    {
+      "Id": 4,
+      "PetOwner": {
+        "Name": null,
+        "Username": null,
+        "Age": null,
+        "Email": "sevastian@gmail.com",
+        "PhoneNumber": null,
+        "Password": "password",
+        "Type": null
+      },
+      "StartDate": "2023-11-17T00:00:00+01:00",
+      "EndDate": "2023-11-20T00:00:00+01:00",
+      "PostalCode": "1001",
+      "ServiceDescription": "rgwrgh",
+      "CreationDateTime": "0001-01-01T00:00:00",
+      "Pet": {
+        "Id": 1,
+        "PetName": "X",
+        "PetType": 13,
+        "Weight": 0,
+        "IsVaccinated": true,
+        "Description": "Fat cat"
       }
     }
   ]

@@ -15,8 +15,16 @@ public class PetEntity {
     private boolean isVaccinated;
     private String dietDescription = "";
     @ManyToOne
-    private PetOwnerEntity petOwner;
+    private UserEntity petOwner;
 
+
+    public UserEntity getPetOwner() {
+        return petOwner;
+    }
+
+    public void setPetOwner(UserEntity petOwner) {
+        this.petOwner = petOwner;
+    }
 
     public PetEntity() {
     }
@@ -26,7 +34,7 @@ public class PetEntity {
         this.petType = petType;
     }
 
-    public PetEntity(int id, String petName, String petType, int weight, boolean isVaccinated, String dietDescription, PetOwnerEntity petOwner) {
+    public PetEntity(int id, String petName, String petType, int weight, boolean isVaccinated, String dietDescription, UserEntity petOwner) {
         this.id = id;
         this.petName = petName;
         this.petType = petType;
@@ -36,7 +44,7 @@ public class PetEntity {
         this.petOwner = petOwner;
     }
 
-    public PetEntity( String petName, String petType, int weight, boolean isVaccinated, String dietDescription, PetOwnerEntity petOwner) {
+    public PetEntity( String petName, String petType, int weight, boolean isVaccinated, String dietDescription, UserEntity petOwner) {
         this.petName = petName;
         this.petType = petType;
         this.weight = weight;
@@ -103,11 +111,4 @@ public class PetEntity {
         this.id = id;
     }
 
-    public PetOwnerEntity getPetOwner() {
-        return petOwner;
-    }
-
-    public void setPetOwner(PetOwnerEntity petOwner) {
-        this.petOwner = petOwner;
-    }
 }

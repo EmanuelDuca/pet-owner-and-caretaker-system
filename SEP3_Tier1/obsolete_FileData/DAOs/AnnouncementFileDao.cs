@@ -13,46 +13,6 @@ public class AnnouncementFileDao : IAnnouncementDao
         this.context = context;
     }
 
-    public Task<Announcement> CreateAsync(AnnouncementCreationDto dto)
-    {
-        int id = 1;
-        if (context.Announcements.Any())
-        {
-            id = context.Announcements.Max(a => a.Id);
-            id++;
-        }
-        dto.Id = id;
-
-        User? user = context.Users.FirstOrDefault(u => 
-            u.Email.Equals(dto.OwnerEmail, StringComparison.OrdinalIgnoreCase));
-        
-        PetOwner existingOwner;
-        if (user.Type.Equals("PetOwner", StringComparison.OrdinalIgnoreCase))
-        {
-            existingOwner = User.TransformToPetOwner(user);
-        }else {
-            Console.WriteLine("User is not a petOwner");
-            throw new Exception("Invalid email");
-        }
-        
-        Announcement announcement = new Announcement
-        {
-            Id = dto.Id,
-            PetOwner = existingOwner,
-            EndDate = dto.EndDate,
-            StartDate = dto.StartDate,
-            Pet = dto.Pet,
-            CreationDateTime = dto.CreationDateTime,
-            PostalCode = dto.PostalCode,
-            ServiceDescription = dto.ServiceDescription
-        };
-        
-        context.Announcements.Add(announcement);
-        context.SaveChanges();
-        
-        return Task.FromResult(announcement);
-    }
-
     public Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto searchParameters)
     {
         IEnumerable<Announcement> announcements = context.Announcements.AsEnumerable();
@@ -84,7 +44,7 @@ public class AnnouncementFileDao : IAnnouncementDao
         return Task.FromResult(announcements);
     }
 
-    public Task<Announcement> CreateAsync(Announcement announcement)
+    public Task<Announcement> CreateAsync(Announcement ann)
     {
         int id = 1;
         if (context.Announcements.Any())
@@ -93,12 +53,12 @@ public class AnnouncementFileDao : IAnnouncementDao
             id++;
         }
 
-        announcement.Id = id;
+        ann.Id = id;
         
-        context.Announcements.Add(announcement);
+        context.Announcements.Add(ann);
         context.SaveChanges();
 
-        return Task.FromResult(announcement);
+        return Task.FromResult(ann);
     }
 
     public Task UpdateAsync(AnnouncementUpdateDto announcement)

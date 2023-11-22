@@ -8,4 +8,5 @@ public class Pet
     public int Weight { get; init; }
     public bool IsVaccinated { get; init; }
     public string Description { get; init; }
+    public PetOwner PetOwner { get; init; }
 }
