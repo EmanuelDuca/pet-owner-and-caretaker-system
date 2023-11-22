@@ -93,4 +93,19 @@ public class UserController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpPost("edit")]
+    public async Task<ActionResult<User>> Edit([FromBody] UserEditDto dto)
+    {
+        try
+        {
+            User user = await userLogic.EditAsync(dto);
+            return Ok(GenerateJwt(user));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

@@ -26,24 +26,24 @@ public class GrpcUserService : IUserDao
     {
         try
         {
-            string type = "";
-            if (user is PetOwner)
-            {
-                type = "PetOwner";
-            }else if (user is CareTaker)
-            {
-                type = "CareTaker";
-            }
+            // string type = "";
+            // if (user is PetOwner)
+            // {
+            //     type = "PetOwner";
+            // }else if (user is CareTaker)
+            // {
+            //     type = "CareTaker";
+            // }
+            //
+            // var request = new UserProto
+            // {
+            //     Username = user.Username,
+            //     Password = user.Password,
+            //     Email = user.Email,
+            //     Type = type
+            // };
         
-            var request = new UserProto
-            {
-                Username = user.Username,
-                Password = user.Password,
-                Email = user.Email,
-                Type = type
-            };
-        
-            UserProto grpcUserToCreate = userServiceClient.CreateUser(request);
+            UserProto grpcUserToCreate = userServiceClient.CreateUser(UserProtoGenerator(user));
             Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
             return await mapper.MapToEntity(grpcUserToCreate);
         }
@@ -67,5 +67,42 @@ public class GrpcUserService : IUserDao
         {
             throw new Exception(e.Message);
         }
+    }
+
+    public async Task<User?> UpdateAsync(User user)
+    {
+        try
+        {
+            UserProto grpcUserToCreate = userServiceClient.UpdateUser(UserProtoGenerator(user));
+            Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
+            return await mapper.MapToEntity(grpcUserToCreate);
+        }
+        catch (RpcException e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
+    private UserProto UserProtoGenerator(User user)
+    {
+        string type = "";
+        if (user is PetOwner)
+        {
+            type = "PetOwner";
+        }else if (user is CareTaker)
+        {
+            type = "CareTaker";
+        }
+        
+        var request = new UserProto
+        {
+            Username = user.Username,
+            Password = user.Password,
+            Email = user.Email,
+            Type = type,
+            Age = user.Age,
+            Phone = user.PhoneNumber
+        };
+        return request;
     }
 }

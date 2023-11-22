@@ -23,12 +23,13 @@ service AnnouncementService{
 
 
 message UserProto{
-  string email = 1;
-  string username = 2;
-  string password = 3;
-  int32 age = 4;
-  string phone = 5;
-  string type = 6;
+  google.protobuf.StringValue email = 1;
+  google.protobuf.StringValue username = 2;
+  google.protobuf.StringValue password = 3;
+  google.protobuf.Int32Value age = 4;
+  google.protobuf.StringValue phone = 5;
+  google.protobuf.StringValue type = 6;
+  google.protobuf.StringValue name = 7;
 }
 
 message UsersProto{
