@@ -9,6 +9,7 @@ public class UserEntity implements Serializable {
     @Column(unique = true)
     private String email;
     private String username;
+    private String name;
     private String password;
     private int age;
     private String phone;
@@ -35,6 +36,16 @@ public class UserEntity implements Serializable {
         this.type = type;
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
+    public UserEntity setName(String name)
+    {
+        this.name = name;
+        return this;
+    }
 
     public String getUsername() {
         return username;

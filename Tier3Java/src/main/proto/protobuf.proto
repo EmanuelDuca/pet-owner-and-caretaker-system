@@ -29,6 +29,7 @@ message UserProto{
   int32 age = 4;
   string phone = 5;
   string type = 6;
+  string name = 7;
 }
 
 message UsersProto{
