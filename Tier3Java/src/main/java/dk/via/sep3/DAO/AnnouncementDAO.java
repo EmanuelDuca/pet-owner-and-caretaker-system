@@ -41,15 +41,8 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     @Transactional
     public AnnouncementEntity updateAnnouncement(AnnouncementEntity announcementEntity)
     {
-        var announcement = getAnnouncement(announcementEntity.getId());
-        announcement.setPet(announcementEntity.getPet());
-        announcement.setDescription((announcementEntity.getDescription()));
-        announcement.setStartDate(announcementEntity.getStartDate());
-        announcement.setFinishDate(announcementEntity.getFinishDate());
-        announcement.setPostalCode(announcementEntity.getPostalCode());
         petRepository.save(announcementEntity.getPet());
-        announcementRepository.save(announcement);
-        return announcement;
+        return announcementRepository.save(announcementEntity);
     }
 
     @Override

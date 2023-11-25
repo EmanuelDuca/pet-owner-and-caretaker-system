@@ -16,18 +16,29 @@ public class mainTest
         UserServiceGrpc.UserServiceBlockingStub userStub = UserServiceGrpc.newBlockingStub(managedChannel);
         AnnouncementServiceGrpc.AnnouncementServiceBlockingStub announcementStub = AnnouncementServiceGrpc.newBlockingStub(managedChannel);
 
-        UserProto user = UserProto.newBuilder()
-                .setEmail("allan1@gmail.com")
-                .setPhone("000000000")
-                .setName("Allan ...")
+
+        // Test update user
+//        UserProto user = UserProto.newBuilder()
+//                .setEmail("allan1@gmail.com")
+//                .setPhone("000000000")
+//                .setName("Allan ...")
+//                .build();
+//
+//        try{
+//            userStub.updateUser(user);
+//        }catch (Exception e)
+//        {
+//            System.out.println(e.getMessage());
+
+        // Test update announcement
+
+        AnnouncementProto announcementProto = AnnouncementProto.newBuilder()
+                .setId(13)
+                .setPostalCode("7424")
+                .setDescription("I was updated")
                 .build();
 
-        try{
-            userStub.updateUser(user);
-        }catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
+        announcementStub.updateAnnouncement(announcementProto);
 
 
         // Test create user
