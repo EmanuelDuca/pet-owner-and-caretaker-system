@@ -85,6 +85,12 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
     {
         AnnouncementEntity announcement = announcementDAO.getAnnouncement(request.getId());
 
+        if(announcement == null)
+        {
+            responseObserver.onError(GrpcError.constructException("Announcement with id " + request.getId() + " is not found"));
+            return;
+        }
+
         if(!Strings.isNullOrEmpty(request.getDescription()))
             announcement.setDescription(request.getDescription());
 
@@ -107,16 +113,13 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
             announcement.setPet(pet);
         }
 
-        System.out.println("#####LOG#####" + announcement.getDescription());
-        System.out.println("#####LOG#####" + announcement.getPet().getPetType());
-        System.out.println("#####LOG#####" + announcement.getPet().getPetOwner().getUsername());
-        var announcementEntity = announcementDAO.updateAnnouncement(announcement);
-        if(announcementEntity == null)
+        var updatedAnnouncement = announcementDAO.updateAnnouncement(announcement);
+        if(updatedAnnouncement == null)
         {
             responseObserver.onError(GrpcError.constructException("Announcement was not updated"));
             return;
         }
-        responseObserver.onNext(AnnouncementMapper.mapToProto(announcementEntity));
+        responseObserver.onNext(AnnouncementMapper.mapToProto(updatedAnnouncement));
         responseObserver.onCompleted();
     }
 
