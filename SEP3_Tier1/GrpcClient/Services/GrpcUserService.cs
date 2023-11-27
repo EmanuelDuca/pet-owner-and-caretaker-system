@@ -26,24 +26,24 @@ public class GrpcUserService : IUserDao
     {
         try
         {
-            string type = "";
-            if (user is PetOwner)
-            {
-                type = "PetOwner";
-            }else if (user is CareTaker)
-            {
-                type = "CareTaker";
-            }
+            // string type = "";
+            // if (user is PetOwner)
+            // {
+            //     type = "PetOwner";
+            // }else if (user is CareTaker)
+            // {
+            //     type = "CareTaker";
+            // }
+            //
+            // var request = new UserProto
+            // {
+            //     Username = user.Username,
+            //     Password = user.Password,
+            //     Email = user.Email,
+            //     Type = type
+            // };
         
-            var request = new UserProto
-            {
-                Username = user.Username,
-                Password = user.Password,
-                Email = user.Email,
-                Type = type
-            };
-        
-            UserProto grpcUserToCreate = userServiceClient.CreateUser(request);
+            UserProto grpcUserToCreate = await userServiceClient.CreateUserAsync(UserProtoGenerator(user));
             Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
             return await mapper.MapToEntity(grpcUserToCreate);
         }
@@ -62,6 +62,62 @@ public class GrpcUserService : IUserDao
                 Email = email
             });
             return await mapper.MapToEntity(receivedUser);
+        }
+        catch (RpcException e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
+    public async Task<User?> UpdateAsync(User user)
+    {
+        try
+        {
+            UserProto grpcUserToCreate = await userServiceClient.UpdateUserAsync(UserProtoGenerator(user));
+            Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
+            return await mapper.MapToEntity(grpcUserToCreate);
+        }
+        catch (RpcException e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
+    private UserProto UserProtoGenerator(User user)
+    {
+        string type = "";
+        if (user is PetOwner)
+        {
+            type = "PetOwner";
+        }else if (user is CareTaker)
+        {
+            type = "CareTaker";
+        }
+        
+        var request = new UserProto
+        {
+            Username = user.Username,
+            Password = user.Password,
+            Email = user.Email,
+            Type = type,
+            Age = user.Age,
+            Phone = user.PhoneNumber
+        };
+        return request;
+    }
+    
+    public async Task<IEnumerable<User>> GetAsync(SearchUsersDto parameters)
+    {
+        try
+        {
+            var request = new SearchUsersProto()
+            {
+                Age = parameters.Age,
+                Name = parameters.Name,
+                Type = parameters.Type
+            };
+            UsersProto users = await userServiceClient.SearchUserAsync(request);
+            return await mapper.MapToEntityList(users);
         }
         catch (RpcException e)
         {

@@ -102,4 +102,9 @@ public class AnnouncementFileDao : IAnnouncementDao
         
         return Task.CompletedTask;
     }
+
+    public Task OfferAsync(CareTaker caretaker)
+    {
+        throw new NotImplementedException();
+    }
 }

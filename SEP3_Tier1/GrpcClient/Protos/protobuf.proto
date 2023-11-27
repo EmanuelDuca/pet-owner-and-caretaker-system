@@ -22,6 +22,9 @@ service AnnouncementService{
   rpc DeleteAnnouncement(FindAnnouncementProto) returns (ResponseStatus);
 }
 
+service CommunicationService{
+  rpc OfferCare(UserProto) returns (ResponseStatus);
+}
 
 message UserProto{
   string email = 1;
@@ -42,7 +45,9 @@ message FindUserProto{
 }
 
 message SearchUsersProto{
-  string type = 1;
+  google.protobuf.StringValue type = 1;
+  google.protobuf.StringValue name = 2;
+  google.protobuf.Int32Value age = 3;
 }
 
 

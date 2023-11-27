@@ -28,7 +28,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
         mapper = new AnnouncementMapper(userService);
     }
 
-    public Task<Announcement> CreateAsync(Announcement ann)
+    public async Task<Announcement> CreateAsync(Announcement ann)
     {
         try
         {
@@ -51,9 +51,9 @@ public class GrpcAnnouncementService : IAnnouncementDao
                 DateOfCreation = TimestampConverter.FromDateTime(ann.CreationDateTime)
             };
         
-            AnnouncementProto grpcAnnouncementToCreate = announcementServiceClient.CreateAnnouncement(request);
+            AnnouncementProto grpcAnnouncementToCreate = await announcementServiceClient.CreateAnnouncementAsync(request);
 
-            return mapper.MapToEntity(grpcAnnouncementToCreate);
+            return await mapper.MapToEntity(grpcAnnouncementToCreate);
         }
         catch (RpcException e)
         {
@@ -96,7 +96,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
                 Description = dto.ServiceDescription,
                 Pet = await mapper.PetMapper.MapToProto(dto.Pet!)
             };
-            AnnouncementProto updated = announcementServiceClient.UpdateAnnouncement(request);
+            AnnouncementProto updated = await announcementServiceClient.UpdateAnnouncementAsync(request);
             if (updated.Id != request.Id)
             {
                 throw new Exception("Announcement was not updated.");
@@ -109,7 +109,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
         
     }
 
-    public Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
         try
         {
@@ -118,20 +118,22 @@ public class GrpcAnnouncementService : IAnnouncementDao
                 Id = id
             };
 
-            ResponseStatus status = announcementServiceClient.DeleteAnnouncement(request);
+            ResponseStatus status = await announcementServiceClient.DeleteAnnouncementAsync(request);
             if (int.Parse(status.ResponseStatus_) == 404)
             {
                 throw new Exception($"Announcement was not deleted -- response status {status} from Java");
             }
-            return Task.CompletedTask;
         }
         catch (RpcException e)
         {
             throw new Exception(e.Message);
         }
     }
-    
-    
+
+    public Task OfferAsync(CareTaker caretaker)
+    {
+        throw new NotImplementedException();
+    }
 }
     
 
