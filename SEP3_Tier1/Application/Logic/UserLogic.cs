@@ -97,4 +97,9 @@ public class UserLogic : IUserLogic
         User updated = await userDao.UpdateAsync(toUpdate) ?? throw new Exception("In userLogic file User.Type was mismatched");
         return updated;
     }
+    
+    public async Task<IEnumerable<User>> GetAsync(SearchUsersDto parameters)
+    {
+        return await userDao.GetAsync(parameters);
+    }
 }

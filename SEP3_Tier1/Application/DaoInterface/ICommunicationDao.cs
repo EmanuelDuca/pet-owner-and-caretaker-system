@@ -5,5 +5,4 @@ namespace Application.DaoInterface;
 
 public interface ICommunicationDao
 {
-    Task<IEnumerable<CareTaker>> GetAsync(SearchCaretakerDto parameters);
 }

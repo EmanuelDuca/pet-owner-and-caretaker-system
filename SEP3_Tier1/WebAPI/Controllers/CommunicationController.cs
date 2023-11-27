@@ -14,19 +14,4 @@ public class CommunicationController : ControllerBase
     {
         this.logic = logic;
     }
-
-    [HttpGet]
-    public async Task<ActionResult> GetAsync(SearchCaretakerDto parameters)
-    {
-        try
-        {
-            var caretakers = await logic.GetAsync(parameters);
-            return Ok(caretakers);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return StatusCode(500, e.Message);
-        }
-    }
 }

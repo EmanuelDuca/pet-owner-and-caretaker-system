@@ -43,7 +43,7 @@ public class GrpcUserService : IUserDao
             //     Type = type
             // };
         
-            UserProto grpcUserToCreate = userServiceClient.CreateUser(UserProtoGenerator(user));
+            UserProto grpcUserToCreate = await userServiceClient.CreateUserAsync(UserProtoGenerator(user));
             Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
             return await mapper.MapToEntity(grpcUserToCreate);
         }
@@ -73,7 +73,7 @@ public class GrpcUserService : IUserDao
     {
         try
         {
-            UserProto grpcUserToCreate = userServiceClient.UpdateUser(UserProtoGenerator(user));
+            UserProto grpcUserToCreate = await userServiceClient.UpdateUserAsync(UserProtoGenerator(user));
             Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
             return await mapper.MapToEntity(grpcUserToCreate);
         }
@@ -104,5 +104,24 @@ public class GrpcUserService : IUserDao
             Phone = user.PhoneNumber
         };
         return request;
+    }
+    
+    public async Task<IEnumerable<User>> GetAsync(SearchUsersDto parameters)
+    {
+        try
+        {
+            var request = new SearchUsersProto()
+            {
+                Age = parameters.Age,
+                Name = parameters.Name,
+                Type = parameters.Type
+            };
+            UsersProto users = await userServiceClient.SearchUserAsync(request);
+            return await mapper.MapToEntityList(users);
+        }
+        catch (RpcException e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 }

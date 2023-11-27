@@ -33,4 +33,9 @@ public class UserFileDao : IUserDao
     {
         throw new NotImplementedException();
     }
+
+    public Task<IEnumerable<User>> GetAsync(SearchUsersDto parameters)
+    {
+        throw new NotImplementedException();
+    }
 }

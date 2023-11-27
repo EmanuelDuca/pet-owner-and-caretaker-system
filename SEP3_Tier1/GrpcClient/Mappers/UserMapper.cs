@@ -46,4 +46,10 @@ public class UserMapper
         }
         return Task.FromResult(user);
     }
+
+    public async Task<IEnumerable<User>> MapToEntityList(UsersProto proto)
+    {
+        return await Task.WhenAll(proto.Users
+            .Select(async user => await MapToEntity(user)));
+    }
 }
