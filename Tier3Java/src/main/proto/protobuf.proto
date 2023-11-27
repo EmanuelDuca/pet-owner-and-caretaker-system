@@ -20,6 +20,7 @@ service AnnouncementService{
   rpc GetAnnouncement(FindAnnouncementProto) returns (AnnouncementProto);
   rpc UpdateAnnouncement(AnnouncementProto) returns (AnnouncementProto);
   rpc DeleteAnnouncement(FindAnnouncementProto) returns (ResponseStatus);
+  rpc StartService(AnnouncementProto) returns (Void);
 }
 
 
