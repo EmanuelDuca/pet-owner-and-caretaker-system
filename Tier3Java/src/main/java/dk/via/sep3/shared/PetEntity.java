@@ -13,7 +13,7 @@ public class PetEntity {
     private String petType;
     private int weight;
     private boolean isVaccinated;
-    private String dietDescription = "";
+    private String description = "";
     @ManyToOne
     private UserEntity petOwner;
 
@@ -34,32 +34,32 @@ public class PetEntity {
         this.petType = petType;
     }
 
-    public PetEntity(int id, String petName, String petType, int weight, boolean isVaccinated, String dietDescription, UserEntity petOwner) {
+    public PetEntity(int id, String petName, String petType, int weight, boolean isVaccinated, String description, UserEntity petOwner) {
         this.id = id;
         this.petName = petName;
         this.petType = petType;
         this.weight = weight;
         this.isVaccinated = isVaccinated;
-        this.dietDescription = dietDescription;
+        this.description = description;
         this.petOwner = petOwner;
     }
 
-    public PetEntity( String petName, String petType, int weight, boolean isVaccinated, String dietDescription, UserEntity petOwner) {
+    public PetEntity(String petName, String petType, int weight, boolean isVaccinated, String description, UserEntity petOwner) {
         this.petName = petName;
         this.petType = petType;
         this.weight = weight;
         this.isVaccinated = isVaccinated;
-        this.dietDescription = dietDescription;
+        this.description = description;
         this.petOwner = petOwner;
     }
 
-    public PetEntity(String petName, String petType, int weight, boolean isVaccinated, String dietDescription) {
+    public PetEntity(String petName, String petType, int weight, boolean isVaccinated, String description) {
         this.id = id;
         this.petName = petName;
         this.petType = petType;
         this.weight = weight;
         this.isVaccinated = isVaccinated;
-        this.dietDescription = dietDescription;
+        this.description = description;
     }
 
     public String getPetName() {
@@ -94,12 +94,12 @@ public class PetEntity {
         isVaccinated = vaccinated;
     }
 
-    public String getDietDescription() {
-        return dietDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDietDescription(String dietDescription) {
-        this.dietDescription = dietDescription;
+    public void setDescription(String dietDescription) {
+        this.description = dietDescription;
     }
 
 

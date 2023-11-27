@@ -13,7 +13,7 @@ public class PetMapper
                 .setPetType(petEntity.getPetType())
                 .setWeight(petEntity.getWeight())
                 .setIsVaccinated(petEntity.isVaccinated())
-                .setDescription(petEntity.getDietDescription())
+                .setDescription(petEntity.getDescription())
                 .setOwnerEmail(petEntity.getPetOwner().getEmail())
                 .build();
     }

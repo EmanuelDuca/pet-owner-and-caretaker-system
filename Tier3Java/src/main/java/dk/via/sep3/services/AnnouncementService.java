@@ -102,13 +102,20 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
 
         if(request.getPet().getId() != 0)
         {
-            PetEntity pet = new PetEntity(
-                    request.getPet().getPetName(),
-                    request.getPet().getPetType(),
-                    request.getPet().getWeight(),
-                    request.getPet().getIsVaccinated(),
-                    request.getPet().getDescription(),
-                    userDAO.findUser(request.getPetOwnerEmail()));
+            PetEntity pet = announcement.getPet();
+
+            if(!Strings.isNullOrEmpty(request.getPet().getDescription()))
+                pet.setDescription(request.getPet().getDescription());
+
+            if(!Strings.isNullOrEmpty(request.getPet().getPetType()))
+                pet.setPetType(request.getPet().getPetType());
+
+            if(!Strings.isNullOrEmpty(request.getPet().getPetName()))
+                pet.setPetName(request.getPet().getPetName());
+
+            if(request.getPet().getIsVaccinated() != pet.isVaccinated())
+                pet.setVaccinated(request.getPet().getIsVaccinated());
+
 
             announcement.setPet(pet);
         }
@@ -130,7 +137,5 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         responseObserver.onNext(ResponseStatus.newBuilder().setResponseStatus(response).build());
         responseObserver.onCompleted();
     }
-
-
 
 }
