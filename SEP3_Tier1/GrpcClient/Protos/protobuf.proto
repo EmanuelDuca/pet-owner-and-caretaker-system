@@ -21,6 +21,10 @@ service AnnouncementService{
   rpc DeleteAnnouncement(FindAnnouncementProto) returns (ResponseStatus);
 }
 
+service CommunicationService{
+  rpc OfferCare(UserProto) returns (ResponseStatus);
+}
+
 message UserProto{
   google.protobuf.StringValue email = 1;
   google.protobuf.StringValue username = 2;

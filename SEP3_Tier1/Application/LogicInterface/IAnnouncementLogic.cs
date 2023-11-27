@@ -9,5 +9,4 @@ public interface IAnnouncementLogic
     Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto searchAnnouncementDto);
     Task UpdateAsync(AnnouncementUpdateDto dto);
     Task DeleteAsync(int id);
-    Task OfferCare(CareTaker caretaker);
 }

@@ -5,4 +5,5 @@ namespace Application.DaoInterface;
 
 public interface ICommunicationDao
 {
+    Task OfferAsync(CareTaker caretaker);
 }

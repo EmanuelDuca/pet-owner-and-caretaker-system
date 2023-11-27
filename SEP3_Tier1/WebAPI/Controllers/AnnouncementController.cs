@@ -75,19 +75,4 @@ public class AnnouncementController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-
-    [HttpPost("offer")]
-    public async Task<ActionResult> OfferCare(CareTaker caretaker)
-    {
-        try
-        {
-            await logic.OfferCare(caretaker);
-            return Ok();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return StatusCode(500, e.Message);
-        }
-    }
 }

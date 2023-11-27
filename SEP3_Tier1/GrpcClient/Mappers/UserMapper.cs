@@ -52,4 +52,27 @@ public class UserMapper
         return await Task.WhenAll(proto.Users
             .Select(async user => await MapToEntity(user)));
     }
+    
+    public static UserProto UserProtoGenerator(User user)
+    {
+        string type = "";
+        if (user is PetOwner)
+        {
+            type = "PetOwner";
+        }else if (user is CareTaker)
+        {
+            type = "CareTaker";
+        }
+        
+        var request = new UserProto
+        {
+            Username = user.Username,
+            Password = user.Password,
+            Email = user.Email,
+            Type = type,
+            Age = user.Age,
+            Phone = user.PhoneNumber
+        };
+        return request;
+    }
 }

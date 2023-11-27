@@ -49,7 +49,7 @@ builder.Services.AddGrpcClient<AnnouncementService.AnnouncementServiceClient>(o 
 });
 
 
-
+builder.Services.AddSignalR();
 
 builder.Services.AddSwaggerGen();
 
