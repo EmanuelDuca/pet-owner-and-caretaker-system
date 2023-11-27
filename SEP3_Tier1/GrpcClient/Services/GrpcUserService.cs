@@ -100,7 +100,7 @@ public class GrpcUserService : IUserDao
             Password = user.Password,
             Email = user.Email,
             Type = type,
-            Age = user.Age,
+            Age = user.Age!.Value,
             Phone = user.PhoneNumber
         };
         return request;

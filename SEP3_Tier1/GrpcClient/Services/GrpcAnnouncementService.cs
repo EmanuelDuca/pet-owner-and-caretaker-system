@@ -66,12 +66,11 @@ public class GrpcAnnouncementService : IAnnouncementDao
     {
         try
         {
-            var request = new SearchAnnouncementProto
-            {
-                TimeStart = TimestampConverter.FromDateTime(dto.StartTime!.Value),
-                TimeFinish = TimestampConverter.FromDateTime(dto.EndTime!.Value),
-                PostalCode = dto.PostalCode
-            };
+            var request = new SearchAnnouncementProto();
+
+            if (!string.IsNullOrEmpty(dto.PostalCode))
+                request.PostalCode = dto.PostalCode;
+            
             AnnouncementsProto announcements = announcementServiceClient.FindAnnouncements(request);
             return await mapper.MapToEntityList(announcements);
         }
