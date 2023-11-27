@@ -2,6 +2,7 @@
 using Domain.DTOs;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers;
 
@@ -32,11 +33,30 @@ public class AnnouncementController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetAsync([FromQuery] SearchAnnouncementDto parameters)
+    public async Task<ActionResult> GetAsync([FromQuery] SearchAnnouncementDto dto)
     {
         try
         {
-            var announcements = await logic.GetAsync(parameters);
+            Console.WriteLine(dto);
+            Console.WriteLine(JsonConvert.SerializeObject(dto));
+            var announcements = await logic.GetAsync(dto);
+            return Ok(announcements);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    //Bellow will use Post request to filter the Announcements
+    [HttpPost("filter")]
+    public async Task<ActionResult> GetAnnouncementsByPreferenceAsync([FromBody] SearchAnnouncementDto dto)
+    {
+        try
+        {
+            Console.WriteLine(JsonConvert.SerializeObject(dto));
+            var announcements = await logic.GetAsync(dto);
             return Ok(announcements);
         }
         catch (Exception e)

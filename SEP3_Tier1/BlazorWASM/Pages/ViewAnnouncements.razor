@@ -73,8 +73,8 @@
     private bool isVaccinatedFilter;
     private bool isFilterShown;
     
-    private DateTime startDate;
-    private DateTime endDate;
+    private DateTime? startDate;
+    private DateTime? endDate;
     private String postalCode;
     private String userName;
 
@@ -90,20 +90,6 @@
             Console.WriteLine(classDropDown);
         }
     }
-
-    async void FilterAnnouncements()
-    {
-        SearchAnnouncementDto dto = new SearchAnnouncementDto
-        {
-            PetTypes = filteredPetTypes,
-            StartTime = startDate.ToShortDateString(),
-            EndTime = startDate.ToShortDateString(),
-            PostalCode = postalCode
-        };
-        
-        announcements = (await AnnouncementService.GetAsync(dto)).ToList();
-        Console.WriteLine(JsonConvert.SerializeObject(announcements));
-    } 
 }
 
 @functions
@@ -129,5 +115,22 @@
     {
         Console.WriteLine(filteredPetTypes);   
         Console.WriteLine("petType");   
+    }
+    
+    private async void FilterAnnouncements()
+    {
+        
+        SearchAnnouncementDto dto = new SearchAnnouncementDto
+        {
+            PetTypes = filteredPetTypes,
+            StartTime = startDate?.ToShortDateString(),
+            EndTime = endDate?.ToShortDateString(),
+            PostalCode = postalCode,
+        };
+
+        Console.WriteLine($"$Dto object converted to JSON:\n{JsonConvert.SerializeObject(dto)}");
+        
+        announcements = (await AnnouncementService.GetAsync(dto)).ToList();
+        //Console.WriteLine(JsonConvert.SerializeObject(announcements));
     }
 }
