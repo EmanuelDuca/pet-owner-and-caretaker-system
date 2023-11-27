@@ -18,26 +18,35 @@ public class AnnouncementLogic : IAnnouncementLogic
         this.announcementDao = announcementDao;
         this.userDao = userDao;
     }
-    public async Task<Announcement> CreateAsync(AnnouncementCreationDto creationDto)
+    public async Task<Announcement> CreateAsync(CreateAnnouncementDto dto)
     {
-        User? existing = await userDao.GetByEmailAsync(creationDto.OwnerEmail);
+        User? existing = await userDao.GetByEmailAsync(dto.OwnerEmail);
         if (existing == null || existing.Type != "PetOwner")
         {
-            throw new UserNotFoundException(creationDto.OwnerEmail);
+            throw new UserNotFoundException(dto.OwnerEmail);
         }
     
         
-        ValidateData(creationDto.StartDate, creationDto.EndDate, creationDto.PostalCode);
+        ValidateData(dto.StartDate, dto.EndDate, dto.PostalCode);
         Announcement toCreate = new Announcement
         {
-            EndDate = creationDto.EndDate,
-            StartDate = creationDto.StartDate,
-            PostalCode = creationDto.PostalCode,
-            ServiceDescription = creationDto.ServiceDescription,
-            CreationDateTime = creationDto.CreationDateTime,
+            EndDate = dto.EndDate,
+            StartDate = dto.StartDate,
+            PostalCode = dto.PostalCode,
+            ServiceDescription = dto.ServiceDescription,
+            CreationDateTime = DateTime.Now,
             PetOwner = new PetOwner(existing),
-            Pet = creationDto.Pet
+            Pet = new Pet
+            {
+                Id = dto.PetDto.Id,
+                PetOwner = new PetOwner(existing),
+                Description = dto.PetDto.Description,
+                Weight = dto.PetDto.Weight,
+                PetType = dto.PetDto.PetType,
+                PetName = dto.PetDto.PetName
+            }
         };
+        toCreate.Pet.PetOwner = toCreate.PetOwner;
         Announcement announcement = await announcementDao.CreateAsync(toCreate);
         
         return announcement;
@@ -59,7 +68,7 @@ public class AnnouncementLogic : IAnnouncementLogic
         }
     }
     
-    public async Task UpdateAsync(AnnouncementUpdateDto dto)
+    public async Task UpdateAsync(UpdateAnnouncementDto dto)
     {
         ValidateData(dto.StartDate,dto.EndDate,dto.PostalCode);
         await announcementDao.UpdateAsync(dto);

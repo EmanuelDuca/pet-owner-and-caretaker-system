@@ -6,6 +6,7 @@ using Domain.DTOs;
 using Grpc.Net.Client;
 using Domain.Models;
 using GrpcClient.Mappers;
+using GrpcClient.Utils;
 using HttpClients.ClientInterfaces;
 
 namespace GrpcClient.Services;
@@ -35,8 +36,8 @@ public class GrpcAnnouncementService : IAnnouncementDao
             {
                 PetOwnerEmail = ann.PetOwner.Email,
                 Description = ann.ServiceDescription,
-                TimeStart = ann.StartDate.ToShortDateString(),
-                TimeFinish = ann.EndDate.ToShortDateString(),
+                TimeStart = TimestampConverter.FromDateTime(ann.StartDate),
+                TimeFinish = TimestampConverter.FromDateTime(ann.EndDate),
                 Pet = new PetProto
                 {
                     PetName = ann.Pet.PetName,
@@ -47,7 +48,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
                     OwnerEmail = ann.PetOwner.Email
                 },
                 PostalCode = ann.PostalCode,
-                DateOfCreation = ann.CreationDateTime.ToShortDateString()
+                DateOfCreation = TimestampConverter.FromDateTime(ann.CreationDateTime)
             };
         
             AnnouncementProto grpcAnnouncementToCreate = announcementServiceClient.CreateAnnouncement(request);
@@ -67,8 +68,8 @@ public class GrpcAnnouncementService : IAnnouncementDao
         {
             var request = new SearchAnnouncementProto
             {
-                TimeStart = dto.StartTime,
-                TimeFinish = dto.EndTime,
+                TimeStart = TimestampConverter.FromDateTime(dto.StartTime!.Value),
+                TimeFinish = TimestampConverter.FromDateTime(dto.EndTime!.Value),
                 PostalCode = dto.PostalCode
             };
             AnnouncementsProto announcements = announcementServiceClient.FindAnnouncements(request);
@@ -82,15 +83,15 @@ public class GrpcAnnouncementService : IAnnouncementDao
 
     
 
-    public async Task UpdateAsync(AnnouncementUpdateDto dto)
+    public async Task UpdateAsync(UpdateAnnouncementDto dto)
     {
         try
         {
             var request = new AnnouncementProto
             {
                 Id = dto.Id,
-                TimeStart = dto.StartDate?.ToShortDateString(),
-                TimeFinish = dto.EndDate?.ToShortDateString(),
+                TimeStart = TimestampConverter.FromDateTime(dto.StartDate!.Value),
+                TimeFinish = TimestampConverter.FromDateTime(dto.EndDate!.Value),
                 PostalCode = dto.PostalCode,
                 Description = dto.ServiceDescription,
                 Pet = await mapper.PetMapper.MapToProto(dto.Pet!)

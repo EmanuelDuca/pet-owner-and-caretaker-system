@@ -28,6 +28,7 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     }
 
     @Override
+    @Transactional
     public AnnouncementEntity createAnnouncement(AnnouncementEntity announcementEntity)
     {
         if (announcementRepository.existsById(announcementEntity.getId()))

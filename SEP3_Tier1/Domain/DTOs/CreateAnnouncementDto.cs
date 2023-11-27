@@ -2,7 +2,7 @@
 
 namespace Domain.DTOs;
 
-public class AnnouncementCreationDto
+public class CreateAnnouncementDto
 {
     public int Id { get; set; }
     public string OwnerEmail { get; init; }
@@ -11,7 +11,7 @@ public class AnnouncementCreationDto
     public string PostalCode { get; init; }
     public string ServiceDescription { get; init; }
     public DateTime CreationDateTime { get; init; }
-    public Pet Pet { get; init; }
+    public CreatePetDto PetDto { get; init; }
     
     
 }

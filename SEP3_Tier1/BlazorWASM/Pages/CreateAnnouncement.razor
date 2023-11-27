@@ -170,10 +170,10 @@
     {
         try
         {
-            Pet pet;
+            CreatePetDto createPetDto;
 
             if (isNewPet)
-                pet = new Pet
+                createPetDto = new CreatePetDto
                 {
                     PetName = announcementInputs.PetName,
                     PetType = announcementInputs.PetType,
@@ -182,20 +182,19 @@
                 };
             else
             {
-                pet = PetList.Value;
+                createPetDto = new CreatePetDto(PetList.Value);
             }
 
-            AnnouncementCreationDto creationDto = new AnnouncementCreationDto
+            CreateAnnouncementDto dto = new CreateAnnouncementDto
             {
                 OwnerEmail = ownerEmail,
                 StartDate = announcementInputs.StartDate,
                 EndDate = announcementInputs.EndDate,
                 ServiceDescription = announcementInputs.Description,
-                // AuthorUsername = TODO
                 PostalCode = announcementInputs.Postalcode,
-                Pet = pet
+                PetDto = createPetDto
             };
-            await announcementService.CreateAsync(creationDto);
+            await announcementService.CreateAsync(dto);
 
             NotificationService.Notify(new NotificationMessage()
             {

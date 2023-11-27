@@ -17,11 +17,11 @@ public class AnnouncementController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Announcement>> CreateAnnouncement(AnnouncementCreationDto creationDto)
+    public async Task<ActionResult<Announcement>> CreateAnnouncement(CreateAnnouncementDto dto)
     {
         try
         {
-            Announcement announcement = await logic.CreateAsync(creationDto);
+            Announcement announcement = await logic.CreateAsync(dto);
             return Created($"/announcements/{announcement.Id}", announcement);
         }
         catch (Exception e)
@@ -47,7 +47,7 @@ public class AnnouncementController : ControllerBase
     }
 
     [HttpPatch]
-    public async Task<ActionResult> UpdateAsync([FromBody] AnnouncementUpdateDto dto)
+    public async Task<ActionResult> UpdateAsync([FromBody] UpdateAnnouncementDto dto)
     {
         try
         {

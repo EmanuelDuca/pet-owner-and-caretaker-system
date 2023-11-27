@@ -33,12 +33,16 @@ public class mainTest
         // Test update announcement
 
         AnnouncementProto announcementProto = AnnouncementProto.newBuilder()
-                .setId(13)
+                .setId(1)
                 .setPostalCode("7424")
                 .setDescription("I was updated")
                 .build();
 
         announcementStub.updateAnnouncement(announcementProto);
+
+
+        // Test create announcement
+
 
 
         // Test create user

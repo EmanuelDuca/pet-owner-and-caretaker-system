@@ -18,7 +18,7 @@ public class AnnouncementHttpClient : IAnnouncementService
     }
     
     
-    public async Task<Announcement> CreateAsync(AnnouncementCreationDto dto)
+    public async Task<Announcement> CreateAsync(CreateAnnouncementDto dto)
     {
         HttpResponseMessage response = await client.PostAsJsonAsync(START_URI, dto);
         string content = await HttpClientHelper.HandleResponse(response);
@@ -32,7 +32,7 @@ public class AnnouncementHttpClient : IAnnouncementService
         return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<Announcement>>(content);
     }
 
-    public async Task UpdateAsync(AnnouncementUpdateDto dto)
+    public async Task UpdateAsync(UpdateAnnouncementDto dto)
     {
         HttpResponseMessage response = await client.PatchAsJsonAsync(START_URI, dto);
         await HttpClientHelper.HandleResponse(response);

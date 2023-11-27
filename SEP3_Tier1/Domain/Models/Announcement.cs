@@ -3,11 +3,11 @@
 public class Announcement
 {
     public int Id { get; set; }
-    public PetOwner PetOwner { get; init; }
-    public DateTime StartDate { get; init; }
-    public DateTime EndDate { get; init; }
-    public string PostalCode { get; init; }
-    public string ServiceDescription { get; init; }
-    public DateTime CreationDateTime { get; init; }
-    public Pet Pet { get; init; }
+    public PetOwner PetOwner { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public string PostalCode { get; set; }
+    public string ServiceDescription { get; set; }
+    public DateTime CreationDateTime { get; set; }
+    public Pet Pet { get; set; }
 }

@@ -1,5 +1,7 @@
 using Application.DaoInterface;
 using Domain.Models;
+using Google.Protobuf.WellKnownTypes;
+using GrpcClient.Utils;
 
 namespace GrpcClient.Mappers;
 
@@ -21,9 +23,9 @@ public class AnnouncementMapper
         var announcement = new Announcement
         {
             Id = proto.Id,
-            CreationDateTime = DateTime.Parse(proto.DateOfCreation),
-            StartDate = DateTime.Parse(proto.TimeStart),
-            EndDate = DateTime.Parse(proto.TimeFinish),
+            CreationDateTime = TimestampConverter.ToDateTime(proto.DateOfCreation),
+            StartDate = TimestampConverter.ToDateTime(proto.TimeStart),
+            EndDate = TimestampConverter.ToDateTime(proto.TimeFinish),
             PetOwner = (PetOwner) (await userService.GetByEmailAsync(proto.PetOwnerEmail))!,
             PostalCode = proto.PostalCode,
             ServiceDescription = proto.Description,

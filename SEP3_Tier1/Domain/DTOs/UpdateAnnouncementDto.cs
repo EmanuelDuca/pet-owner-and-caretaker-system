@@ -2,7 +2,7 @@ using Domain.Models;
 
 namespace Domain.DTOs;
 
-public class AnnouncementUpdateDto
+public class UpdateAnnouncementDto
 {
     public int Id { get; }
     public DateTime? StartDate { get; set; }
@@ -12,7 +12,7 @@ public class AnnouncementUpdateDto
     public Pet? Pet { get; set; }
     
 
-    public AnnouncementUpdateDto(int id)
+    public UpdateAnnouncementDto(int id)
     {
         Id = id;
     }
