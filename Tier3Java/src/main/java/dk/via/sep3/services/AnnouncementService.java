@@ -1,11 +1,13 @@
 package dk.via.sep3.services;
 
 import com.google.common.base.Strings;
+import com.google.protobuf.Timestamp;
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.AnnouncementMapper;
 import dk.via.sep3.shared.AnnouncementEntity;
 import dk.via.sep3.shared.PetEntity;
+import dk.via.sep3.shared.utils.TimestampConverter;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +36,8 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         AnnouncementEntity announcement = new AnnouncementEntity(
                 userDAO.findUser(request.getPetOwnerEmail()),
                 request.getDescription(),
-                request.getTimeStart(),
-                request.getTimeFinish(),
+                TimestampConverter.toLocalDateTime(request.getTimeStart()),
+                TimestampConverter.toLocalDateTime(request.getTimeFinish()),
                 new PetEntity(
                         request.getPet().getPetName(),
                         request.getPet().getPetType(),
@@ -46,7 +48,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
                 ),
                 request.getPostalCode()
         );
-        announcement.setDateOfCreation(request.getDateOfCreation());
+        announcement.setDateOfCreation(TimestampConverter.toLocalDateTime(request.getDateOfCreation()));
         AnnouncementEntity announcementRespond = announcementDAO.createAnnouncement(announcement);
 
         if(announcementRespond == null)
@@ -94,11 +96,14 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         if(!Strings.isNullOrEmpty(request.getDescription()))
             announcement.setDescription(request.getDescription());
 
-        if(!Strings.isNullOrEmpty(request.getTimeStart()))
-            announcement.setStartDate(request.getTimeStart());
+        if(!request.getTimeStart().isInitialized())
+            announcement.setStartDate(TimestampConverter.toLocalDateTime(request.getTimeStart()));
 
-        if(!Strings.isNullOrEmpty(request.getTimeFinish()))
-            announcement.setFinishDate(request.getTimeFinish());
+        if(!Strings.isNullOrEmpty(request.getPostalCode()))
+            announcement.setPostalCode(request.getPostalCode());
+
+        if(!request.getTimeFinish().isInitialized())
+            announcement.setFinishDate(TimestampConverter.toLocalDateTime(request.getTimeFinish()));
 
         if(request.getPet().getId() != 0)
         {
