@@ -1,6 +1,7 @@
 package dk.via.sep3.mappers;
 
 import dk.via.sep3.shared.AnnouncementEntity;
+import dk.via.sep3.shared.utils.TimestampConverter;
 import origin.protobuf.AnnouncementProto;
 
 
@@ -12,11 +13,11 @@ public class AnnouncementMapper
         return AnnouncementProto.newBuilder()
                 .setPetOwnerEmail(announcementEntity.getPetOwner().getEmail())
                 .setDescription(announcementEntity.getDescription())
-                .setTimeStart(announcementEntity.getStartDate())
-                .setTimeFinish(announcementEntity.getFinishDate())
+                .setTimeStart(TimestampConverter.fromLocalDateTime(announcementEntity.getStartDate()))
+                .setTimeFinish(TimestampConverter.fromLocalDateTime(announcementEntity.getFinishDate()))
                 .setPet(PetMapper.mapToProto(announcementEntity.getPet()))
                 .setPostalCode(announcementEntity.getAddress())
-                .setDateOfCreation(announcementEntity.getDateOfCreation())
+                .setDateOfCreation(TimestampConverter.fromLocalDateTime(announcementEntity.getDateOfCreation()))
                 .setId(announcementEntity.getId())
                 .build();
     }

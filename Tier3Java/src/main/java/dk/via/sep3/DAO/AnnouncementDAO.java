@@ -4,11 +4,13 @@ import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.repository.AnnouncementRepository;
 import dk.via.sep3.repository.PetRepository;
 import dk.via.sep3.shared.AnnouncementEntity;
+import dk.via.sep3.shared.utils.TimestampConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import origin.protobuf.SearchAnnouncementProto;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -62,17 +64,19 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     @Override
     public Collection<AnnouncementEntity> getAnnouncements(SearchAnnouncementProto searchDto)
     {
-        return announcementRepository.findAll();
-//        return announcementRepository.findAll()
-//                .stream()
-//                .filter(a -> !searchDto.getPetOwnerUsername().|| searchDto.getPetOwnerUsername().getValue().equals(a.getPetOwner().getEmail()))
-//                .filter(a -> !searchDto.getPetType().get || searchDto.getPetType().getValue().equals(a.getPetOwner().getType()))
-//                .filter(a -> !searchDto.getTimeFinish().isInitialized() || searchDto.getTimeFinish().getValue().equals(a.getFinishDate()))
-//                .filter(a -> !searchDto.getTimeStart().isInitialized() || searchDto.getTimeStart().getValue().equals(a.getStartDate()))
-//                .filter(a -> !searchDto.getPostalCode().isInitialized() || searchDto.getPostalCode().getValue().equals(a.getPostalCode()))
-//                .filter(a -> !searchDto.getPetWeight().getDefaultInstanceForType().|| searchDto.getPetWeight().getValue() == a.getPet().getWeight())
-//                .filter(a -> !searchDto.getPetIsVaccinated().isInitialized() || searchDto.getPetIsVaccinated().getValue() == a.getPet().isVaccinated())
-//                .toList();
+        return announcementRepository.findAll()
+                .stream()
+                .filter(a -> !searchDto.getPetOwnerUsername().isInitialized() || searchDto.getPetOwnerUsername().getValue().equals(a.getPetOwner().getEmail()))
+                .filter(a -> !searchDto.getPetType().isInitialized() || searchDto.getPetType().getValue().equals(a.getPetOwner().getType()))
+
+                .filter(a -> !searchDto.getTimeFinish().isInitialized() && !searchDto.getTimeStart().isInitialized() ||
+                            TimestampConverter.toLocalDateTime(searchDto.getTimeFinish()).isBefore(a.getFinishDate()) &&
+                                    TimestampConverter.toLocalDateTime(searchDto.getTimeStart()).isAfter(a.getStartDate()))
+
+                .filter(a -> !searchDto.getPostalCode().isInitialized() || searchDto.getPostalCode().getValue().equals(a.getPostalCode()))
+                .filter(a -> !searchDto.getPetWeight().isInitialized() || searchDto.getPetWeight().getValue() == a.getPet().getWeight())
+                .filter(a -> !searchDto.getPetIsVaccinated().isInitialized() || searchDto.getPetIsVaccinated().getValue() == a.getPet().isVaccinated())
+                .toList();
     }
 
     @Override
