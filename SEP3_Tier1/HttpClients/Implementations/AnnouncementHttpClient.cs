@@ -1,9 +1,11 @@
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using Domain;
 using Domain.DTOs;
 using Domain.Models;
 using HttpClients.ClientInterfaces;
+using Newtonsoft.Json;
 
 namespace HttpClients.Implementations;
 
@@ -27,9 +29,13 @@ public class AnnouncementHttpClient : IAnnouncementService
 
     public async Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto? dto)
     {
-        HttpResponseMessage response = await client.GetAsync(START_URI);
-        string content = await HttpClientHelper.HandleResponse(response);
-        return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<Announcement>>(content);
+        string jsonDto = JsonConvert.SerializeObject(dto);
+
+        HttpResponseMessage response = await client.GetAsync($"{START_URI}?{jsonDto}");
+        
+        //response = await client.GetAsync(START_URI);
+        string responseContent = await HttpClientHelper.HandleResponse(response);
+        return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<Announcement>>(responseContent);
     }
 
     public async Task UpdateAsync(AnnouncementUpdateDto dto)

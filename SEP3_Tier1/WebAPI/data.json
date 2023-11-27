@@ -26,6 +26,15 @@
       "PhoneNumber": null,
       "Password": "password",
       "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "ionV",
+      "Age": null,
+      "Email": "ionv@gmail.com",
+      "PhoneNumber": null,
+      "Password": "1111",
+      "Type": "PetOwner"
     }
   ],
   "Announcements": [
@@ -51,7 +60,8 @@
         "PetType": 5,
         "Weight": 3,
         "IsVaccinated": true,
-        "Description": "3f2eg2g"
+        "Description": "3f2eg2g",
+        "PetOwner": null
       }
     },
     {
@@ -76,7 +86,8 @@
         "PetType": 18,
         "Weight": 0,
         "IsVaccinated": true,
-        "Description": "It\u0027s Hugo"
+        "Description": "It\u0027s Hugo",
+        "PetOwner": null
       }
     },
     {
@@ -101,7 +112,8 @@
         "PetType": 0,
         "Weight": 0,
         "IsVaccinated": true,
-        "Description": "Finwaropigrg"
+        "Description": "Finwaropigrg",
+        "PetOwner": null
       }
     },
     {
@@ -126,7 +138,8 @@
         "PetType": 13,
         "Weight": 0,
         "IsVaccinated": true,
-        "Description": "Fat cat"
+        "Description": "Fat cat",
+        "PetOwner": null
       }
     }
   ]

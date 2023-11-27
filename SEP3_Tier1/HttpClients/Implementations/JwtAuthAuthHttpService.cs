@@ -8,14 +8,14 @@ using HttpClients.ClientInterfaces;
 
 namespace HttpClients.Implementations;
 
-public class JwtUserAuthAuthHttpService : IUserAuthService
+public class JwtAuthAuthHttpService : IAuthService
 {
     private readonly HttpClient client;
     public static string? Jwt { get; private set; }
     private readonly string START_URI = "users";
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
 
-    public JwtUserAuthAuthHttpService(HttpClient client)
+    public JwtAuthAuthHttpService(HttpClient client)
     {
         this.client = client;
     }
