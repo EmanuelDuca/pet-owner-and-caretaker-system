@@ -10,4 +10,5 @@ public interface IAnnouncementDao
     Task UpdateAsync(AnnouncementUpdateDto announcement);
     Task<Announcement> CreateAsync(Announcement ann);
     Task DeleteAsync(int id);
+    Task OfferAsync(CareTaker caretaker);
 }

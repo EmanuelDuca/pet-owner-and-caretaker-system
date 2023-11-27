@@ -128,8 +128,11 @@ public class GrpcAnnouncementService : IAnnouncementDao
             throw new Exception(e.Message);
         }
     }
-    
-    
+
+    public Task OfferAsync(CareTaker caretaker)
+    {
+        throw new NotImplementedException();
+    }
 }
     
 

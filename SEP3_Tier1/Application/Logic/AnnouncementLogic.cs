@@ -69,4 +69,9 @@ public class AnnouncementLogic : IAnnouncementLogic
     {
         await announcementDao.DeleteAsync(id);
     }
+
+    public async Task OfferCare(CareTaker caretaker)
+    {
+        await announcementDao.OfferAsync(caretaker);
+    }
 }
