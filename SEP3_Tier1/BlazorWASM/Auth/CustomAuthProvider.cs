@@ -6,9 +6,9 @@ namespace BlazorClient.Auth;
 
 public class CustomAuthProvider : AuthenticationStateProvider
 {
-    private readonly IUserAuthService authService;
+    private readonly IAuthService authService;
 
-    public CustomAuthProvider(IUserAuthService authService)
+    public CustomAuthProvider(IAuthService authService)
     {
         this.authService = authService;
         this.authService.OnAuthStateChanged += AuthStateChanged;

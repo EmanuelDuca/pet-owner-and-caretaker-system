@@ -3,6 +3,7 @@
 @using Domain.DTOs
 @using Domain.Models
 @using Blazored.LocalStorage
+@using Newtonsoft.Json
 @inject IAnnouncementService AnnouncementService
 @inject ILocalStorageService LocalStorageService
 @inject IPexelsService ImageService
@@ -16,22 +17,31 @@
     
     
     <div class="dropdown">
-        <RadzenButton Style="margin-left: 8px; min-width: 160px;" Click="@(_ => ShowDropDownContent())">Apply filters</RadzenButton>
+        <RadzenButton Style="margin-left: 8px; min-width: 160px;" Click="@(_ => ShowDropDownContent())">Select filters</RadzenButton>
         <div class="@classDropDown">
-              <RadzenDropDown
-                          @bind-Value=filteredPetTypes
-                          Data="PetType.PetTypesWithNames"
-                          Multiple=true
-                          Placeholder="Select pet types"
-                          TextProperty="Name"
-                          Chips="true"
-                          ValueProperty="Value"
-                          SelectAllText="Select all types"
-                          Style="width: 100%; max-width: 400px; margin-bottom: 8px" />
+            <RadzenDropDown
+                @bind-Value=filteredPetTypes
+                Data="PetType.PetTypesWithNames"
+                Multiple=true
+                Placeholder="Select pet types"
+                TextProperty="Name"
+                Chips="true"
+                ValueProperty="Value"
+                SelectAllText="Select all types"
+                Style="width: 100%; max-width: 400px; margin-bottom: 8px" />
         
-              <RadzenCheckBox @bind-Value=@isVaccinatedFilter/>
-            <RadzenLabel Text="Vaccinated" Style="margin-left: 8px; vertical-align: middle"/>
+            <RadzenCheckBox @bind-Value=@isVaccinatedFilter/>
+            <RadzenLabel Text="Vaccinated" Style="margin-left: 8px; vertical-align: middle;" />
+            <br />
+            <RadzenLabel Text="From Date" Style="margin-left: 8px; vertical-align: middle;" />
+            <RadzenDatePicker @bind-Value=@startDate />
+            <RadzenLabel Text="To Date" Style="margin-left: 8px; vertical-align: middle;" />
+            <RadzenDatePicker @bind-Value=@endDate />
+            <RadzenLabel Text="Postal Code" Style="margin-left: 8px; vertical-align: middle;" />
+            <RadzenAutoComplete @bind-Value=@postalCode TextProperty="Postal Code" Style="width: 15rem" />
+            <RadzenButton Variant="Variant.Flat" Shade="Shade.Dark" Click=@(args => FilterAnnouncements()) Text="Apply Filters" ButtonStyle="ButtonStyle.Primary" />
         </div>
+        
     </div>
     
 </div>
@@ -62,6 +72,11 @@
     private string classDropDown = "dropdown-content";
     private bool isVaccinatedFilter;
     private bool isFilterShown;
+    
+    private DateTime? startDate;
+    private DateTime? endDate;
+    private String postalCode;
+    private String userName;
 
     private bool IsFilterShown
     {
@@ -81,7 +96,8 @@
 {
     protected override async Task OnInitializedAsync()
     {
-        announcements = (await AnnouncementService.GetAsync(null)).ToList();
+        SearchAnnouncementDto dto = new SearchAnnouncementDto();
+        announcements = (await AnnouncementService.GetAsync(dto)).ToList();
     }
     
     public void Search()
@@ -99,5 +115,22 @@
     {
         Console.WriteLine(filteredPetTypes);   
         Console.WriteLine("petType");   
+    }
+    
+    private async void FilterAnnouncements()
+    {
+        
+        SearchAnnouncementDto dto = new SearchAnnouncementDto
+        {
+            PetTypes = filteredPetTypes,
+            StartTime = startDate?.ToShortDateString(),
+            EndTime = endDate?.ToShortDateString(),
+            PostalCode = postalCode,
+        };
+
+        Console.WriteLine($"$Dto object converted to JSON:\n{JsonConvert.SerializeObject(dto)}");
+        
+        announcements = (await AnnouncementService.GetAsync(dto)).ToList();
+        //Console.WriteLine(JsonConvert.SerializeObject(announcements));
     }
 }

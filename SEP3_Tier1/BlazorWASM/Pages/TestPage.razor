@@ -1,0 +1,104 @@
+@page "/TestPage"
+@using System.Security.Claims
+@attribute [Authorize]
+
+@if (ownerEmail == null)
+{
+    <label>Loading...</label>
+}
+else
+{
+    <AuthorizeView>
+      <div class="container">
+        <div class="py-5 text-center">
+          <img class="rounded-circle mt-5" src="//cdn-icons-png.flaticon.com/512/3177/3177440.png" alt="" width="100" height="100">
+          <h2>Edit Profile</h2>
+          <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+        </div>
+            
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">Billing address</h4>
+          <form class="needs-validation" novalidate="">
+            <div class="row g-3">
+                
+              <div class="col-12">
+                <label for="username" class="form-label">Username</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text"></span>
+                  <input type="text" class="form-control" id="username" placeholder="Username" required="">
+                  <div class="invalid-feedback">
+                    Your username is required.
+                  </div>
+                </div>
+              </div>
+                  
+              <div class="col-12">
+                <label for="email" class="form-label">Email <span class="text-body-secondary">(Can't Be Changed)</span></label>
+                <input readonly type="email" class="form-control" id="email" placeholder="@ownerEmail">
+              </div>
+                  
+              <div class="col-12">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="phone" placeholder="+45 012..." required="">
+                <div class="invalid-feedback">
+                  Please enter your phone number.
+                </div>
+              </div>
+                  
+              <div class="col-md-4">
+                <label for="state" class="form-label">State</label>
+                <select class="form-select" id="state" required="">
+                  <option value="">Choose...</option>
+                  <option>California</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid state.
+                </div>
+              </div>
+                  
+              <div class="col-md-3">
+                <label for="zip" class="form-label">Zip</label>
+                <input type="text" class="form-control" id="zip" placeholder="" required="">
+                <div class="invalid-feedback">
+                  Zip code required.
+                </div>
+              </div>
+            </div>
+                  
+            <hr class="my-4">
+                  
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="same-address">
+              <label class="form-check-label" for="same-address">Notify me about new announcements</label>
+            </div>
+                  
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="save-info">
+              <label class="form-check-label" for="save-info">Notify when somebody are requesting a service</label>
+            </div>
+                  
+            <hr class="my-4">
+                  
+            <button class="w-20 btn btn-primary btn-lg" type="submit">Save Changes</button>
+          </form>
+        </div>
+            
+            
+      </div>
+    </AuthorizeView>
+}
+
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    
+    private string ownerEmail;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+    }
+}
