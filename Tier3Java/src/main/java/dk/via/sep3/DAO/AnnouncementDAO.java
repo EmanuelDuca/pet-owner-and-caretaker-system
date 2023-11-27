@@ -1,5 +1,6 @@
 package dk.via.sep3.DAO;
 
+import com.google.protobuf.Descriptors;
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.repository.AnnouncementRepository;
 import dk.via.sep3.repository.PetRepository;
@@ -67,16 +68,16 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     {
         return announcementRepository.findAll()
                 .stream()
-                .filter(a -> !searchDto.getPetOwnerUsername().isInitialized() || searchDto.getPetOwnerUsername().getValue().equals(a.getPetOwner().getEmail()))
-                .filter(a -> !searchDto.getPetType().isInitialized() || searchDto.getPetType().getValue().equals(a.getPetOwner().getType()))
+                .filter(a -> !searchDto.hasPetOwnerUsername() || searchDto.getPetOwnerUsername().getValue().equals(a.getPetOwner().getEmail()))
+                .filter(a -> !searchDto.hasPetType() || searchDto.getPetType().getValue().equals(a.getPet().getPetType()))
 
-                .filter(a -> !searchDto.getTimeFinish().isInitialized() && !searchDto.getTimeStart().isInitialized() ||
+                .filter(a -> !searchDto.hasTimeFinish() && !searchDto.hasTimeStart() ||
                             TimestampConverter.toLocalDateTime(searchDto.getTimeFinish()).isBefore(a.getFinishDate()) &&
                                     TimestampConverter.toLocalDateTime(searchDto.getTimeStart()).isAfter(a.getStartDate()))
 
-                .filter(a -> !searchDto.getPostalCode().isInitialized() || searchDto.getPostalCode().getValue().equals(a.getPostalCode()))
-                .filter(a -> !searchDto.getPetWeight().isInitialized() || searchDto.getPetWeight().getValue() == a.getPet().getWeight())
-                .filter(a -> !searchDto.getPetIsVaccinated().isInitialized() || searchDto.getPetIsVaccinated().getValue() == a.getPet().isVaccinated())
+                .filter(a -> !searchDto.hasPostalCode() || searchDto.getPostalCode().getValue().equals(a.getPostalCode()))
+                .filter(a -> !searchDto.hasPetWeight() || searchDto.getPetWeight().getValue() == a.getPet().getWeight())
+                .filter(a -> !searchDto.hasPetIsVaccinated() || searchDto.getPetIsVaccinated().getValue() == a.getPet().isVaccinated())
                 .toList();
     }
 

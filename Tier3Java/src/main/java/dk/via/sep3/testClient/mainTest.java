@@ -1,6 +1,7 @@
 package dk.via.sep3.testClient;
 
 
+import com.google.protobuf.StringValue;
 import dk.via.sep3.mappers.AnnouncementMapper;
 import io.grpc.*;
 import origin.protobuf.*;
@@ -32,17 +33,23 @@ public class mainTest
 
         // Test update announcement
 
-        AnnouncementProto announcementProto = AnnouncementProto.newBuilder()
-                .setId(1)
-                .setPostalCode("7424")
-                .setDescription("I was updated")
+//        AnnouncementProto announcementProto = AnnouncementProto.newBuilder()
+//                .setId(1)
+//                .setPostalCode("7424")
+//                .setDescription("I was updated")
+//                .build();
+//
+//        announcementStub.updateAnnouncement(announcementProto);
+
+
+
+
+        // Test filter announcement
+        SearchAnnouncementProto searchAnnouncementProto = SearchAnnouncementProto.newBuilder()
+                .setPetType(StringValue.of("Dog"))
                 .build();
-
-        announcementStub.updateAnnouncement(announcementProto);
-
-
-        // Test create announcement
-
+        var filteredAnnouncements = announcementStub.findAnnouncements(searchAnnouncementProto);
+        System.out.println(filteredAnnouncements);
 
 
         // Test create user
