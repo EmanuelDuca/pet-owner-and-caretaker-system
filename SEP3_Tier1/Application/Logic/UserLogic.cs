@@ -62,4 +62,44 @@ public class UserLogic : IUserLogic
 
         return existing;
     }
+
+    public async Task<User> EditAsync(UserEditDto editDto)
+    {
+        User? existing = await userDao.GetByEmailAsync(editDto.Email);
+        if (existing == null) {
+            throw new Exception("User with given email does not exist");
+        }
+        
+        
+        User tempUser = new User()
+        {
+            Username = editDto.UserName ?? existing.Username,
+            Email = existing.Email,
+            Password = editDto.Password ?? existing.Password,
+            Type = existing.Type,
+            PhoneNumber = editDto.PhoneNumber ?? existing.PhoneNumber,
+            Age = editDto.Age ?? existing.Age,
+            Name = editDto.Name ?? existing.Name
+        };
+        User toUpdate;
+        switch (existing.Type)
+        {
+            case "PetOwner":
+                toUpdate = new PetOwner(tempUser);
+                break;
+            case "CareTaker":
+                toUpdate = new CareTaker(tempUser);
+                break;
+            default:
+                throw new Exception("Wrong user type");
+        }
+        
+        User updated = await userDao.UpdateAsync(toUpdate) ?? throw new Exception("In userLogic file User.Type was mismatched");
+        return updated;
+    }
+    
+    public async Task<IEnumerable<User>> GetAsync(SearchUsersDto parameters)
+    {
+        return await userDao.GetAsync(parameters);
+    }
 }

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,7 +50,7 @@ builder.Services.AddGrpcClient<AnnouncementService.AnnouncementServiceClient>(o 
 });
 
 
-
+builder.Services.AddSignalR();
 
 builder.Services.AddSwaggerGen();
 
@@ -72,9 +73,7 @@ AuthorizationPolicies.AddPolicies(builder.Services);
 
 var app = builder.Build();
 
-app.UseAuthorization();
-app.UseAuthentication();
-app.UseHttpsRedirection();
+
 
 
 if (app.Environment.IsDevelopment())
@@ -93,7 +92,8 @@ app.UseCors(x => x
 
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

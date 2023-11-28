@@ -16,14 +16,14 @@ public class AnnouncementFileDao : IAnnouncementDao
     public Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto searchParameters)
     {
         IEnumerable<Announcement> announcements = context.Announcements.AsEnumerable();
-        if (!string.IsNullOrEmpty(searchParameters.StartTime))
+        if (searchParameters.StartTime == null)
         {
-            announcements = announcements.Where(t => t.StartDate.Equals(DateTime.Parse(searchParameters.StartTime)));
+            announcements = announcements.Where(t => t.StartDate.Equals(searchParameters.StartTime));
         }
-        
-        if (!string.IsNullOrEmpty(searchParameters.StartTime))
+
+        if (searchParameters.StartTime == null)
         {
-            announcements = announcements.Where(t => t.StartDate.Equals(DateTime.Parse(searchParameters.StartTime)));
+            announcements = announcements.Where(t => t.StartDate.Equals(searchParameters.StartTime));
         }
 
         if (!string.IsNullOrEmpty(searchParameters.DescriptionContains))
@@ -61,24 +61,24 @@ public class AnnouncementFileDao : IAnnouncementDao
         return Task.FromResult(ann);
     }
 
-    public Task UpdateAsync(AnnouncementUpdateDto announcement)
+    public Task UpdateAsync(UpdateAnnouncementDto updateAnnouncement)
     {
-        Announcement? existing = context.Announcements.FirstOrDefault(a => a.Id == announcement.Id);
+        Announcement? existing = context.Announcements.FirstOrDefault(a => a.Id == updateAnnouncement.Id);
         if (existing == null)
         {
-            throw new Exception($"Announcement with id {announcement.Id} does not exist!");
+            throw new Exception($"Announcement with id {updateAnnouncement.Id} does not exist!");
         }
 
         Announcement createdAnnouncement = new Announcement
         {
-            Id = announcement.Id,
+            Id = updateAnnouncement.Id,
             PetOwner = existing.PetOwner,
             CreationDateTime = existing.CreationDateTime,
-            EndDate = announcement.EndDate ?? existing.EndDate,
-            StartDate = announcement.StartDate ?? existing.EndDate,
-            Pet = announcement.Pet ?? existing.Pet,
-            PostalCode = announcement.PostalCode ?? existing.PostalCode,
-            ServiceDescription = announcement.ServiceDescription ?? existing.PostalCode
+            EndDate = updateAnnouncement.EndDate ?? existing.EndDate,
+            StartDate = updateAnnouncement.StartDate ?? existing.EndDate,
+            Pet = updateAnnouncement.Pet ?? existing.Pet,
+            PostalCode = updateAnnouncement.PostalCode ?? existing.PostalCode,
+            ServiceDescription = updateAnnouncement.ServiceDescription ?? existing.PostalCode
         };
         context.Announcements.Remove(existing);
         context.Announcements.Add(createdAnnouncement);
@@ -101,5 +101,10 @@ public class AnnouncementFileDao : IAnnouncementDao
         context.SaveChanges();
         
         return Task.CompletedTask;
+    }
+
+    public Task OfferAsync(CareTaker caretaker)
+    {
+        throw new NotImplementedException();
     }
 }

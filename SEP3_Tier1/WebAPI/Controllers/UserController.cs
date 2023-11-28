@@ -93,4 +93,34 @@ public class UserController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpPost("edit")]
+    public async Task<ActionResult<User>> Edit([FromBody] UserEditDto dto)
+    {
+        try
+        {
+            User user = await userLogic.EditAsync(dto);
+            return Ok(GenerateJwt(user));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult> GetAsync(SearchUsersDto parameters)
+    {
+        try
+        {
+            var users = await userLogic.GetAsync(parameters);
+            return Ok(users);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

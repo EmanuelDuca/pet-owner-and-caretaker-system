@@ -1,6 +1,8 @@
 package dk.via.sep3.testClient;
 
 
+import com.google.protobuf.StringValue;
+import dk.via.sep3.mappers.AnnouncementMapper;
 import io.grpc.*;
 import origin.protobuf.*;
 
@@ -16,26 +18,60 @@ public class mainTest
         AnnouncementServiceGrpc.AnnouncementServiceBlockingStub announcementStub = AnnouncementServiceGrpc.newBlockingStub(managedChannel);
 
 
-        // Test create user
-        UserProto user = UserProto.newBuilder()
-                .setEmail("allan5@gmail.com")
-                .setUsername("Allan")
-                .setPassword("via123")
-                .setAge(40)
-                .setPhone("078830013")
-                .setType("CareTaker")
+        // Test update user
+//        UserProto user = UserProto.newBuilder()
+//                .setEmail("allan1@gmail.com")
+//                .setPhone("000000000")
+//                .setName("Allan ...")
+//                .build();
+//
+//        try{
+//            userStub.updateUser(user);
+//        }catch (Exception e)
+//        {
+//            System.out.println(e.getMessage());
+
+        // Test update announcement
+
+//        AnnouncementProto announcementProto = AnnouncementProto.newBuilder()
+//                .setId(1)
+//                .setPostalCode("7424")
+//                .setDescription("I was updated")
+//                .build();
+//
+//        announcementStub.updateAnnouncement(announcementProto);
+
+
+
+
+        // Test filter announcement
+        SearchAnnouncementProto searchAnnouncementProto = SearchAnnouncementProto.newBuilder()
+                .setPetType(StringValue.of("Dog"))
                 .build();
-        try {
-            UserProto response = userStub.createUser(user);
-            System.out.println(response.getEmail());
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
+        var filteredAnnouncements = announcementStub.findAnnouncements(searchAnnouncementProto);
+        System.out.println(filteredAnnouncements);
 
 
-        System.out.println(announcementStub.findAnnouncements(null));
+        // Test create user
+//        UserProto user = UserProto.newBuilder()
+//                .setEmail("allan6@gmail.com")
+//                .setUsername("Allan")
+//                .setPassword("via123")
+//                .setAge(40)
+//                .setPhone("078830013")
+//                .setType("CareTaker")
+//                .build();
+//        try {
+//            UserProto response = userStub.createUser(user);
+//            System.out.println(response.getEmail());
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println(e.getMessage());
+//        }
+//
+//
+//        System.out.println(announcementStub.findAnnouncements(null));
 
 
         //Test find user by email

@@ -1,5 +1,6 @@
 package dk.via.sep3.services;
 
+import com.google.common.base.Strings;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.UserMapper;
 import dk.via.sep3.shared.UserEntity;
@@ -75,8 +76,8 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
 
 
     }
-    @Transactional
     @Override
+    @Transactional
     public void searchUser(SearchUsersProto request, StreamObserver<UsersProto> responseObserver) {
         Collection<UserEntity> users = userDAO.getUsers(request.getType());
 
@@ -85,14 +86,9 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
             return;
         }
 
-        Collection<UserProto> userCollection = new ArrayList<>();
+        var filteredUsers = users.stream().map(UserMapper::mapProto).toList();
 
-        for (var user : users)
-        {
-            userCollection.add(UserMapper.mapProto(user));
-        }
-
-        UsersProto usersItems = UsersProto.newBuilder().addAllUsers(userCollection).build();
+        UsersProto usersItems = UsersProto.newBuilder().addAllUsers(filteredUsers).build();
 
         responseObserver.onNext(usersItems);
         responseObserver.onCompleted();
@@ -100,8 +96,38 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     }
 
     @Override
+    @Transactional
     public void updateUser(UserProto request, StreamObserver<UserProto> responseObserver) {
+        UserEntity user = userDAO.findUser(request.getEmail());
 
+        if(user == null)
+        {
+            responseObserver.onError(GrpcError.constructException("User with email " + request.getEmail() + " is not found"));
+            return;
+        }
+
+        if(!Strings.isNullOrEmpty(request.getName()))
+            user.setName(request.getName());
+
+        if(request.getAge() != 0)
+            user.setAge(request.getAge());
+
+        if(!Strings.isNullOrEmpty(request.getPhone()))
+            user.setPhone(request.getPhone());
+
+        if(!Strings.isNullOrEmpty(request.getUsername()))
+            user.setUsername(request.getUsername());
+
+
+        var updatedUser = userDAO.updateUserInformation(user);
+        if(updatedUser == null)
+        {
+            responseObserver.onError(GrpcError.constructException("User was not updated."));
+            return;
+        }
+
+        responseObserver.onNext(UserMapper.mapProto(updatedUser));
+        responseObserver.onCompleted();
     }
 
     @Override

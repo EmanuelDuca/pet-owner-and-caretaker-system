@@ -66,7 +66,7 @@ public class UserDAO implements UserDAOInterface {
     @Override
     public UserEntity updateUserInformation(UserEntity userEntity)
     {
-        return null;
+        return userRepository.save(userEntity);
     }
 
     @Override

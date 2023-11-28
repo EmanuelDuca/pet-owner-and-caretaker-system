@@ -1,1 +1,6 @@
+dk\via\sep3\mappers\PetMapper.class
+dk\via\sep3\services\AnnouncementService.class
+dk\via\sep3\shared\utils\TimestampConverter.class
+dk\via\sep3\DAO\AnnouncementDAO.class
+dk\via\sep3\shared\PetEntity.class
 origin\protobuf\Protobuf$1.class

@@ -2,6 +2,7 @@
 using Domain.DTOs;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers;
 
@@ -17,11 +18,11 @@ public class AnnouncementController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Announcement>> CreateAnnouncement(AnnouncementCreationDto creationDto)
+    public async Task<ActionResult<Announcement>> CreateAnnouncement(CreateAnnouncementDto dto)
     {
         try
         {
-            Announcement announcement = await logic.CreateAsync(creationDto);
+            Announcement announcement = await logic.CreateAsync(dto);
             return Created($"/announcements/{announcement.Id}", announcement);
         }
         catch (Exception e)
@@ -32,11 +33,30 @@ public class AnnouncementController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetAsync([FromQuery] SearchAnnouncementDto parameters)
+    public async Task<ActionResult> GetAsync([FromQuery] SearchAnnouncementDto dto)
     {
         try
         {
-            var announcements = await logic.GetAsync(parameters);
+            Console.WriteLine(dto);
+            Console.WriteLine(JsonConvert.SerializeObject(dto));
+            var announcements = await logic.GetAsync(dto);
+            return Ok(announcements);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    //Bellow will use Post request to filter the Announcements
+    [HttpPost("filter")]
+    public async Task<ActionResult> GetAnnouncementsByPreferenceAsync([FromBody] SearchAnnouncementDto dto)
+    {
+        try
+        {
+            Console.WriteLine(JsonConvert.SerializeObject(dto));
+            var announcements = await logic.GetAsync(dto);
             return Ok(announcements);
         }
         catch (Exception e)
@@ -47,7 +67,7 @@ public class AnnouncementController : ControllerBase
     }
 
     [HttpPatch]
-    public async Task<ActionResult> UpdateAsync([FromBody] AnnouncementUpdateDto dto)
+    public async Task<ActionResult> UpdateAsync([FromBody] UpdateAnnouncementDto dto)
     {
         try
         {

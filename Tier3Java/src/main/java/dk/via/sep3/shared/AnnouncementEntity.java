@@ -1,7 +1,11 @@
 package dk.via.sep3.shared;
 
 
+import com.google.protobuf.Timestamp;
+import net.bytebuddy.asm.Advice;
+
 import javax.persistence.*;
+import java.sql.Time;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,17 +17,17 @@ public class AnnouncementEntity {
     @ManyToOne
     private UserEntity petOwner;
     private String description;
-    private String startDate;
-    private String finishDate;
-    @OneToOne
+    private LocalDateTime startDate;
+    private LocalDateTime finishDate;
+    @OneToOne(cascade = CascadeType.ALL)
     private PetEntity petEntity;
     private String postalCode;
-    private String dateOfCreation;
+    private LocalDateTime dateOfCreation;
 
     public AnnouncementEntity() {
     }
 
-    public AnnouncementEntity(int id, UserEntity petOwner, String description, String startDate, String finishDate, PetEntity petEntity, String postalCode) {
+    public AnnouncementEntity(int id, UserEntity petOwner, String description, LocalDateTime startDate, LocalDateTime finishDate, PetEntity petEntity, String postalCode) {
         this.id = id;
         this.petOwner = petOwner;
         this.description = description;
@@ -33,7 +37,7 @@ public class AnnouncementEntity {
         this.postalCode = postalCode;
     }
 
-    public AnnouncementEntity(UserEntity petOwner, String description, String startDate, String finishDate, PetEntity petEntity, String postalCode) {
+    public AnnouncementEntity(UserEntity petOwner, String description, LocalDateTime startDate, LocalDateTime finishDate, PetEntity petEntity, String postalCode) {
         this.petOwner = petOwner;
         this.description = description;
         this.startDate = startDate;
@@ -67,7 +71,7 @@ public class AnnouncementEntity {
         this.postalCode = postalCode;
     }
 
-    public String getDateOfCreation() {
+    public LocalDateTime getDateOfCreation() {
         return dateOfCreation;
     }
 
@@ -80,19 +84,19 @@ public class AnnouncementEntity {
     }
 
 
-    public String getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public String getFinishDate() {
+    public LocalDateTime getFinishDate() {
         return finishDate;
     }
 
-    public void setFinishDate(String finishDate) {
+    public void setFinishDate(LocalDateTime finishDate) {
         this.finishDate = finishDate;
     }
 
@@ -112,7 +116,7 @@ public class AnnouncementEntity {
         this.postalCode = postalCode;
     }
 
-    public void setDateOfCreation(String dateOfCreation) {
+    public void setDateOfCreation(LocalDateTime dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
 

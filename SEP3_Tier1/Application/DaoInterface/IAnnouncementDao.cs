@@ -7,7 +7,7 @@ public interface IAnnouncementDao
 {
     // Task<Announcement> CreateAsync(AnnouncementCreationDto dto);
     Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto dto);
-    Task UpdateAsync(AnnouncementUpdateDto announcement);
+    Task UpdateAsync(UpdateAnnouncementDto updateAnnouncement);
     Task<Announcement> CreateAsync(Announcement ann);
     Task DeleteAsync(int id);
 }

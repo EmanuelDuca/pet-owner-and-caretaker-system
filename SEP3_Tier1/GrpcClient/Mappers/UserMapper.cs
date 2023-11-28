@@ -46,4 +46,33 @@ public class UserMapper
         }
         return Task.FromResult(user);
     }
+
+    public async Task<IEnumerable<User>> MapToEntityList(UsersProto proto)
+    {
+        return await Task.WhenAll(proto.Users
+            .Select(async user => await MapToEntity(user)));
+    }
+    
+    public static UserProto UserProtoGenerator(User user)
+    {
+        string type = "";
+        if (user is PetOwner)
+        {
+            type = "PetOwner";
+        }else if (user is CareTaker)
+        {
+            type = "CareTaker";
+        }
+        
+        var request = new UserProto
+        {
+            Username = user.Username,
+            Password = user.Password,
+            Email = user.Email,
+            Type = type,
+            Age = user.Age!.Value,
+            Phone = user.PhoneNumber
+        };
+        return request;
+    }
 }

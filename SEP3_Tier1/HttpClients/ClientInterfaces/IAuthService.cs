@@ -4,7 +4,7 @@ using Domain.Models;
 
 namespace HttpClients.ClientInterfaces;
 
-public interface IUserAuthService
+public interface IAuthService
 {
     Task LoginAsync(UserLoginDto loginDto);
     Task LogoutAsync();

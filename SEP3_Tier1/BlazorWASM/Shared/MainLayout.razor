@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@namespace BlazorWASM.Shared
+@using BlazorWASM.Pages
 
 <div class="page">
     <div class="sidebar">
@@ -6,6 +8,10 @@
     </div>
 
     <main>
+        <div class="top-row px-4">
+            <LoginButtons/>
+        </div>
+        
         <article class="content px-4">
             @Body
         </article>

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Application.DaoInterface;
+using Domain.DTOs;
 using Domain.Models;
 
 namespace obsolete_FileData.DAOs;
@@ -26,5 +27,15 @@ public class UserFileDao : IUserDao
         User? existing = context.Users.FirstOrDefault(u =>
             u.Email.Equals(email));
         return Task.FromResult(existing);
+    }
+
+    public Task<User?> UpdateAsync(User user)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<User>> GetAsync(SearchUsersDto parameters)
+    {
+        throw new NotImplementedException();
     }
 }
