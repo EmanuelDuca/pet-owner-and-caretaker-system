@@ -13,13 +13,20 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<FileContext>();
 
+builder.Services.AddHostedService<ServerTimeNotifier>();
+builder.Services.AddCors();
 
+builder.Services.AddSignalR(o=> 
+{
+    o.EnableDetailedErrors = true;
+});;
 
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
@@ -47,9 +54,6 @@ builder.Services.AddGrpcClient<AnnouncementService.AnnouncementServiceClient>(o 
 {
     o.Address = new Uri("http://localhost:9090");
 });
-
-
-builder.Services.AddSignalR();
 
 builder.Services.AddSwaggerGen();
 
@@ -86,8 +90,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
-    .SetIsOriginAllowed(origin => true) // allow any origin
-    .AllowCredentials());
+    .AllowAnyOrigin());
 
 // Configure the HTTP request pipeline.
 
@@ -96,5 +99,6 @@ app.UseHttpsRedirection();
 
 
 app.MapControllers();
+app.MapHub<MyHub>("myhub");
 
 app.Run();

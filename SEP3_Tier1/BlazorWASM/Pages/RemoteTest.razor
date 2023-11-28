@@ -1,0 +1,54 @@
+﻿@page "/RemoteTest"
+@using Microsoft.AspNetCore.SignalR.Client
+@implements IAsyncDisposable
+<h3>RemoteTest</h3>
+
+<PageTitle>Index</PageTitle>
+
+<ul id="messagesList">
+    @foreach (var message in messages)
+    {
+        <li>@message</li>
+    }
+</ul>
+
+@code {
+    private HubConnection? hubConnection;
+    private List<string> messages = new List<string>();
+    private string? userInput;
+    private string? messageInput;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl("https://localhost:7230/myhub")
+            .Build();
+        
+        hubConnection.On<string>("Receive", (message) =>
+        {
+            messages.Add(message);
+            InvokeAsync(StateHasChanged);
+        });
+        
+        await hubConnection.StartAsync();
+    }
+    //
+    private async Task Send()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("SendMessage", userInput, messageInput);
+        }
+    }
+    //
+    // public bool IsConnected =>
+    //     hubConnection?.State == HubConnectionState.Connected;
+    //
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+}
