@@ -11,7 +11,6 @@ service UserService{
   rpc SearchUser(SearchUsersProto) returns (UsersProto);
   rpc UpdateUser(UserProto) returns (UserProto);
   rpc DeleteUser(FindUserProto) returns (ResponseStatus);
-  rpc StartService(AnnouncementProto) returns (Void);
 }
 
 service AnnouncementService{
@@ -22,8 +21,8 @@ service AnnouncementService{
   rpc DeleteAnnouncement(FindAnnouncementProto) returns (ResponseStatus);
 }
 
-service CommunicationService{
-  rpc OfferCare(UserProto) returns (ResponseStatus);
+service CareServiceRequest{
+  rpc OfferCare(StartCareServiceRequest) returns (ResponseStatus);
 }
 
 message UserProto{
@@ -96,7 +95,13 @@ message PetProto{
 }
 
 message ResponseStatus{
-  string responseStatus =1;
+  string responseStatus = 1;
+}
+
+message StartCareServiceRequest{
+  string initiatorEmail = 1;
+  int32 announcementId = 2;
+  string recipientEmail = 3;
 }
 
 message Void{}

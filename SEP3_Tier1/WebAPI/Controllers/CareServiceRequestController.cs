@@ -1,4 +1,5 @@
 ﻿using Application.DaoInterface;
+using Application.LogicInterface;
 using Domain.DTOs;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +9,9 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("communication")]
-public class CommunicationController : ControllerBase
+public class CareServiceRequestController : ControllerBase
 {
-    private readonly ICommunicationLogic logic;
+    private readonly ICareServiceRequestLogic logic;
     
     // private readonly IHubContext<AnnouncementHub> _hubContext;
 
@@ -21,11 +22,11 @@ public class CommunicationController : ControllerBase
     // }
     
     [HttpPost("offer")]
-    public async Task<ActionResult> OfferCare(CareTaker caretaker)
+    public async Task<ActionResult> OfferCare(string initiatorEmail, int announcementId, string recipientEmail)
     {
         try
         {
-            await logic.OfferCare(caretaker);
+            await logic.OfferCare(initiatorEmail, announcementId, recipientEmail);
             // _hubContext.Clients.All.SendAsync("ReceiveMessage", "Change made");
             return Ok();
         }
