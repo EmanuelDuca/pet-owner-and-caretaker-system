@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using RabbitMQ.Client;
 using WebAPI.WebSocketClient;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,7 +44,6 @@ builder.Services.AddGrpcClient<UserService.UserServiceClient>(o =>
 {
     o.Address = new Uri("http://localhost:9090");
 });
-
 builder.Services.AddGrpcClient<AnnouncementService.AnnouncementServiceClient>(o =>
 {
     o.Address = new Uri("http://localhost:9090");
@@ -77,7 +75,9 @@ AuthorizationPolicies.AddPolicies(builder.Services);
 
 var app = builder.Build();
 
-
+app.UseAuthorization();
+app.UseAuthentication();
+app.UseHttpsRedirection();
 
 
 if (app.Environment.IsDevelopment())
@@ -89,16 +89,16 @@ if (app.Environment.IsDevelopment())
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
-    .SetIsOriginAllowed(origin => true) // allow any origin
-    .AllowCredentials());
+    .AllowAnyOrigin());
 
 // Configure the HTTP request pipeline.
 
 
 app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
+
 
 app.MapControllers();
+app.MapHub<MyHub>("myhub");
+app.MapHub<OfferHub>("offers");
 
 app.Run();

@@ -70,7 +70,7 @@ public class UserMapper
             Password = user.Password,
             Email = user.Email,
             Type = type,
-            Age = user.Age!.Value,
+            Age = user.Age,
             Phone = user.PhoneNumber
         };
         return request;

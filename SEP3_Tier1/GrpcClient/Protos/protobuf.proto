@@ -11,7 +11,7 @@ service UserService{
   rpc SearchUser(SearchUsersProto) returns (UsersProto);
   rpc UpdateUser(UserProto) returns (UserProto);
   rpc DeleteUser(FindUserProto) returns (ResponseStatus);
-  rpc StartService(AnnouncementProto) returns (Void);
+
 }
 
 service AnnouncementService{
