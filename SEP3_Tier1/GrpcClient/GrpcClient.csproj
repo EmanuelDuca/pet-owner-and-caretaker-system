@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\protobuf.proto" GrpcServices="Client"/>
+        <Protobuf Include="..\..\Tier3Java\src\main\protos\protobuf.proto" GrpcServices="Client"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -28,12 +28,12 @@ service CommunicationService{
 
 message UserProto{
   string email = 1;
-  string username = 2;
-  string password = 3;
-  int32 age = 4;
-  string phone = 5;
-  string type = 6;
-  string name = 7;
+  string password = 2;
+  string username = 3;
+  string type = 4;
+  google.protobuf.StringValue name = 5;
+  google.protobuf.Int32Value age = 6;
+  google.protobuf.StringValue phone = 7;
 }
 
 message UsersProto{

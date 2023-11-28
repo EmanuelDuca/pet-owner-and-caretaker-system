@@ -10,6 +10,7 @@ class ServiceRequestWebSocketClient : BackgroundService
 
     public ServiceRequestWebSocketClient(string serverUri)
     {
+        clientWebSocket = new();
         this.serverUri = serverUri;
     }
 
@@ -18,7 +19,6 @@ class ServiceRequestWebSocketClient : BackgroundService
     {
         try
         {
-            clientWebSocket = new();
             await clientWebSocket.ConnectAsync(new Uri(serverUri), CancellationToken.None);
             Console.WriteLine("Connected to the websocket server!");
         }

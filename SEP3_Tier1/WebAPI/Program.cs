@@ -1,18 +1,13 @@
 using System.Text;
-using System.Text.Json;
 using Application.DaoInterface;
 using Application.Logic;
 using Application.LogicInterface;
 using Domain.Auth;
 using obsolete_FileData;
-using obsolete_FileData.DAOs;
-using GrpcClient;
 using GrpcClient.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using WebAPI;
 using WebAPI.WebSocketClient;
 
 var builder = WebApplication.CreateBuilder(args);
