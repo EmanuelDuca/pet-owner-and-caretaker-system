@@ -1,31 +1,22 @@
 package dk.via.sep3.services;
 
 import io.grpc.stub.StreamObserver;
-import org.springframework.messaging.converter.MappingJackson2MessageConverter;
-import org.springframework.messaging.simp.stomp.StompHeaders;
-import org.springframework.messaging.simp.stomp.StompSession;
-import org.springframework.messaging.simp.stomp.StompSessionHandler;
-import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
-import org.springframework.web.server.WebSession;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.client.WebSocketClient;
-import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import org.springframework.web.socket.messaging.WebSocketStompClient;
-import origin.protobuf.CommunicationServiceGrpc;
+import origin.protobuf.CareServiceRequestGrpc;
 import origin.protobuf.ResponseStatus;
-import origin.protobuf.UserProto;
+import origin.protobuf.StartCareServiceRequest;
 
 import java.io.IOException;
 
-public class CommunicationService extends CommunicationServiceGrpc.CommunicationServiceImplBase
+public class CareRequestService extends CareServiceRequestGrpc.CareServiceRequestImplBase
 {
     private static WebSocketSession session;
 
     @Override
-    public void offerCare(UserProto request, StreamObserver<ResponseStatus> responseObserver)
+    public void offerCare(StartCareServiceRequest request, StreamObserver<ResponseStatus> responseObserver)
     {
         try
         {
@@ -41,7 +32,7 @@ public class CommunicationService extends CommunicationServiceGrpc.Communication
         @Override
         public void afterConnectionEstablished(WebSocketSession session) throws Exception {
             System.out.println("WebSocket opened: " + session.getId());
-            CommunicationService.session = session;
+            CareRequestService.session = session;
         }
 
         @Override

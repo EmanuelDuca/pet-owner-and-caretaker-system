@@ -9,9 +9,13 @@ public class UserEntity implements Serializable {
     @Column(unique = true)
     private String email;
     private String username;
+
+    @Column(nullable = true)
     private String name;
     private String password;
-    private int age;
+    @Column(nullable = true)
+    private Integer age;
+    @Column(nullable = true)
     private String phone;
     private String type;
 
@@ -27,13 +31,14 @@ public class UserEntity implements Serializable {
     public UserEntity() {
     }
 
-    public UserEntity(String email, String username, String password, int age, String phone, String type) {
+    public UserEntity(String email, String username, String password, Integer age, String phone, String type, String name) {
         this.email = email;
         this.username = username;
         this.password = password;
         this.age = age;
         this.phone = phone;
         this.type = type;
+        this.name = name;
     }
 
     public String getName()
@@ -63,7 +68,7 @@ public class UserEntity implements Serializable {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

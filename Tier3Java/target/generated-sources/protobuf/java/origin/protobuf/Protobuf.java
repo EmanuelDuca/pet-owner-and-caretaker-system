@@ -70,6 +70,11 @@ public final class Protobuf {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ResponseStatus_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_StartCareServiceRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_StartCareServiceRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Void_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -85,58 +90,62 @@ public final class Protobuf {
     java.lang.String[] descriptorData = {
       "\n\016protobuf.proto\032\036google/protobuf/wrappe" +
       "rs.proto\032\037google/protobuf/timestamp.prot" +
-      "o\"v\n\tUserProto\022\r\n\005email\030\001 \001(\t\022\020\n\010usernam" +
-      "e\030\002 \001(\t\022\020\n\010password\030\003 \001(\t\022\013\n\003age\030\004 \001(\005\022\r" +
-      "\n\005phone\030\005 \001(\t\022\014\n\004type\030\006 \001(\t\022\014\n\004name\030\007 \001(" +
-      "\t\"\'\n\nUsersProto\022\031\n\005users\030\001 \003(\0132\n.UserPro" +
-      "to\"\036\n\rFindUserProto\022\r\n\005email\030\001 \001(\t\"\224\001\n\020S" +
-      "earchUsersProto\022*\n\004type\030\001 \001(\0132\034.google.p" +
-      "rotobuf.StringValue\022*\n\004name\030\002 \001(\0132\034.goog" +
-      "le.protobuf.StringValue\022(\n\003age\030\003 \001(\0132\033.g",
-      "oogle.protobuf.Int32Value\"1\n\016LoginUserPr" +
-      "oto\022\r\n\005email\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"\212\002\n" +
-      "\021AnnouncementProto\022\025\n\rpetOwnerEmail\030\001 \001(" +
-      "\t\022\023\n\013description\030\002 \001(\t\022-\n\ttimeStart\030\003 \001(" +
-      "\0132\032.google.protobuf.Timestamp\022.\n\ntimeFin" +
-      "ish\030\004 \001(\0132\032.google.protobuf.Timestamp\022\026\n" +
-      "\003pet\030\005 \001(\0132\t.PetProto\022\022\n\npostalCode\030\006 \001(" +
-      "\t\0222\n\016dateOfCreation\030\007 \001(\0132\032.google.proto" +
-      "buf.Timestamp\022\n\n\002id\030\010 \001(\005\"?\n\022Announcemen" +
-      "tsProto\022)\n\rannouncements\030\001 \003(\0132\022.Announc",
-      "ementProto\"#\n\025FindAnnouncementProto\022\n\n\002i" +
-      "d\030\001 \001(\005\"\366\002\n\027SearchAnnouncementProto\0226\n\020p" +
-      "etOwnerUsername\030\001 \001(\0132\034.google.protobuf." +
-      "StringValue\022-\n\ttimeStart\030\002 \001(\0132\032.google." +
-      "protobuf.Timestamp\022.\n\ntimeFinish\030\003 \001(\0132\032" +
-      ".google.protobuf.Timestamp\0220\n\npostalCode" +
-      "\030\004 \001(\0132\034.google.protobuf.StringValue\022-\n\007" +
-      "petType\030\005 \001(\0132\034.google.protobuf.StringVa" +
-      "lue\022.\n\tpetWeight\030\006 \001(\0132\033.google.protobuf" +
-      ".Int32Value\0223\n\017petIsVaccinated\030\007 \001(\0132\032.g",
-      "oogle.protobuf.BoolValue\"\207\001\n\010PetProto\022\017\n" +
-      "\007petName\030\001 \001(\t\022\017\n\007petType\030\002 \001(\t\022\016\n\006weigh" +
-      "t\030\003 \001(\005\022\024\n\014isVaccinated\030\004 \001(\010\022\023\n\013descrip" +
-      "tion\030\005 \001(\t\022\n\n\002id\030\006 \001(\005\022\022\n\nownerEmail\030\007 \001" +
-      "(\t\"(\n\016ResponseStatus\022\026\n\016responseStatus\030\001" +
-      " \001(\t\"\006\n\004Void2\257\002\n\013UserService\022$\n\nCreateUs" +
-      "er\022\n.UserProto\032\n.UserProto\022$\n\005LogIn\022\017.Lo" +
-      "ginUserProto\032\n.UserProto\022&\n\010FindUser\022\016.F" +
-      "indUserProto\032\n.UserProto\022,\n\nSearchUser\022\021" +
-      ".SearchUsersProto\032\013.UsersProto\022$\n\nUpdate",
-      "User\022\n.UserProto\032\n.UserProto\022-\n\nDeleteUs" +
-      "er\022\016.FindUserProto\032\017.ResponseStatus\022)\n\014S" +
-      "tartService\022\022.AnnouncementProto\032\005.Void2\323" +
-      "\002\n\023AnnouncementService\022<\n\022CreateAnnounce" +
-      "ment\022\022.AnnouncementProto\032\022.AnnouncementP" +
-      "roto\022B\n\021FindAnnouncements\022\030.SearchAnnoun" +
-      "cementProto\032\023.AnnouncementsProto\022=\n\017GetA" +
-      "nnouncement\022\026.FindAnnouncementProto\032\022.An" +
-      "nouncementProto\022<\n\022UpdateAnnouncement\022\022." +
-      "AnnouncementProto\032\022.AnnouncementProto\022=\n",
-      "\022DeleteAnnouncement\022\026.FindAnnouncementPr" +
-      "oto\032\017.ResponseStatus2@\n\024CommunicationSer" +
-      "vice\022(\n\tOfferCare\022\n.UserProto\032\017.Response" +
-      "StatusB\023\n\017origin.protobufP\001b\006proto3"
+      "o\"\317\001\n\tUserProto\022\r\n\005email\030\001 \001(\t\022\020\n\010passwo" +
+      "rd\030\002 \001(\t\022\020\n\010username\030\003 \001(\t\022\014\n\004type\030\004 \001(\t" +
+      "\022*\n\004name\030\005 \001(\0132\034.google.protobuf.StringV" +
+      "alue\022(\n\003age\030\006 \001(\0132\033.google.protobuf.Int3" +
+      "2Value\022+\n\005phone\030\007 \001(\0132\034.google.protobuf." +
+      "StringValue\"\'\n\nUsersProto\022\031\n\005users\030\001 \003(\013" +
+      "2\n.UserProto\"\036\n\rFindUserProto\022\r\n\005email\030\001" +
+      " \001(\t\"\224\001\n\020SearchUsersProto\022*\n\004type\030\001 \001(\0132",
+      "\034.google.protobuf.StringValue\022*\n\004name\030\002 " +
+      "\001(\0132\034.google.protobuf.StringValue\022(\n\003age" +
+      "\030\003 \001(\0132\033.google.protobuf.Int32Value\"1\n\016L" +
+      "oginUserProto\022\r\n\005email\030\001 \001(\t\022\020\n\010password" +
+      "\030\002 \001(\t\"\212\002\n\021AnnouncementProto\022\025\n\rpetOwner" +
+      "Email\030\001 \001(\t\022\023\n\013description\030\002 \001(\t\022-\n\ttime" +
+      "Start\030\003 \001(\0132\032.google.protobuf.Timestamp\022" +
+      ".\n\ntimeFinish\030\004 \001(\0132\032.google.protobuf.Ti" +
+      "mestamp\022\026\n\003pet\030\005 \001(\0132\t.PetProto\022\022\n\nposta" +
+      "lCode\030\006 \001(\t\0222\n\016dateOfCreation\030\007 \001(\0132\032.go",
+      "ogle.protobuf.Timestamp\022\n\n\002id\030\010 \001(\005\"?\n\022A" +
+      "nnouncementsProto\022)\n\rannouncements\030\001 \003(\013" +
+      "2\022.AnnouncementProto\"#\n\025FindAnnouncement" +
+      "Proto\022\n\n\002id\030\001 \001(\005\"\366\002\n\027SearchAnnouncement" +
+      "Proto\0226\n\020petOwnerUsername\030\001 \001(\0132\034.google" +
+      ".protobuf.StringValue\022-\n\ttimeStart\030\002 \001(\013" +
+      "2\032.google.protobuf.Timestamp\022.\n\ntimeFini" +
+      "sh\030\003 \001(\0132\032.google.protobuf.Timestamp\0220\n\n" +
+      "postalCode\030\004 \001(\0132\034.google.protobuf.Strin" +
+      "gValue\022-\n\007petType\030\005 \001(\0132\034.google.protobu",
+      "f.StringValue\022.\n\tpetWeight\030\006 \001(\0132\033.googl" +
+      "e.protobuf.Int32Value\0223\n\017petIsVaccinated" +
+      "\030\007 \001(\0132\032.google.protobuf.BoolValue\"\207\001\n\010P" +
+      "etProto\022\017\n\007petName\030\001 \001(\t\022\017\n\007petType\030\002 \001(" +
+      "\t\022\016\n\006weight\030\003 \001(\005\022\024\n\014isVaccinated\030\004 \001(\010\022" +
+      "\023\n\013description\030\005 \001(\t\022\n\n\002id\030\006 \001(\005\022\022\n\nowne" +
+      "rEmail\030\007 \001(\t\"(\n\016ResponseStatus\022\026\n\016respon" +
+      "seStatus\030\001 \001(\t\"a\n\027StartCareServiceReques" +
+      "t\022\026\n\016initiatorEmail\030\001 \001(\t\022\026\n\016announcemen" +
+      "tId\030\002 \001(\005\022\026\n\016recipientEmail\030\003 \001(\t\"\006\n\004Voi",
+      "d2\204\002\n\013UserService\022$\n\nCreateUser\022\n.UserPr" +
+      "oto\032\n.UserProto\022$\n\005LogIn\022\017.LoginUserProt" +
+      "o\032\n.UserProto\022&\n\010FindUser\022\016.FindUserProt" +
+      "o\032\n.UserProto\022,\n\nSearchUser\022\021.SearchUser" +
+      "sProto\032\013.UsersProto\022$\n\nUpdateUser\022\n.User" +
+      "Proto\032\n.UserProto\022-\n\nDeleteUser\022\016.FindUs" +
+      "erProto\032\017.ResponseStatus2\323\002\n\023Announcemen" +
+      "tService\022<\n\022CreateAnnouncement\022\022.Announc" +
+      "ementProto\032\022.AnnouncementProto\022B\n\021FindAn" +
+      "nouncements\022\030.SearchAnnouncementProto\032\023.",
+      "AnnouncementsProto\022=\n\017GetAnnouncement\022\026." +
+      "FindAnnouncementProto\032\022.AnnouncementProt" +
+      "o\022<\n\022UpdateAnnouncement\022\022.AnnouncementPr" +
+      "oto\032\022.AnnouncementProto\022=\n\022DeleteAnnounc" +
+      "ement\022\026.FindAnnouncementProto\032\017.Response" +
+      "Status2L\n\022CareServiceRequest\0226\n\tOfferCar" +
+      "e\022\030.StartCareServiceRequest\032\017.ResponseSt" +
+      "atusB\023\n\017origin.protobufP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -157,7 +166,7 @@ public final class Protobuf {
     internal_static_UserProto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserProto_descriptor,
-        new java.lang.String[] { "Email", "Username", "Password", "Age", "Phone", "Type", "Name", });
+        new java.lang.String[] { "Email", "Password", "Username", "Type", "Name", "Age", "Phone", });
     internal_static_UsersProto_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_UsersProto_fieldAccessorTable = new
@@ -218,8 +227,14 @@ public final class Protobuf {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ResponseStatus_descriptor,
         new java.lang.String[] { "ResponseStatus", });
-    internal_static_Void_descriptor =
+    internal_static_StartCareServiceRequest_descriptor =
       getDescriptor().getMessageTypes().get(11);
+    internal_static_StartCareServiceRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_StartCareServiceRequest_descriptor,
+        new java.lang.String[] { "InitiatorEmail", "AnnouncementId", "RecipientEmail", });
+    internal_static_Void_descriptor =
+      getDescriptor().getMessageTypes().get(12);
     internal_static_Void_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Void_descriptor,

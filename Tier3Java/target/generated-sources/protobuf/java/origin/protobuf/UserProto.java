@@ -16,12 +16,9 @@ public  final class UserProto extends
   }
   private UserProto() {
     email_ = "";
-    username_ = "";
     password_ = "";
-    age_ = 0;
-    phone_ = "";
+    username_ = "";
     type_ = "";
-    name_ = "";
   }
 
   @java.lang.Override
@@ -58,36 +55,58 @@ public  final class UserProto extends
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            username_ = s;
+            password_ = s;
             break;
           }
           case 26: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            password_ = s;
+            username_ = s;
             break;
           }
-          case 32: {
-
-            age_ = input.readInt32();
-            break;
-          }
-          case 42: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            phone_ = s;
-            break;
-          }
-          case 50: {
+          case 34: {
             java.lang.String s = input.readStringRequireUtf8();
 
             type_ = s;
             break;
           }
-          case 58: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 42: {
+            com.google.protobuf.StringValue.Builder subBuilder = null;
+            if (name_ != null) {
+              subBuilder = name_.toBuilder();
+            }
+            name_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(name_);
+              name_ = subBuilder.buildPartial();
+            }
 
-            name_ = s;
+            break;
+          }
+          case 50: {
+            com.google.protobuf.Int32Value.Builder subBuilder = null;
+            if (age_ != null) {
+              subBuilder = age_.toBuilder();
+            }
+            age_ = input.readMessage(com.google.protobuf.Int32Value.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(age_);
+              age_ = subBuilder.buildPartial();
+            }
+
+            break;
+          }
+          case 58: {
+            com.google.protobuf.StringValue.Builder subBuilder = null;
+            if (phone_ != null) {
+              subBuilder = phone_.toBuilder();
+            }
+            phone_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(phone_);
+              phone_ = subBuilder.buildPartial();
+            }
+
             break;
           }
         }
@@ -147,44 +166,10 @@ public  final class UserProto extends
     }
   }
 
-  public static final int USERNAME_FIELD_NUMBER = 2;
-  private volatile java.lang.Object username_;
-  /**
-   * <code>string username = 2;</code>
-   */
-  public java.lang.String getUsername() {
-    java.lang.Object ref = username_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      username_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string username = 2;</code>
-   */
-  public com.google.protobuf.ByteString
-      getUsernameBytes() {
-    java.lang.Object ref = username_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      username_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int PASSWORD_FIELD_NUMBER = 3;
+  public static final int PASSWORD_FIELD_NUMBER = 2;
   private volatile java.lang.Object password_;
   /**
-   * <code>string password = 3;</code>
+   * <code>string password = 2;</code>
    */
   public java.lang.String getPassword() {
     java.lang.Object ref = password_;
@@ -199,7 +184,7 @@ public  final class UserProto extends
     }
   }
   /**
-   * <code>string password = 3;</code>
+   * <code>string password = 2;</code>
    */
   public com.google.protobuf.ByteString
       getPasswordBytes() {
@@ -215,53 +200,44 @@ public  final class UserProto extends
     }
   }
 
-  public static final int AGE_FIELD_NUMBER = 4;
-  private int age_;
+  public static final int USERNAME_FIELD_NUMBER = 3;
+  private volatile java.lang.Object username_;
   /**
-   * <code>int32 age = 4;</code>
+   * <code>string username = 3;</code>
    */
-  public int getAge() {
-    return age_;
-  }
-
-  public static final int PHONE_FIELD_NUMBER = 5;
-  private volatile java.lang.Object phone_;
-  /**
-   * <code>string phone = 5;</code>
-   */
-  public java.lang.String getPhone() {
-    java.lang.Object ref = phone_;
+  public java.lang.String getUsername() {
+    java.lang.Object ref = username_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      phone_ = s;
+      username_ = s;
       return s;
     }
   }
   /**
-   * <code>string phone = 5;</code>
+   * <code>string username = 3;</code>
    */
   public com.google.protobuf.ByteString
-      getPhoneBytes() {
-    java.lang.Object ref = phone_;
+      getUsernameBytes() {
+    java.lang.Object ref = username_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      phone_ = b;
+      username_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int TYPE_FIELD_NUMBER = 6;
+  public static final int TYPE_FIELD_NUMBER = 4;
   private volatile java.lang.Object type_;
   /**
-   * <code>string type = 6;</code>
+   * <code>string type = 4;</code>
    */
   public java.lang.String getType() {
     java.lang.Object ref = type_;
@@ -276,7 +252,7 @@ public  final class UserProto extends
     }
   }
   /**
-   * <code>string type = 6;</code>
+   * <code>string type = 4;</code>
    */
   public com.google.protobuf.ByteString
       getTypeBytes() {
@@ -292,38 +268,67 @@ public  final class UserProto extends
     }
   }
 
-  public static final int NAME_FIELD_NUMBER = 7;
-  private volatile java.lang.Object name_;
+  public static final int NAME_FIELD_NUMBER = 5;
+  private com.google.protobuf.StringValue name_;
   /**
-   * <code>string name = 7;</code>
+   * <code>.google.protobuf.StringValue name = 5;</code>
    */
-  public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+  public boolean hasName() {
+    return name_ != null;
   }
   /**
-   * <code>string name = 7;</code>
+   * <code>.google.protobuf.StringValue name = 5;</code>
    */
-  public com.google.protobuf.ByteString
-      getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public com.google.protobuf.StringValue getName() {
+    return name_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : name_;
+  }
+  /**
+   * <code>.google.protobuf.StringValue name = 5;</code>
+   */
+  public com.google.protobuf.StringValueOrBuilder getNameOrBuilder() {
+    return getName();
+  }
+
+  public static final int AGE_FIELD_NUMBER = 6;
+  private com.google.protobuf.Int32Value age_;
+  /**
+   * <code>.google.protobuf.Int32Value age = 6;</code>
+   */
+  public boolean hasAge() {
+    return age_ != null;
+  }
+  /**
+   * <code>.google.protobuf.Int32Value age = 6;</code>
+   */
+  public com.google.protobuf.Int32Value getAge() {
+    return age_ == null ? com.google.protobuf.Int32Value.getDefaultInstance() : age_;
+  }
+  /**
+   * <code>.google.protobuf.Int32Value age = 6;</code>
+   */
+  public com.google.protobuf.Int32ValueOrBuilder getAgeOrBuilder() {
+    return getAge();
+  }
+
+  public static final int PHONE_FIELD_NUMBER = 7;
+  private com.google.protobuf.StringValue phone_;
+  /**
+   * <code>.google.protobuf.StringValue phone = 7;</code>
+   */
+  public boolean hasPhone() {
+    return phone_ != null;
+  }
+  /**
+   * <code>.google.protobuf.StringValue phone = 7;</code>
+   */
+  public com.google.protobuf.StringValue getPhone() {
+    return phone_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : phone_;
+  }
+  /**
+   * <code>.google.protobuf.StringValue phone = 7;</code>
+   */
+  public com.google.protobuf.StringValueOrBuilder getPhoneOrBuilder() {
+    return getPhone();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -341,23 +346,23 @@ public  final class UserProto extends
     if (!getEmailBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, email_);
     }
-    if (!getUsernameBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, username_);
-    }
     if (!getPasswordBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, password_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, password_);
     }
-    if (age_ != 0) {
-      output.writeInt32(4, age_);
-    }
-    if (!getPhoneBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, phone_);
+    if (!getUsernameBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, username_);
     }
     if (!getTypeBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, type_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, type_);
     }
-    if (!getNameBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, name_);
+    if (name_ != null) {
+      output.writeMessage(5, getName());
+    }
+    if (age_ != null) {
+      output.writeMessage(6, getAge());
+    }
+    if (phone_ != null) {
+      output.writeMessage(7, getPhone());
     }
   }
 
@@ -369,24 +374,26 @@ public  final class UserProto extends
     if (!getEmailBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, email_);
     }
-    if (!getUsernameBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, username_);
-    }
     if (!getPasswordBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, password_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, password_);
     }
-    if (age_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(4, age_);
-    }
-    if (!getPhoneBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, phone_);
+    if (!getUsernameBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, username_);
     }
     if (!getTypeBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, type_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, type_);
     }
-    if (!getNameBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, name_);
+    if (name_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(5, getName());
+    }
+    if (age_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(6, getAge());
+    }
+    if (phone_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(7, getPhone());
     }
     memoizedSize = size;
     return size;
@@ -406,18 +413,27 @@ public  final class UserProto extends
     boolean result = true;
     result = result && getEmail()
         .equals(other.getEmail());
-    result = result && getUsername()
-        .equals(other.getUsername());
     result = result && getPassword()
         .equals(other.getPassword());
-    result = result && (getAge()
-        == other.getAge());
-    result = result && getPhone()
-        .equals(other.getPhone());
+    result = result && getUsername()
+        .equals(other.getUsername());
     result = result && getType()
         .equals(other.getType());
-    result = result && getName()
-        .equals(other.getName());
+    result = result && (hasName() == other.hasName());
+    if (hasName()) {
+      result = result && getName()
+          .equals(other.getName());
+    }
+    result = result && (hasAge() == other.hasAge());
+    if (hasAge()) {
+      result = result && getAge()
+          .equals(other.getAge());
+    }
+    result = result && (hasPhone() == other.hasPhone());
+    if (hasPhone()) {
+      result = result && getPhone()
+          .equals(other.getPhone());
+    }
     return result;
   }
 
@@ -430,18 +446,24 @@ public  final class UserProto extends
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + EMAIL_FIELD_NUMBER;
     hash = (53 * hash) + getEmail().hashCode();
-    hash = (37 * hash) + USERNAME_FIELD_NUMBER;
-    hash = (53 * hash) + getUsername().hashCode();
     hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
     hash = (53 * hash) + getPassword().hashCode();
-    hash = (37 * hash) + AGE_FIELD_NUMBER;
-    hash = (53 * hash) + getAge();
-    hash = (37 * hash) + PHONE_FIELD_NUMBER;
-    hash = (53 * hash) + getPhone().hashCode();
+    hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+    hash = (53 * hash) + getUsername().hashCode();
     hash = (37 * hash) + TYPE_FIELD_NUMBER;
     hash = (53 * hash) + getType().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
+    if (hasName()) {
+      hash = (37 * hash) + NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getName().hashCode();
+    }
+    if (hasAge()) {
+      hash = (37 * hash) + AGE_FIELD_NUMBER;
+      hash = (53 * hash) + getAge().hashCode();
+    }
+    if (hasPhone()) {
+      hash = (37 * hash) + PHONE_FIELD_NUMBER;
+      hash = (53 * hash) + getPhone().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -573,18 +595,30 @@ public  final class UserProto extends
       super.clear();
       email_ = "";
 
-      username_ = "";
-
       password_ = "";
 
-      age_ = 0;
-
-      phone_ = "";
+      username_ = "";
 
       type_ = "";
 
-      name_ = "";
-
+      if (nameBuilder_ == null) {
+        name_ = null;
+      } else {
+        name_ = null;
+        nameBuilder_ = null;
+      }
+      if (ageBuilder_ == null) {
+        age_ = null;
+      } else {
+        age_ = null;
+        ageBuilder_ = null;
+      }
+      if (phoneBuilder_ == null) {
+        phone_ = null;
+      } else {
+        phone_ = null;
+        phoneBuilder_ = null;
+      }
       return this;
     }
 
@@ -608,12 +642,24 @@ public  final class UserProto extends
     public origin.protobuf.UserProto buildPartial() {
       origin.protobuf.UserProto result = new origin.protobuf.UserProto(this);
       result.email_ = email_;
-      result.username_ = username_;
       result.password_ = password_;
-      result.age_ = age_;
-      result.phone_ = phone_;
+      result.username_ = username_;
       result.type_ = type_;
-      result.name_ = name_;
+      if (nameBuilder_ == null) {
+        result.name_ = name_;
+      } else {
+        result.name_ = nameBuilder_.build();
+      }
+      if (ageBuilder_ == null) {
+        result.age_ = age_;
+      } else {
+        result.age_ = ageBuilder_.build();
+      }
+      if (phoneBuilder_ == null) {
+        result.phone_ = phone_;
+      } else {
+        result.phone_ = phoneBuilder_.build();
+      }
       onBuilt();
       return result;
     }
@@ -659,28 +705,26 @@ public  final class UserProto extends
         email_ = other.email_;
         onChanged();
       }
-      if (!other.getUsername().isEmpty()) {
-        username_ = other.username_;
-        onChanged();
-      }
       if (!other.getPassword().isEmpty()) {
         password_ = other.password_;
         onChanged();
       }
-      if (other.getAge() != 0) {
-        setAge(other.getAge());
-      }
-      if (!other.getPhone().isEmpty()) {
-        phone_ = other.phone_;
+      if (!other.getUsername().isEmpty()) {
+        username_ = other.username_;
         onChanged();
       }
       if (!other.getType().isEmpty()) {
         type_ = other.type_;
         onChanged();
       }
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        onChanged();
+      if (other.hasName()) {
+        mergeName(other.getName());
+      }
+      if (other.hasAge()) {
+        mergeAge(other.getAge());
+      }
+      if (other.hasPhone()) {
+        mergePhone(other.getPhone());
       }
       onChanged();
       return this;
@@ -777,78 +821,9 @@ public  final class UserProto extends
       return this;
     }
 
-    private java.lang.Object username_ = "";
-    /**
-     * <code>string username = 2;</code>
-     */
-    public java.lang.String getUsername() {
-      java.lang.Object ref = username_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        username_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string username = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getUsernameBytes() {
-      java.lang.Object ref = username_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        username_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string username = 2;</code>
-     */
-    public Builder setUsername(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      username_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string username = 2;</code>
-     */
-    public Builder clearUsername() {
-      
-      username_ = getDefaultInstance().getUsername();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string username = 2;</code>
-     */
-    public Builder setUsernameBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      username_ = value;
-      onChanged();
-      return this;
-    }
-
     private java.lang.Object password_ = "";
     /**
-     * <code>string password = 3;</code>
+     * <code>string password = 2;</code>
      */
     public java.lang.String getPassword() {
       java.lang.Object ref = password_;
@@ -863,7 +838,7 @@ public  final class UserProto extends
       }
     }
     /**
-     * <code>string password = 3;</code>
+     * <code>string password = 2;</code>
      */
     public com.google.protobuf.ByteString
         getPasswordBytes() {
@@ -879,7 +854,7 @@ public  final class UserProto extends
       }
     }
     /**
-     * <code>string password = 3;</code>
+     * <code>string password = 2;</code>
      */
     public Builder setPassword(
         java.lang.String value) {
@@ -892,7 +867,7 @@ public  final class UserProto extends
       return this;
     }
     /**
-     * <code>string password = 3;</code>
+     * <code>string password = 2;</code>
      */
     public Builder clearPassword() {
       
@@ -901,7 +876,7 @@ public  final class UserProto extends
       return this;
     }
     /**
-     * <code>string password = 3;</code>
+     * <code>string password = 2;</code>
      */
     public Builder setPasswordBytes(
         com.google.protobuf.ByteString value) {
@@ -915,104 +890,78 @@ public  final class UserProto extends
       return this;
     }
 
-    private int age_ ;
+    private java.lang.Object username_ = "";
     /**
-     * <code>int32 age = 4;</code>
+     * <code>string username = 3;</code>
      */
-    public int getAge() {
-      return age_;
-    }
-    /**
-     * <code>int32 age = 4;</code>
-     */
-    public Builder setAge(int value) {
-      
-      age_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 age = 4;</code>
-     */
-    public Builder clearAge() {
-      
-      age_ = 0;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object phone_ = "";
-    /**
-     * <code>string phone = 5;</code>
-     */
-    public java.lang.String getPhone() {
-      java.lang.Object ref = phone_;
+    public java.lang.String getUsername() {
+      java.lang.Object ref = username_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        phone_ = s;
+        username_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string phone = 5;</code>
+     * <code>string username = 3;</code>
      */
     public com.google.protobuf.ByteString
-        getPhoneBytes() {
-      java.lang.Object ref = phone_;
+        getUsernameBytes() {
+      java.lang.Object ref = username_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        phone_ = b;
+        username_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string phone = 5;</code>
+     * <code>string username = 3;</code>
      */
-    public Builder setPhone(
+    public Builder setUsername(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      phone_ = value;
+      username_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string phone = 5;</code>
+     * <code>string username = 3;</code>
      */
-    public Builder clearPhone() {
+    public Builder clearUsername() {
       
-      phone_ = getDefaultInstance().getPhone();
+      username_ = getDefaultInstance().getUsername();
       onChanged();
       return this;
     }
     /**
-     * <code>string phone = 5;</code>
+     * <code>string username = 3;</code>
      */
-    public Builder setPhoneBytes(
+    public Builder setUsernameBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      phone_ = value;
+      username_ = value;
       onChanged();
       return this;
     }
 
     private java.lang.Object type_ = "";
     /**
-     * <code>string type = 6;</code>
+     * <code>string type = 4;</code>
      */
     public java.lang.String getType() {
       java.lang.Object ref = type_;
@@ -1027,7 +976,7 @@ public  final class UserProto extends
       }
     }
     /**
-     * <code>string type = 6;</code>
+     * <code>string type = 4;</code>
      */
     public com.google.protobuf.ByteString
         getTypeBytes() {
@@ -1043,7 +992,7 @@ public  final class UserProto extends
       }
     }
     /**
-     * <code>string type = 6;</code>
+     * <code>string type = 4;</code>
      */
     public Builder setType(
         java.lang.String value) {
@@ -1056,7 +1005,7 @@ public  final class UserProto extends
       return this;
     }
     /**
-     * <code>string type = 6;</code>
+     * <code>string type = 4;</code>
      */
     public Builder clearType() {
       
@@ -1065,7 +1014,7 @@ public  final class UserProto extends
       return this;
     }
     /**
-     * <code>string type = 6;</code>
+     * <code>string type = 4;</code>
      */
     public Builder setTypeBytes(
         com.google.protobuf.ByteString value) {
@@ -1079,73 +1028,355 @@ public  final class UserProto extends
       return this;
     }
 
-    private java.lang.Object name_ = "";
+    private com.google.protobuf.StringValue name_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> nameBuilder_;
     /**
-     * <code>string name = 7;</code>
+     * <code>.google.protobuf.StringValue name = 5;</code>
      */
-    public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
+    public boolean hasName() {
+      return nameBuilder_ != null || name_ != null;
+    }
+    /**
+     * <code>.google.protobuf.StringValue name = 5;</code>
+     */
+    public com.google.protobuf.StringValue getName() {
+      if (nameBuilder_ == null) {
+        return name_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : name_;
       } else {
-        return (java.lang.String) ref;
+        return nameBuilder_.getMessage();
       }
     }
     /**
-     * <code>string name = 7;</code>
+     * <code>.google.protobuf.StringValue name = 5;</code>
      */
-    public com.google.protobuf.ByteString
-        getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        name_ = b;
-        return b;
+    public Builder setName(com.google.protobuf.StringValue value) {
+      if (nameBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        name_ = value;
+        onChanged();
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        nameBuilder_.setMessage(value);
       }
+
+      return this;
     }
     /**
-     * <code>string name = 7;</code>
+     * <code>.google.protobuf.StringValue name = 5;</code>
      */
     public Builder setName(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      name_ = value;
-      onChanged();
+        com.google.protobuf.StringValue.Builder builderForValue) {
+      if (nameBuilder_ == null) {
+        name_ = builderForValue.build();
+        onChanged();
+      } else {
+        nameBuilder_.setMessage(builderForValue.build());
+      }
+
       return this;
     }
     /**
-     * <code>string name = 7;</code>
+     * <code>.google.protobuf.StringValue name = 5;</code>
+     */
+    public Builder mergeName(com.google.protobuf.StringValue value) {
+      if (nameBuilder_ == null) {
+        if (name_ != null) {
+          name_ =
+            com.google.protobuf.StringValue.newBuilder(name_).mergeFrom(value).buildPartial();
+        } else {
+          name_ = value;
+        }
+        onChanged();
+      } else {
+        nameBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.StringValue name = 5;</code>
      */
     public Builder clearName() {
-      
-      name_ = getDefaultInstance().getName();
-      onChanged();
+      if (nameBuilder_ == null) {
+        name_ = null;
+        onChanged();
+      } else {
+        name_ = null;
+        nameBuilder_ = null;
+      }
+
       return this;
     }
     /**
-     * <code>string name = 7;</code>
+     * <code>.google.protobuf.StringValue name = 5;</code>
      */
-    public Builder setNameBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
+    public com.google.protobuf.StringValue.Builder getNameBuilder() {
       
-      name_ = value;
       onChanged();
+      return getNameFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.google.protobuf.StringValue name = 5;</code>
+     */
+    public com.google.protobuf.StringValueOrBuilder getNameOrBuilder() {
+      if (nameBuilder_ != null) {
+        return nameBuilder_.getMessageOrBuilder();
+      } else {
+        return name_ == null ?
+            com.google.protobuf.StringValue.getDefaultInstance() : name_;
+      }
+    }
+    /**
+     * <code>.google.protobuf.StringValue name = 5;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
+        getNameFieldBuilder() {
+      if (nameBuilder_ == null) {
+        nameBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
+                getName(),
+                getParentForChildren(),
+                isClean());
+        name_ = null;
+      }
+      return nameBuilder_;
+    }
+
+    private com.google.protobuf.Int32Value age_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.protobuf.Int32Value, com.google.protobuf.Int32Value.Builder, com.google.protobuf.Int32ValueOrBuilder> ageBuilder_;
+    /**
+     * <code>.google.protobuf.Int32Value age = 6;</code>
+     */
+    public boolean hasAge() {
+      return ageBuilder_ != null || age_ != null;
+    }
+    /**
+     * <code>.google.protobuf.Int32Value age = 6;</code>
+     */
+    public com.google.protobuf.Int32Value getAge() {
+      if (ageBuilder_ == null) {
+        return age_ == null ? com.google.protobuf.Int32Value.getDefaultInstance() : age_;
+      } else {
+        return ageBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>.google.protobuf.Int32Value age = 6;</code>
+     */
+    public Builder setAge(com.google.protobuf.Int32Value value) {
+      if (ageBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        age_ = value;
+        onChanged();
+      } else {
+        ageBuilder_.setMessage(value);
+      }
+
       return this;
+    }
+    /**
+     * <code>.google.protobuf.Int32Value age = 6;</code>
+     */
+    public Builder setAge(
+        com.google.protobuf.Int32Value.Builder builderForValue) {
+      if (ageBuilder_ == null) {
+        age_ = builderForValue.build();
+        onChanged();
+      } else {
+        ageBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.Int32Value age = 6;</code>
+     */
+    public Builder mergeAge(com.google.protobuf.Int32Value value) {
+      if (ageBuilder_ == null) {
+        if (age_ != null) {
+          age_ =
+            com.google.protobuf.Int32Value.newBuilder(age_).mergeFrom(value).buildPartial();
+        } else {
+          age_ = value;
+        }
+        onChanged();
+      } else {
+        ageBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.Int32Value age = 6;</code>
+     */
+    public Builder clearAge() {
+      if (ageBuilder_ == null) {
+        age_ = null;
+        onChanged();
+      } else {
+        age_ = null;
+        ageBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.Int32Value age = 6;</code>
+     */
+    public com.google.protobuf.Int32Value.Builder getAgeBuilder() {
+      
+      onChanged();
+      return getAgeFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.google.protobuf.Int32Value age = 6;</code>
+     */
+    public com.google.protobuf.Int32ValueOrBuilder getAgeOrBuilder() {
+      if (ageBuilder_ != null) {
+        return ageBuilder_.getMessageOrBuilder();
+      } else {
+        return age_ == null ?
+            com.google.protobuf.Int32Value.getDefaultInstance() : age_;
+      }
+    }
+    /**
+     * <code>.google.protobuf.Int32Value age = 6;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.protobuf.Int32Value, com.google.protobuf.Int32Value.Builder, com.google.protobuf.Int32ValueOrBuilder> 
+        getAgeFieldBuilder() {
+      if (ageBuilder_ == null) {
+        ageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            com.google.protobuf.Int32Value, com.google.protobuf.Int32Value.Builder, com.google.protobuf.Int32ValueOrBuilder>(
+                getAge(),
+                getParentForChildren(),
+                isClean());
+        age_ = null;
+      }
+      return ageBuilder_;
+    }
+
+    private com.google.protobuf.StringValue phone_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> phoneBuilder_;
+    /**
+     * <code>.google.protobuf.StringValue phone = 7;</code>
+     */
+    public boolean hasPhone() {
+      return phoneBuilder_ != null || phone_ != null;
+    }
+    /**
+     * <code>.google.protobuf.StringValue phone = 7;</code>
+     */
+    public com.google.protobuf.StringValue getPhone() {
+      if (phoneBuilder_ == null) {
+        return phone_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : phone_;
+      } else {
+        return phoneBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>.google.protobuf.StringValue phone = 7;</code>
+     */
+    public Builder setPhone(com.google.protobuf.StringValue value) {
+      if (phoneBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        phone_ = value;
+        onChanged();
+      } else {
+        phoneBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.StringValue phone = 7;</code>
+     */
+    public Builder setPhone(
+        com.google.protobuf.StringValue.Builder builderForValue) {
+      if (phoneBuilder_ == null) {
+        phone_ = builderForValue.build();
+        onChanged();
+      } else {
+        phoneBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.StringValue phone = 7;</code>
+     */
+    public Builder mergePhone(com.google.protobuf.StringValue value) {
+      if (phoneBuilder_ == null) {
+        if (phone_ != null) {
+          phone_ =
+            com.google.protobuf.StringValue.newBuilder(phone_).mergeFrom(value).buildPartial();
+        } else {
+          phone_ = value;
+        }
+        onChanged();
+      } else {
+        phoneBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.StringValue phone = 7;</code>
+     */
+    public Builder clearPhone() {
+      if (phoneBuilder_ == null) {
+        phone_ = null;
+        onChanged();
+      } else {
+        phone_ = null;
+        phoneBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.StringValue phone = 7;</code>
+     */
+    public com.google.protobuf.StringValue.Builder getPhoneBuilder() {
+      
+      onChanged();
+      return getPhoneFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.google.protobuf.StringValue phone = 7;</code>
+     */
+    public com.google.protobuf.StringValueOrBuilder getPhoneOrBuilder() {
+      if (phoneBuilder_ != null) {
+        return phoneBuilder_.getMessageOrBuilder();
+      } else {
+        return phone_ == null ?
+            com.google.protobuf.StringValue.getDefaultInstance() : phone_;
+      }
+    }
+    /**
+     * <code>.google.protobuf.StringValue phone = 7;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
+        getPhoneFieldBuilder() {
+      if (phoneBuilder_ == null) {
+        phoneBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
+                getPhone(),
+                getParentForChildren(),
+                isClean());
+        phone_ = null;
+      }
+      return phoneBuilder_;
     }
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {

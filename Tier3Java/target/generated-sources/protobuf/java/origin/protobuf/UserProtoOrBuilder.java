@@ -18,57 +18,71 @@ public interface UserProtoOrBuilder extends
       getEmailBytes();
 
   /**
-   * <code>string username = 2;</code>
-   */
-  java.lang.String getUsername();
-  /**
-   * <code>string username = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getUsernameBytes();
-
-  /**
-   * <code>string password = 3;</code>
+   * <code>string password = 2;</code>
    */
   java.lang.String getPassword();
   /**
-   * <code>string password = 3;</code>
+   * <code>string password = 2;</code>
    */
   com.google.protobuf.ByteString
       getPasswordBytes();
 
   /**
-   * <code>int32 age = 4;</code>
+   * <code>string username = 3;</code>
    */
-  int getAge();
-
+  java.lang.String getUsername();
   /**
-   * <code>string phone = 5;</code>
-   */
-  java.lang.String getPhone();
-  /**
-   * <code>string phone = 5;</code>
+   * <code>string username = 3;</code>
    */
   com.google.protobuf.ByteString
-      getPhoneBytes();
+      getUsernameBytes();
 
   /**
-   * <code>string type = 6;</code>
+   * <code>string type = 4;</code>
    */
   java.lang.String getType();
   /**
-   * <code>string type = 6;</code>
+   * <code>string type = 4;</code>
    */
   com.google.protobuf.ByteString
       getTypeBytes();
 
   /**
-   * <code>string name = 7;</code>
+   * <code>.google.protobuf.StringValue name = 5;</code>
    */
-  java.lang.String getName();
+  boolean hasName();
   /**
-   * <code>string name = 7;</code>
+   * <code>.google.protobuf.StringValue name = 5;</code>
    */
-  com.google.protobuf.ByteString
-      getNameBytes();
+  com.google.protobuf.StringValue getName();
+  /**
+   * <code>.google.protobuf.StringValue name = 5;</code>
+   */
+  com.google.protobuf.StringValueOrBuilder getNameOrBuilder();
+
+  /**
+   * <code>.google.protobuf.Int32Value age = 6;</code>
+   */
+  boolean hasAge();
+  /**
+   * <code>.google.protobuf.Int32Value age = 6;</code>
+   */
+  com.google.protobuf.Int32Value getAge();
+  /**
+   * <code>.google.protobuf.Int32Value age = 6;</code>
+   */
+  com.google.protobuf.Int32ValueOrBuilder getAgeOrBuilder();
+
+  /**
+   * <code>.google.protobuf.StringValue phone = 7;</code>
+   */
+  boolean hasPhone();
+  /**
+   * <code>.google.protobuf.StringValue phone = 7;</code>
+   */
+  com.google.protobuf.StringValue getPhone();
+  /**
+   * <code>.google.protobuf.StringValue phone = 7;</code>
+   */
+  com.google.protobuf.StringValueOrBuilder getPhoneOrBuilder();
 }

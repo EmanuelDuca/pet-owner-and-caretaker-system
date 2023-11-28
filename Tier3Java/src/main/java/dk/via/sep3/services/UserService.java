@@ -27,14 +27,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
 
 
     public void createUser(UserProto request, StreamObserver<UserProto> responseObserver) {
-        UserEntity user = new UserEntity(
-                request.getEmail(),
-                request.getUsername(),
-                request.getPassword(),
-                request.getAge(),
-                request.getPhone(),
-                request.getType()
-        );
+        UserEntity user = UserMapper.mapToShared(request);
         if (userDAO.findUser(user.getEmail()) == null)
         {
             UserEntity createdUser = userDAO.registerUser(user);
@@ -106,14 +99,14 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
             return;
         }
 
-        if(!Strings.isNullOrEmpty(request.getName()))
-            user.setName(request.getName());
+        if(request.hasName())
+            user.setName(request.getName().getValue());
 
-        if(request.getAge() != 0)
-            user.setAge(request.getAge());
+        if(request.hasAge())
+            user.setAge(request.getAge().getValue());
 
-        if(!Strings.isNullOrEmpty(request.getPhone()))
-            user.setPhone(request.getPhone());
+        if(request.hasPhone())
+            user.setPhone(request.getPhone().getValue());
 
         if(!Strings.isNullOrEmpty(request.getUsername()))
             user.setUsername(request.getUsername());
