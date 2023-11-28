@@ -1,0 +1,120 @@
+﻿@page "/ManageAnnouncement/{id:int}"
+@using Domain.Models
+@using System.Security.Claims
+@using Blazored.LocalStorage
+@using BlazorWASM.Validators
+@using Domain.DTOs
+@using HttpClients.ClientInterfaces
+@inject IAnnouncementService announcementService
+@inject ILocalStorageService localStorageService
+@attribute [Authorize]
+
+<style>
+    article{
+    background-image: url("@backgroundImageUrl") !important;
+}
+</style>
+
+@if (announcement == null)
+{
+    <label>Loading...</label>
+}
+else
+{
+    <ManageAnnouncementComponent Announcement="@announcement" OnSubmitAction="() => UpdateAnnouncement()" ActionName="Save Changes" />
+}
+
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    
+    [Parameter]
+    public int Id { get; set; }
+    private Announcement? announcement;
+    
+    private AnnouncementInputValidators announcementInputs;
+    
+    private PetDropDown PetList;
+    private string ValidatorStyles = "position: relative; width: 20%; margin-left: auto; display: block;";
+    private bool isNewPet;
+    private IEnumerable<Claim>? userClaims;
+    private string backgroundImageUrl;
+    
+    
+    
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthState;
+        backgroundImageUrl = await localStorageService.GetItemAsStringAsync("backgroundImage");
+        ClaimsPrincipal user = authState.User;
+        userClaims = user.Claims;
+        
+        try
+        {
+            announcement = await announcementService.GetByIdAsync(Id);
+            if (announcement != null)
+            {
+                //SynchronizeAnnouncementInputs(announcement);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+    // userPets = ..
+        
+    }
+
+    private void SynchronizeAnnouncementInputs(Announcement announcement)
+    {
+        announcementInputs.StartDate = announcement.StartDate;
+        announcementInputs.EndDate = announcement.EndDate;
+        //Announcement.Description = announcement.ServiceDescription;
+        announcementInputs.Postalcode = announcement.PostalCode;
+        /*
+        Announcement.PetType = announcement.Pet.PetType;
+        Announcement.PetDescription = announcement.Pet.Description;
+        Announcement.PetName = announcement.Pet.PetName;
+        Announcement.PetWeight = announcement.Pet.Weight;
+        */
+    }
+
+    
+    private async Task UpdateAnnouncement()
+    {
+        Console.WriteLine("Button UpdateAnnouncement is working");
+        /*
+        try
+        {
+            CreatePetDto createPetDto;
+            if (isNewPet)
+                createPetDto = new CreatePetDto
+                {
+                    PetName = announcementInputs.PetName,
+                    PetType = announcementInputs.PetType,
+                    Weight = announcementInputs.PetWeight,
+                    Description = announcementInputs.PetDescription
+                };
+            else
+            {
+                createPetDto = new CreatePetDto(PetList.Value);
+            }
+
+            UpdateAnnouncementDto dto = new UpdateAnnouncementDto(Id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            NotificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Duration = 6000,
+                Detail = e.Message
+            });
+            
+        }
+        */
+    }
+}

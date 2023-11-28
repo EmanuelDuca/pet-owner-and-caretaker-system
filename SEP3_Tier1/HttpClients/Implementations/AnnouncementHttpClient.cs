@@ -34,6 +34,13 @@ public class AnnouncementHttpClient : IAnnouncementService
         return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<Announcement>>(responseContent);
     }
 
+    public async Task<Announcement> GetByIdAsync(int id)
+    {
+        HttpResponseMessage response = await client.GetAsync($"{START_URI}/{id}");
+        string content =  await HttpClientHelper.HandleResponse(response);   
+        return await HttpClientHelper.GenerateObjectFromJson<Announcement>(content);
+    }
+
     public async Task UpdateAsync(UpdateAnnouncementDto dto)
     {
         HttpResponseMessage response = await client.PatchAsJsonAsync(START_URI, dto);

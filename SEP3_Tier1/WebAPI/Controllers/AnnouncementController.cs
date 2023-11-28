@@ -48,6 +48,21 @@ public class AnnouncementController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Announcement>> GetByIdAsync([FromRoute] int id)
+    {
+        try
+        {
+            var announcement = await logic.GetByIdAsync(id);
+            return Ok(announcement);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
     
     //Bellow will use Post request to filter the Announcements
     [HttpPost("filter")]

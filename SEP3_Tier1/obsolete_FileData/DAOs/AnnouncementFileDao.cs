@@ -44,6 +44,12 @@ public class AnnouncementFileDao : IAnnouncementDao
         return Task.FromResult(announcements);
     }
 
+    public Task<Announcement> GetByIdAsync(int id)
+    {
+        Announcement? existing = context.Announcements.FirstOrDefault(a => a.Id == id);
+        return Task.FromResult(existing);
+    }
+
     public Task<Announcement> CreateAsync(Announcement ann)
     {
         int id = 1;

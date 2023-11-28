@@ -52,6 +52,11 @@ public class AnnouncementLogic : IAnnouncementLogic
         return announcement;
     }
 
+    public async Task<Announcement> GetByIdAsync(int id)
+    {
+        return await announcementDao.GetByIdAsync(id);
+    }
+
     public async Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto searchAnnouncementDto)
     {
         return (await announcementDao.GetAsync(searchAnnouncementDto)).OrderByDescending(a => a.CreationDateTime);

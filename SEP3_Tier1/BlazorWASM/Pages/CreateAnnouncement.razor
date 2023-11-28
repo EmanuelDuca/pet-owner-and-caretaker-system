@@ -157,7 +157,6 @@
         ClaimsPrincipal user = authState.User;
         userClaims = user.Claims;
         ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
-
     // userPets = ..
 
 
