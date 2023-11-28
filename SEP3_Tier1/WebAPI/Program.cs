@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using RabbitMQ.Client;
+using WebAPI.WebSocketClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,10 +45,13 @@ builder.Services.AddGrpcClient<UserService.UserServiceClient>(o =>
 {
     o.Address = new Uri("http://localhost:9090");
 });
+
 builder.Services.AddGrpcClient<AnnouncementService.AnnouncementServiceClient>(o =>
 {
     o.Address = new Uri("http://localhost:9090");
 });
+
+builder.Services.AddHostedService(_ => new ServiceRequestWebSocketClient("ws://localhost:8080/websocket"));
 
 
 builder.Services.AddSignalR();

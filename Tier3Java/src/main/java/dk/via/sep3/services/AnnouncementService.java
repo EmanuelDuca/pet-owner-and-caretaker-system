@@ -1,10 +1,6 @@
 package dk.via.sep3.services;
 
 import com.google.common.base.Strings;
-import com.google.protobuf.Timestamp;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.AnnouncementMapper;
@@ -15,12 +11,9 @@ import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import origin.protobuf.*;
-import origin.protobuf.Void;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.util.Collection;
-import java.util.concurrent.TimeoutException;
 
 @GRpcService
 public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementServiceImplBase {
@@ -147,20 +140,5 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         String response = announcementDAO.deleteAnnouncement(announcementDAO.getAnnouncement(request.getId()))? "User is deleted" : "User not found";
         responseObserver.onNext(ResponseStatus.newBuilder().setResponseStatus(response).build());
         responseObserver.onCompleted();
-    }
-
-    @Override
-    public void startService(AnnouncementProto request, StreamObserver<Void> responseObserver)
-    {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost"); // Replace with RabbitMQ server address if needed
-
-        try (Connection connection = factory.newConnection();
-             Channel channel = connection.createChannel()) {
-            channel.queueDeclare("start service", false, false, false, null);
-        } catch (IOException | TimeoutException e)
-        {
-            throw new RuntimeException(e);
-        }
     }
 }

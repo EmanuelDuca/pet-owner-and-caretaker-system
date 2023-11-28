@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Text;
 using Application.DaoInterface;
 using Domain;
 using Domain.DTOs;
@@ -8,6 +9,8 @@ using Domain.Models;
 using GrpcClient.Mappers;
 using GrpcClient.Utils;
 using HttpClients.ClientInterfaces;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace GrpcClient.Services;
 using Domain.DTOs;
@@ -128,10 +131,19 @@ public class GrpcAnnouncementService : IAnnouncementDao
             throw new Exception(e.Message);
         }
     }
+    
+    
 
-    public Task OfferAsync(CareTaker caretaker)
+    public async Task OfferAsync(CareTaker caretaker)
     {
-        throw new NotImplementedException();
+        try
+        {
+            
+        }
+        catch (RpcException e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 }
     

@@ -16,10 +16,10 @@ public class UserLogic : IUserLogic
 
     public async Task<User> RegisterAsync(UserCreationDto dto)
     {
-        User? existing = await userDao.GetByEmailAsync(dto.Email);
-        if (existing != null) {
-            throw new Exception("Email already taken");
-        }
+        // User? existing = await userDao.GetByEmailAsync(dto.Email);
+        // if (existing != null) {
+        //     throw new Exception("Email already taken");
+        // }
 
         
         User toCreate;

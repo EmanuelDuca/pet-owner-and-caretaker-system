@@ -79,7 +79,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     @Override
     @Transactional
     public void searchUser(SearchUsersProto request, StreamObserver<UsersProto> responseObserver) {
-        Collection<UserEntity> users = userDAO.getUsers(request.getType());
+        Collection<UserEntity> users = userDAO.getUsers(request.getType().getValue());
 
         if (users.isEmpty()) {
             responseObserver.onError(GrpcError.constructException("No such users"));
