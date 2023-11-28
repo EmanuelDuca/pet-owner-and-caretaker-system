@@ -22,7 +22,7 @@ public class ServerTimeNotifier : BackgroundService
         {
             var dateTime = DateTime.Now;
             logger.LogInformation("Executing {Service} {Time}", nameof(ServerTimeNotifier), dateTime);
-            await _context.Clients.All.Receive($"Server time = {dateTime}");
+            await _context.Clients.All.Receive("",$"Server time = {dateTime}");
         }
     }
 }

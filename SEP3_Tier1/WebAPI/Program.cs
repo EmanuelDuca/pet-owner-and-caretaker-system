@@ -20,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddScoped<FileContext>();
 
-builder.Services.AddHostedService<ServerTimeNotifier>();
+// builder.Services.AddHostedService<ServerTimeNotifier>();
 builder.Services.AddCors();
 
 builder.Services.AddSignalR(o=> 
@@ -100,5 +100,6 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 app.MapHub<MyHub>("myhub");
+app.MapHub<OfferHub>("offers");
 
 app.Run();
