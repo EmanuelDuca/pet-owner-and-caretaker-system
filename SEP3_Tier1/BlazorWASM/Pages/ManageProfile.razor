@@ -1,5 +1,6 @@
 @page "/ManageProfile"
 @using System.Security.Claims
+@inject NavigationManager navMgr
 @attribute [Authorize]
 
 @if (ownerEmail == null)
@@ -9,13 +10,22 @@
 else
 {
     <AuthorizeView>
-      <div class="container">
-        <div class="py-5 text-center">
-          <img class="rounded-circle mt-5" src="//cdn-icons-png.flaticon.com/512/3177/3177440.png" alt="" width="100" height="100">
-          <h2>Edit Profile</h2>
-          <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+      <div class="MyProfile-header">
+        <div class="card" @onclick='() => NavigateTo("MyProfile")'>
+          <RadzenImage Path="https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-16-512.png" Style="width: 100px; height: 100px; border-radius: 50%;"/>
+          <div class="column" Gap="0">
+            <h3>Salutations, @username !</h3>
+          </div>
         </div>
-            
+        <div class="card selected">
+          <RadzenImage Path="https://cdn-icons-png.flaticon.com/512/166/166256.png" Style="width: 100px; height: 100px; border-radius: 50%;"/>
+          <div class="column" Gap="0">
+            <h3>Edit Profile</h3>
+          </div>
+        </div>
+      </div>
+      
+      <div class="container">
         <div class="col-md-7 col-lg-8">
           <h4 class="mb-3">Billing address</h4>
           <form class="needs-validation" novalidate="">
@@ -94,11 +104,33 @@ else
     public Task<AuthenticationState> AuthState { get; set; } = null!;
     
     private string ownerEmail;
+    public string? username;
     
     protected override async Task OnInitializedAsync()
     {
-        AuthenticationState authState = await AuthState;
-        ClaimsPrincipal user = authState.User;
-        ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+      AuthenticationState authState = await AuthState;
+      ClaimsPrincipal user = authState.User;
+      username = authState.User.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value;
+      ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+    }
+  
+    public void NavigateTo(String address)
+    {
+      try
+      {
+        switch (address)
+        {
+          case "ManageProfile":
+            navMgr.NavigateTo($"/ManageProfile");
+            break;
+          case "MyProfile":
+            navMgr.NavigateTo($"/MyProfile");
+            break;
+        }
+      }
+      catch(Exception e)
+      {
+        Console.WriteLine(e);
+      }
     }
 }
