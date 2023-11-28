@@ -55,7 +55,6 @@ public class AnnouncementController : ControllerBase
     {
         try
         {
-            Console.WriteLine(JsonConvert.SerializeObject(dto));
             var announcements = await logic.GetAsync(dto);
             return Ok(announcements);
         }

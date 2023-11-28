@@ -4,6 +4,7 @@
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @inject IAnnouncementService AnnouncementService
+@inject NavigationManager navMgr
 @attribute [Authorize]
 
 @if (username == null)
@@ -13,13 +14,20 @@
 else
 {
     <AuthorizeView>
-        <div class="card">
-            <RadzenImage Path="https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-16-512.png" Style="width: 100px; height: 100px; border-radius: 50%;" />
-            <div class="column" Gap="0">
-                <h3>Salutations, @username !</h3>
+        <div class="MyProfile-header">
+            <div class="card">
+                <RadzenImage Path="https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-16-512.png" Style="width: 100px; height: 100px; border-radius: 50%;"/>
+                <div class="column" Gap="0">
+                    <h3>Salutations, @username !</h3>
+                </div>
+            </div>
+            <div class="card" @onclick="() => NavigateToManageProfile()" >
+                <RadzenImage Path="https://cdn-icons-png.flaticon.com/512/166/166256.png" Style="width: 100px; height: 100px; border-radius: 50%;"/>
+                <div class="column" Gap="0">
+                    <h3>Edit Profile</h3>
+                </div>
             </div>
         </div>
-        <div></div>
     </AuthorizeView>
     <div class="d-flex flex-row">
         <div class="sidebar filter-area">
@@ -67,5 +75,17 @@ else
         AuthenticationState authState = await AuthState;
         username = authState.User.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value;
         announcements = (await AnnouncementService.GetAsync(new SearchAnnouncementDto(){Username = username})).ToList();
+    }
+
+    private void NavigateToManageProfile()
+    {
+        try
+        {
+            navMgr.NavigateTo($"/ManageProfile");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 }
