@@ -54,7 +54,6 @@
       "PostalCode": "4683",
       "ServiceDescription": "oubhawfgiawugegiuagwrhaghuo",
       "CreationDateTime": "2023-11-08T14:02:16.023Z",
-      "AuthorUsername": null,
       "Pet": {
         "Id": 8,
         "PetName": "pollo",
@@ -81,7 +80,6 @@
       "PostalCode": "3323",
       "ServiceDescription": "My pet is a pollo, just like me",
       "CreationDateTime": "0001-01-01T00:00:00",
-      "AuthorUsername": null,
       "Pet": {
         "Id": 1,
         "PetName": "Pollo",
@@ -108,7 +106,6 @@
       "PostalCode": "8700",
       "ServiceDescription": "blabla",
       "CreationDateTime": "0001-01-01T00:00:00",
-      "AuthorUsername": null,
       "Pet": {
         "Id": 1,
         "PetName": "Cherry",
@@ -143,6 +140,40 @@
         "IsVaccinated": true,
         "Description": "Fat cat",
         "PetOwner": null
+      }
+    },
+    {
+      "Id": 5,
+      "PetOwner": {
+        "Name": null,
+        "Username": null,
+        "Age": null,
+        "Email": "ionv@gmail.com",
+        "PhoneNumber": null,
+        "Password": "1111",
+        "Type": null
+      },
+      "StartDate": "2023-11-28T00:00:00+01:00",
+      "EndDate": "2023-12-01T00:00:00+01:00",
+      "PostalCode": "8700",
+      "ServiceDescription": "some description",
+      "CreationDateTime": "2023-11-28T10:07:32.1766797+01:00",
+      "Pet": {
+        "Id": 0,
+        "PetName": "Max",
+        "PetType": 0,
+        "Weight": 8,
+        "IsVaccinated": false,
+        "Description": "bla bla",
+        "PetOwner": {
+          "Name": null,
+          "Username": null,
+          "Age": null,
+          "Email": "ionv@gmail.com",
+          "PhoneNumber": null,
+          "Password": "1111",
+          "Type": null
+        }
       }
     }
   ]
