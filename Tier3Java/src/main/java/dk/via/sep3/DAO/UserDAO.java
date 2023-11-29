@@ -59,7 +59,7 @@ public class UserDAO implements UserDAOInterface {
     {
         return userRepository.findAll()
                 .stream()
-                .filter(u -> u.getType().equals(searchType))
+//                .filter(u -> u.getType().equals(searchType))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
