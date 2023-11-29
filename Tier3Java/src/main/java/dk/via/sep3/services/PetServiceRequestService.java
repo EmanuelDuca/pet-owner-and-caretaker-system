@@ -1,7 +1,7 @@
 package dk.via.sep3.services;
 
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
-import dk.via.sep3.DAOInterfaces.CareRequestServiceDaoInterface;
+import dk.via.sep3.DAOInterfaces.PetServiceRequestInterface;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.shared.AnnouncementEntity;
 import dk.via.sep3.shared.CareServiceRequestEntity;
@@ -18,15 +18,15 @@ import origin.protobuf.ServiceServiceGrpc;
 import origin.protobuf.Void;
 
 @GRpcService
-public class RequestService extends ServiceServiceGrpc.ServiceServiceImplBase
+public class PetServiceRequestService extends ServiceServiceGrpc.ServiceServiceImplBase
 {
     private static WebSocketSession session;
     private final UserDAOInterface userDao;
     private final AnnouncementDAOInterface announcementDAO;
-    private final CareRequestServiceDaoInterface careServiceRequestDAO;
+    private final PetServiceRequestInterface careServiceRequestDAO;
 
     @Autowired
-    public RequestService(UserDAOInterface userDao, AnnouncementDAOInterface announcementDAO, CareRequestServiceDaoInterface careServiceRequestDAO)
+    public PetServiceRequestService(UserDAOInterface userDao, AnnouncementDAOInterface announcementDAO, PetServiceRequestInterface careServiceRequestDAO)
     {
         this.userDao = userDao;
         this.announcementDAO = announcementDAO;
@@ -50,7 +50,7 @@ public class RequestService extends ServiceServiceGrpc.ServiceServiceImplBase
         @Override
         public void afterConnectionEstablished(WebSocketSession session) throws Exception {
             System.out.println("WebSocket opened: " + session.getId());
-            RequestService.session = session;
+            PetServiceRequestService.session = session;
         }
 
         @Override

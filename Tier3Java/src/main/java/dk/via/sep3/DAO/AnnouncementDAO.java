@@ -1,19 +1,16 @@
 package dk.via.sep3.DAO;
 
-import com.google.protobuf.Descriptors;
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.repository.AnnouncementRepository;
 import dk.via.sep3.repository.PetRepository;
 import dk.via.sep3.shared.AnnouncementEntity;
-import dk.via.sep3.shared.utils.TimestampConverter;
+import dk.via.sep3.utils.TimestampConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import origin.protobuf.SearchAnnouncementProto;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Optional;
 
 @Repository
 public class AnnouncementDAO implements AnnouncementDAOInterface
