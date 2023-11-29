@@ -24,6 +24,7 @@ dk\via\sep3\services\GrpcError.class
 origin\protobuf\CareServiceRequestGrpc$CareServiceRequestImplBase.class
 origin\protobuf\AnnouncementServiceGrpc$AnnouncementServiceDescriptorSupplier.class
 dk\via\sep3\mappers\UserMapper.class
+dk\via\sep3\testClient\mainTest.class
 origin\protobuf\FindAnnouncementProtoOrBuilder.class
 origin\protobuf\AnnouncementsProtoOrBuilder.class
 origin\protobuf\FindUserProto.class
