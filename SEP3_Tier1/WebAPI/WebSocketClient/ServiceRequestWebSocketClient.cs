@@ -1,5 +1,6 @@
 ﻿using System.Net.WebSockets;
 using System.Text;
+using System.Text.Json;
 
 namespace WebAPI.WebSocketClient;
 
@@ -47,6 +48,8 @@ class ServiceRequestWebSocketClient : BackgroundService
             if (result.MessageType == WebSocketMessageType.Text)
             {
                 string receivedMessage = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                StartCareServiceRequest json = JsonSerializer.Deserialize<StartCareServiceRequest>(receivedMessage)!;
+                
                 Console.WriteLine($"Received message: {receivedMessage}");
             }
         }
