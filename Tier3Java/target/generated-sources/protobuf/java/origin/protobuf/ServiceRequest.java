@@ -19,6 +19,7 @@ public  final class ServiceRequest extends
     announcementId_ = 0;
     recipientEmail_ = "";
     status_ = 0;
+    id_ = 0;
   }
 
   @java.lang.Override
@@ -67,6 +68,11 @@ public  final class ServiceRequest extends
             int rawValue = input.readEnum();
 
             status_ = rawValue;
+            break;
+          }
+          case 40: {
+
+            id_ = input.readInt32();
             break;
           }
         }
@@ -292,6 +298,15 @@ public  final class ServiceRequest extends
     return result == null ? origin.protobuf.ServiceRequest.Status.UNRECOGNIZED : result;
   }
 
+  public static final int ID_FIELD_NUMBER = 5;
+  private int id_;
+  /**
+   * <code>int32 id = 5;</code>
+   */
+  public int getId() {
+    return id_;
+  }
+
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
@@ -316,6 +331,9 @@ public  final class ServiceRequest extends
     if (status_ != origin.protobuf.ServiceRequest.Status.ACCEPTED.getNumber()) {
       output.writeEnum(4, status_);
     }
+    if (id_ != 0) {
+      output.writeInt32(5, id_);
+    }
   }
 
   public int getSerializedSize() {
@@ -336,6 +354,10 @@ public  final class ServiceRequest extends
     if (status_ != origin.protobuf.ServiceRequest.Status.ACCEPTED.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(4, status_);
+    }
+    if (id_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(5, id_);
     }
     memoizedSize = size;
     return size;
@@ -360,6 +382,8 @@ public  final class ServiceRequest extends
     result = result && getRecipientEmail()
         .equals(other.getRecipientEmail());
     result = result && status_ == other.status_;
+    result = result && (getId()
+        == other.getId());
     return result;
   }
 
@@ -378,6 +402,8 @@ public  final class ServiceRequest extends
     hash = (53 * hash) + getRecipientEmail().hashCode();
     hash = (37 * hash) + STATUS_FIELD_NUMBER;
     hash = (53 * hash) + status_;
+    hash = (37 * hash) + ID_FIELD_NUMBER;
+    hash = (53 * hash) + getId();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -515,6 +541,8 @@ public  final class ServiceRequest extends
 
       status_ = 0;
 
+      id_ = 0;
+
       return this;
     }
 
@@ -541,6 +569,7 @@ public  final class ServiceRequest extends
       result.announcementId_ = announcementId_;
       result.recipientEmail_ = recipientEmail_;
       result.status_ = status_;
+      result.id_ = id_;
       onBuilt();
       return result;
     }
@@ -595,6 +624,9 @@ public  final class ServiceRequest extends
       }
       if (other.status_ != 0) {
         setStatusValue(other.getStatusValue());
+      }
+      if (other.getId() != 0) {
+        setId(other.getId());
       }
       onChanged();
       return this;
@@ -826,6 +858,32 @@ public  final class ServiceRequest extends
     public Builder clearStatus() {
       
       status_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private int id_ ;
+    /**
+     * <code>int32 id = 5;</code>
+     */
+    public int getId() {
+      return id_;
+    }
+    /**
+     * <code>int32 id = 5;</code>
+     */
+    public Builder setId(int value) {
+      
+      id_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 id = 5;</code>
+     */
+    public Builder clearId() {
+      
+      id_ = 0;
       onChanged();
       return this;
     }

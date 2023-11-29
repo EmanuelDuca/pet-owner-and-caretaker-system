@@ -40,4 +40,9 @@ public interface ServiceRequestOrBuilder extends
    * <code>.ServiceRequest.Status status = 4;</code>
    */
   origin.protobuf.ServiceRequest.Status getStatus();
+
+  /**
+   * <code>int32 id = 5;</code>
+   */
+  int getId();
 }

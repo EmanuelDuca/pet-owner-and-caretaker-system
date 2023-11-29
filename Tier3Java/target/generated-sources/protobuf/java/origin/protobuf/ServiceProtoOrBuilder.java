@@ -48,4 +48,9 @@ public interface ServiceProtoOrBuilder extends
    * <code>.ServiceProto.Status status = 4;</code>
    */
   origin.protobuf.ServiceProto.Status getStatus();
+
+  /**
+   * <code>int32 id = 5;</code>
+   */
+  int getId();
 }

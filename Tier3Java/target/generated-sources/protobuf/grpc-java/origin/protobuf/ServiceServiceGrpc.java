@@ -40,48 +40,48 @@ public final class ServiceServiceGrpc {
               origin.protobuf.Void.getDefaultInstance()))
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<origin.protobuf.ServiceRequest,
+  public static final io.grpc.MethodDescriptor<origin.protobuf.FindRequestServiceProto,
       origin.protobuf.Void> METHOD_ACCEPT_START_SERVICE =
-      io.grpc.MethodDescriptor.<origin.protobuf.ServiceRequest, origin.protobuf.Void>newBuilder()
+      io.grpc.MethodDescriptor.<origin.protobuf.FindRequestServiceProto, origin.protobuf.Void>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
               "ServiceService", "AcceptStartService"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              origin.protobuf.ServiceRequest.getDefaultInstance()))
+              origin.protobuf.FindRequestServiceProto.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               origin.protobuf.Void.getDefaultInstance()))
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<origin.protobuf.ServiceRequest,
+  public static final io.grpc.MethodDescriptor<origin.protobuf.FindRequestServiceProto,
       origin.protobuf.Void> METHOD_DENY_START_SERVICE =
-      io.grpc.MethodDescriptor.<origin.protobuf.ServiceRequest, origin.protobuf.Void>newBuilder()
+      io.grpc.MethodDescriptor.<origin.protobuf.FindRequestServiceProto, origin.protobuf.Void>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
               "ServiceService", "DenyStartService"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              origin.protobuf.ServiceRequest.getDefaultInstance()))
+              origin.protobuf.FindRequestServiceProto.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               origin.protobuf.Void.getDefaultInstance()))
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<origin.protobuf.FindServiceProto,
+  public static final io.grpc.MethodDescriptor<origin.protobuf.FindRequestServiceProto,
       origin.protobuf.Void> METHOD_END_SERVICE =
-      io.grpc.MethodDescriptor.<origin.protobuf.FindServiceProto, origin.protobuf.Void>newBuilder()
+      io.grpc.MethodDescriptor.<origin.protobuf.FindRequestServiceProto, origin.protobuf.Void>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
               "ServiceService", "EndService"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              origin.protobuf.FindServiceProto.getDefaultInstance()))
+              origin.protobuf.FindRequestServiceProto.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               origin.protobuf.Void.getDefaultInstance()))
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<origin.protobuf.SearchAnnouncementProto,
-      origin.protobuf.RequestServicesProto> METHOD_FIND_REQUEST_SERVICES =
+      origin.protobuf.RequestServicesProto> METHOD_SEARCH_REQUEST_SERVICES =
       io.grpc.MethodDescriptor.<origin.protobuf.SearchAnnouncementProto, origin.protobuf.RequestServicesProto>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ServiceService", "FindRequestServices"))
+              "ServiceService", "SearchRequestServices"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               origin.protobuf.SearchAnnouncementProto.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -89,11 +89,11 @@ public final class ServiceServiceGrpc {
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<origin.protobuf.SearchServiceProto,
-      origin.protobuf.ServicesProto> METHOD_FIND_SERVICES =
+      origin.protobuf.ServicesProto> METHOD_SEARCH_SERVICES =
       io.grpc.MethodDescriptor.<origin.protobuf.SearchServiceProto, origin.protobuf.ServicesProto>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ServiceService", "FindServices"))
+              "ServiceService", "SearchServices"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               origin.protobuf.SearchServiceProto.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -101,11 +101,11 @@ public final class ServiceServiceGrpc {
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<origin.protobuf.FindServiceProto,
-      origin.protobuf.ServiceProto> METHOD_GET_SERVICE =
+      origin.protobuf.ServiceProto> METHOD_FIND_SERVICE =
       io.grpc.MethodDescriptor.<origin.protobuf.FindServiceProto, origin.protobuf.ServiceProto>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ServiceService", "GetService"))
+              "ServiceService", "FindService"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               origin.protobuf.FindServiceProto.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -148,44 +148,44 @@ public final class ServiceServiceGrpc {
 
     /**
      */
-    public void acceptStartService(origin.protobuf.ServiceRequest request,
+    public void acceptStartService(origin.protobuf.FindRequestServiceProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.Void> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_ACCEPT_START_SERVICE, responseObserver);
     }
 
     /**
      */
-    public void denyStartService(origin.protobuf.ServiceRequest request,
+    public void denyStartService(origin.protobuf.FindRequestServiceProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.Void> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_DENY_START_SERVICE, responseObserver);
     }
 
     /**
      */
-    public void endService(origin.protobuf.FindServiceProto request,
+    public void endService(origin.protobuf.FindRequestServiceProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.Void> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_END_SERVICE, responseObserver);
     }
 
     /**
      */
-    public void findRequestServices(origin.protobuf.SearchAnnouncementProto request,
+    public void searchRequestServices(origin.protobuf.SearchAnnouncementProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.RequestServicesProto> responseObserver) {
-      asyncUnimplementedUnaryCall(METHOD_FIND_REQUEST_SERVICES, responseObserver);
+      asyncUnimplementedUnaryCall(METHOD_SEARCH_REQUEST_SERVICES, responseObserver);
     }
 
     /**
      */
-    public void findServices(origin.protobuf.SearchServiceProto request,
+    public void searchServices(origin.protobuf.SearchServiceProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.ServicesProto> responseObserver) {
-      asyncUnimplementedUnaryCall(METHOD_FIND_SERVICES, responseObserver);
+      asyncUnimplementedUnaryCall(METHOD_SEARCH_SERVICES, responseObserver);
     }
 
     /**
      */
-    public void getService(origin.protobuf.FindServiceProto request,
+    public void findService(origin.protobuf.FindServiceProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.ServiceProto> responseObserver) {
-      asyncUnimplementedUnaryCall(METHOD_GET_SERVICE, responseObserver);
+      asyncUnimplementedUnaryCall(METHOD_FIND_SERVICE, responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -201,44 +201,44 @@ public final class ServiceServiceGrpc {
             METHOD_ACCEPT_START_SERVICE,
             asyncUnaryCall(
               new MethodHandlers<
-                origin.protobuf.ServiceRequest,
+                origin.protobuf.FindRequestServiceProto,
                 origin.protobuf.Void>(
                   this, METHODID_ACCEPT_START_SERVICE)))
           .addMethod(
             METHOD_DENY_START_SERVICE,
             asyncUnaryCall(
               new MethodHandlers<
-                origin.protobuf.ServiceRequest,
+                origin.protobuf.FindRequestServiceProto,
                 origin.protobuf.Void>(
                   this, METHODID_DENY_START_SERVICE)))
           .addMethod(
             METHOD_END_SERVICE,
             asyncUnaryCall(
               new MethodHandlers<
-                origin.protobuf.FindServiceProto,
+                origin.protobuf.FindRequestServiceProto,
                 origin.protobuf.Void>(
                   this, METHODID_END_SERVICE)))
           .addMethod(
-            METHOD_FIND_REQUEST_SERVICES,
+            METHOD_SEARCH_REQUEST_SERVICES,
             asyncUnaryCall(
               new MethodHandlers<
                 origin.protobuf.SearchAnnouncementProto,
                 origin.protobuf.RequestServicesProto>(
-                  this, METHODID_FIND_REQUEST_SERVICES)))
+                  this, METHODID_SEARCH_REQUEST_SERVICES)))
           .addMethod(
-            METHOD_FIND_SERVICES,
+            METHOD_SEARCH_SERVICES,
             asyncUnaryCall(
               new MethodHandlers<
                 origin.protobuf.SearchServiceProto,
                 origin.protobuf.ServicesProto>(
-                  this, METHODID_FIND_SERVICES)))
+                  this, METHODID_SEARCH_SERVICES)))
           .addMethod(
-            METHOD_GET_SERVICE,
+            METHOD_FIND_SERVICE,
             asyncUnaryCall(
               new MethodHandlers<
                 origin.protobuf.FindServiceProto,
                 origin.protobuf.ServiceProto>(
-                  this, METHODID_GET_SERVICE)))
+                  this, METHODID_FIND_SERVICE)))
           .build();
     }
   }
@@ -271,7 +271,7 @@ public final class ServiceServiceGrpc {
 
     /**
      */
-    public void acceptStartService(origin.protobuf.ServiceRequest request,
+    public void acceptStartService(origin.protobuf.FindRequestServiceProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.Void> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_ACCEPT_START_SERVICE, getCallOptions()), request, responseObserver);
@@ -279,7 +279,7 @@ public final class ServiceServiceGrpc {
 
     /**
      */
-    public void denyStartService(origin.protobuf.ServiceRequest request,
+    public void denyStartService(origin.protobuf.FindRequestServiceProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.Void> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_DENY_START_SERVICE, getCallOptions()), request, responseObserver);
@@ -287,7 +287,7 @@ public final class ServiceServiceGrpc {
 
     /**
      */
-    public void endService(origin.protobuf.FindServiceProto request,
+    public void endService(origin.protobuf.FindRequestServiceProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.Void> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_END_SERVICE, getCallOptions()), request, responseObserver);
@@ -295,26 +295,26 @@ public final class ServiceServiceGrpc {
 
     /**
      */
-    public void findRequestServices(origin.protobuf.SearchAnnouncementProto request,
+    public void searchRequestServices(origin.protobuf.SearchAnnouncementProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.RequestServicesProto> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(METHOD_FIND_REQUEST_SERVICES, getCallOptions()), request, responseObserver);
+          getChannel().newCall(METHOD_SEARCH_REQUEST_SERVICES, getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void findServices(origin.protobuf.SearchServiceProto request,
+    public void searchServices(origin.protobuf.SearchServiceProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.ServicesProto> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(METHOD_FIND_SERVICES, getCallOptions()), request, responseObserver);
+          getChannel().newCall(METHOD_SEARCH_SERVICES, getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void getService(origin.protobuf.FindServiceProto request,
+    public void findService(origin.protobuf.FindServiceProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.ServiceProto> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(METHOD_GET_SERVICE, getCallOptions()), request, responseObserver);
+          getChannel().newCall(METHOD_FIND_SERVICE, getCallOptions()), request, responseObserver);
     }
   }
 
@@ -345,44 +345,44 @@ public final class ServiceServiceGrpc {
 
     /**
      */
-    public origin.protobuf.Void acceptStartService(origin.protobuf.ServiceRequest request) {
+    public origin.protobuf.Void acceptStartService(origin.protobuf.FindRequestServiceProto request) {
       return blockingUnaryCall(
           getChannel(), METHOD_ACCEPT_START_SERVICE, getCallOptions(), request);
     }
 
     /**
      */
-    public origin.protobuf.Void denyStartService(origin.protobuf.ServiceRequest request) {
+    public origin.protobuf.Void denyStartService(origin.protobuf.FindRequestServiceProto request) {
       return blockingUnaryCall(
           getChannel(), METHOD_DENY_START_SERVICE, getCallOptions(), request);
     }
 
     /**
      */
-    public origin.protobuf.Void endService(origin.protobuf.FindServiceProto request) {
+    public origin.protobuf.Void endService(origin.protobuf.FindRequestServiceProto request) {
       return blockingUnaryCall(
           getChannel(), METHOD_END_SERVICE, getCallOptions(), request);
     }
 
     /**
      */
-    public origin.protobuf.RequestServicesProto findRequestServices(origin.protobuf.SearchAnnouncementProto request) {
+    public origin.protobuf.RequestServicesProto searchRequestServices(origin.protobuf.SearchAnnouncementProto request) {
       return blockingUnaryCall(
-          getChannel(), METHOD_FIND_REQUEST_SERVICES, getCallOptions(), request);
+          getChannel(), METHOD_SEARCH_REQUEST_SERVICES, getCallOptions(), request);
     }
 
     /**
      */
-    public origin.protobuf.ServicesProto findServices(origin.protobuf.SearchServiceProto request) {
+    public origin.protobuf.ServicesProto searchServices(origin.protobuf.SearchServiceProto request) {
       return blockingUnaryCall(
-          getChannel(), METHOD_FIND_SERVICES, getCallOptions(), request);
+          getChannel(), METHOD_SEARCH_SERVICES, getCallOptions(), request);
     }
 
     /**
      */
-    public origin.protobuf.ServiceProto getService(origin.protobuf.FindServiceProto request) {
+    public origin.protobuf.ServiceProto findService(origin.protobuf.FindServiceProto request) {
       return blockingUnaryCall(
-          getChannel(), METHOD_GET_SERVICE, getCallOptions(), request);
+          getChannel(), METHOD_FIND_SERVICE, getCallOptions(), request);
     }
   }
 
@@ -415,7 +415,7 @@ public final class ServiceServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.Void> acceptStartService(
-        origin.protobuf.ServiceRequest request) {
+        origin.protobuf.FindRequestServiceProto request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_ACCEPT_START_SERVICE, getCallOptions()), request);
     }
@@ -423,7 +423,7 @@ public final class ServiceServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.Void> denyStartService(
-        origin.protobuf.ServiceRequest request) {
+        origin.protobuf.FindRequestServiceProto request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_DENY_START_SERVICE, getCallOptions()), request);
     }
@@ -431,33 +431,33 @@ public final class ServiceServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.Void> endService(
-        origin.protobuf.FindServiceProto request) {
+        origin.protobuf.FindRequestServiceProto request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_END_SERVICE, getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.RequestServicesProto> findRequestServices(
+    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.RequestServicesProto> searchRequestServices(
         origin.protobuf.SearchAnnouncementProto request) {
       return futureUnaryCall(
-          getChannel().newCall(METHOD_FIND_REQUEST_SERVICES, getCallOptions()), request);
+          getChannel().newCall(METHOD_SEARCH_REQUEST_SERVICES, getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.ServicesProto> findServices(
+    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.ServicesProto> searchServices(
         origin.protobuf.SearchServiceProto request) {
       return futureUnaryCall(
-          getChannel().newCall(METHOD_FIND_SERVICES, getCallOptions()), request);
+          getChannel().newCall(METHOD_SEARCH_SERVICES, getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.ServiceProto> getService(
+    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.ServiceProto> findService(
         origin.protobuf.FindServiceProto request) {
       return futureUnaryCall(
-          getChannel().newCall(METHOD_GET_SERVICE, getCallOptions()), request);
+          getChannel().newCall(METHOD_FIND_SERVICE, getCallOptions()), request);
     }
   }
 
@@ -465,9 +465,9 @@ public final class ServiceServiceGrpc {
   private static final int METHODID_ACCEPT_START_SERVICE = 1;
   private static final int METHODID_DENY_START_SERVICE = 2;
   private static final int METHODID_END_SERVICE = 3;
-  private static final int METHODID_FIND_REQUEST_SERVICES = 4;
-  private static final int METHODID_FIND_SERVICES = 5;
-  private static final int METHODID_GET_SERVICE = 6;
+  private static final int METHODID_SEARCH_REQUEST_SERVICES = 4;
+  private static final int METHODID_SEARCH_SERVICES = 5;
+  private static final int METHODID_FIND_SERVICE = 6;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -491,27 +491,27 @@ public final class ServiceServiceGrpc {
               (io.grpc.stub.StreamObserver<origin.protobuf.Void>) responseObserver);
           break;
         case METHODID_ACCEPT_START_SERVICE:
-          serviceImpl.acceptStartService((origin.protobuf.ServiceRequest) request,
+          serviceImpl.acceptStartService((origin.protobuf.FindRequestServiceProto) request,
               (io.grpc.stub.StreamObserver<origin.protobuf.Void>) responseObserver);
           break;
         case METHODID_DENY_START_SERVICE:
-          serviceImpl.denyStartService((origin.protobuf.ServiceRequest) request,
+          serviceImpl.denyStartService((origin.protobuf.FindRequestServiceProto) request,
               (io.grpc.stub.StreamObserver<origin.protobuf.Void>) responseObserver);
           break;
         case METHODID_END_SERVICE:
-          serviceImpl.endService((origin.protobuf.FindServiceProto) request,
+          serviceImpl.endService((origin.protobuf.FindRequestServiceProto) request,
               (io.grpc.stub.StreamObserver<origin.protobuf.Void>) responseObserver);
           break;
-        case METHODID_FIND_REQUEST_SERVICES:
-          serviceImpl.findRequestServices((origin.protobuf.SearchAnnouncementProto) request,
+        case METHODID_SEARCH_REQUEST_SERVICES:
+          serviceImpl.searchRequestServices((origin.protobuf.SearchAnnouncementProto) request,
               (io.grpc.stub.StreamObserver<origin.protobuf.RequestServicesProto>) responseObserver);
           break;
-        case METHODID_FIND_SERVICES:
-          serviceImpl.findServices((origin.protobuf.SearchServiceProto) request,
+        case METHODID_SEARCH_SERVICES:
+          serviceImpl.searchServices((origin.protobuf.SearchServiceProto) request,
               (io.grpc.stub.StreamObserver<origin.protobuf.ServicesProto>) responseObserver);
           break;
-        case METHODID_GET_SERVICE:
-          serviceImpl.getService((origin.protobuf.FindServiceProto) request,
+        case METHODID_FIND_SERVICE:
+          serviceImpl.findService((origin.protobuf.FindServiceProto) request,
               (io.grpc.stub.StreamObserver<origin.protobuf.ServiceProto>) responseObserver);
           break;
         default:
@@ -551,9 +551,9 @@ public final class ServiceServiceGrpc {
               .addMethod(METHOD_ACCEPT_START_SERVICE)
               .addMethod(METHOD_DENY_START_SERVICE)
               .addMethod(METHOD_END_SERVICE)
-              .addMethod(METHOD_FIND_REQUEST_SERVICES)
-              .addMethod(METHOD_FIND_SERVICES)
-              .addMethod(METHOD_GET_SERVICE)
+              .addMethod(METHOD_SEARCH_REQUEST_SERVICES)
+              .addMethod(METHOD_SEARCH_SERVICES)
+              .addMethod(METHOD_FIND_SERVICE)
               .build();
         }
       }

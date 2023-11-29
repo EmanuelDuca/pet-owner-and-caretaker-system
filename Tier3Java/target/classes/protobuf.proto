@@ -23,12 +23,12 @@ service AnnouncementService{
 
 service ServiceService{
   rpc RequestStartService(ServiceRequest) returns (Void);
-  rpc AcceptStartService(ServiceRequest) returns (Void);
-  rpc DenyStartService(ServiceRequest) returns (Void);
-  rpc EndService(FindServiceProto) returns (Void);
-  rpc FindRequestServices(SearchAnnouncementProto) returns (RequestServicesProto);
-  rpc FindServices(SearchServiceProto) returns (ServicesProto);
-  rpc GetService(FindServiceProto) returns (ServiceProto);
+  rpc AcceptStartService(FindRequestServiceProto) returns (Void);
+  rpc DenyStartService(FindRequestServiceProto) returns (Void);
+  rpc EndService(FindRequestServiceProto) returns (Void);
+  rpc SearchRequestServices(SearchAnnouncementProto) returns (RequestServicesProto);
+  rpc SearchServices(SearchServiceProto) returns (ServicesProto);
+  rpc FindService(FindServiceProto) returns (ServiceProto);
 }
 
 message LoginUserProto{
@@ -72,7 +72,7 @@ message ServiceRequest{
   int32 announcementId = 2;
   string recipientEmail = 3;
   Status status = 4;
-
+  int32 id = 5;
   enum Status{
     ACCEPTED = 0;
     DENIED = 1;
@@ -85,7 +85,7 @@ message ServiceProto{
   string caretakerEmail = 2;
   string petOwnerEmail = 3;
   Status status = 4;
-
+  int32 id = 5;
   enum Status{
     PLANNED = 0;
     IN_PROGRESS = 1;
@@ -141,6 +141,10 @@ message FindAnnouncementProto{
 
 message FindServiceProto{
   int32 serviceId = 1;
+}
+
+message FindRequestServiceProto{
+  int32 requestId = 1;
 }
 
 message Void{}
