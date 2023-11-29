@@ -7,8 +7,8 @@ using obsolete_FileData;
 using GrpcClient.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using obsolete_FileData.DAOs;
 using WebAPI;
-using WebAPI.WebSocketClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,12 +21,12 @@ builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
 
 //When using GRPc
-builder.Services.AddScoped<IUserDao, GrpcUserService>();
-builder.Services.AddScoped<IAnnouncementDao, GrpcAnnouncementService>();
+//builder.Services.AddScoped<IUserDao, GrpcUserService>();
+//builder.Services.AddScoped<IAnnouncementDao, GrpcAnnouncementService>();
 
 //When savind to file
-// builder.Services.AddScoped<IUserDao, UserFileDao>();
-// builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
+builder.Services.AddScoped<IUserDao, UserFileDao>();
+builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
 
 
 
@@ -43,9 +43,6 @@ builder.Services.AddGrpcClient<AnnouncementService.AnnouncementServiceClient>(o 
 {
     o.Address = new Uri("http://localhost:9090");
 });
-
-builder.Services.AddHostedService(_ => new ServiceRequestWebSocketClient("ws://localhost:8080/websocket"));
-
 
 builder.Services.AddSignalR();
 

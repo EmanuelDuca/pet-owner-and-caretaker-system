@@ -16,14 +16,14 @@ public class AnnouncementFileDao : IAnnouncementDao
     public Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto searchParameters)
     {
         IEnumerable<Announcement> announcements = context.Announcements.AsEnumerable();
-        if (searchParameters.StartTime == null)
+        if (searchParameters.StartTime != null)
         {
             announcements = announcements.Where(t => t.StartDate.Equals(searchParameters.StartTime));
         }
 
-        if (searchParameters.StartTime == null)
+        if (searchParameters.EndTime != null)
         {
-            announcements = announcements.Where(t => t.StartDate.Equals(searchParameters.StartTime));
+            announcements = announcements.Where(t => t.StartDate.Equals(searchParameters.EndTime));
         }
 
         if (!string.IsNullOrEmpty(searchParameters.DescriptionContains))
@@ -42,6 +42,12 @@ public class AnnouncementFileDao : IAnnouncementDao
         }
 
         return Task.FromResult(announcements);
+    }
+
+    public Task<Announcement> GetByIdAsync(int id)
+    {
+        Announcement? existing = context.Announcements.FirstOrDefault(a => a.Id == id);
+        return Task.FromResult(existing);
     }
 
     public Task<Announcement> CreateAsync(Announcement ann)

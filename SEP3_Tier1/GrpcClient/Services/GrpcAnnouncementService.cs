@@ -63,7 +63,12 @@ public class GrpcAnnouncementService : IAnnouncementDao
             throw new Exception(e.Message);
         }
     }
-    
+
+    public Task<Announcement> GetByIdAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
+
 
     public async Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto dto)
     {
@@ -120,11 +125,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
                 Id = id
             };
 
-            ResponseStatus status = await announcementServiceClient.DeleteAnnouncementAsync(request);
-            if (int.Parse(status.ResponseStatus_) == 404)
-            {
-                throw new Exception($"Announcement was not deleted -- response status {status} from Java");
-            }
+            await announcementServiceClient.DeleteAnnouncementAsync(request);
         }
         catch (RpcException e)
         {
