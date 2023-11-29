@@ -1,6 +1,7 @@
 package dk.via.sep3.shared;
 
 import origin.protobuf.ServiceProto;
+import origin.protobuf.ServiceStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,15 +20,24 @@ public class PetServiceEntity
     @OneToOne
     private AnnouncementEntity announcement;
 
-    private ServiceProto.Status status;
+    private ServiceStatus status;
 
-    public PetServiceEntity(int id, CareTakerEntity careTaker, PetOwnerEntity petOwner, AnnouncementEntity announcement, ServiceProto.Status status)
+    public PetServiceEntity(int id, CareTakerEntity careTaker, PetOwnerEntity petOwner, AnnouncementEntity announcement, ServiceStatus status)
     {
         this.id = id;
         this.careTaker = careTaker;
         this.petOwner = petOwner;
         this.announcement = announcement;
         this.status = status;
+    }
+
+    public PetServiceEntity(CareTakerEntity careTaker, PetOwnerEntity petOwner, AnnouncementEntity announcement)
+    {
+        this.id = id;
+        this.careTaker = careTaker;
+        this.petOwner = petOwner;
+        this.announcement = announcement;
+        this.status=ServiceStatus.PLANNED;
     }
 
     public PetServiceEntity()
@@ -60,12 +70,12 @@ public class PetServiceEntity
         return announcement;
     }
 
-    public ServiceProto.Status getStatus()
+    public ServiceStatus getStatus()
     {
         return status;
     }
 
-    public PetServiceEntity setStatus(ServiceProto.Status status)
+    public PetServiceEntity setStatus(ServiceStatus status)
     {
         this.status = status;
         return this;

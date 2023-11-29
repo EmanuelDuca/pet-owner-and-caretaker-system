@@ -22,11 +22,11 @@ service AnnouncementService{
 }
 
 service ServiceService{
-  rpc RequestStartService(ServiceRequest) returns (Void);
+  rpc RequestStartService(ServiceRequestProto) returns (Void);
   rpc AcceptStartService(FindRequestServiceProto) returns (Void);
   rpc DenyStartService(FindRequestServiceProto) returns (Void);
-  rpc EndService(FindRequestServiceProto) returns (Void);
-  rpc SearchRequestServices(SearchAnnouncementProto) returns (RequestServicesProto);
+  rpc EndService(FindServiceProto) returns (Void);
+  rpc SearchRequestServices(FindAnnouncementProto) returns (RequestServicesProto);
   rpc SearchServices(SearchServiceProto) returns (ServicesProto);
   rpc FindService(FindServiceProto) returns (ServiceProto);
 }
@@ -67,7 +67,7 @@ message AnnouncementProto{
   int32 id = 8;
 }
 
-message ServiceRequest{
+message ServiceRequestProto{
   string initiatorEmail = 1;
   int32 announcementId = 2;
   string recipientEmail = 3;
@@ -84,13 +84,15 @@ message ServiceProto{
   AnnouncementProto announcement = 1;
   string caretakerEmail = 2;
   string petOwnerEmail = 3;
-  Status status = 4;
+  ServiceStatus status = 4;
   int32 id = 5;
-  enum Status{
-    PLANNED = 0;
-    IN_PROGRESS = 1;
-    DONE = 2;
-  }
+
+}
+
+enum ServiceStatus{
+  PLANNED = 0;
+  IN_PROGRESS = 1;
+  DONE = 2;
 }
 
 message UsersProto{
@@ -102,7 +104,7 @@ message AnnouncementsProto{
 }
 
 message RequestServicesProto{
-  repeated ServiceRequest requestServices = 1;
+  repeated ServiceRequestProto requestServices = 1;
 }
 
 message ServicesProto{
@@ -126,9 +128,9 @@ message SearchAnnouncementProto{
 }
 
 message SearchServiceProto{
-  string caretakerEmail = 2;
-  string petOwnerEmail = 3;
-  int32 status = 4;
+  string caretakerEmail = 1;
+  string petOwnerEmail = 2;
+  ServiceStatus status = 3;
 }
 
 message FindUserProto{

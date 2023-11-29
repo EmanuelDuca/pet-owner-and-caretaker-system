@@ -9,6 +9,9 @@ import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import origin.protobuf.*;
+import origin.protobuf.FindUserProto;
+import origin.protobuf.LoginUserProto;
+import origin.protobuf.UserProto;
 import origin.protobuf.Void;
 
 import javax.transaction.Transactional;

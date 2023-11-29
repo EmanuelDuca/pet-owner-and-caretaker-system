@@ -41,12 +41,6 @@ public class mainTest
 //
 
 
-        ServiceRequest serviceRequest = ServiceRequest.newBuilder()
-                .setAnnouncementId(1)
-                .setInitiatorEmail("sevastian@gmail.com")
-                .setRecipientEmail("allan6@gmail.com")
-                .build();
-        serviceBlockingStub.requestStartService(serviceRequest);
 
 
 

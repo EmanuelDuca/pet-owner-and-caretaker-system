@@ -1,6 +1,5 @@
 package dk.via.sep3.shared;
-
-import origin.protobuf.ServiceRequest;
+import origin.protobuf.ServiceRequestProto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,7 +19,7 @@ public class PetServiceRequestEntity
     @OneToOne
     private AnnouncementEntity announcement;
 
-    private ServiceRequest.Status status;
+    private ServiceRequestProto.Status status;
 
     private LocalDateTime dateTime;
 
@@ -31,7 +30,7 @@ public class PetServiceRequestEntity
         this.recipient = recipient;
         this.announcement = announcement;
         this.dateTime = LocalDateTime.now();
-        this.status = ServiceRequest.Status.SENT;
+        this.status = ServiceRequestProto.Status.SENT;
     }
 
     public PetServiceRequestEntity(UserEntity initiator, UserEntity recipient, AnnouncementEntity announcement)
@@ -40,7 +39,7 @@ public class PetServiceRequestEntity
         this.recipient = recipient;
         this.announcement = announcement;
         this.dateTime = LocalDateTime.now();
-        this.status = ServiceRequest.Status.SENT;
+        this.status = ServiceRequestProto.Status.SENT;
     }
 
     public PetServiceRequestEntity()
@@ -48,7 +47,7 @@ public class PetServiceRequestEntity
 
     }
 
-    public PetServiceRequestEntity setStatus(ServiceRequest.Status status)
+    public PetServiceRequestEntity setStatus(ServiceRequestProto.Status status)
     {
         this.status = status;
         return this;

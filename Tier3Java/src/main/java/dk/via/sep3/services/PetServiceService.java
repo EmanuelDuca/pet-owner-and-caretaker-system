@@ -4,15 +4,26 @@ import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.DAOInterfaces.PetServiceDAOInterface;
 import dk.via.sep3.DAOInterfaces.PetServiceRequestDAOInterface;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
-import dk.via.sep3.shared.AnnouncementEntity;
-import dk.via.sep3.shared.PetServiceEntity;
-import dk.via.sep3.shared.PetServiceRequestEntity;
-import dk.via.sep3.shared.UserEntity;
+import dk.via.sep3.mappers.AnnouncementMapper;
+import dk.via.sep3.mappers.PetServiceMapper;
+import dk.via.sep3.mappers.PetServiceRequestMapper;
+import dk.via.sep3.shared.*;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import origin.protobuf.*;
+import origin.protobuf.FindAnnouncementProto;
+import origin.protobuf.FindRequestServiceProto;
+import origin.protobuf.FindServiceProto;
+import origin.protobuf.RequestServicesProto;
+import origin.protobuf.SearchServiceProto;
+import origin.protobuf.ServiceProto;
+import origin.protobuf.ServiceRequestProto;
+import origin.protobuf.ServicesProto;
 import origin.protobuf.Void;
+
+import java.util.Collection;
+
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 @GRpcService
@@ -33,7 +44,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     }
 
     @Override
-    public void requestStartService(ServiceRequest request, StreamObserver<Void> responseObserver)
+    public void requestStartService(ServiceRequestProto request, StreamObserver<Void> responseObserver)
     {
         UserEntity initiator = userDao.findUser(request.getInitiatorEmail());
         UserEntity recipient = userDao.findUser(request.getRecipientEmail());
@@ -47,10 +58,13 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     @Override
     public void acceptStartService(FindRequestServiceProto request, StreamObserver<Void> responseObserver)
     {
-//        careServiceRequestDAO.confirmServiceRequest(request.getRequestId());
-//        careServiceDAO.createService(new PetServiceEntity(
-//                careServiceRequestDAO.
-//        ));
+        careServiceRequestDAO.confirmServiceRequest(request.getRequestId());
+        PetServiceRequestEntity serviceRequest =careServiceRequestDAO.getServiceRequestById(request.getRequestId());
+        careServiceDAO.createService(new PetServiceEntity(
+                new CareTakerEntity(serviceRequest.getInitiator()),
+                new PetOwnerEntity(serviceRequest.getRecipient()),
+                serviceRequest.getAnnouncement()
+        ));
     }
 
     @Override
@@ -60,26 +74,57 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     }
 
     @Override
-    public void endService(FindRequestServiceProto request, StreamObserver<Void> responseObserver)
+    public void endService(FindServiceProto request, StreamObserver<Void> responseObserver)
     {
-        super.endService(request, responseObserver);
+        careServiceDAO.endService(request.getServiceId());
     }
 
     @Override
-    public void searchRequestServices(SearchAnnouncementProto request, StreamObserver<RequestServicesProto> responseObserver)
+    public void searchRequestServices(FindAnnouncementProto request, StreamObserver<RequestServicesProto> responseObserver)
     {
-        super.searchRequestServices(request, responseObserver);
+        Collection<PetServiceRequestEntity> requests = careServiceRequestDAO.searchServiceRequests(request.getId());
+
+        if (requests.isEmpty())
+        {
+            responseObserver.onError(GrpcError.constructException("No such requests"));
+            return;
+        }
+
+        Collection<ServiceRequestProto> requestsCollection = requests
+                .stream().map(PetServiceRequestMapper::mapToProto).toList();
+
+        RequestServicesProto requestsProtoItems = RequestServicesProto.newBuilder().addAllRequestServices(requestsCollection).build();
+        responseObserver.onNext(requestsProtoItems);
+        responseObserver.onCompleted();
     }
 
     @Override
     public void searchServices(SearchServiceProto request, StreamObserver<ServicesProto> responseObserver)
     {
-        super.searchServices(request, responseObserver);
+        Collection<PetServiceEntity> services = careServiceDAO.searchServices(
+                (CareTakerEntity) userDao.findUser(request.getCaretakerEmail()),
+                (PetOwnerEntity) userDao.findUser(request.getPetOwnerEmail()),
+                request.getStatus()
+        );
+
+        if (services.isEmpty())
+        {
+            responseObserver.onError(GrpcError.constructException("No such services"));
+            return;
+        }
+
+        Collection<ServiceProto> servicessCollection = services
+                .stream().map(PetServiceMapper::mapToProto).toList();
+
+        ServicesProto servicesProtoItems = ServicesProto.newBuilder().addAllServices(servicessCollection).build();
+        responseObserver.onNext(servicesProtoItems);
+        responseObserver.onCompleted();
     }
 
     @Override
     public void findService(FindServiceProto request, StreamObserver<ServiceProto> responseObserver)
     {
-        super.findService(request, responseObserver);
+        responseObserver.onNext(PetServiceMapper.mapToProto(careServiceDAO.findServiceById(request.getServiceId())));
+        responseObserver.onCompleted();
     }
 }

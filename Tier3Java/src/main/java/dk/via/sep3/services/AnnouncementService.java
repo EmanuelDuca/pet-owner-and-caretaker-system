@@ -11,6 +11,10 @@ import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import origin.protobuf.*;
+import origin.protobuf.AnnouncementProto;
+import origin.protobuf.AnnouncementsProto;
+import origin.protobuf.FindAnnouncementProto;
+import origin.protobuf.SearchAnnouncementProto;
 import origin.protobuf.Void;
 
 import javax.transaction.Transactional;
