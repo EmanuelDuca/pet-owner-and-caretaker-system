@@ -1,0 +1,32 @@
+.card{
+    --inputs-width: 60%;
+}
+
+.card{
+    padding-inline: 2rem;
+    text-align: center;
+    backdrop-filter: blur(14px);
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 0;
+    backface-visibility: hidden !important;
+}
+
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+
+.field{
+    display: flex !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-top: 1em !important;
+}
+
+.input, textarea{
+    width: 60% !important;
+}

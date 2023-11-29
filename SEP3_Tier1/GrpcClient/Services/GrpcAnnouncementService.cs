@@ -63,7 +63,12 @@ public class GrpcAnnouncementService : IAnnouncementDao
             throw new Exception(e.Message);
         }
     }
-    
+
+    public Task<Announcement> GetByIdAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
+
 
     public async Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto dto)
     {
