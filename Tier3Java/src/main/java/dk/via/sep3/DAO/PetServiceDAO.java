@@ -31,7 +31,9 @@ public class PetServiceDAO implements PetServiceDAOInterface
     @Override
     public void endService(int serviceId)
     {
-        findServiceById(serviceId);
+        var serviceToUpdate = findServiceById(serviceId);
+        serviceToUpdate.setStatus(ServiceProto.Status.DONE);
+        repository.save(serviceToUpdate);
     }
 
     @Override
@@ -43,6 +45,12 @@ public class PetServiceDAO implements PetServiceDAOInterface
     @Override
     public Collection<PetServiceEntity> searchServices(CareTakerEntity careTaker, PetOwnerEntity petOwner, ServiceProto.Status status)
     {
-        return null;
+        return repository.findAll()
+                .stream()
+                .filter(s -> careTaker == null || careTaker.equals(s.getCareTaker()))
+                .filter(s -> petOwner == null || petOwner.equals(s.getPetOwner()))
+                .filter(s -> status == null || status.equals(s.getStatus()))
+                .toList();
+
     }
 }
