@@ -2,6 +2,8 @@ package dk.via.sep3.mappers;
 
 import com.google.protobuf.Int32Value;
 import com.google.protobuf.StringValue;
+import dk.via.sep3.shared.CareTakerEntity;
+import dk.via.sep3.shared.PetOwnerEntity;
 import dk.via.sep3.shared.UserEntity;
 import origin.protobuf.UserProto;
 
@@ -12,22 +14,28 @@ public class UserMapper {
                 .setEmail(user.getEmail())
                 .setUsername(user.getUsername())
                 .setPassword(user.getPassword())
-                .setAge(Int32Value.of(user.getAge()))
-                .setPhone(StringValue.of(user.getPhone()))
+
 //                .setType(user.getType())
                 .build();
     }
 
     public static UserEntity mapToShared(UserProto user)
     {
-        return new UserEntity(
+        var userToReturn = new UserEntity(
                 user.getEmail(),
                 user.getUsername(),
                 user.getPassword(),
                 user.hasAge()? user.getAge().getValue() : null,
                 user.hasPhone()? user.getPhone().getValue() : null,
-//                user.getType(),
                 user.hasName()? user.getName().getValue() : null
         );
+
+        if(user.getType().equals("PetOwner"))
+            return new PetOwnerEntity(userToReturn);
+
+        if(user.getType().equals("CareTaker"))
+            return new CareTakerEntity(userToReturn);
+
+        return null;
     }
 }

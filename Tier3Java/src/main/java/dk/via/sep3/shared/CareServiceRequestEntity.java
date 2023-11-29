@@ -2,8 +2,10 @@ package dk.via.sep3.shared;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "care_service_request")
 public class CareServiceRequestEntity
 {
     @Id
@@ -19,12 +21,15 @@ public class CareServiceRequestEntity
 
     private ServiceRequestStatus status;
 
+    private LocalDateTime dateTime;
+
     public CareServiceRequestEntity(int id, UserEntity initiator, UserEntity recipient, AnnouncementEntity announcement)
     {
         this.id = id;
         this.initiator = initiator;
         this.recipient = recipient;
         this.announcement = announcement;
+        this.dateTime = LocalDateTime.now();
     }
 
     public CareServiceRequestEntity(UserEntity initiator, UserEntity recipient, AnnouncementEntity announcement)
@@ -32,6 +37,7 @@ public class CareServiceRequestEntity
         this.initiator = initiator;
         this.recipient = recipient;
         this.announcement = announcement;
+        this.status = ServiceRequestStatus.NONE;
     }
 
     public CareServiceRequestEntity()
@@ -57,23 +63,5 @@ public class CareServiceRequestEntity
     public UserEntity getRecipient()
     {
         return recipient;
-    }
-
-    @Embeddable public static class CareServiceRequestId implements Serializable
-    {
-        private String initiator, recipient;
-        private int announcement;
-
-        public CareServiceRequestId(String initiator, String recipient, int announcement)
-        {
-            this.initiator = initiator;
-            this.recipient = recipient;
-            this.announcement = announcement;
-        }
-
-        public CareServiceRequestId()
-        {
-
-        }
     }
 }
