@@ -1,0 +1,7 @@
+.MyProfile-header {
+    display: flex;
+}
+
+.selected{
+    background-color: #9AD0C2;
+}

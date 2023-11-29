@@ -23,9 +23,6 @@
     padding: 0;
 }
 </style>
-
-
-
    
     <div class="container-fluid p-0 col-xxl-5 col-lg-6 col-md-10 col-sm-12">
         <RadzenTemplateForm TItem="AnnouncementInputValidators"
@@ -157,7 +154,6 @@
         ClaimsPrincipal user = authState.User;
         userClaims = user.Claims;
         ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
-
     // userPets = ..
 
 
