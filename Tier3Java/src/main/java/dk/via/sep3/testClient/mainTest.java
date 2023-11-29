@@ -45,11 +45,11 @@ public class mainTest
 
 
         // Test filter announcement
-        SearchAnnouncementProto searchAnnouncementProto = SearchAnnouncementProto.newBuilder()
-                .setPetType(StringValue.of("Dog"))
-                .build();
-        var filteredAnnouncements = announcementStub.findAnnouncements(searchAnnouncementProto);
-        System.out.println(filteredAnnouncements);
+//        SearchAnnouncementProto searchAnnouncementProto = SearchAnnouncementProto.newBuilder()
+//                .setPetType(StringValue.of("Dog"))
+//                .build();
+//        var filteredAnnouncements = announcementStub.findAnnouncements(searchAnnouncementProto);
+//        System.out.println(filteredAnnouncements);
 
 
         // Test create user

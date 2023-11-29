@@ -10,19 +10,30 @@ service UserService{
   rpc FindUser(FindUserProto) returns (UserProto);
   rpc SearchUser(SearchUsersProto) returns (UsersProto);
   rpc UpdateUser(UserProto) returns (UserProto);
-  rpc DeleteUser(FindUserProto) returns (ResponseStatus);
+  rpc DeleteUser(FindUserProto) returns (Void);
 }
 
 service AnnouncementService{
   rpc CreateAnnouncement(AnnouncementProto) returns (AnnouncementProto);
-  rpc FindAnnouncements(SearchAnnouncementProto) returns (AnnouncementsProto);
-  rpc GetAnnouncement(FindAnnouncementProto) returns (AnnouncementProto);
+  rpc SearchAnnouncements(SearchAnnouncementProto) returns (AnnouncementsProto);
+  rpc FindAnnouncement(FindAnnouncementProto) returns (AnnouncementProto);
   rpc UpdateAnnouncement(AnnouncementProto) returns (AnnouncementProto);
-  rpc DeleteAnnouncement(FindAnnouncementProto) returns (ResponseStatus);
+  rpc DeleteAnnouncement(FindAnnouncementProto) returns (Void);
 }
 
-service CareServiceRequest{
-  rpc OfferCare(StartCareServiceRequest) returns (ResponseStatus);
+service ServiceService{
+  rpc RequestStartService(ServiceRequest) returns (Void);
+  rpc AcceptStartService(ServiceRequest) returns (Void);
+  rpc DenyStartService(ServiceRequest) returns (Void);
+  rpc EndService(FindServiceProto) returns (Void);
+  rpc FindRequestServices(SearchAnnouncementProto) returns (RequestServicesProto);
+  rpc FindServices(SearchServiceProto) returns (ServicesProto);
+  rpc GetService(FindServiceProto) returns (ServiceProto);
+}
+
+message LoginUserProto{
+  string email = 1;
+  string password = 2;
 }
 
 message UserProto{
@@ -35,24 +46,14 @@ message UserProto{
   google.protobuf.StringValue phone = 7;
 }
 
-message UsersProto{
-  repeated UserProto users = 1;
-}
-
-message FindUserProto{
-  string email = 1;
-}
-
-message SearchUsersProto{
-  google.protobuf.StringValue type = 1;
-  google.protobuf.StringValue name = 2;
-  google.protobuf.Int32Value age = 3;
-}
-
-
-message LoginUserProto{
-  string email = 1;
-  string password = 2;
+message PetProto{
+  string petName = 1;
+  string petType = 2;
+  int32 weight = 3;
+  bool isVaccinated = 4;
+  string description =5;
+  int32 id = 6;
+  string ownerEmail = 7;
 }
 
 message AnnouncementProto{
@@ -66,12 +67,39 @@ message AnnouncementProto{
   int32 id = 8;
 }
 
+message ServiceRequest{
+  string initiatorEmail = 1;
+  int32 announcementId = 2;
+  string recipientEmail = 3;
+}
+
+message ServiceProto{
+  AnnouncementProto announcement = 1;
+  string caretakerEmail = 2;
+  string petOwnerEmail = 3;
+  int32 status = 4;
+}
+
+message UsersProto{
+  repeated UserProto users = 1;
+}
+
 message AnnouncementsProto{
   repeated AnnouncementProto announcements = 1;
 }
 
-message FindAnnouncementProto{
-  int32 id = 1;
+message RequestServicesProto{
+  repeated ServiceRequest requestServices = 1;
+}
+
+message ServicesProto{
+  repeated ServiceProto services = 1;
+}
+
+message SearchUsersProto{
+  google.protobuf.StringValue type = 1;
+  google.protobuf.StringValue name = 2;
+  google.protobuf.Int32Value age = 3;
 }
 
 message SearchAnnouncementProto{
@@ -84,24 +112,22 @@ message SearchAnnouncementProto{
   google.protobuf.BoolValue petIsVaccinated = 7;
 }
 
-message PetProto{
-  string petName = 1;
-  string petType = 2;
-  int32 weight = 3;
-  bool isVaccinated = 4;
-  string description =5;
-  int32 id = 6;
-  string ownerEmail = 7;
+message SearchServiceProto{
+  string caretakerEmail = 2;
+  string petOwnerEmail = 3;
+  int32 status = 4;
 }
 
-message ResponseStatus{
-  string responseStatus = 1;
+message FindUserProto{
+  string email = 1;
 }
 
-message StartCareServiceRequest{
-  string initiatorEmail = 1;
-  int32 announcementId = 2;
-  string recipientEmail = 3;
+message FindAnnouncementProto{
+  int32 id = 1;
+}
+
+message FindServiceProto{
+  int32 serviceId = 1;
 }
 
 message Void{}

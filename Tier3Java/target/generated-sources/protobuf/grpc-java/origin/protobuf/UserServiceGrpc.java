@@ -89,15 +89,15 @@ public final class UserServiceGrpc {
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<origin.protobuf.FindUserProto,
-      origin.protobuf.ResponseStatus> METHOD_DELETE_USER =
-      io.grpc.MethodDescriptor.<origin.protobuf.FindUserProto, origin.protobuf.ResponseStatus>newBuilder()
+      origin.protobuf.Void> METHOD_DELETE_USER =
+      io.grpc.MethodDescriptor.<origin.protobuf.FindUserProto, origin.protobuf.Void>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
               "UserService", "DeleteUser"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               origin.protobuf.FindUserProto.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              origin.protobuf.ResponseStatus.getDefaultInstance()))
+              origin.protobuf.Void.getDefaultInstance()))
           .build();
 
   /**
@@ -165,7 +165,7 @@ public final class UserServiceGrpc {
     /**
      */
     public void deleteUser(origin.protobuf.FindUserProto request,
-        io.grpc.stub.StreamObserver<origin.protobuf.ResponseStatus> responseObserver) {
+        io.grpc.stub.StreamObserver<origin.protobuf.Void> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_DELETE_USER, responseObserver);
     }
 
@@ -211,7 +211,7 @@ public final class UserServiceGrpc {
             asyncUnaryCall(
               new MethodHandlers<
                 origin.protobuf.FindUserProto,
-                origin.protobuf.ResponseStatus>(
+                origin.protobuf.Void>(
                   this, METHODID_DELETE_USER)))
           .build();
     }
@@ -278,7 +278,7 @@ public final class UserServiceGrpc {
     /**
      */
     public void deleteUser(origin.protobuf.FindUserProto request,
-        io.grpc.stub.StreamObserver<origin.protobuf.ResponseStatus> responseObserver) {
+        io.grpc.stub.StreamObserver<origin.protobuf.Void> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_DELETE_USER, getCallOptions()), request, responseObserver);
     }
@@ -339,7 +339,7 @@ public final class UserServiceGrpc {
 
     /**
      */
-    public origin.protobuf.ResponseStatus deleteUser(origin.protobuf.FindUserProto request) {
+    public origin.protobuf.Void deleteUser(origin.protobuf.FindUserProto request) {
       return blockingUnaryCall(
           getChannel(), METHOD_DELETE_USER, getCallOptions(), request);
     }
@@ -405,7 +405,7 @@ public final class UserServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.ResponseStatus> deleteUser(
+    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.Void> deleteUser(
         origin.protobuf.FindUserProto request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_DELETE_USER, getCallOptions()), request);
@@ -458,7 +458,7 @@ public final class UserServiceGrpc {
           break;
         case METHODID_DELETE_USER:
           serviceImpl.deleteUser((origin.protobuf.FindUserProto) request,
-              (io.grpc.stub.StreamObserver<origin.protobuf.ResponseStatus>) responseObserver);
+              (io.grpc.stub.StreamObserver<origin.protobuf.Void>) responseObserver);
           break;
         default:
           throw new AssertionError();

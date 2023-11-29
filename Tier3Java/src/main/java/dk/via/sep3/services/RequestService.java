@@ -13,12 +13,12 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import origin.protobuf.CareServiceRequestGrpc;
-import origin.protobuf.ResponseStatus;
-import origin.protobuf.StartCareServiceRequest;
+import origin.protobuf.ServiceRequest;
+import origin.protobuf.ServiceServiceGrpc;
+import origin.protobuf.Void;
 
 @GRpcService
-public class RequestService extends CareServiceRequestGrpc.CareServiceRequestImplBase
+public class RequestService extends ServiceServiceGrpc.ServiceServiceImplBase
 {
     private static WebSocketSession session;
     private final UserDAOInterface userDao;
@@ -34,8 +34,7 @@ public class RequestService extends CareServiceRequestGrpc.CareServiceRequestImp
     }
 
     @Override
-    public void offerCare(StartCareServiceRequest request, StreamObserver<ResponseStatus> responseObserver)
-    {
+    public void requestStartService(ServiceRequest request, StreamObserver<Void> responseObserver) {
         UserEntity initiator = userDao.findUser(request.getInitiatorEmail());
         UserEntity recipient = userDao.findUser(request.getRecipientEmail());
         AnnouncementEntity announcement = announcementDAO.getAnnouncement(request.getAnnouncementId());

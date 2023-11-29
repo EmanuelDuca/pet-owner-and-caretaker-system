@@ -11,6 +11,7 @@ import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import origin.protobuf.*;
+import origin.protobuf.Void;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
@@ -135,10 +136,10 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
     }
 
 
-    public void deleteAnnouncement(FindAnnouncementProto request, StreamObserver<ResponseStatus> responseObserver)
+    public void deleteAnnouncement(FindAnnouncementProto request, StreamObserver<Void> responseObserver)
     {
         String response = announcementDAO.deleteAnnouncement(announcementDAO.getAnnouncement(request.getId()))? "User is deleted" : "User not found";
-        responseObserver.onNext(ResponseStatus.newBuilder().setResponseStatus(response).build());
+        responseObserver.onNext(Void.newBuilder().build());
         responseObserver.onCompleted();
     }
 }

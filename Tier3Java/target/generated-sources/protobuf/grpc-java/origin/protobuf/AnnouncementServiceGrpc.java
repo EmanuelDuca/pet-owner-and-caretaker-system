@@ -41,11 +41,11 @@ public final class AnnouncementServiceGrpc {
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<origin.protobuf.SearchAnnouncementProto,
-      origin.protobuf.AnnouncementsProto> METHOD_FIND_ANNOUNCEMENTS =
+      origin.protobuf.AnnouncementsProto> METHOD_SEARCH_ANNOUNCEMENTS =
       io.grpc.MethodDescriptor.<origin.protobuf.SearchAnnouncementProto, origin.protobuf.AnnouncementsProto>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "AnnouncementService", "FindAnnouncements"))
+              "AnnouncementService", "SearchAnnouncements"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               origin.protobuf.SearchAnnouncementProto.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -53,11 +53,11 @@ public final class AnnouncementServiceGrpc {
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<origin.protobuf.FindAnnouncementProto,
-      origin.protobuf.AnnouncementProto> METHOD_GET_ANNOUNCEMENT =
+      origin.protobuf.AnnouncementProto> METHOD_FIND_ANNOUNCEMENT =
       io.grpc.MethodDescriptor.<origin.protobuf.FindAnnouncementProto, origin.protobuf.AnnouncementProto>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "AnnouncementService", "GetAnnouncement"))
+              "AnnouncementService", "FindAnnouncement"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               origin.protobuf.FindAnnouncementProto.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -77,15 +77,15 @@ public final class AnnouncementServiceGrpc {
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<origin.protobuf.FindAnnouncementProto,
-      origin.protobuf.ResponseStatus> METHOD_DELETE_ANNOUNCEMENT =
-      io.grpc.MethodDescriptor.<origin.protobuf.FindAnnouncementProto, origin.protobuf.ResponseStatus>newBuilder()
+      origin.protobuf.Void> METHOD_DELETE_ANNOUNCEMENT =
+      io.grpc.MethodDescriptor.<origin.protobuf.FindAnnouncementProto, origin.protobuf.Void>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
               "AnnouncementService", "DeleteAnnouncement"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               origin.protobuf.FindAnnouncementProto.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              origin.protobuf.ResponseStatus.getDefaultInstance()))
+              origin.protobuf.Void.getDefaultInstance()))
           .build();
 
   /**
@@ -124,16 +124,16 @@ public final class AnnouncementServiceGrpc {
 
     /**
      */
-    public void findAnnouncements(origin.protobuf.SearchAnnouncementProto request,
+    public void searchAnnouncements(origin.protobuf.SearchAnnouncementProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementsProto> responseObserver) {
-      asyncUnimplementedUnaryCall(METHOD_FIND_ANNOUNCEMENTS, responseObserver);
+      asyncUnimplementedUnaryCall(METHOD_SEARCH_ANNOUNCEMENTS, responseObserver);
     }
 
     /**
      */
-    public void getAnnouncement(origin.protobuf.FindAnnouncementProto request,
+    public void findAnnouncement(origin.protobuf.FindAnnouncementProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementProto> responseObserver) {
-      asyncUnimplementedUnaryCall(METHOD_GET_ANNOUNCEMENT, responseObserver);
+      asyncUnimplementedUnaryCall(METHOD_FIND_ANNOUNCEMENT, responseObserver);
     }
 
     /**
@@ -146,7 +146,7 @@ public final class AnnouncementServiceGrpc {
     /**
      */
     public void deleteAnnouncement(origin.protobuf.FindAnnouncementProto request,
-        io.grpc.stub.StreamObserver<origin.protobuf.ResponseStatus> responseObserver) {
+        io.grpc.stub.StreamObserver<origin.protobuf.Void> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_DELETE_ANNOUNCEMENT, responseObserver);
     }
 
@@ -160,19 +160,19 @@ public final class AnnouncementServiceGrpc {
                 origin.protobuf.AnnouncementProto>(
                   this, METHODID_CREATE_ANNOUNCEMENT)))
           .addMethod(
-            METHOD_FIND_ANNOUNCEMENTS,
+            METHOD_SEARCH_ANNOUNCEMENTS,
             asyncUnaryCall(
               new MethodHandlers<
                 origin.protobuf.SearchAnnouncementProto,
                 origin.protobuf.AnnouncementsProto>(
-                  this, METHODID_FIND_ANNOUNCEMENTS)))
+                  this, METHODID_SEARCH_ANNOUNCEMENTS)))
           .addMethod(
-            METHOD_GET_ANNOUNCEMENT,
+            METHOD_FIND_ANNOUNCEMENT,
             asyncUnaryCall(
               new MethodHandlers<
                 origin.protobuf.FindAnnouncementProto,
                 origin.protobuf.AnnouncementProto>(
-                  this, METHODID_GET_ANNOUNCEMENT)))
+                  this, METHODID_FIND_ANNOUNCEMENT)))
           .addMethod(
             METHOD_UPDATE_ANNOUNCEMENT,
             asyncUnaryCall(
@@ -185,7 +185,7 @@ public final class AnnouncementServiceGrpc {
             asyncUnaryCall(
               new MethodHandlers<
                 origin.protobuf.FindAnnouncementProto,
-                origin.protobuf.ResponseStatus>(
+                origin.protobuf.Void>(
                   this, METHODID_DELETE_ANNOUNCEMENT)))
           .build();
     }
@@ -219,18 +219,18 @@ public final class AnnouncementServiceGrpc {
 
     /**
      */
-    public void findAnnouncements(origin.protobuf.SearchAnnouncementProto request,
+    public void searchAnnouncements(origin.protobuf.SearchAnnouncementProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementsProto> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(METHOD_FIND_ANNOUNCEMENTS, getCallOptions()), request, responseObserver);
+          getChannel().newCall(METHOD_SEARCH_ANNOUNCEMENTS, getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void getAnnouncement(origin.protobuf.FindAnnouncementProto request,
+    public void findAnnouncement(origin.protobuf.FindAnnouncementProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementProto> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(METHOD_GET_ANNOUNCEMENT, getCallOptions()), request, responseObserver);
+          getChannel().newCall(METHOD_FIND_ANNOUNCEMENT, getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -244,7 +244,7 @@ public final class AnnouncementServiceGrpc {
     /**
      */
     public void deleteAnnouncement(origin.protobuf.FindAnnouncementProto request,
-        io.grpc.stub.StreamObserver<origin.protobuf.ResponseStatus> responseObserver) {
+        io.grpc.stub.StreamObserver<origin.protobuf.Void> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_DELETE_ANNOUNCEMENT, getCallOptions()), request, responseObserver);
     }
@@ -277,16 +277,16 @@ public final class AnnouncementServiceGrpc {
 
     /**
      */
-    public origin.protobuf.AnnouncementsProto findAnnouncements(origin.protobuf.SearchAnnouncementProto request) {
+    public origin.protobuf.AnnouncementsProto searchAnnouncements(origin.protobuf.SearchAnnouncementProto request) {
       return blockingUnaryCall(
-          getChannel(), METHOD_FIND_ANNOUNCEMENTS, getCallOptions(), request);
+          getChannel(), METHOD_SEARCH_ANNOUNCEMENTS, getCallOptions(), request);
     }
 
     /**
      */
-    public origin.protobuf.AnnouncementProto getAnnouncement(origin.protobuf.FindAnnouncementProto request) {
+    public origin.protobuf.AnnouncementProto findAnnouncement(origin.protobuf.FindAnnouncementProto request) {
       return blockingUnaryCall(
-          getChannel(), METHOD_GET_ANNOUNCEMENT, getCallOptions(), request);
+          getChannel(), METHOD_FIND_ANNOUNCEMENT, getCallOptions(), request);
     }
 
     /**
@@ -298,7 +298,7 @@ public final class AnnouncementServiceGrpc {
 
     /**
      */
-    public origin.protobuf.ResponseStatus deleteAnnouncement(origin.protobuf.FindAnnouncementProto request) {
+    public origin.protobuf.Void deleteAnnouncement(origin.protobuf.FindAnnouncementProto request) {
       return blockingUnaryCall(
           getChannel(), METHOD_DELETE_ANNOUNCEMENT, getCallOptions(), request);
     }
@@ -332,18 +332,18 @@ public final class AnnouncementServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.AnnouncementsProto> findAnnouncements(
+    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.AnnouncementsProto> searchAnnouncements(
         origin.protobuf.SearchAnnouncementProto request) {
       return futureUnaryCall(
-          getChannel().newCall(METHOD_FIND_ANNOUNCEMENTS, getCallOptions()), request);
+          getChannel().newCall(METHOD_SEARCH_ANNOUNCEMENTS, getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.AnnouncementProto> getAnnouncement(
+    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.AnnouncementProto> findAnnouncement(
         origin.protobuf.FindAnnouncementProto request) {
       return futureUnaryCall(
-          getChannel().newCall(METHOD_GET_ANNOUNCEMENT, getCallOptions()), request);
+          getChannel().newCall(METHOD_FIND_ANNOUNCEMENT, getCallOptions()), request);
     }
 
     /**
@@ -356,7 +356,7 @@ public final class AnnouncementServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.ResponseStatus> deleteAnnouncement(
+    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.Void> deleteAnnouncement(
         origin.protobuf.FindAnnouncementProto request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_DELETE_ANNOUNCEMENT, getCallOptions()), request);
@@ -364,8 +364,8 @@ public final class AnnouncementServiceGrpc {
   }
 
   private static final int METHODID_CREATE_ANNOUNCEMENT = 0;
-  private static final int METHODID_FIND_ANNOUNCEMENTS = 1;
-  private static final int METHODID_GET_ANNOUNCEMENT = 2;
+  private static final int METHODID_SEARCH_ANNOUNCEMENTS = 1;
+  private static final int METHODID_FIND_ANNOUNCEMENT = 2;
   private static final int METHODID_UPDATE_ANNOUNCEMENT = 3;
   private static final int METHODID_DELETE_ANNOUNCEMENT = 4;
 
@@ -390,12 +390,12 @@ public final class AnnouncementServiceGrpc {
           serviceImpl.createAnnouncement((origin.protobuf.AnnouncementProto) request,
               (io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementProto>) responseObserver);
           break;
-        case METHODID_FIND_ANNOUNCEMENTS:
-          serviceImpl.findAnnouncements((origin.protobuf.SearchAnnouncementProto) request,
+        case METHODID_SEARCH_ANNOUNCEMENTS:
+          serviceImpl.searchAnnouncements((origin.protobuf.SearchAnnouncementProto) request,
               (io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementsProto>) responseObserver);
           break;
-        case METHODID_GET_ANNOUNCEMENT:
-          serviceImpl.getAnnouncement((origin.protobuf.FindAnnouncementProto) request,
+        case METHODID_FIND_ANNOUNCEMENT:
+          serviceImpl.findAnnouncement((origin.protobuf.FindAnnouncementProto) request,
               (io.grpc.stub.StreamObserver<origin.protobuf.AnnouncementProto>) responseObserver);
           break;
         case METHODID_UPDATE_ANNOUNCEMENT:
@@ -404,7 +404,7 @@ public final class AnnouncementServiceGrpc {
           break;
         case METHODID_DELETE_ANNOUNCEMENT:
           serviceImpl.deleteAnnouncement((origin.protobuf.FindAnnouncementProto) request,
-              (io.grpc.stub.StreamObserver<origin.protobuf.ResponseStatus>) responseObserver);
+              (io.grpc.stub.StreamObserver<origin.protobuf.Void>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -440,8 +440,8 @@ public final class AnnouncementServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new AnnouncementServiceDescriptorSupplier())
               .addMethod(METHOD_CREATE_ANNOUNCEMENT)
-              .addMethod(METHOD_FIND_ANNOUNCEMENTS)
-              .addMethod(METHOD_GET_ANNOUNCEMENT)
+              .addMethod(METHOD_SEARCH_ANNOUNCEMENTS)
+              .addMethod(METHOD_FIND_ANNOUNCEMENT)
               .addMethod(METHOD_UPDATE_ANNOUNCEMENT)
               .addMethod(METHOD_DELETE_ANNOUNCEMENT)
               .build();
