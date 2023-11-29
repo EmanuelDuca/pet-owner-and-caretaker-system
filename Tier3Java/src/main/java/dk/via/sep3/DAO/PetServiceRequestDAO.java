@@ -8,6 +8,7 @@ import dk.via.sep3.shared.PetServiceRequestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import origin.protobuf.SearchServiceProto;
+import origin.protobuf.ServiceRequest;
 
 import java.util.Collection;
 
@@ -39,24 +40,38 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
     @Override
     public Collection<PetServiceRequestEntity> searchServiceRequests(int announcementId)
     {
-        return null;
+        return repository.findAll()
+                .stream()
+                .filter(s -> s.getAnnouncement().getId() == announcementId).toList();
     }
 
     @Override
     public boolean deleteServiceRequests(int announcementId)
     {
-        return false;
+        var servicesToDelete = searchServiceRequests(announcementId);
+        repository.deleteAll(servicesToDelete);
+        return true;
     }
 
     @Override
     public void confirmServiceRequest(int serviceId)
     {
-
+        var serviceToUpdate = repository.getReferenceById(serviceId);
+        serviceToUpdate.setStatus(ServiceRequest.Status.ACCEPTED);
+        repository.save(serviceToUpdate);
     }
 
     @Override
     public void denyServiceRequest(int serviceId)
     {
+        var serviceToUpdate = repository.getReferenceById(serviceId);
+        serviceToUpdate.setStatus(ServiceRequest.Status.DENIED);
+        repository.save(serviceToUpdate);
+    }
 
+    @Override
+    public PetServiceRequestEntity getServiceRequestById(int serviceRequestId)
+    {
+        return repository.getReferenceById(serviceRequestId);
     }
 }

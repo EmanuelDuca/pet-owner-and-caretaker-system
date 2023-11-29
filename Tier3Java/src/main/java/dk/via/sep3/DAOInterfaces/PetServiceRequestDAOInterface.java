@@ -11,5 +11,5 @@ public interface PetServiceRequestDAOInterface
     boolean deleteServiceRequests(int announcementId);
     void confirmServiceRequest(int serviceId);
     void denyServiceRequest(int serviceId);
-
+    PetServiceRequestEntity getServiceRequestById(int serviceRequestId);
 }

@@ -31,7 +31,7 @@ public class PetServiceRequestEntity
         this.recipient = recipient;
         this.announcement = announcement;
         this.dateTime = LocalDateTime.now();
-        this.status = ServiceRequest.Status.NONE;
+        this.status = ServiceRequest.Status.SENT;
     }
 
     public PetServiceRequestEntity(UserEntity initiator, UserEntity recipient, AnnouncementEntity announcement)
@@ -40,12 +40,18 @@ public class PetServiceRequestEntity
         this.recipient = recipient;
         this.announcement = announcement;
         this.dateTime = LocalDateTime.now();
-        this.status = ServiceRequest.Status.NONE;
+        this.status = ServiceRequest.Status.SENT;
     }
 
     public PetServiceRequestEntity()
     {
 
+    }
+
+    public PetServiceRequestEntity setStatus(ServiceRequest.Status status)
+    {
+        this.status = status;
+        return this;
     }
 
     public int getId()

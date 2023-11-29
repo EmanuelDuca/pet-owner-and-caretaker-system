@@ -9,8 +9,8 @@ import java.util.Collection;
 
 public interface PetServiceDAOInterface
 {
-    PetServiceEntity createService(int requestServiceId);
-    void endService(int requestServiceId);
+    PetServiceEntity createService(PetServiceEntity service);
+    void endService(int serviceId);
     PetServiceEntity findServiceById(int serviceId);
     Collection<PetServiceEntity> searchServices(CareTakerEntity careTaker, PetOwnerEntity petOwner, ServiceProto.Status status);
 }

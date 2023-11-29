@@ -74,9 +74,9 @@ message ServiceRequest{
   Status status = 4;
   int32 id = 5;
   enum Status{
-    ACCEPTED = 0;
-    DENIED = 1;
-    NONE = 2;
+    SENT = 0;
+    ACCEPTED = 1;
+    DENIED = 2;
   }
 }
 
