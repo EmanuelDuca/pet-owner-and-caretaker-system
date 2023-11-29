@@ -19,7 +19,7 @@ public class FeedbackEntity {
 
     @OneToOne
     @MapsId("userEmail")
-    private UserEntity user;
+    private UserEntity user; // caretaker
 
     private short rating;
     private String feedback;
