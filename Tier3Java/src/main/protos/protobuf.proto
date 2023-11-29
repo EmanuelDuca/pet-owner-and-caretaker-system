@@ -85,15 +85,15 @@ message ServiceRequestProto{
 
 message ServiceProto{
   AnnouncementProto announcement = 1;
-  string caretaker = 2;
-  string petOwner = 3;
+  string caretakerEmail = 2;
+  string petOwnerEmail = 3;
   ServiceStatus status = 4;
   int32 id = 5;
 }
 
 message FeedbackProto{
   ServiceProto service = 2;
-  UserProto caretaker = 3;
+  string caretakerEmail = 3;
   int32 rating = 4;
   string feedback= 5;
 }

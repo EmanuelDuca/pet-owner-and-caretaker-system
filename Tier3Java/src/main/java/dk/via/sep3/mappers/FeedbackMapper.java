@@ -13,7 +13,7 @@ public class FeedbackMapper
         return FeedbackProto.newBuilder()
                 .setFeedback(entity.getFeedback())
                 .setRating(entity.getRating())
-                .setCaretaker(UserMapper.mapProto(entity.getCaretaker()))
+                .setCaretakerEmail(entity.getCaretaker().getEmail())
                 .setService(PetServiceMapper.mapToProto(entity.getService()))
                 .build();
     }

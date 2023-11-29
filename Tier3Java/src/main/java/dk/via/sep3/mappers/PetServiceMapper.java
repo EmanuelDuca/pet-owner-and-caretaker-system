@@ -9,14 +9,11 @@ public class PetServiceMapper {
     public static ServiceProto mapToProto(PetServiceEntity serviceEntity)
     {
         return ServiceProto.newBuilder()
-                .setPetOwnerEmail(serviceEntity.getPetOwner().getEmail())
                 .setCaretakerEmail(serviceEntity.getCareTaker().getEmail())
                 .setAnnouncement(AnnouncementMapper.mapToProto(serviceEntity.getAnnouncement()))
+                .setStatus(serviceEntity.getStatus())
+                .setPetOwnerEmail(serviceEntity.getPetOwner().getEmail())
                 .build();
     }
 
-    public static PetServiceEntity mapToEntity(ServiceProto proto)
-    {
-
-    }
 }

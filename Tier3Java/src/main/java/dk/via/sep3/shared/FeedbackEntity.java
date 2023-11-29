@@ -69,6 +69,11 @@ public class FeedbackEntity {
             this.serviceId = serviceId;
             this.caretakerEmail = caretakerEmail;
         }
+
+        public FeedbackId()
+        {
+
+        }
     }
 }
 
