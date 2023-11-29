@@ -15,7 +15,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         try
         {
             await careRequestClient
-                .RequestStartServiceAsync(new ServiceRequest
+                .RequestStartServiceAsync(new ServiceRequestProto
                 {
                     AnnouncementId = announcementId,
                     InitiatorEmail = initiatorEmail,

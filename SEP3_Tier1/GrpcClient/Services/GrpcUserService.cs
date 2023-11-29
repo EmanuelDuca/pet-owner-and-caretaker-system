@@ -114,7 +114,7 @@ public class GrpcUserService : IUserDao
                 Name = parameters.Name,
                 Type = parameters.Type
             };
-            UsersProto users = await userServiceClient.SearchUserAsync(request);
+            UsersProto users = await userServiceClient.SearchUsersAsync(request);
             return await mapper.MapToEntityList(users);
         }
         catch (RpcException e)
