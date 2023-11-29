@@ -37,14 +37,26 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
     }
 
     @Override
-    public Collection<PetServiceRequestEntity> searchRequestServices(SearchServiceProto searchProto)
+    public Collection<PetServiceRequestEntity> searchServiceRequests(int announcementId)
     {
         return null;
     }
 
     @Override
-    public boolean deleteServiceRequest(int id)
+    public boolean deleteServiceRequests(int announcementId)
     {
         return false;
+    }
+
+    @Override
+    public void confirmServiceRequest(int serviceId)
+    {
+
+    }
+
+    @Override
+    public void denyServiceRequest(int serviceId)
+    {
+
     }
 }
