@@ -7,17 +7,16 @@ import java.io.Serializable;
 public class UserEntity implements Serializable {
     @Id
     @Column(unique = true)
-    private String email;
-    private String username;
+    protected String email;
+    protected String username;
 
     @Column(nullable = true)
-    private String name;
-    private String password;
+    protected String name;
+    protected String password;
     @Column(nullable = true)
-    private Integer age;
+    protected Integer age;
     @Column(nullable = true)
-    private String phone;
-    private String type;
+    protected String phone;
 
 
     public UserEntity(String username, String password) {
@@ -31,13 +30,12 @@ public class UserEntity implements Serializable {
     public UserEntity() {
     }
 
-    public UserEntity(String email, String username, String password, Integer age, String phone, String type, String name) {
+    public UserEntity(String email, String username, String password, Integer age, String phone, String name) {
         this.email = email;
         this.username = username;
         this.password = password;
         this.age = age;
         this.phone = phone;
-        this.type = type;
         this.name = name;
     }
 
@@ -90,13 +88,5 @@ public class UserEntity implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

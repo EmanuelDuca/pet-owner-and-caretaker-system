@@ -47,7 +47,9 @@ origin\protobuf\CareServiceRequestGrpc$CareServiceRequestStub.class
 origin\protobuf\UserServiceGrpc$MethodHandlers.class
 origin\protobuf\UserServiceGrpc$UserServiceStub.class
 origin\protobuf\UserProto$1.class
+dk\via\sep3\services\PetOwnerEntity.class
 origin\protobuf\AnnouncementsProto.class
+dk\via\sep3\services\CareTakerEntity.class
 origin\protobuf\UsersProto$1.class
 origin\protobuf\VoidOrBuilder.class
 origin\protobuf\CareServiceRequestGrpc$CareServiceRequestDescriptorSupplier.class
