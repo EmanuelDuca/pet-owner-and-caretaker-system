@@ -35,6 +35,18 @@ message UserProto{
   google.protobuf.StringValue phone = 7;
 }
 
+message CaretakerProto{
+  UserProto user = 1;
+  string test = 2;
+}
+
+message PetOwnerProto{
+  UserProto user = 1;
+  string test1 = 2;
+}
+
+
+
 message UsersProto{
   repeated UserProto users = 1;
 }

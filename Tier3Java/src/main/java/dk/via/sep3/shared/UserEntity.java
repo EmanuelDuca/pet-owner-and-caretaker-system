@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "user_entity")
 public class UserEntity implements Serializable {
     @Id
     @Column(unique = true)
@@ -62,7 +63,7 @@ public class UserEntity implements Serializable {
         this.password = password;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 

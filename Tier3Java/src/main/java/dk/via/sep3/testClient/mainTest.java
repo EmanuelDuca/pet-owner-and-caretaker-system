@@ -45,30 +45,28 @@ public class mainTest
 
 
         // Test filter announcement
-        SearchAnnouncementProto searchAnnouncementProto = SearchAnnouncementProto.newBuilder()
-                .setPetType(StringValue.of("Dog"))
-                .build();
-        var filteredAnnouncements = announcementStub.findAnnouncements(searchAnnouncementProto);
-        System.out.println(filteredAnnouncements);
-
-
-        // Test create user
-//        UserProto user = UserProto.newBuilder()
-//                .setEmail("allan6@gmail.com")
-//                .setUsername("Allan")
-//                .setPassword("via123")
-//                .setAge(40)
-//                .setPhone("078830013")
-//                .setType("CareTaker")
+//        SearchAnnouncementProto searchAnnouncementProto = SearchAnnouncementProto.newBuilder()
+//                .setPetType(StringValue.of("Dog"))
 //                .build();
-//        try {
-//            UserProto response = userStub.createUser(user);
-//            System.out.println(response.getEmail());
-//        }
-//        catch (Exception e)
-//        {
-//            System.out.println(e.getMessage());
-//        }
+//        var filteredAnnouncements = announcementStub.findAnnouncements(searchAnnouncementProto);
+//        System.out.println(filteredAnnouncements);
+
+
+//         Test create user
+        UserProto user = UserProto.newBuilder()
+                .setEmail("allan6@gmail.com")
+                .setUsername("Allan")
+                .setType("CareTaker")
+                .setPassword("via123")
+                .build();
+        try {
+            UserProto response = userStub.createUser(user);
+            System.out.println(response.getEmail());
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
 //
 //
 //        System.out.println(announcementStub.findAnnouncements(null));
