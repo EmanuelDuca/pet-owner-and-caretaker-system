@@ -8,7 +8,7 @@ import dk.via.sep3.shared.PetServiceRequestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import origin.protobuf.SearchServiceProto;
-import origin.protobuf.ServiceRequest;
+import origin.protobuf.ServiceRequestProto;
 
 import java.util.Collection;
 
@@ -57,7 +57,7 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
     public void confirmServiceRequest(int serviceId)
     {
         var serviceToUpdate = repository.getReferenceById(serviceId);
-        serviceToUpdate.setStatus(ServiceRequest.Status.ACCEPTED);
+        serviceToUpdate.setStatus(ServiceRequestProto.Status.ACCEPTED);
         repository.save(serviceToUpdate);
     }
 
@@ -65,7 +65,7 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
     public void denyServiceRequest(int serviceId)
     {
         var serviceToUpdate = repository.getReferenceById(serviceId);
-        serviceToUpdate.setStatus(ServiceRequest.Status.DENIED);
+        serviceToUpdate.setStatus(ServiceRequestProto.Status.DENIED);
         repository.save(serviceToUpdate);
     }
 

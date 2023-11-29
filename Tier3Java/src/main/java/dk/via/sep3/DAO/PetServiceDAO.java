@@ -8,6 +8,7 @@ import dk.via.sep3.shared.PetServiceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import origin.protobuf.ServiceProto;
+import origin.protobuf.ServiceStatus;
 
 import java.util.Collection;
 
@@ -25,7 +26,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
     @Override
     public PetServiceEntity createService(PetServiceEntity service)
     {
-        service.setStatus(ServiceProto.Status.PLANNED);
+        service.setStatus(ServiceStatus.PLANNED);
         return repository.save(service);
     }
 
@@ -33,7 +34,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
     public void endService(int serviceId)
     {
         var serviceToUpdate = findServiceById(serviceId);
-        serviceToUpdate.setStatus(ServiceProto.Status.DONE);
+        serviceToUpdate.setStatus(ServiceStatus.DONE);
         repository.save(serviceToUpdate);
     }
 
@@ -44,7 +45,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
     }
 
     @Override
-    public Collection<PetServiceEntity> searchServices(CareTakerEntity careTaker, PetOwnerEntity petOwner, ServiceProto.Status status)
+    public Collection<PetServiceEntity> searchServices(CareTakerEntity careTaker, PetOwnerEntity petOwner, ServiceStatus status)
     {
         return repository.findAll()
                 .stream()

@@ -33,6 +33,15 @@ public class PetServiceEntity
         this.status = status;
     }
 
+    public PetServiceEntity(CareTakerEntity careTaker, PetOwnerEntity petOwner, AnnouncementEntity announcement)
+    {
+        this.id = id;
+        this.careTaker = careTaker;
+        this.petOwner = petOwner;
+        this.announcement = announcement;
+        this.status=ServiceStatus.PLANNED;
+    }
+
     public PetServiceEntity()
     {
 
