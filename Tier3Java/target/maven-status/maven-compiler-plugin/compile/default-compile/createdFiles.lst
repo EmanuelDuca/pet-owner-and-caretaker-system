@@ -3,6 +3,7 @@ origin\protobuf\StartCareServiceRequest$Builder.class
 origin\protobuf\Void.class
 origin\protobuf\StartCareServiceRequest.class
 dk\via\sep3\services\CareRequestService.class
+dk\via\sep3\DAO\UserDAO.class
 origin\protobuf\UsersProto.class
 origin\protobuf\Void$1.class
 origin\protobuf\CareServiceRequestGrpc$CareServiceRequestBlockingStub.class
@@ -12,6 +13,7 @@ origin\protobuf\SearchAnnouncementProtoOrBuilder.class
 dk\via\sep3\mappers\PetMapper.class
 dk\via\sep3\WebSocketConfig.class
 origin\protobuf\AnnouncementProto$1.class
+dk\via\sep3\DAO\CareRequestServiceDao.class
 origin\protobuf\SearchUsersProto$Builder.class
 origin\protobuf\FindUserProto$1.class
 origin\protobuf\SearchUsersProto$1.class
@@ -24,6 +26,7 @@ dk\via\sep3\services\GrpcError.class
 origin\protobuf\CareServiceRequestGrpc$CareServiceRequestImplBase.class
 origin\protobuf\AnnouncementServiceGrpc$AnnouncementServiceDescriptorSupplier.class
 dk\via\sep3\mappers\UserMapper.class
+dk\via\sep3\DAOInterfaces\CareRequestServiceDaoInterface.class
 dk\via\sep3\testClient\mainTest.class
 origin\protobuf\FindAnnouncementProtoOrBuilder.class
 origin\protobuf\AnnouncementsProtoOrBuilder.class
@@ -54,6 +57,7 @@ origin\protobuf\AnnouncementsProto$Builder.class
 origin\protobuf\FindAnnouncementProto$1.class
 origin\protobuf\SearchAnnouncementProto.class
 origin\protobuf\CareServiceRequestGrpc$CareServiceRequestFutureStub.class
+dk\via\sep3\shared\CareServiceRequestEntity.class
 origin\protobuf\StartCareServiceRequestOrBuilder.class
 origin\protobuf\FindUserProtoOrBuilder.class
 dk\via\sep3\services\UserService.class
@@ -81,6 +85,7 @@ origin\protobuf\CareServiceRequestGrpc.class
 origin\protobuf\FindAnnouncementProto.class
 origin\protobuf\UserProtoOrBuilder.class
 origin\protobuf\UserServiceGrpc.class
+dk\via\sep3\shared\CareServiceRequestEntity$CareServiceRequestId.class
 origin\protobuf\UserServiceGrpc$UserServiceFutureStub.class
 origin\protobuf\UsersProto$Builder.class
 origin\protobuf\PetProto$1.class
@@ -88,6 +93,7 @@ origin\protobuf\AnnouncementProtoOrBuilder.class
 origin\protobuf\SearchUsersProto.class
 origin\protobuf\LoginUserProtoOrBuilder.class
 origin\protobuf\AnnouncementServiceGrpc$MethodHandlers.class
+dk\via\sep3\repository\CareServiceRequestRepository.class
 origin\protobuf\Protobuf$1.class
 origin\protobuf\ResponseStatus.class
 origin\protobuf\AnnouncementsProto$1.class
