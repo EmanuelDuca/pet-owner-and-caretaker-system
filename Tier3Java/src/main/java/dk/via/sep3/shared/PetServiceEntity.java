@@ -78,10 +78,9 @@ public class PetServiceEntity
         return status;
     }
 
-    public PetServiceEntity setStatus(ServiceStatus status)
+    public void setStatus(ServiceStatus status)
     {
         this.status = status;
-        return this;
     }
 
     public int getId()

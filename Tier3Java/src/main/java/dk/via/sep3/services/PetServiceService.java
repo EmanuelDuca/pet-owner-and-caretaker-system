@@ -22,6 +22,7 @@ import origin.protobuf.ServiceRequestProto;
 import origin.protobuf.ServicesProto;
 import origin.protobuf.Void;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
@@ -44,6 +45,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     }
 
     @Override
+    @Transactional
     public void requestStartService(ServiceRequestProto request, StreamObserver<Void> responseObserver)
     {
         UserEntity initiator = userDao.findUser(request.getInitiatorEmail());
@@ -56,6 +58,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     }
 
     @Override
+    @Transactional
     public void acceptStartService(FindRequestServiceProto request, StreamObserver<Void> responseObserver)
     {
         careServiceRequestDAO.confirmServiceRequest(request.getRequestId());
@@ -68,18 +71,21 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     }
 
     @Override
+    @Transactional
     public void denyStartService(FindRequestServiceProto request, StreamObserver<Void> responseObserver)
     {
         careServiceRequestDAO.denyServiceRequest(request.getRequestId());
     }
 
     @Override
+    @Transactional
     public void endService(FindServiceProto request, StreamObserver<Void> responseObserver)
     {
         careServiceDAO.endService(request.getServiceId());
     }
 
     @Override
+    @Transactional
     public void searchRequestServices(FindAnnouncementProto request, StreamObserver<RequestServicesProto> responseObserver)
     {
         Collection<PetServiceRequestEntity> requests = careServiceRequestDAO.searchServiceRequests(request.getId());
@@ -99,6 +105,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     }
 
     @Override
+    @Transactional
     public void searchServices(SearchServiceProto request, StreamObserver<ServicesProto> responseObserver)
     {
         Collection<PetServiceEntity> services = careServiceDAO.searchServices(
@@ -122,6 +129,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     }
 
     @Override
+    @Transactional
     public void findService(FindServiceProto request, StreamObserver<ServiceProto> responseObserver)
     {
         responseObserver.onNext(PetServiceMapper.mapToProto(careServiceDAO.findServiceById(request.getServiceId())));

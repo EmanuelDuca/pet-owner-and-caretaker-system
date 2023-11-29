@@ -15,12 +15,10 @@ public class FeedbackEntity {
 
     @OneToOne
     @MapsId("serviceId")
-    @JoinColumn(name = "service_id")
     private PetServiceEntity service;
 
     @OneToOne
-    @MapsId("userId")
-    @JoinColumn(name = "user_id")
+    @MapsId("userEmail")
     private UserEntity user;
 
     private short rating;
@@ -53,7 +51,7 @@ public class FeedbackEntity {
     private static class FeedbackId implements Serializable
     {
         private int serviceId;
-        private int userId;
+        private String userEmail;
     }
 }
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import origin.protobuf.SearchServiceProto;
 import origin.protobuf.ServiceRequestProto;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 
 @Repository
@@ -27,6 +28,7 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
         this.userRepository = userRepository;
     }
     @Override
+    @Transactional
     public PetServiceRequestEntity createServiceRequest(PetServiceRequestEntity careServiceEntity)
     {
         if(!userRepository.existsById(careServiceEntity.getInitiator().getEmail())
@@ -38,6 +40,7 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
     }
 
     @Override
+    @Transactional
     public Collection<PetServiceRequestEntity> searchServiceRequests(int announcementId)
     {
         return repository.findAll()
@@ -46,6 +49,7 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
     }
 
     @Override
+    @Transactional
     public boolean deleteServiceRequests(int announcementId)
     {
         var servicesToDelete = searchServiceRequests(announcementId);
@@ -54,6 +58,7 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
     }
 
     @Override
+    @Transactional
     public void confirmServiceRequest(int serviceId)
     {
         var serviceToUpdate = repository.getReferenceById(serviceId);
@@ -62,6 +67,7 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
     }
 
     @Override
+    @Transactional
     public void denyServiceRequest(int serviceId)
     {
         var serviceToUpdate = repository.getReferenceById(serviceId);
@@ -70,6 +76,7 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
     }
 
     @Override
+    @Transactional
     public PetServiceRequestEntity getServiceRequestById(int serviceRequestId)
     {
         return repository.getReferenceById(serviceRequestId);

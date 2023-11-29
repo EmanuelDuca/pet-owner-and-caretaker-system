@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import origin.protobuf.ServiceProto;
 import origin.protobuf.ServiceStatus;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 
 @Repository
@@ -24,6 +25,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
     }
 
     @Override
+    @Transactional
     public PetServiceEntity createService(PetServiceEntity service)
     {
         service.setStatus(ServiceStatus.PLANNED);
@@ -31,6 +33,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
     }
 
     @Override
+    @Transactional
     public void endService(int serviceId)
     {
         var serviceToUpdate = findServiceById(serviceId);
@@ -39,12 +42,15 @@ public class PetServiceDAO implements PetServiceDAOInterface
     }
 
     @Override
+    @Transactional
     public PetServiceEntity findServiceById(int serviceId)
     {
         return repository.getReferenceById(serviceId);
     }
 
     @Override
+    @Transactional
+
     public Collection<PetServiceEntity> searchServices(CareTakerEntity careTaker, PetOwnerEntity petOwner, ServiceStatus status)
     {
         return repository.findAll()

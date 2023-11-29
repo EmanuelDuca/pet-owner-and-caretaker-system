@@ -21,25 +21,29 @@ public class mainTest
         AnnouncementServiceGrpc.AnnouncementServiceBlockingStub announcementStub = AnnouncementServiceGrpc.newBlockingStub(managedChannel);
         ServiceServiceGrpc.ServiceServiceBlockingStub serviceBlockingStub = ServiceServiceGrpc.newBlockingStub(managedChannel);
 
-        AnnouncementProto announcementProto = AnnouncementProto.newBuilder()
-                .setPetOwnerEmail("sevastian@gmail.com")
-                .setTimeStart(TimestampConverter.fromLocalDateTime(LocalDateTime.now()))
-                .setTimeFinish(TimestampConverter.fromLocalDateTime(LocalDateTime.now().plusDays(3)))
-                .setDescription("Nice")
-                .setPostalCode("8700")
-                .setPet(PetProto.newBuilder()
-                        .setOwnerEmail("sevastian@gmail.com")
-                        .setPetName("HUI_VAM")
-                        .setPetType("Cat")
-                        .setIsVaccinated(false)
-                        .setDescription("miau miau maiu")
-                        .setWeight(25)
-                        .build())
-                .build();
-        AnnouncementProto announcementProtoResponse = announcementStub.createAnnouncement(announcementProto);
-        System.out.println(announcementProtoResponse.getDescription());
+//        AnnouncementProto announcementProto = AnnouncementProto.newBuilder()
+//                .setPetOwnerEmail("sevastian@gmail.com")
+//                .setTimeStart(TimestampConverter.fromLocalDateTime(LocalDateTime.now()))
+//                .setTimeFinish(TimestampConverter.fromLocalDateTime(LocalDateTime.now().plusDays(3)))
+//                .setDescription("Nice")
+//                .setPostalCode("8700")
+//                .setPet(PetProto.newBuilder()
+//                        .setOwnerEmail("sevastian@gmail.com")
+//                        .setPetName("HUI_VAM")
+//                        .setPetType("Cat")
+//                        .setIsVaccinated(false)
+//                        .setDescription("miau miau maiu")
+//                        .setWeight(25)
+//                        .build())
+//                .build();
+//        AnnouncementProto announcementProtoResponse = announcementStub.createAnnouncement(announcementProto);
+//        System.out.println(announcementProtoResponse.getDescription());
 //
 
+
+        serviceBlockingStub.acceptStartService(FindRequestServiceProto.newBuilder()
+                        .setRequestId(2)
+                        .build());
 
 
 
