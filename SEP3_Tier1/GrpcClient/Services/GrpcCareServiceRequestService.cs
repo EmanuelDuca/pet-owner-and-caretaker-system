@@ -8,14 +8,14 @@ namespace GrpcClient.Services;
 
 public class GrpcCareServiceRequestService : ICareServiceRequestDao
 {
-    private readonly CareServiceRequest.CareServiceRequestClient careRequestClient;
+    private readonly ServiceService.ServiceServiceClient careRequestClient;
 
     public async Task OfferAsync(string initiatorEmail, int announcementId, string recipientEmail)
     {
         try
         {
             await careRequestClient
-                .OfferCareAsync(new StartCareServiceRequest
+                .RequestStartServiceAsync(new ServiceRequest
                 {
                     AnnouncementId = announcementId,
                     InitiatorEmail = initiatorEmail,

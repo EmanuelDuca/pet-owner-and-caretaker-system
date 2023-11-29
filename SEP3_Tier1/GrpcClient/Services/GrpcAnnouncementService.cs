@@ -79,7 +79,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
             if (!string.IsNullOrEmpty(dto.PostalCode))
                 request.PostalCode = dto.PostalCode;
             
-            AnnouncementsProto announcements = announcementServiceClient.FindAnnouncements(request);
+            AnnouncementsProto announcements = await announcementServiceClient.SearchAnnouncementsAsync(request);
             return await mapper.MapToEntityList(announcements);
         }
         catch (RpcException e)

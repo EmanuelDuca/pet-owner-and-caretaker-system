@@ -14,8 +14,7 @@ public class UserMapper {
                 .setEmail(user.getEmail())
                 .setUsername(user.getUsername())
                 .setPassword(user.getPassword())
-
-//                .setType(user.getType())
+                .setType(user instanceof CareTakerEntity? "CareTaker" : "PetOwner")
                 .build();
     }
 

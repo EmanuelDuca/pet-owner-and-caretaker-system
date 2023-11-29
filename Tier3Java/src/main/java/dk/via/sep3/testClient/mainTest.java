@@ -52,21 +52,24 @@ public class mainTest
 //        System.out.println(filteredAnnouncements);
 
 
+
+
+
 //         Test create user
-        UserProto user = UserProto.newBuilder()
-                .setEmail("allan6@gmail.com")
-                .setUsername("Allan")
-                .setType("CareTaker")
-                .setPassword("via123")
-                .build();
-        try {
-            UserProto response = userStub.createUser(user);
-            System.out.println(response.getEmail());
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
+//        UserProto user = UserProto.newBuilder()
+//                .setEmail("allan6@gmail.com")
+//                .setUsername("Allan")
+//                .setType("CareTaker")
+//                .setPassword("via123")
+//                .build();
+//        try {
+//            UserProto response = userStub.createUser(user);
+//            System.out.println(response.getEmail());
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println(e.getMessage());
+//        }
 //
 //
 //        System.out.println(announcementStub.findAnnouncements(null));

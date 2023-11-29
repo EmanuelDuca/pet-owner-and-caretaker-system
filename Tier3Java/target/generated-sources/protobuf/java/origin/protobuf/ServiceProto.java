@@ -71,8 +71,9 @@ public  final class ServiceProto extends
             break;
           }
           case 32: {
+            int rawValue = input.readEnum();
 
-            status_ = input.readInt32();
+            status_ = rawValue;
             break;
           }
         }
@@ -96,6 +97,113 @@ public  final class ServiceProto extends
     return origin.protobuf.Protobuf.internal_static_ServiceProto_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             origin.protobuf.ServiceProto.class, origin.protobuf.ServiceProto.Builder.class);
+  }
+
+  /**
+   * Protobuf enum {@code ServiceProto.Status}
+   */
+  public enum Status
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>PLANNED = 0;</code>
+     */
+    PLANNED(0),
+    /**
+     * <code>IN_PROGRESS = 1;</code>
+     */
+    IN_PROGRESS(1),
+    /**
+     * <code>DONE = 2;</code>
+     */
+    DONE(2),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>PLANNED = 0;</code>
+     */
+    public static final int PLANNED_VALUE = 0;
+    /**
+     * <code>IN_PROGRESS = 1;</code>
+     */
+    public static final int IN_PROGRESS_VALUE = 1;
+    /**
+     * <code>DONE = 2;</code>
+     */
+    public static final int DONE_VALUE = 2;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static Status valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static Status forNumber(int value) {
+      switch (value) {
+        case 0: return PLANNED;
+        case 1: return IN_PROGRESS;
+        case 2: return DONE;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<Status>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        Status> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<Status>() {
+            public Status findValueByNumber(int number) {
+              return Status.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return origin.protobuf.ServiceProto.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final Status[] VALUES = values();
+
+    public static Status valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private Status(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:ServiceProto.Status)
   }
 
   public static final int ANNOUNCEMENT_FIELD_NUMBER = 1;
@@ -190,10 +298,17 @@ public  final class ServiceProto extends
   public static final int STATUS_FIELD_NUMBER = 4;
   private int status_;
   /**
-   * <code>int32 status = 4;</code>
+   * <code>.ServiceProto.Status status = 4;</code>
    */
-  public int getStatus() {
+  public int getStatusValue() {
     return status_;
+  }
+  /**
+   * <code>.ServiceProto.Status status = 4;</code>
+   */
+  public origin.protobuf.ServiceProto.Status getStatus() {
+    origin.protobuf.ServiceProto.Status result = origin.protobuf.ServiceProto.Status.valueOf(status_);
+    return result == null ? origin.protobuf.ServiceProto.Status.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -217,8 +332,8 @@ public  final class ServiceProto extends
     if (!getPetOwnerEmailBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, petOwnerEmail_);
     }
-    if (status_ != 0) {
-      output.writeInt32(4, status_);
+    if (status_ != origin.protobuf.ServiceProto.Status.PLANNED.getNumber()) {
+      output.writeEnum(4, status_);
     }
   }
 
@@ -237,9 +352,9 @@ public  final class ServiceProto extends
     if (!getPetOwnerEmailBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, petOwnerEmail_);
     }
-    if (status_ != 0) {
+    if (status_ != origin.protobuf.ServiceProto.Status.PLANNED.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(4, status_);
+        .computeEnumSize(4, status_);
     }
     memoizedSize = size;
     return size;
@@ -266,8 +381,7 @@ public  final class ServiceProto extends
         .equals(other.getCaretakerEmail());
     result = result && getPetOwnerEmail()
         .equals(other.getPetOwnerEmail());
-    result = result && (getStatus()
-        == other.getStatus());
+    result = result && status_ == other.status_;
     return result;
   }
 
@@ -287,7 +401,7 @@ public  final class ServiceProto extends
     hash = (37 * hash) + PETOWNEREMAIL_FIELD_NUMBER;
     hash = (53 * hash) + getPetOwnerEmail().hashCode();
     hash = (37 * hash) + STATUS_FIELD_NUMBER;
-    hash = (53 * hash) + getStatus();
+    hash = (53 * hash) + status_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -511,8 +625,8 @@ public  final class ServiceProto extends
         petOwnerEmail_ = other.petOwnerEmail_;
         onChanged();
       }
-      if (other.getStatus() != 0) {
-        setStatus(other.getStatus());
+      if (other.status_ != 0) {
+        setStatusValue(other.getStatusValue());
       }
       onChanged();
       return this;
@@ -795,24 +909,42 @@ public  final class ServiceProto extends
       return this;
     }
 
-    private int status_ ;
+    private int status_ = 0;
     /**
-     * <code>int32 status = 4;</code>
+     * <code>.ServiceProto.Status status = 4;</code>
      */
-    public int getStatus() {
+    public int getStatusValue() {
       return status_;
     }
     /**
-     * <code>int32 status = 4;</code>
+     * <code>.ServiceProto.Status status = 4;</code>
      */
-    public Builder setStatus(int value) {
-      
+    public Builder setStatusValue(int value) {
       status_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 status = 4;</code>
+     * <code>.ServiceProto.Status status = 4;</code>
+     */
+    public origin.protobuf.ServiceProto.Status getStatus() {
+      origin.protobuf.ServiceProto.Status result = origin.protobuf.ServiceProto.Status.valueOf(status_);
+      return result == null ? origin.protobuf.ServiceProto.Status.UNRECOGNIZED : result;
+    }
+    /**
+     * <code>.ServiceProto.Status status = 4;</code>
+     */
+    public Builder setStatus(origin.protobuf.ServiceProto.Status value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      
+      status_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.ServiceProto.Status status = 4;</code>
      */
     public Builder clearStatus() {
       

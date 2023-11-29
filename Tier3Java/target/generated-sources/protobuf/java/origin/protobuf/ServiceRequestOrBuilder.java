@@ -31,4 +31,13 @@ public interface ServiceRequestOrBuilder extends
    */
   com.google.protobuf.ByteString
       getRecipientEmailBytes();
+
+  /**
+   * <code>.ServiceRequest.Status status = 4;</code>
+   */
+  int getStatusValue();
+  /**
+   * <code>.ServiceRequest.Status status = 4;</code>
+   */
+  origin.protobuf.ServiceRequest.Status getStatus();
 }

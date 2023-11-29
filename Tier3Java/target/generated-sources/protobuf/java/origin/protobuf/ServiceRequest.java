@@ -18,6 +18,7 @@ public  final class ServiceRequest extends
     initiatorEmail_ = "";
     announcementId_ = 0;
     recipientEmail_ = "";
+    status_ = 0;
   }
 
   @java.lang.Override
@@ -62,6 +63,12 @@ public  final class ServiceRequest extends
             recipientEmail_ = s;
             break;
           }
+          case 32: {
+            int rawValue = input.readEnum();
+
+            status_ = rawValue;
+            break;
+          }
         }
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -83,6 +90,113 @@ public  final class ServiceRequest extends
     return origin.protobuf.Protobuf.internal_static_ServiceRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             origin.protobuf.ServiceRequest.class, origin.protobuf.ServiceRequest.Builder.class);
+  }
+
+  /**
+   * Protobuf enum {@code ServiceRequest.Status}
+   */
+  public enum Status
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>ACCEPTED = 0;</code>
+     */
+    ACCEPTED(0),
+    /**
+     * <code>DENIED = 1;</code>
+     */
+    DENIED(1),
+    /**
+     * <code>NONE = 2;</code>
+     */
+    NONE(2),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>ACCEPTED = 0;</code>
+     */
+    public static final int ACCEPTED_VALUE = 0;
+    /**
+     * <code>DENIED = 1;</code>
+     */
+    public static final int DENIED_VALUE = 1;
+    /**
+     * <code>NONE = 2;</code>
+     */
+    public static final int NONE_VALUE = 2;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static Status valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static Status forNumber(int value) {
+      switch (value) {
+        case 0: return ACCEPTED;
+        case 1: return DENIED;
+        case 2: return NONE;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<Status>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        Status> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<Status>() {
+            public Status findValueByNumber(int number) {
+              return Status.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return origin.protobuf.ServiceRequest.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final Status[] VALUES = values();
+
+    public static Status valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private Status(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:ServiceRequest.Status)
   }
 
   public static final int INITIATOREMAIL_FIELD_NUMBER = 1;
@@ -162,6 +276,22 @@ public  final class ServiceRequest extends
     }
   }
 
+  public static final int STATUS_FIELD_NUMBER = 4;
+  private int status_;
+  /**
+   * <code>.ServiceRequest.Status status = 4;</code>
+   */
+  public int getStatusValue() {
+    return status_;
+  }
+  /**
+   * <code>.ServiceRequest.Status status = 4;</code>
+   */
+  public origin.protobuf.ServiceRequest.Status getStatus() {
+    origin.protobuf.ServiceRequest.Status result = origin.protobuf.ServiceRequest.Status.valueOf(status_);
+    return result == null ? origin.protobuf.ServiceRequest.Status.UNRECOGNIZED : result;
+  }
+
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
@@ -183,6 +313,9 @@ public  final class ServiceRequest extends
     if (!getRecipientEmailBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, recipientEmail_);
     }
+    if (status_ != origin.protobuf.ServiceRequest.Status.ACCEPTED.getNumber()) {
+      output.writeEnum(4, status_);
+    }
   }
 
   public int getSerializedSize() {
@@ -199,6 +332,10 @@ public  final class ServiceRequest extends
     }
     if (!getRecipientEmailBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, recipientEmail_);
+    }
+    if (status_ != origin.protobuf.ServiceRequest.Status.ACCEPTED.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(4, status_);
     }
     memoizedSize = size;
     return size;
@@ -222,6 +359,7 @@ public  final class ServiceRequest extends
         == other.getAnnouncementId());
     result = result && getRecipientEmail()
         .equals(other.getRecipientEmail());
+    result = result && status_ == other.status_;
     return result;
   }
 
@@ -238,6 +376,8 @@ public  final class ServiceRequest extends
     hash = (53 * hash) + getAnnouncementId();
     hash = (37 * hash) + RECIPIENTEMAIL_FIELD_NUMBER;
     hash = (53 * hash) + getRecipientEmail().hashCode();
+    hash = (37 * hash) + STATUS_FIELD_NUMBER;
+    hash = (53 * hash) + status_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -373,6 +513,8 @@ public  final class ServiceRequest extends
 
       recipientEmail_ = "";
 
+      status_ = 0;
+
       return this;
     }
 
@@ -398,6 +540,7 @@ public  final class ServiceRequest extends
       result.initiatorEmail_ = initiatorEmail_;
       result.announcementId_ = announcementId_;
       result.recipientEmail_ = recipientEmail_;
+      result.status_ = status_;
       onBuilt();
       return result;
     }
@@ -449,6 +592,9 @@ public  final class ServiceRequest extends
       if (!other.getRecipientEmail().isEmpty()) {
         recipientEmail_ = other.recipientEmail_;
         onChanged();
+      }
+      if (other.status_ != 0) {
+        setStatusValue(other.getStatusValue());
       }
       onChanged();
       return this;
@@ -636,6 +782,50 @@ public  final class ServiceRequest extends
   checkByteStringIsUtf8(value);
       
       recipientEmail_ = value;
+      onChanged();
+      return this;
+    }
+
+    private int status_ = 0;
+    /**
+     * <code>.ServiceRequest.Status status = 4;</code>
+     */
+    public int getStatusValue() {
+      return status_;
+    }
+    /**
+     * <code>.ServiceRequest.Status status = 4;</code>
+     */
+    public Builder setStatusValue(int value) {
+      status_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.ServiceRequest.Status status = 4;</code>
+     */
+    public origin.protobuf.ServiceRequest.Status getStatus() {
+      origin.protobuf.ServiceRequest.Status result = origin.protobuf.ServiceRequest.Status.valueOf(status_);
+      return result == null ? origin.protobuf.ServiceRequest.Status.UNRECOGNIZED : result;
+    }
+    /**
+     * <code>.ServiceRequest.Status status = 4;</code>
+     */
+    public Builder setStatus(origin.protobuf.ServiceRequest.Status value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      
+      status_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.ServiceRequest.Status status = 4;</code>
+     */
+    public Builder clearStatus() {
+      
+      status_ = 0;
       onChanged();
       return this;
     }

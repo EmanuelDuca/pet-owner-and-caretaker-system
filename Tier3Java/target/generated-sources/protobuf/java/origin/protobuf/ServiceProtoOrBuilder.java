@@ -41,7 +41,11 @@ public interface ServiceProtoOrBuilder extends
       getPetOwnerEmailBytes();
 
   /**
-   * <code>int32 status = 4;</code>
+   * <code>.ServiceProto.Status status = 4;</code>
    */
-  int getStatus();
+  int getStatusValue();
+  /**
+   * <code>.ServiceProto.Status status = 4;</code>
+   */
+  origin.protobuf.ServiceProto.Status getStatus();
 }

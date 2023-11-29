@@ -1,5 +1,7 @@
 package dk.via.sep3.shared;
 
+import origin.protobuf.ServiceRequest;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -19,7 +21,7 @@ public class CareServiceRequestEntity
     @OneToOne
     private AnnouncementEntity announcement;
 
-    private ServiceRequestStatus status;
+    private ServiceRequest.Status status;
 
     private LocalDateTime dateTime;
 
@@ -37,7 +39,7 @@ public class CareServiceRequestEntity
         this.initiator = initiator;
         this.recipient = recipient;
         this.announcement = announcement;
-        this.status = ServiceRequestStatus.NONE;
+        this.status = ServiceRequest.Status.NONE;
     }
 
     public CareServiceRequestEntity()

@@ -1,5 +1,7 @@
 package dk.via.sep3.shared;
 
+import origin.protobuf.ServiceProto;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -17,9 +19,9 @@ public class CareServiceEntity
     @OneToOne
     private AnnouncementEntity announcement;
 
-    private ServiceStatus status;
+    private ServiceProto.Status status;
 
-    public CareServiceEntity(int id, CareTakerEntity careTaker, PetOwnerEntity petOwner, AnnouncementEntity announcement, ServiceStatus status)
+    public CareServiceEntity(int id, CareTakerEntity careTaker, PetOwnerEntity petOwner, AnnouncementEntity announcement, ServiceProto.Status status)
     {
         this.id = id;
         this.careTaker = careTaker;
@@ -58,9 +60,15 @@ public class CareServiceEntity
         return announcement;
     }
 
-    public ServiceStatus getStatus()
+    public ServiceProto.Status getStatus()
     {
         return status;
+    }
+
+    public CareServiceEntity setStatus(ServiceProto.Status status)
+    {
+        this.status = status;
+        return this;
     }
 
     public int getId()

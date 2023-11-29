@@ -126,58 +126,62 @@ public final class Protobuf {
       "eFinish\030\004 \001(\0132\032.google.protobuf.Timestam" +
       "p\022\026\n\003pet\030\005 \001(\0132\t.PetProto\022\022\n\npostalCode\030" +
       "\006 \001(\t\0222\n\016dateOfCreation\030\007 \001(\0132\032.google.p" +
-      "rotobuf.Timestamp\022\n\n\002id\030\010 \001(\005\"X\n\016Service" +
-      "Request\022\026\n\016initiatorEmail\030\001 \001(\t\022\026\n\016annou",
-      "ncementId\030\002 \001(\005\022\026\n\016recipientEmail\030\003 \001(\t\"" +
-      "w\n\014ServiceProto\022(\n\014announcement\030\001 \001(\0132\022." +
-      "AnnouncementProto\022\026\n\016caretakerEmail\030\002 \001(" +
-      "\t\022\025\n\rpetOwnerEmail\030\003 \001(\t\022\016\n\006status\030\004 \001(\005" +
+      "rotobuf.Timestamp\022\n\n\002id\030\010 \001(\005\"\256\001\n\016Servic" +
+      "eRequest\022\026\n\016initiatorEmail\030\001 \001(\t\022\026\n\016anno",
+      "uncementId\030\002 \001(\005\022\026\n\016recipientEmail\030\003 \001(\t" +
+      "\022&\n\006status\030\004 \001(\0162\026.ServiceRequest.Status" +
+      "\",\n\006Status\022\014\n\010ACCEPTED\020\000\022\n\n\006DENIED\020\001\022\010\n\004" +
+      "NONE\020\002\"\277\001\n\014ServiceProto\022(\n\014announcement\030" +
+      "\001 \001(\0132\022.AnnouncementProto\022\026\n\016caretakerEm" +
+      "ail\030\002 \001(\t\022\025\n\rpetOwnerEmail\030\003 \001(\t\022$\n\006stat" +
+      "us\030\004 \001(\0162\024.ServiceProto.Status\"0\n\006Status" +
+      "\022\013\n\007PLANNED\020\000\022\017\n\013IN_PROGRESS\020\001\022\010\n\004DONE\020\002" +
       "\"\'\n\nUsersProto\022\031\n\005users\030\001 \003(\0132\n.UserProt" +
-      "o\"?\n\022AnnouncementsProto\022)\n\rannouncements" +
+      "o\"?\n\022AnnouncementsProto\022)\n\rannouncements",
       "\030\001 \003(\0132\022.AnnouncementProto\"@\n\024RequestSer" +
       "vicesProto\022(\n\017requestServices\030\001 \003(\0132\017.Se" +
       "rviceRequest\"0\n\rServicesProto\022\037\n\010service" +
-      "s\030\001 \003(\0132\r.ServiceProto\"\224\001\n\020SearchUsersPr",
+      "s\030\001 \003(\0132\r.ServiceProto\"\224\001\n\020SearchUsersPr" +
       "oto\022*\n\004type\030\001 \001(\0132\034.google.protobuf.Stri" +
       "ngValue\022*\n\004name\030\002 \001(\0132\034.google.protobuf." +
       "StringValue\022(\n\003age\030\003 \001(\0132\033.google.protob" +
       "uf.Int32Value\"\366\002\n\027SearchAnnouncementProt" +
       "o\0226\n\020petOwnerUsername\030\001 \001(\0132\034.google.pro" +
-      "tobuf.StringValue\022-\n\ttimeStart\030\002 \001(\0132\032.g" +
+      "tobuf.StringValue\022-\n\ttimeStart\030\002 \001(\0132\032.g",
       "oogle.protobuf.Timestamp\022.\n\ntimeFinish\030\003" +
       " \001(\0132\032.google.protobuf.Timestamp\0220\n\npost" +
       "alCode\030\004 \001(\0132\034.google.protobuf.StringVal" +
-      "ue\022-\n\007petType\030\005 \001(\0132\034.google.protobuf.St",
+      "ue\022-\n\007petType\030\005 \001(\0132\034.google.protobuf.St" +
       "ringValue\022.\n\tpetWeight\030\006 \001(\0132\033.google.pr" +
       "otobuf.Int32Value\0223\n\017petIsVaccinated\030\007 \001" +
       "(\0132\032.google.protobuf.BoolValue\"S\n\022Search" +
       "ServiceProto\022\026\n\016caretakerEmail\030\002 \001(\t\022\025\n\r" +
       "petOwnerEmail\030\003 \001(\t\022\016\n\006status\030\004 \001(\005\"\036\n\rF" +
-      "indUserProto\022\r\n\005email\030\001 \001(\t\"#\n\025FindAnnou" +
+      "indUserProto\022\r\n\005email\030\001 \001(\t\"#\n\025FindAnnou",
       "ncementProto\022\n\n\002id\030\001 \001(\005\"%\n\020FindServiceP" +
       "roto\022\021\n\tserviceId\030\001 \001(\005\"\006\n\004Void2\372\001\n\013User" +
       "Service\022$\n\nCreateUser\022\n.UserProto\032\n.User" +
-      "Proto\022$\n\005LogIn\022\017.LoginUserProto\032\n.UserPr",
+      "Proto\022$\n\005LogIn\022\017.LoginUserProto\032\n.UserPr" +
       "oto\022&\n\010FindUser\022\016.FindUserProto\032\n.UserPr" +
       "oto\022,\n\nSearchUser\022\021.SearchUsersProto\032\013.U" +
       "sersProto\022$\n\nUpdateUser\022\n.UserProto\032\n.Us" +
       "erProto\022#\n\nDeleteUser\022\016.FindUserProto\032\005." +
       "Void2\314\002\n\023AnnouncementService\022<\n\022CreateAn" +
-      "nouncement\022\022.AnnouncementProto\032\022.Announc" +
+      "nouncement\022\022.AnnouncementProto\032\022.Announc",
       "ementProto\022D\n\023SearchAnnouncements\022\030.Sear" +
       "chAnnouncementProto\032\023.AnnouncementsProto" +
       "\022>\n\020FindAnnouncement\022\026.FindAnnouncementP" +
-      "roto\032\022.AnnouncementProto\022<\n\022UpdateAnnoun",
+      "roto\032\022.AnnouncementProto\022<\n\022UpdateAnnoun" +
       "cement\022\022.AnnouncementProto\032\022.Announcemen" +
       "tProto\0223\n\022DeleteAnnouncement\022\026.FindAnnou" +
       "ncementProto\032\005.Void2\356\002\n\016ServiceService\022-" +
       "\n\023RequestStartService\022\017.ServiceRequest\032\005" +
       ".Void\022,\n\022AcceptStartService\022\017.ServiceReq" +
-      "uest\032\005.Void\022*\n\020DenyStartService\022\017.Servic" +
+      "uest\032\005.Void\022*\n\020DenyStartService\022\017.Servic",
       "eRequest\032\005.Void\022&\n\nEndService\022\021.FindServ" +
       "iceProto\032\005.Void\022F\n\023FindRequestServices\022\030" +
       ".SearchAnnouncementProto\032\025.RequestServic" +
-      "esProto\0223\n\014FindServices\022\023.SearchServiceP",
+      "esProto\0223\n\014FindServices\022\023.SearchServiceP" +
       "roto\032\016.ServicesProto\022.\n\nGetService\022\021.Fin" +
       "dServiceProto\032\r.ServiceProtoB\023\n\017origin.p" +
       "rotobufP\001b\006proto3"
@@ -225,7 +229,7 @@ public final class Protobuf {
     internal_static_ServiceRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ServiceRequest_descriptor,
-        new java.lang.String[] { "InitiatorEmail", "AnnouncementId", "RecipientEmail", });
+        new java.lang.String[] { "InitiatorEmail", "AnnouncementId", "RecipientEmail", "Status", });
     internal_static_ServiceProto_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_ServiceProto_fieldAccessorTable = new
