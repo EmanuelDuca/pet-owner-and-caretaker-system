@@ -8,7 +8,7 @@ service UserService{
   rpc CreateUser(UserProto) returns (UserProto);
   rpc LogIn(LoginUserProto) returns (UserProto);
   rpc FindUser(FindUserProto) returns (UserProto);
-  rpc SearchUser(SearchUsersProto) returns (UsersProto);
+  rpc SearchUsers(SearchUsersProto) returns (UsersProto);
   rpc UpdateUser(UserProto) returns (UserProto);
   rpc DeleteUser(FindUserProto) returns (Void);
 }

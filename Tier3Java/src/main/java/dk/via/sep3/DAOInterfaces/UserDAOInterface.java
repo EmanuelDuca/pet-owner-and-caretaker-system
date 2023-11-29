@@ -2,6 +2,8 @@ package dk.via.sep3.DAOInterfaces;
 
 
 import dk.via.sep3.shared.UserEntity;
+import origin.protobuf.SearchAnnouncementProto;
+import origin.protobuf.SearchUsersProto;
 
 import java.util.Collection;
 
@@ -18,5 +20,5 @@ public interface UserDAOInterface {
 
     Collection<UserEntity> getAllUsers();
 
-    Collection<UserEntity> getUsers(String searchType);
+    Collection<UserEntity> getUsers(String userType);
 }

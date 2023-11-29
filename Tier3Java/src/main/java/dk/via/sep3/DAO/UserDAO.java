@@ -2,6 +2,8 @@ package dk.via.sep3.DAO;
 
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.repository.UserRepository;
+import dk.via.sep3.shared.CareTakerEntity;
+import dk.via.sep3.shared.PetOwnerEntity;
 import dk.via.sep3.shared.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -59,8 +61,8 @@ public class UserDAO implements UserDAOInterface {
     {
         return userRepository.findAll()
                 .stream()
-//                .filter(u -> u.getType().equals(searchType))
-                .collect(Collectors.toCollection(ArrayList::new));
+                .filter(u -> searchType.equals("CareTaker")? u instanceof CareTakerEntity : u instanceof PetOwnerEntity)
+                .toList();
     }
 
     @Override

@@ -19,6 +19,9 @@ public class PetServiceEntity
     @OneToOne
     private AnnouncementEntity announcement;
 
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "service")
+    private FeedbackEntity feedback;
+
     private ServiceProto.Status status;
 
     public PetServiceEntity(int id, CareTakerEntity careTaker, PetOwnerEntity petOwner, AnnouncementEntity announcement, ServiceProto.Status status)
