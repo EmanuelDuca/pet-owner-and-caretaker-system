@@ -2,7 +2,6 @@ package dk.via.sep3.shared;
 
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
-import javax.persistence.Id;
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -18,17 +17,17 @@ public class FeedbackEntity {
     private PetServiceEntity service;
 
     @OneToOne
-    @MapsId("userEmail")
-    private UserEntity user;
+    @MapsId("caretakerEmail")
+    private CareTakerEntity caretaker;
 
     private short rating;
     private String feedback;
 
 
-    public FeedbackEntity(PetServiceEntity service, UserEntity user)
+    public FeedbackEntity(PetServiceEntity service, CareTakerEntity caretaker)
     {
         this.service = service;
-        this.user = user;
+        this.caretaker = caretaker;
     }
 
     public FeedbackEntity()
@@ -42,16 +41,16 @@ public class FeedbackEntity {
         return service;
     }
 
-    public UserEntity getUser()
+    public CareTakerEntity getCaretaker()
     {
-        return user;
+        return caretaker;
     }
 
     @Embeddable
-    private static class FeedbackId implements Serializable
+    public static class FeedbackId implements Serializable
     {
         private int serviceId;
-        private String userEmail;
+        private String caretakerEmail;
     }
 }
 

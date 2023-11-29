@@ -62,10 +62,25 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     public void acceptStartService(FindRequestServiceProto request, StreamObserver<Void> responseObserver)
     {
         careServiceRequestDAO.confirmServiceRequest(request.getRequestId());
-        PetServiceRequestEntity serviceRequest =careServiceRequestDAO.getServiceRequestById(request.getRequestId());
+        PetServiceRequestEntity serviceRequest = careServiceRequestDAO.getServiceRequestById(request.getRequestId());
+        UserEntity initiator = userDao.findUser(serviceRequest.getInitiator().getEmail());
+        UserEntity recipient = userDao.findUser(serviceRequest.getRecipient().getEmail());
+
+        CareTakerEntity careTaker;
+        PetOwnerEntity petOwner;
+
+        if (initiator instanceof CareTakerEntity) {
+            careTaker = (CareTakerEntity) initiator;
+            petOwner = (PetOwnerEntity) recipient;
+        }
+        else {
+            petOwner = (PetOwnerEntity) initiator;
+            careTaker = (CareTakerEntity) recipient;
+        }
+
         careServiceDAO.createService(new PetServiceEntity(
-                new CareTakerEntity(serviceRequest.getInitiator()),
-                new PetOwnerEntity(serviceRequest.getRecipient()),
+                careTaker,
+                petOwner,
                 serviceRequest.getAnnouncement()
         ));
     }

@@ -48,6 +48,16 @@ public class PetServiceEntity
 
     }
 
+    public FeedbackEntity getFeedback()
+    {
+        return feedback;
+    }
+
+    public void setFeedback(FeedbackEntity feedback)
+    {
+        this.feedback = feedback;
+    }
+
     public CareTakerEntity getCareTaker()
     {
         return careTaker;
