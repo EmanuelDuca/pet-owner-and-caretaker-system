@@ -1,18 +1,6 @@
 package dk.via.sep3.DAO;
 
-import dk.via.sep3.DAOInterfaces.PetServiceDAOInterface;
-import dk.via.sep3.repository.PetServiceRepository;
-import dk.via.sep3.shared.CareTakerEntity;
-import dk.via.sep3.shared.PetOwnerEntity;
-import dk.via.sep3.shared.PetServiceEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import origin.protobuf.ServiceProto;
-
-import java.util.Collection;
-
-@Repository
-public class PetServiceDAO implements PetServiceDAOInterface
+public class PetServiceDAO
 {
     private final PetServiceRepository repository;
 
