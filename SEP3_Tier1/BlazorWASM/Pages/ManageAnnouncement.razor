@@ -21,7 +21,8 @@
 }
 else
 {
-    <ManageAnnouncementComponent Announcement="@announcement" OnSubmitAction="() => UpdateAnnouncement()" ActionName="Save Changes" />
+    <ManageAnnouncementComponent Announcement="@announcement" OnSubmitAction="() => UpdateAnnouncement()" 
+                                 ActionName="Save Changes" ForPage="ManageAnnouncement" />
 }
 
 
@@ -32,14 +33,13 @@ else
     [Parameter]
     public int Id { get; set; }
     private Announcement? announcement;
-    
-    private AnnouncementInputValidators announcementInputs;
-    
     private PetDropDown PetList;
     private string ValidatorStyles = "position: relative; width: 20%; margin-left: auto; display: block;";
     private bool isNewPet;
     private IEnumerable<Claim>? userClaims;
     private string backgroundImageUrl;
+    
+    CreatePetDto createPetDto;
     
     
     
@@ -53,10 +53,6 @@ else
         try
         {
             announcement = await announcementService.GetByIdAsync(Id);
-            if (announcement != null)
-            {
-                //SynchronizeAnnouncementInputs(announcement);
-            }
         }
         catch (Exception e)
         {
@@ -66,43 +62,24 @@ else
     // userPets = ..
         
     }
-
-    private void SynchronizeAnnouncementInputs(Announcement announcement)
-    {
-        announcementInputs.StartDate = announcement.StartDate;
-        announcementInputs.EndDate = announcement.EndDate;
-        //Announcement.Description = announcement.ServiceDescription;
-        announcementInputs.Postalcode = announcement.PostalCode;
-        /*
-        Announcement.PetType = announcement.Pet.PetType;
-        Announcement.PetDescription = announcement.Pet.Description;
-        Announcement.PetName = announcement.Pet.PetName;
-        Announcement.PetWeight = announcement.Pet.Weight;
-        */
-    }
-
     
     private async Task UpdateAnnouncement()
     {
-        Console.WriteLine("Button UpdateAnnouncement is working");
-        /*
         try
         {
-            CreatePetDto createPetDto;
-            if (isNewPet)
-                createPetDto = new CreatePetDto
-                {
-                    PetName = announcementInputs.PetName,
-                    PetType = announcementInputs.PetType,
-                    Weight = announcementInputs.PetWeight,
-                    Description = announcementInputs.PetDescription
-                };
-            else
-            {
-                createPetDto = new CreatePetDto(PetList.Value);
-            }
-
             UpdateAnnouncementDto dto = new UpdateAnnouncementDto(Id);
+            dto.Pet = new Pet();
+            
+            dto = FetchDataFromAnnouncementComponent(dto, announcement);
+            
+            await announcementService.UpdateAsync(dto);
+
+            NotificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Success,
+                Duration = 6000,
+                Detail = "Announcement is created"
+            });
         }
         catch (Exception e)
         {
@@ -115,6 +92,22 @@ else
             });
             
         }
-        */
     }
+
+    private UpdateAnnouncementDto FetchDataFromAnnouncementComponent(UpdateAnnouncementDto dto, Announcement announce)
+    {
+        dto.StartDate = announce.StartDate;
+        dto.EndDate = announce.EndDate;
+        dto.PostalCode = announce.PostalCode;
+        dto.ServiceDescription = announce.ServiceDescription;
+        
+        //Update Pet
+        dto.Pet.PetType = announcement.Pet.PetType;
+        dto.Pet.PetName = announcement.Pet.PetName;
+        dto.Pet.Description = announcement.Pet.Description;
+        dto.Pet.Weight = announcement.Pet.Weight;
+        dto.Pet.IsVaccinated = announcement.Pet.IsVaccinated;
+        return dto;
+    }
+    
 }

@@ -55,25 +55,10 @@
 
 
             <b class="mt-4">Pet:</b>
-
-            <RadzenSelectBar class="rounded-pill w-100 m-auto d-block" @bind-Value="isNewPet"
-                             Size="ButtonSize.ExtraSmall" TValue="bool"
-                             Style=".valid.modified:not([type=checkbox]) {
-                                        outline: none;
-                                    } ">
-                <Items>
-                    <RadzenSelectBarItem Text="Create new pet" Value="true"/>
-                    <RadzenSelectBarItem Text="Choose your pet" Value="false"/>
-                </Items>
-            </RadzenSelectBar>
-
-            <div class="pet-part  mt-3">
-                @if (!isNewPet)
-                {
-                    <PetDropDown OwnerEmail="@Announcement.PetOwner.Email" @ref="PetList"/>
-                }
-                else
-                {
+            
+            @if (ForPage.Equals("ManageAnnouncement", StringComparison.OrdinalIgnoreCase))
+            {
+                <div class="pet-part  mt-3">
                     <fieldset class="field mt-0">
                         <label>Type:</label>
                         @{
@@ -87,31 +72,91 @@
                         }
                     </fieldset>
                     <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetType" Popup="true"/>
-
+                    
                     <fieldset class="field">
                         <label>Name:</label>
                         <RadzenTextBox @bind-Value="Announcement.Pet.PetName"
                                        Style="width: var(--inputs-width)"
                                        Name="PetName"/>
-
+                    
                     </fieldset>
                     <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetName" Popup="true"/>
-
+                    
                     <fieldset class="field">
                         <label>Description:</label>
                         <RadzenTextArea @bind-Value="Announcement.Pet.Description"
                                         Style="width: var(--inputs-width)"
                                         Name="PetDescription"/>
                     </fieldset>
-
+                    
                     <fieldset class="field">
                         <label>Weight:</label>
                         <RadzenNumeric @bind-Value="Announcement.Pet.Weight"
                                        Style="width: var(--inputs-width)"
                                        Name="PetWeight"/>
                     </fieldset>
-                }
-            </div>
+                </div>
+            }
+            else
+            {
+                <RadzenSelectBar class="rounded-pill w-100 m-auto d-block" @bind-Value="isNewPet"
+                                 Size="ButtonSize.ExtraSmall" TValue="bool"
+                                 Style=".valid.modified:not([type=checkbox]) {
+                                        outline: none;
+                                    } ">
+                    <Items>
+                        <RadzenSelectBarItem Text="Create new pet" Value="true"/>
+                        <RadzenSelectBarItem Text="Choose your pet" Value="false"/>
+                    </Items>
+                </RadzenSelectBar>
+                
+                <div class="pet-part  mt-3">
+                    @if (!isNewPet)
+                    {
+                        <PetDropDown OwnerEmail="@Announcement.PetOwner.Email" @ref="PetList"/>
+                    }
+                    else
+                    {
+                        <fieldset class="field mt-0">
+                            <label>Type:</label>
+                            @{
+                                // var types = Enum.GetValues(typeof(PetType)).Cast<PetType>();
+                                <RadzenDropDown Data="PetType.PetTypesWithNames"
+                                                @bind-Value="Announcement.Pet.PetType"
+                                                Style="width: var(--inputs-width);"
+                                                Name="PetType"
+                                                TextProperty="Name"
+                                                ValueProperty="Value"/>
+                            }
+                        </fieldset>
+                        <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetType" Popup="true"/>
+
+                        <fieldset class="field">
+                            <label>Name:</label>
+                            <RadzenTextBox @bind-Value="Announcement.Pet.PetName"
+                                           Style="width: var(--inputs-width)"
+                                           Name="PetName"/>
+
+                        </fieldset>
+                        <RadzenRequiredValidator Style="@ValidatorStyles" Component="PetName" Popup="true"/>
+
+                        <fieldset class="field">
+                            <label>Description:</label>
+                            <RadzenTextArea @bind-Value="Announcement.Pet.Description"
+                                            Style="width: var(--inputs-width)"
+                                            Name="PetDescription"/>
+                        </fieldset>
+
+                        <fieldset class="field">
+                            <label>Weight:</label>
+                            <RadzenNumeric @bind-Value="Announcement.Pet.Weight"
+                                           Style="width: var(--inputs-width)"
+                                           Name="PetWeight"/>
+                        </fieldset>
+                    }
+                </div>
+                
+            }
 
             <RadzenButton ButtonType="ButtonType.Submit" Style="margin-top: 2rem">@ActionName</RadzenButton>
         </div>
@@ -128,6 +173,9 @@
     
     [Parameter]
     public String ActionName { get; set; }
+    
+    [Parameter]
+    public String ForPage { get; set; }
     
     private string ValidatorStyles = "position: relative; width: 20%; margin-left: auto; display: block;";
     private bool isNewPet;

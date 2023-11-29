@@ -46,11 +46,8 @@ else
                             <button class="icon-button" @onclick="() => OpenEditAnnouncement(announcement.Id)">
                                 <span class="oi oi-pencil"></span>
                             </button>
-                            <button class="icon-button">
+                            <button class="icon-button" @onclick="() => DeleteAnnouncement(announcement.Id)">
                                 <span class="oi oi-trash"></span>
-                            </button>
-                            <button class="icon-button">
-                                <span class="oi oi-share"></span>
                             </button>
                         </div>
                         <AnnouncementComponent Announcement="announcement"/>
@@ -108,5 +105,28 @@ else
             Console.WriteLine(e);
         }
         navMgr.NavigateTo($"/ManageAnnouncement/{announcementId}");
+    }
+
+    private async Task DeleteAnnouncement(int announcementId)
+    {
+        try
+        {
+            Console.WriteLine("Deleting announcement...");
+            await AnnouncementService.DeleteAsync(announcementId);
+            
+            Console.WriteLine();
+
+            // Update the local list by removing the deleted announcement
+            announcements?.RemoveAll(a => a.Id == announcementId);
+
+            // Trigger a re-render of the component to reflect the updated data
+            StateHasChanged();
+
+            Console.WriteLine("Announcement deleted successfully.");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 }
