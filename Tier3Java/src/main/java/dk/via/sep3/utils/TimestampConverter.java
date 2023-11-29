@@ -1,4 +1,4 @@
-package dk.via.sep3.shared.utils;
+package dk.via.sep3.utils;
 
 import com.google.protobuf.Timestamp;
 

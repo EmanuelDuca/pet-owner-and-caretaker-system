@@ -6,7 +6,7 @@ import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.AnnouncementMapper;
 import dk.via.sep3.shared.AnnouncementEntity;
 import dk.via.sep3.shared.PetEntity;
-import dk.via.sep3.shared.utils.TimestampConverter;
+import dk.via.sep3.utils.TimestampConverter;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
