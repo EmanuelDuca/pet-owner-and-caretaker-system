@@ -75,7 +75,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     }
     @Override
     @Transactional
-    public void searchUsers(SearchUsersProto request, StreamObserver<UsersProto> responseObserver) {
+    public void searchUser(SearchUsersProto request, StreamObserver<UsersProto> responseObserver) {
         Collection<UserEntity> users = userDAO.getUsers(request.getType().getValue());
 
         if (users.isEmpty()) {
