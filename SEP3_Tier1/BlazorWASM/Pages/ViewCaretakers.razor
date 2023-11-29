@@ -1,6 +1,111 @@
 ﻿@page "/ViewCaretakers"
-<h3>ViewCaretakers</h3>
+@using HttpClients.ClientInterfaces
+@using Domain.DTOs
+@using Domain.Models
+@using Blazored.LocalStorage
+@using Newtonsoft.Json
+@inject IUserService UserService
+@inject IAnnouncementService AnnouncementService
+@inject ILocalStorageService LocalStorageService
+@inject IPexelsService ImageService
+
+<div class="d-flex flex-row">
+    <div class="search-container w-100">
+        <RadzenTextBox Placeholder="Search..." id="searchInput" class="w-100"/>
+        <span class="oi oi-magnifying-glass" id="searchIcon" @onclick="Search"></span>
+    </div>
+    
+    
+    <div class="dropdown">
+        <RadzenButton Style="margin-left: 8px; min-width: 160px;" Click="@(_ => ShowDropDownContent())">Select filters</RadzenButton>
+        <div class="@classDropDown">
+            <RadzenFormField Text="RadzenNumeric" Variant="Variant.Outlined">
+                                <RadzenNumeric @bind-Value="@age" />
+                            </RadzenFormField>
+            <RadzenButton Variant="Variant.Flat" Shade="Shade.Dark" Click=@(args => FilterAnnouncements()) Text="Apply Filters" ButtonStyle="ButtonStyle.Primary" />
+        </div>
+        
+    </div>
+    
+</div>
+
+<div class="d-flex flex-row">
+    <div class="sidebar filter-area">
+    </div>
+    <div class="content">
+        @if (announcements == null)
+        {
+            <label>Loading...</label>
+        }
+        else
+        {
+            @foreach (var announcement in announcements!)
+            {
+                <AnnouncementComponent 
+                    Announcement="announcement"/>
+            }
+        }
+    </div>
+</div>
+
 
 @code {
+    private List<Announcement>? announcements;
+    private List<PetType.Type> filteredPetTypes = new();
+    private string classDropDown = "dropdown-content";
+    private bool isVaccinatedFilter;
+    private bool isFilterShown;
+    private int age;
     
+    private DateTime? startDate;
+    private DateTime? endDate;
+    private String postalCode;
+    private String userName;
+
+    private bool IsFilterShown
+    {
+        get => isFilterShown;
+        set
+        {
+            isFilterShown = value;
+            classDropDown = "dropdown-content";
+            if (isFilterShown)
+                classDropDown += " show";
+            Console.WriteLine(classDropDown);
+        }
+    }
+}
+
+@functions
+{
+    protected override async Task OnInitializedAsync()
+    {
+        SearchAnnouncementDto dto = new SearchAnnouncementDto();
+        announcements = (await AnnouncementService.GetAsync(dto)).ToList();
+    }
+    
+    public void Search()
+    {
+        Console.WriteLine("pressed");   
+        Console.WriteLine(filteredPetTypes.Count);   
+    }
+
+    public void ShowDropDownContent()
+    {
+        IsFilterShown = !IsFilterShown;
+    }
+    
+    private async void FilterAnnouncements()
+    {
+        
+        SearchUsersDto dto = new SearchUsersDto()
+        {
+            Age = age,
+        };
+
+        Console.WriteLine($"$Dto object converted to JSON:\n{JsonConvert.SerializeObject(dto)}");
+        
+        // announcements = (await UserService.GetAsync(dto)).ToList();
+        //Console.WriteLine(JsonConvert.SerializeObject(announcements));
+    }
 }
