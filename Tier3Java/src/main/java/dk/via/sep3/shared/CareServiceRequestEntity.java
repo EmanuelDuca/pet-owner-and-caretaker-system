@@ -1,14 +1,16 @@
 package dk.via.sep3.shared;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import java.io.Serializable;
 
 @Entity
 public class CareServiceRequestEntity
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @EmbeddedId
+    private CareServiceRequestId id;
 
     @OneToOne
     private UserEntity initiator;
@@ -17,18 +19,9 @@ public class CareServiceRequestEntity
     @OneToOne
     private AnnouncementEntity announcement;
 
-    private ServiceRequestStatus status;
-
-    public CareServiceRequestEntity(int id, UserEntity initiator, UserEntity recipient, AnnouncementEntity announcement)
-    {
-        this.id = id;
-        this.initiator = initiator;
-        this.recipient = recipient;
-        this.announcement = announcement;
-    }
-
     public CareServiceRequestEntity(UserEntity initiator, UserEntity recipient, AnnouncementEntity announcement)
     {
+        id = new CareServiceRequestId(initiator.getEmail(), recipient.getEmail(), announcement.getId());
         this.initiator = initiator;
         this.recipient = recipient;
         this.announcement = announcement;
@@ -39,7 +32,7 @@ public class CareServiceRequestEntity
 
     }
 
-    public int getId()
+    public CareServiceRequestId getId()
     {
         return id;
     }
