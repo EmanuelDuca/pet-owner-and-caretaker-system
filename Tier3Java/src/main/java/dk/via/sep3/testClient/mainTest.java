@@ -2,11 +2,14 @@ package dk.via.sep3.testClient;
 
 
 import com.google.protobuf.StringValue;
+import com.google.protobuf.Timestamp;
 import dk.via.sep3.mappers.AnnouncementMapper;
+import dk.via.sep3.utils.TimestampConverter;
 import io.grpc.*;
 import origin.protobuf.*;
 
 import java.lang.String;
+import java.time.LocalDateTime;
 
 public class mainTest
 {
@@ -16,6 +19,35 @@ public class mainTest
         ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("localhost", 9090) .usePlaintext() .build();
         UserServiceGrpc.UserServiceBlockingStub userStub = UserServiceGrpc.newBlockingStub(managedChannel);
         AnnouncementServiceGrpc.AnnouncementServiceBlockingStub announcementStub = AnnouncementServiceGrpc.newBlockingStub(managedChannel);
+        ServiceServiceGrpc.ServiceServiceBlockingStub serviceBlockingStub = ServiceServiceGrpc.newBlockingStub(managedChannel);
+
+        AnnouncementProto announcementProto = AnnouncementProto.newBuilder()
+                .setPetOwnerEmail("sevastian@gmail.com")
+                .setTimeStart(TimestampConverter.fromLocalDateTime(LocalDateTime.now()))
+                .setTimeFinish(TimestampConverter.fromLocalDateTime(LocalDateTime.now().plusDays(3)))
+                .setDescription("Nice")
+                .setPostalCode("8700")
+                .setPet(PetProto.newBuilder()
+                        .setOwnerEmail("sevastian@gmail.com")
+                        .setPetName("HUI_VAM")
+                        .setPetType("Cat")
+                        .setIsVaccinated(false)
+                        .setDescription("miau miau maiu")
+                        .setWeight(25)
+                        .build())
+                .build();
+        AnnouncementProto announcementProtoResponse = announcementStub.createAnnouncement(announcementProto);
+        System.out.println(announcementProtoResponse.getDescription());
+//
+
+
+        ServiceRequest serviceRequest = ServiceRequest.newBuilder()
+                .setAnnouncementId(1)
+                .setInitiatorEmail("sevastian@gmail.com")
+                .setRecipientEmail("allan6@gmail.com")
+                .build();
+        serviceBlockingStub.requestStartService(serviceRequest);
+
 
 
         // Test update user
@@ -92,24 +124,7 @@ public class mainTest
 //
 //
 //        //Create announcement
-//        AnnouncementProto announcementProto = AnnouncementProto.newBuilder()
-//                .setPetOwnerEmail("allan@gmail.com")
-//                .setTimeStart("01.01.2024")
-//                .setTimeFinish("01.01.2025")
-//                .setDescription("uraaaaaaaaaaaaaaaaaaaaa")
-//                .setPostalCode("8700")
-//                .setPet(PetProto.newBuilder()
-//                        .setOwnerEmail("allan@gmail.com")
-//                        .setPetName("HUI_VAM")
-//                        .setPetType("cat")
-//                        .setIsVaccinated(false)
-//                        .setDescription("miau miau maiu")
-//                        .setWeight(25)
-//                        .build())
-//                .build();
-//        AnnouncementProto announcementProtoResponse = announcementStub.createAnnouncement(announcementProto);
-//            System.out.println(announcementProtoResponse.getDescription());
-//
+
 //
 //        UserProto user1 = userStub.findUser(FindUserProto.newBuilder().setEmail("allan@gmail.com").build());
 //        System.out.println(user1.getPhone());

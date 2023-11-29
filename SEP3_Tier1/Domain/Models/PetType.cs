@@ -1,6 +1,5 @@
 ﻿namespace Domain.Models;
 
-
 public class PetType
 {
     public Type Value { get; set; }

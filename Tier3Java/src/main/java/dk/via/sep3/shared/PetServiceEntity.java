@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "care_service")
-public class CareServiceEntity
+public class PetServiceEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class CareServiceEntity
 
     private ServiceProto.Status status;
 
-    public CareServiceEntity(int id, CareTakerEntity careTaker, PetOwnerEntity petOwner, AnnouncementEntity announcement, ServiceProto.Status status)
+    public PetServiceEntity(int id, CareTakerEntity careTaker, PetOwnerEntity petOwner, AnnouncementEntity announcement, ServiceProto.Status status)
     {
         this.id = id;
         this.careTaker = careTaker;
@@ -30,7 +30,7 @@ public class CareServiceEntity
         this.status = status;
     }
 
-    public CareServiceEntity()
+    public PetServiceEntity()
     {
 
     }
@@ -65,7 +65,7 @@ public class CareServiceEntity
         return status;
     }
 
-    public CareServiceEntity setStatus(ServiceProto.Status status)
+    public PetServiceEntity setStatus(ServiceProto.Status status)
     {
         this.status = status;
         return this;
