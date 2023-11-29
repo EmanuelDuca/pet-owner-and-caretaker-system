@@ -4,7 +4,6 @@ import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.DAOInterfaces.PetServiceDAOInterface;
 import dk.via.sep3.DAOInterfaces.PetServiceRequestDAOInterface;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
-import dk.via.sep3.mappers.AnnouncementMapper;
 import dk.via.sep3.mappers.PetServiceMapper;
 import dk.via.sep3.mappers.PetServiceRequestMapper;
 import dk.via.sep3.shared.*;
@@ -109,8 +108,8 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     public void searchServices(SearchServiceProto request, StreamObserver<ServicesProto> responseObserver)
     {
         Collection<PetServiceEntity> services = careServiceDAO.searchServices(
-                (CareTakerEntity) userDao.findUser(request.getCaretakerEmail()),
-                (PetOwnerEntity) userDao.findUser(request.getPetOwnerEmail()),
+                new CareTakerEntity(userDao.findUser(request.getCaretakerEmail())),
+                new PetOwnerEntity(userDao.findUser(request.getPetOwnerEmail())),
                 request.getStatus()
         );
 
