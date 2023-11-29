@@ -1,6 +1,5 @@
 package dk.via.sep3.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.DAOInterfaces.CareRequestServiceDaoInterface;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
@@ -17,8 +16,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import origin.protobuf.CareServiceRequestGrpc;
 import origin.protobuf.ResponseStatus;
 import origin.protobuf.StartCareServiceRequest;
-
-import java.io.IOException;
 
 @GRpcService
 public class CareRequestService extends CareServiceRequestGrpc.CareServiceRequestImplBase
@@ -39,18 +36,14 @@ public class CareRequestService extends CareServiceRequestGrpc.CareServiceReques
     @Override
     public void offerCare(StartCareServiceRequest request, StreamObserver<ResponseStatus> responseObserver)
     {
-        try
-        {
-            UserEntity initiator = userDao.findUser(request.getInitiatorEmail());
-            UserEntity recipient = userDao.findUser(request.getRecipientEmail());
-            AnnouncementEntity announcement = announcementDAO.getAnnouncement(request.getAnnouncementId());
-            careServiceRequestDAO.createAnnouncement(new CareServiceRequestEntity(initiator, recipient, announcement));
-            session.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(request)));// todo finish
-            // todo deserialize in c# + make simple page to test everything
-        } catch (IOException e)
-        {
-            throw new RuntimeException(e);
-        }
+        UserEntity initiator = userDao.findUser(request.getInitiatorEmail());
+        UserEntity recipient = userDao.findUser(request.getRecipientEmail());
+        AnnouncementEntity announcement = announcementDAO.getAnnouncement(request.getAnnouncementId());
+        var serviceRequest = careServiceRequestDAO.createServiceRequestOffer(new CareServiceRequestEntity(initiator, recipient, announcement));
+
+        if(serviceRequest == null)
+            responseObserver.onError(GrpcError.constructException("Can't offer care service"));
+//            session.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(request)));
     }
 
     public static class ServiceRequestWebSocketHandler extends TextWebSocketHandler
