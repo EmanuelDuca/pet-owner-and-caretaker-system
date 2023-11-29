@@ -25,6 +25,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
     @Override
     public PetServiceEntity createService(PetServiceEntity service)
     {
+        service.setStatus(ServiceProto.Status.PLANNED);
         return repository.save(service);
     }
 
