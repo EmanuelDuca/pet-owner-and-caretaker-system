@@ -29,6 +29,9 @@ service ServiceService{
   rpc SearchRequestServices(FindAnnouncementProto) returns (RequestServicesProto);
   rpc SearchServices(SearchServiceProto) returns (ServicesProto);
   rpc FindService(FindServiceProto) returns (ServiceProto);
+  rpc AddFeedback(FeedbackProto) returns (Void);
+  rpc DeleteFeedback(FindFeedbackProto) returns (Void);
+  rpc SearchFeedbacks(FindUserProto) returns (FeedbacksProto);
 }
 
 message LoginUserProto{
@@ -89,6 +92,14 @@ message ServiceProto{
 
 }
 
+message FeedbackProto{
+  int32 id =1;
+  ServiceProto service =2;
+  int32 caretakerId =3;
+  int32 rating =4;
+  string feedback=5;
+}
+
 enum ServiceStatus{
   PLANNED = 0;
   IN_PROGRESS = 1;
@@ -109,6 +120,11 @@ message RequestServicesProto{
 
 message ServicesProto{
   repeated ServiceProto services = 1;
+}
+
+message FeedbacksProto
+{
+  repeated FeedbackProto feedback=1;
 }
 
 message SearchUsersProto{
@@ -147,6 +163,10 @@ message FindServiceProto{
 
 message FindRequestServiceProto{
   int32 requestId = 1;
+}
+
+message FindFeedbackProto{
+  int32 feedbackId = 1;
 }
 
 message Void{}
