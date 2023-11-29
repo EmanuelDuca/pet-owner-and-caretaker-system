@@ -18,7 +18,7 @@ import origin.protobuf.ResponseStatus;
 import origin.protobuf.StartCareServiceRequest;
 
 @GRpcService
-public class CareRequestService extends CareServiceRequestGrpc.CareServiceRequestImplBase
+public class RequestService extends CareServiceRequestGrpc.CareServiceRequestImplBase
 {
     private static WebSocketSession session;
     private final UserDAOInterface userDao;
@@ -26,7 +26,7 @@ public class CareRequestService extends CareServiceRequestGrpc.CareServiceReques
     private final CareRequestServiceDaoInterface careServiceRequestDAO;
 
     @Autowired
-    public CareRequestService(UserDAOInterface userDao, AnnouncementDAOInterface announcementDAO, CareRequestServiceDaoInterface careServiceRequestDAO)
+    public RequestService(UserDAOInterface userDao, AnnouncementDAOInterface announcementDAO, CareRequestServiceDaoInterface careServiceRequestDAO)
     {
         this.userDao = userDao;
         this.announcementDAO = announcementDAO;
@@ -51,7 +51,7 @@ public class CareRequestService extends CareServiceRequestGrpc.CareServiceReques
         @Override
         public void afterConnectionEstablished(WebSocketSession session) throws Exception {
             System.out.println("WebSocket opened: " + session.getId());
-            CareRequestService.session = session;
+            RequestService.session = session;
         }
 
         @Override

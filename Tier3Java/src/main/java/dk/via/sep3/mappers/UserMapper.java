@@ -14,7 +14,7 @@ public class UserMapper {
                 .setPassword(user.getPassword())
                 .setAge(Int32Value.of(user.getAge()))
                 .setPhone(StringValue.of(user.getPhone()))
-                .setType(user.getType())
+//                .setType(user.getType())
                 .build();
     }
 
@@ -26,7 +26,7 @@ public class UserMapper {
                 user.getPassword(),
                 user.hasAge()? user.getAge().getValue() : null,
                 user.hasPhone()? user.getPhone().getValue() : null,
-                user.getType(),
+//                user.getType(),
                 user.hasName()? user.getName().getValue() : null
         );
     }

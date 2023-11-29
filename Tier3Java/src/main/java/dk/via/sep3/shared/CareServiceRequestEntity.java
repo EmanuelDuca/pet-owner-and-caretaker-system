@@ -1,8 +1,5 @@
 package dk.via.sep3.shared;
 
-import dk.via.sep3.services.CareRequestService;
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
