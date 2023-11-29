@@ -14,4 +14,9 @@ public class PetServiceMapper {
                 .setAnnouncement(AnnouncementMapper.mapToProto(serviceEntity.getAnnouncement()))
                 .build();
     }
+
+    public static PetServiceEntity mapToEntity(ServiceProto proto)
+    {
+
+    }
 }

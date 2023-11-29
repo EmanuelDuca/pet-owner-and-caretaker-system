@@ -4,6 +4,7 @@ import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.DAOInterfaces.PetServiceDAOInterface;
 import dk.via.sep3.DAOInterfaces.PetServiceRequestDAOInterface;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
+import dk.via.sep3.mappers.FeedbackMapper;
 import dk.via.sep3.mappers.PetServiceMapper;
 import dk.via.sep3.mappers.PetServiceRequestMapper;
 import dk.via.sep3.shared.*;
@@ -23,8 +24,6 @@ import origin.protobuf.Void;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
-
-import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 @GRpcService
 public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
@@ -147,6 +146,37 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     public void findService(FindServiceProto request, StreamObserver<ServiceProto> responseObserver)
     {
         responseObserver.onNext(PetServiceMapper.mapToProto(careServiceDAO.findServiceById(request.getServiceId())));
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void addFeedback(FeedbackProto request, StreamObserver<Void> responseObserver)
+    {
+
+        careServiceDAO.giveFeedback(new FeedbackEntity(
+                careServiceDAO.findServiceById(request.getService().getId()),
+                (CareTakerEntity) userDao.findUser(request.getCaretaker().getEmail()),
+                (short) request.getRating(),
+                request.getFeedback()));
+    }
+
+    @Override
+    public void deleteFeedback(FindFeedbackProto request, StreamObserver<Void> responseObserver)
+    {
+        careServiceDAO.deleteFeedback(request.getServiceId(), request.getCaretakerEmail());
+    }
+
+    @Override
+    public void searchFeedbacks(FindUserProto request, StreamObserver<FeedbacksProto> responseObserver)
+    {
+        var feedbacks = careServiceDAO.getFeedbacks((CareTakerEntity) userDao.findUser(request.getEmail()))
+                .stream()
+                .map(FeedbackMapper::mapToProto).toList();
+
+        responseObserver.onNext(
+                FeedbacksProto.newBuilder()
+                        .addAllFeedback(feedbacks)
+                        .build());
         responseObserver.onCompleted();
     }
 }

@@ -85,19 +85,17 @@ message ServiceRequestProto{
 
 message ServiceProto{
   AnnouncementProto announcement = 1;
-  string caretakerEmail = 2;
-  string petOwnerEmail = 3;
+  string caretaker = 2;
+  string petOwner = 3;
   ServiceStatus status = 4;
   int32 id = 5;
-
 }
 
 message FeedbackProto{
-  int32 id =1;
-  ServiceProto service =2;
-  int32 caretakerId =3;
-  int32 rating =4;
-  string feedback=5;
+  ServiceProto service = 2;
+  UserProto caretaker = 3;
+  int32 rating = 4;
+  string feedback= 5;
 }
 
 enum ServiceStatus{
@@ -166,7 +164,8 @@ message FindRequestServiceProto{
 }
 
 message FindFeedbackProto{
-  int32 feedbackId = 1;
+  string caretakerEmail = 1;
+  int32 serviceId = 2;
 }
 
 message Void{}

@@ -24,10 +24,12 @@ public class FeedbackEntity {
     private String feedback;
 
 
-    public FeedbackEntity(PetServiceEntity service, CareTakerEntity caretaker)
+    public FeedbackEntity(PetServiceEntity service, CareTakerEntity caretaker, short rating, String feedback)
     {
         this.service = service;
         this.caretaker = caretaker;
+        this.rating = rating;
+        this.feedback = feedback;
     }
 
     public FeedbackEntity()
@@ -46,11 +48,27 @@ public class FeedbackEntity {
         return caretaker;
     }
 
+    public short getRating()
+    {
+        return rating;
+    }
+
+    public String getFeedback()
+    {
+        return feedback;
+    }
+
     @Embeddable
     public static class FeedbackId implements Serializable
     {
         private int serviceId;
         private String caretakerEmail;
+
+        public FeedbackId(int serviceId, String caretakerEmail)
+        {
+            this.serviceId = serviceId;
+            this.caretakerEmail = caretakerEmail;
+        }
     }
 }
 

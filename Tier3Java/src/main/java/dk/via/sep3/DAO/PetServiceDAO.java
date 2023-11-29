@@ -78,11 +78,19 @@ public class PetServiceDAO implements PetServiceDAOInterface
     }
 
     @Override
+    @Transactional
     public Collection<FeedbackEntity> getFeedbacks(CareTakerEntity careTaker)
     {
         return feedbackRepository.findAll().stream()
                 .filter(f -> f.getCaretaker().equals(careTaker))
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public void deleteFeedback(int feedbackId, String caretakerEmail)
+    {
+        feedbackRepository.deleteById(new FeedbackEntity.FeedbackId(feedbackId, caretakerEmail));
     }
 
 
