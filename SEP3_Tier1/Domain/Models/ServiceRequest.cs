@@ -6,6 +6,6 @@ public class ServiceRequest
     public User Recipient { get; set; }
     public int Id { get; set; }
     public Announcement Announcement { get; set; }
-    public int status { get; set; }
+    public int RequestEnum { get; set; }
     public DateTime CreationDateTime { get; set; }
 }

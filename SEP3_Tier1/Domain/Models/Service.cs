@@ -1,4 +1,6 @@
-﻿namespace Domain.Models;
+﻿using Domain.Models.Enums;
+
+namespace Domain.Models;
 
 public class Service
 {
@@ -7,5 +9,5 @@ public class Service
     public PetOwner PetOwner { get; set; }
     public Announcement Announcement { get; set; }
     //private FeedbackEntity feedback { get; set; }
-    public int Status { get; set; }
+    public ServiceEnum Status { get; set; }
 }
