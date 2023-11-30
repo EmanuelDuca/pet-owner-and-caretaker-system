@@ -7,6 +7,7 @@ namespace HttpClients.ClientInterfaces;
 public interface IAuthService
 {
     Task LoginAsync(UserLoginDto loginDto);
+    Task<string> GetJWT();
     Task LogoutAsync();
     Task RegisterAsync(UserCreationDto registrationDto);
     Task<ClaimsPrincipal> GetAuthAsync();

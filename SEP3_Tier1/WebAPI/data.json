@@ -35,6 +35,42 @@
       "PhoneNumber": null,
       "Password": "1111",
       "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "vs",
+      "Age": null,
+      "Email": "sv",
+      "PhoneNumber": null,
+      "Password": "dbs",
+      "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "sv",
+      "Age": null,
+      "Email": "michael.leo@gmail.com",
+      "PhoneNumber": null,
+      "Password": "password",
+      "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "svvsvs",
+      "Age": null,
+      "Email": "michael.lsvo.dk@gmail.com",
+      "PhoneNumber": null,
+      "Password": "password",
+      "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "svvsd",
+      "Age": null,
+      "Email": "michael.lsvk@gmail.com",
+      "PhoneNumber": null,
+      "Password": "password",
+      "Type": "PetOwner"
     }
   ],
   "Announcements": []

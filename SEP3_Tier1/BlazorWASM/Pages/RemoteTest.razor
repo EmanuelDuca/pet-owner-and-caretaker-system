@@ -1,6 +1,10 @@
 ﻿@page "/RemoteTest"
 @using Microsoft.AspNetCore.SignalR.Client
+@using HttpClients.ClientInterfaces
 @implements IAsyncDisposable
+@inject IAuthService authService
+@attribute [Authorize]
+
 <h3>RemoteTest</h3>
 
 <PageTitle>Index</PageTitle>
@@ -43,11 +47,14 @@
 
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine(await authService.GetJWT());
         hubConnection = new HubConnectionBuilder()
-            .WithUrl("https://localhost:7230/offers")
+            .WithUrl("https://localhost:7230/offers", 
+                o =>
+                    o.AccessTokenProvider = async () => await Task.FromResult<string?>(await authService.GetJWT()))
             .Build();
         
-        hubConnection.On<string, string>("Test", (user, message) =>
+        hubConnection.On<string, string>("Receive", (user, message) =>
         {
             var encodedMsg = $"{user}:{message}";
             messages.Add(encodedMsg);
