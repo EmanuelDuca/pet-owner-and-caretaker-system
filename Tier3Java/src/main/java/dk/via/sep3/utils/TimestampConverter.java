@@ -2,10 +2,7 @@ package dk.via.sep3.utils;
 
 import com.google.protobuf.Timestamp;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 
 public class TimestampConverter
 {
@@ -38,5 +35,16 @@ public class TimestampConverter
         Instant instant = Instant.ofEpochSecond(seconds, nanos);
 
         return LocalDate.ofInstant(instant, ZoneOffset.UTC);
+    }
+
+    public static Timestamp fromLocalDate(LocalDate localDate) {
+        LocalDateTime localDateTime = localDate.atStartOfDay();
+        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
+        Instant instant = zonedDateTime.toInstant();
+
+        return Timestamp.newBuilder()
+                .setSeconds(instant.getEpochSecond())
+                .setNanos(instant.getNano())
+                .build();
     }
 }

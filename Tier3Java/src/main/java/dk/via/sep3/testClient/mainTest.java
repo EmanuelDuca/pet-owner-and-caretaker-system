@@ -9,6 +9,7 @@ import io.grpc.*;
 import origin.protobuf.*;
 
 import java.lang.String;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class mainTest
@@ -16,20 +17,56 @@ public class mainTest
 
     public static void main(String[] args)
     {
-        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("localhost", 9090) .usePlaintext() .build();
+        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
         UserServiceGrpc.UserServiceBlockingStub userStub = UserServiceGrpc.newBlockingStub(managedChannel);
         AnnouncementServiceGrpc.AnnouncementServiceBlockingStub announcementStub = AnnouncementServiceGrpc.newBlockingStub(managedChannel);
         ServiceServiceGrpc.ServiceServiceBlockingStub serviceBlockingStub = ServiceServiceGrpc.newBlockingStub(managedChannel);
 
+
+        FindUserProto userRequest = FindUserProto.newBuilder()
+                .setEmail("allan1@gmail.com")
+                .build();
+        try {
+            userStub.deleteUser(userRequest);
+        } catch (StatusRuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+
+        // Test add date period
+//        userStub.addDatePeriodToScheduleOfCaretaker(
+//                DatePeriodOfCaretaker.newBuilder()
+//                        .setCaretakerEmail("allan6@gmail.com")
+//                        .setStartDate(TimestampConverter.fromLocalDate(LocalDate.now().minusDays(5)))
+//                        .setEndDate(TimestampConverter.fromLocalDate(LocalDate.now().minusDays(1)))
+//                .build());
+
+        //         Test create user
+//        UserProto user = UserProto.newBuilder()
+//                .setEmail("allan1@gmail.com")
+//                .setUsername("Allan")
+//                .setType("PetOwner")
+//                .setPassword("via123")
+//                .build();
+//        try {
+//            UserProto response = userStub.createUser(user);
+//            System.out.println(response.getEmail());
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println(e.getMessage());
+//        }
+
+
+        //Test create announcement
 //        AnnouncementProto announcementProto = AnnouncementProto.newBuilder()
-//                .setPetOwnerEmail("sevastian@gmail.com")
+//                .setPetOwnerEmail("allan1@gmail.com")
 //                .setTimeStart(TimestampConverter.fromLocalDateTime(LocalDateTime.now()))
 //                .setTimeFinish(TimestampConverter.fromLocalDateTime(LocalDateTime.now().plusDays(3)))
 //                .setDescription("Nice")
 //                .setPostalCode("8700")
 //                .setPet(PetProto.newBuilder()
 //                        .setOwnerEmail("sevastian@gmail.com")
-//                        .setPetName("HUI_VAM")
+//                        .setPetName("Kotyara")
 //                        .setPetType("Cat")
 //                        .setIsVaccinated(false)
 //                        .setDescription("miau miau maiu")
@@ -41,11 +78,10 @@ public class mainTest
 //
 
 
-        serviceBlockingStub.acceptStartService(FindRequestServiceProto.newBuilder()
-                        .setRequestId(2)
-                        .build());
-
-
+        // Test start service
+//        serviceBlockingStub.acceptStartService(FindRequestServiceProto.newBuilder()
+//                        .setRequestId(2)
+//                        .build());
 
 
         // Test update user
@@ -60,9 +96,9 @@ public class mainTest
 //        }catch (Exception e)
 //        {
 //            System.out.println(e.getMessage());
-
+//    }
+//
         // Test update announcement
-
 //        AnnouncementProto announcementProto = AnnouncementProto.newBuilder()
 //                .setId(1)
 //                .setPostalCode("7424")
@@ -85,21 +121,7 @@ public class mainTest
 
 
 
-//         Test create user
-//        UserProto user = UserProto.newBuilder()
-//                .setEmail("allan6@gmail.com")
-//                .setUsername("Allan")
-//                .setType("CareTaker")
-//                .setPassword("via123")
-//                .build();
-//        try {
-//            UserProto response = userStub.createUser(user);
-//            System.out.println(response.getEmail());
-//        }
-//        catch (Exception e)
-//        {
-//            System.out.println(e.getMessage());
-//        }
+
 //
 //
 //        System.out.println(announcementStub.findAnnouncements(null));
@@ -121,7 +143,6 @@ public class mainTest
 //
 //
 //
-//        //Create announcement
 
 //
 //        UserProto user1 = userStub.findUser(FindUserProto.newBuilder().setEmail("allan@gmail.com").build());
