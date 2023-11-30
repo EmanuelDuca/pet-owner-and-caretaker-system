@@ -1,9 +1,13 @@
 @page "/ManageProfile"
 @using System.Security.Claims
+@using Domain.DTOs
+@using HttpClients.ClientInterfaces
+@using Newtonsoft.Json
 @inject NavigationManager navMgr
+@inject IAuthService userService
 @attribute [Authorize]
 
-@if (ownerEmail == null)
+@if (Email == null)
 {
     <label>Loading...</label>
 }
@@ -14,7 +18,7 @@ else
         <div class="card" @onclick='() => NavigateTo("MyProfile")'>
           <RadzenImage Path="https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-16-512.png" Style="width: 100px; height: 100px; border-radius: 50%;"/>
           <div class="column" Gap="0">
-            <h3>Salutations, @username !</h3>
+            <h3>Salutations, @Username !</h3>
           </div>
         </div>
         <div class="card selected">
@@ -27,51 +31,34 @@ else
       
       <div class="container">
         <div class="col-md-7 col-lg-8">
-          <h4 class="mb-3">Billing address</h4>
+          <br/>
           <form class="needs-validation" novalidate="">
             <div class="row g-3">
                 
               <div class="col-12">
-                <label for="username" class="form-label">Username</label>
-                <div class="input-group has-validation">
-                  <span class="input-group-text"></span>
-                  <input type="text" class="form-control" id="username" placeholder="Username" required="">
-                  <div class="invalid-feedback">
-                    Your username is required.
-                  </div>
-                </div>
+                <label for="Username" class="form-label">Username</label>
+                <input type="text" class="form-control" @bind="Username">
               </div>
                   
               <div class="col-12">
                 <label for="email" class="form-label">Email <span class="text-body-secondary">(Can't Be Changed)</span></label>
-                <input readonly type="email" class="form-control" id="email" placeholder="@ownerEmail">
+                <input readonly type="email" class="form-control" id="email" placeholder="@Email">
+              </div>
+              
+              <div class="col-12">
+                <label for="phone" class="form-label">Password</label>
+                <input type="text" class="form-control" @bind="Password">
               </div>
                   
               <div class="col-12">
                 <label for="phone" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="phone" placeholder="+45 012..." required="">
-                <div class="invalid-feedback">
-                  Please enter your phone number.
-                </div>
-              </div>
-                  
-              <div class="col-md-4">
-                <label for="state" class="form-label">State</label>
-                <select class="form-select" id="state" required="">
-                  <option value="">Choose...</option>
-                  <option>California</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please provide a valid state.
-                </div>
+                <input type="text" class="form-control" id="phone" @bind="PhoneNumber">
               </div>
                   
               <div class="col-md-3">
-                <label for="zip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="zip" placeholder="" required="">
-                <div class="invalid-feedback">
-                  Zip code required.
-                </div>
+                <label for="zip" class="form-label">Age</label>
+                <br/>
+                <RadzenNumeric @bind-Value="Age" Style="width: var(--inputs-width)" Name="PetWeight"/>
               </div>
             </div>
                   
@@ -88,12 +75,13 @@ else
             </div>
                   
             <hr class="my-4">
-                  
-            <button class="w-20 btn btn-primary btn-lg" type="submit">Save Changes</button>
           </form>
+          <button class="w-20 btn btn-primary btn-lg" @onclick="EditProfile">Save Changes</button>
+          <button class="w-20 btn btn-outline-danger btn-lg" @onclick="DeleteProfile" >Delete Profile</button>
         </div>
-            
-            
+        
+        <br/>
+        
       </div>
     </AuthorizeView>
 }
@@ -102,16 +90,18 @@ else
 @code {
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
-    
-    private string ownerEmail;
-    public string? username;
+  
+    private string Email;
+    private string Username;
+    private string? PhoneNumber;
+  private int? Age;
+  private string Password;
     
     protected override async Task OnInitializedAsync()
     {
       AuthenticationState authState = await AuthState;
       ClaimsPrincipal user = authState.User;
-      username = authState.User.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value;
-      ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+      FetchDataFromClaims(user);
     }
   
     public void NavigateTo(String address)
@@ -133,4 +123,83 @@ else
         Console.WriteLine(e);
       }
     }
+
+
+  private async Task EditProfile()
+  {
+    try
+    {
+      UserEditDto dto = new UserEditDto(Email);
+      AddInfoInDtoOObject(dto);
+      
+      //For Debugging
+      Console.WriteLine(JsonConvert.SerializeObject(dto));
+      await userService.EditProfile(dto);
+      SuccessMessage("Profile was updated");
+    }
+    catch (Exception e)
+    {
+      Console.WriteLine(e);
+      ErrorMessage(e);
+    }
+  }
+  
+  private async Task DeleteProfile()
+  {
+    try
+    {
+      await userService.DeleteProfile(Email);
+      SuccessMessage("Profile was deleted");
+    }
+    catch (Exception e)
+    {
+      Console.WriteLine(e);
+      ErrorMessage(e);
+    }
+  }
+
+  private void SuccessMessage(String message)
+  {
+    NotificationService.Notify(new NotificationMessage()
+    {
+      Severity = NotificationSeverity.Success,
+      Duration = 6000,
+      Detail = message
+    });
+  }
+
+  private void ErrorMessage(Exception e)
+  {
+    NotificationService.Notify(new NotificationMessage()
+    {
+      Severity = NotificationSeverity.Error,
+      Duration = 6000,
+      Detail = e.Message
+    });
+  }
+
+  private void FetchDataFromClaims(ClaimsPrincipal user)
+  {
+    Username = user.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value;
+    Email = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+    Password = user.Claims.FirstOrDefault(c => c.Type.Equals("Password"))!.Value;
+    PhoneNumber = user.Claims.FirstOrDefault(c => c.Type.Equals("PhoneNumber"))!.Value;
+    string numString = user.Claims.FirstOrDefault(c => c.Type.Equals("Age")).Value;
+    if (string.IsNullOrEmpty(numString))
+    {
+      Age = null;
+    }
+    else
+    {
+      Age = int.Parse(numString);
+    }
+  }
+
+  private void AddInfoInDtoOObject(UserEditDto dto)
+  {
+    dto.UserName = Username;
+    dto.Password = Password;
+    dto.Age = Age;
+    dto.PhoneNumber = PhoneNumber;
+  }
 }

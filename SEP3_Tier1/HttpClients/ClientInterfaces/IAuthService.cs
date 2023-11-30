@@ -11,5 +11,7 @@ public interface IAuthService
     Task LogoutAsync();
     Task RegisterAsync(UserCreationDto registrationDto);
     Task<ClaimsPrincipal> GetAuthAsync();
+    Task EditProfile(UserEditDto dto);
+    Task DeleteProfile(string email);
     Action<ClaimsPrincipal> OnAuthStateChanged { get; set; }
 }

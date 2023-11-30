@@ -1,7 +1,9 @@
-﻿using Application.DaoInterface;
+﻿using System.Net.Http.Json;
+using Application.DaoInterface;
 using Application.LogicInterface;
 using Domain.DTOs;
 using Domain.Models;
+using Newtonsoft.Json;
 
 namespace Application.Logic;
 
@@ -70,7 +72,6 @@ public class UserLogic : IUserLogic
             throw new Exception("User with given email does not exist");
         }
         
-        
         User tempUser = new User()
         {
             Username = editDto.UserName ?? existing.Username,
@@ -81,23 +82,16 @@ public class UserLogic : IUserLogic
             Age = editDto.Age ?? existing.Age,
             Name = editDto.Name ?? existing.Name
         };
-        User toUpdate;
-        switch (existing.Type)
-        {
-            case "PetOwner":
-                toUpdate = new PetOwner(tempUser);
-                break;
-            case "CareTaker":
-                toUpdate = new CareTaker(tempUser);
-                break;
-            default:
-                throw new Exception("Wrong user type");
-        }
-        
-        User updated = await userDao.UpdateAsync(toUpdate) ?? throw new Exception("In userLogic file User.Type was mismatched");
-        return updated;
+
+        User updated = await userDao.UpdateAsync(tempUser);
+        return await Task.FromResult(updated);
     }
-    
+
+    public async Task DeleteUser(string email)
+    {
+        await userDao.DeleteAsync(email);
+    }
+
     public async Task<IEnumerable<User>> GetAsync(SearchUsersDto parameters)
     {
         return await userDao.GetAsync(parameters);

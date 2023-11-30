@@ -109,6 +109,21 @@ public class UserController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpDelete("{email}")]
+    public async Task<ActionResult> DeleteUser([FromRoute] string email)
+    {
+        try
+        {
+            await userLogic.DeleteUser(email);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
     
     [HttpGet]
     public async Task<ActionResult> GetAsync(SearchUsersDto parameters)
