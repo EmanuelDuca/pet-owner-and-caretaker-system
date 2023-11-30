@@ -56,7 +56,28 @@ public class JwtAuthAuthHttpService : IAuthService
     {
         return Task.FromResult(CreateClaimsPrincipal());
     }
-    
+
+    public async Task EditProfile(UserEditDto dto)
+    {
+        HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/edit", dto);
+        string responseContent = await HttpClientHelper.HandleResponse(responseMessage);
+        
+        Jwt = responseContent;
+
+        ClaimsPrincipal principal = CreateClaimsPrincipal();
+        
+        OnAuthStateChanged.Invoke(principal);
+    }
+
+    public async Task DeleteProfile(string email)
+    {
+        HttpResponseMessage response = await client.DeleteAsync($"{START_URI}/{email}");
+        await HttpClientHelper.HandleResponse(response);
+
+        Jwt = null;
+        OnAuthStateChanged.Invoke(new ClaimsPrincipal());
+    }
+
     private ClaimsPrincipal CreateClaimsPrincipal()
     {
         if (string.IsNullOrEmpty(Jwt))

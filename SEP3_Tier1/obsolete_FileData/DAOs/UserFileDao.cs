@@ -31,7 +31,44 @@ public class UserFileDao : IUserDao
 
     public Task<User?> UpdateAsync(User user)
     {
-        throw new NotImplementedException();
+        User? existing = context.Users.FirstOrDefault(u =>
+            u.Email.Equals(user.Email));
+        if (existing == null)
+        {
+            throw new Exception($"User with email: {user.Email} does not exist!");
+        }
+
+        User updatedUser = new User
+        {
+            Email = existing.Email,
+            Password = user.Password,
+            Username = user.Username,
+            Age = user.Age ?? existing.Age,
+            PhoneNumber = user.PhoneNumber ?? existing.PhoneNumber,
+            Type = existing.Type
+        };
+
+        context.Users.Remove(existing);
+        context.Users.Add(updatedUser);
+        
+        context.SaveChanges();
+
+        return Task.FromResult(updatedUser);
+    }
+
+    public Task DeleteAsync(string email)
+    {
+        User? existing = context.Users.FirstOrDefault(u =>
+            u.Email.Equals(email));
+        if (existing == null)
+        {
+            throw new Exception($"User with email: {email} does not exist!");
+        }
+        
+        context.Users.Remove(existing);
+        context.SaveChanges();
+        
+        return Task.CompletedTask;
     }
 
     public Task<IEnumerable<User>> GetAsync(SearchUsersDto parameters)

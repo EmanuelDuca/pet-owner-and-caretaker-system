@@ -7,8 +7,8 @@ using obsolete_FileData;
 using GrpcClient.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using obsolete_FileData.DAOs;
 using WebAPI;
-using WebAPI.WebSocketClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,9 +44,6 @@ builder.Services.AddGrpcClient<AnnouncementService.AnnouncementServiceClient>(o 
     o.Address = new Uri("http://localhost:9090");
 });
 
-builder.Services.AddHostedService(_ => new ServiceRequestWebSocketClient("ws://localhost:8080/websocket"));
-
-
 builder.Services.AddSignalR();
 
 builder.Services.AddSwaggerGen();
@@ -70,10 +67,7 @@ AuthorizationPolicies.AddPolicies(builder.Services);
 
 var app = builder.Build();
 
-app.UseAuthorization();
 app.UseAuthentication();
-app.UseHttpsRedirection();
-
 
 if (app.Environment.IsDevelopment())
 {
@@ -84,11 +78,11 @@ if (app.Environment.IsDevelopment())
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
-    .AllowAnyOrigin());
+    .SetIsOriginAllowed(d => true)
+    .AllowCredentials()
+);
 
-// Configure the HTTP request pipeline.
-
-
+app.UseAuthorization();
 app.UseHttpsRedirection();
 
 
