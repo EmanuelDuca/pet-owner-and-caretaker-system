@@ -44,42 +44,16 @@
       "PhoneNumber": null,
       "Password": "password",
       "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "cubeco",
+      "Age": null,
+      "Email": "michael.leo.dk@gmail.com",
+      "PhoneNumber": null,
+      "Password": "password",
+      "Type": "PetOwner"
     }
   ],
-  "Announcements": [
-    {
-      "Id": 1,
-      "PetOwner": {
-        "Name": null,
-        "Username": null,
-        "Age": null,
-        "Email": "ionv@gmail.com",
-        "PhoneNumber": null,
-        "Password": "1111",
-        "Type": null
-      },
-      "StartDate": "2023-11-30T00:00:00+01:00",
-      "EndDate": "2023-12-03T00:00:00+01:00",
-      "PostalCode": "8700",
-      "ServiceDescription": "des",
-      "CreationDateTime": "2023-11-30T12:59:56.7301375+01:00",
-      "Pet": {
-        "Id": 1,
-        "PetName": "X",
-        "PetType": 13,
-        "Weight": 0,
-        "IsVaccinated": false,
-        "Description": "Fat cat",
-        "PetOwner": {
-          "Name": null,
-          "Username": null,
-          "Age": null,
-          "Email": "ionv@gmail.com",
-          "PhoneNumber": null,
-          "Password": "1111",
-          "Type": null
-        }
-      }
-    }
-  ]
+  "Announcements": []
 }
