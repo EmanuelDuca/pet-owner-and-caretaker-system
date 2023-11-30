@@ -83,6 +83,11 @@ public class GrpcUserService : IUserDao
         }
     }
 
+    public Task DeleteAsync(string email)
+    {
+        throw new NotImplementedException();
+    }
+
     private UserProto UserProtoGenerator(User user)
     {
         string type = "";

@@ -67,10 +67,7 @@ AuthorizationPolicies.AddPolicies(builder.Services);
 
 var app = builder.Build();
 
-app.UseAuthorization();
 app.UseAuthentication();
-app.UseHttpsRedirection();
-
 
 if (app.Environment.IsDevelopment())
 {
@@ -81,11 +78,11 @@ if (app.Environment.IsDevelopment())
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
-    .AllowAnyOrigin());
+    .SetIsOriginAllowed(d => true)
+    .AllowCredentials()
+);
 
-// Configure the HTTP request pipeline.
-
-
+app.UseAuthorization();
 app.UseHttpsRedirection();
 
 
