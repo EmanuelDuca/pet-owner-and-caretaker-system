@@ -3,6 +3,7 @@ package dk.via.sep3.utils;
 import com.google.protobuf.Timestamp;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -22,14 +23,20 @@ public class TimestampConverter
     }
 
     public static LocalDateTime toLocalDateTime(Timestamp timestamp) {
-        // Get seconds and nanoseconds from the Timestamp object
         long seconds = timestamp.getSeconds();
         int nanos = timestamp.getNanos();
 
-        // Create an Instant using seconds and nanoseconds
         Instant instant = Instant.ofEpochSecond(seconds, nanos);
 
-        // Convert Instant to LocalDateTime in UTC
         return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+    }
+
+    public static LocalDate toLocalDate(Timestamp timestamp) {
+        long seconds = timestamp.getSeconds();
+        int nanos = timestamp.getNanos();
+
+        Instant instant = Instant.ofEpochSecond(seconds, nanos);
+
+        return LocalDate.ofInstant(instant, ZoneOffset.UTC);
     }
 }
