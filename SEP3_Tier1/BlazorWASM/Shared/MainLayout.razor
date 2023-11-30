@@ -1,20 +1,55 @@
 ﻿@inherits LayoutComponentBase
 @namespace BlazorWASM.Shared
 @using BlazorWASM.Pages
+@using System.Security.Claims
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu/>
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <LoginButtons/>
+
+<AuthorizeView>
+    
+    <NotAuthorized>
+        <Login></Login>
+    </NotAuthorized>
+    
+    <Authorized>
+        <div class="page">
+            <div class="sidebar">
+                @if (context.User.IsInRole("PetOwner"))
+                {
+                    <PetOwnerNavMenu/>
+                }else if (context.User.IsInRole("CareTaker"))
+                {
+                    <CareTakerNavMenu/>
+                }
+            </div>
+
+            <main>
+                <div class="top-row px-4">
+                    <LoginButtons/>
+                </div>
+
+                <article class="content px-4">
+                    @Body
+                </article>
+                <RadzenComponents/>
+            </main>
         </div>
-        
-        <article class="content px-4">
-            @Body
-        </article>
-        <RadzenComponents/>
-    </main>
-</div>
+    </Authorized>
+
+</AuthorizeView>
+
+
+
+
+
+@code
+{
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+    }
+}

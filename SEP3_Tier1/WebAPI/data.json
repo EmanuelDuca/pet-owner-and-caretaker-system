@@ -8,6 +8,15 @@
       "PhoneNumber": "123123123123",
       "Password": "1111",
       "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "em",
+      "Age": null,
+      "Email": "em@gmail.com",
+      "PhoneNumber": null,
+      "Password": "1111",
+      "Type": "CareTaker"
     }
   ],
   "Announcements": [

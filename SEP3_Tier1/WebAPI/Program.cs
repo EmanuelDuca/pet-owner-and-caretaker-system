@@ -21,12 +21,12 @@ builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
 
 //When using GRPc
-builder.Services.AddScoped<IUserDao, GrpcUserService>();
-builder.Services.AddScoped<IAnnouncementDao, GrpcAnnouncementService>();
+//builder.Services.AddScoped<IUserDao, GrpcUserService>();
+//builder.Services.AddScoped<IAnnouncementDao, GrpcAnnouncementService>();
 
 //When savind to file
-// builder.Services.AddScoped<IUserDao, UserFileDao>();
-// builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
+builder.Services.AddScoped<IUserDao, UserFileDao>();
+builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
 
 
 
