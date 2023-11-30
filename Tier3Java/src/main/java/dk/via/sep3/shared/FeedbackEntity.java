@@ -18,13 +18,13 @@ public class FeedbackEntity {
 
     @OneToOne
     @MapsId("caretakerEmail")
-    private CareTakerEntity caretaker;
+    private UserEntity caretaker;
 
     private short rating;
     private String feedback;
 
 
-    public FeedbackEntity(PetServiceEntity service, CareTakerEntity caretaker, short rating, String feedback)
+    public FeedbackEntity(PetServiceEntity service, UserEntity caretaker, short rating, String feedback)
     {
         this.service = service;
         this.caretaker = caretaker;
@@ -43,7 +43,7 @@ public class FeedbackEntity {
         return service;
     }
 
-    public CareTakerEntity getCaretaker()
+    public UserEntity getCaretaker()
     {
         return caretaker;
     }

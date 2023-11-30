@@ -3,10 +3,9 @@ package dk.via.sep3.DAO;
 import dk.via.sep3.DAOInterfaces.PetServiceDAOInterface;
 import dk.via.sep3.repository.FeedbackRepository;
 import dk.via.sep3.repository.PetServiceRepository;
-import dk.via.sep3.shared.CareTakerEntity;
 import dk.via.sep3.shared.FeedbackEntity;
-import dk.via.sep3.shared.PetOwnerEntity;
 import dk.via.sep3.shared.PetServiceEntity;
+import dk.via.sep3.shared.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
@@ -57,7 +56,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
     @Override
     @Transactional
 
-    public Collection<PetServiceEntity> searchServices(CareTakerEntity careTaker, PetOwnerEntity petOwner, ServiceStatus status)
+    public Collection<PetServiceEntity> searchServices(UserEntity careTaker, UserEntity petOwner, ServiceStatus status)
     {
         return repository.findAll()
                 .stream()
@@ -79,7 +78,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
 
     @Override
     @Transactional
-    public Collection<FeedbackEntity> getFeedbacks(CareTakerEntity careTaker)
+    public Collection<FeedbackEntity> getFeedbacks(UserEntity careTaker)
     {
         return feedbackRepository.findAll().stream()
                 .filter(f -> f.getCaretaker().equals(careTaker))

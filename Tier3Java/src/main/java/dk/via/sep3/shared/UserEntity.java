@@ -2,6 +2,8 @@ package dk.via.sep3.shared;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user_entity")
@@ -18,6 +20,11 @@ public class UserEntity implements Serializable {
     protected Integer age;
     @Column(nullable = true)
     protected String phone;
+    protected String userType;
+
+    // if want to delete all related entities in related tables automatically
+    // This cane be reached via next line
+    //     @OneToMany(mappedBy = "name_of_column_to_reference", cascade = CascadeType.ALL, orphanRemoval = true)
 
 
     public UserEntity(String username, String password) {
@@ -29,11 +36,12 @@ public class UserEntity implements Serializable {
     public UserEntity() {
     }
 
-    public UserEntity(String email, String username, String password, Integer age, String phone, String name) {
+    public UserEntity(String email, String username, String password, String userType, Integer age, String phone, String name) {
         this.email = email;
         this.username = username;
         this.password = password;
         this.age = age;
+        this.userType = userType;
         this.phone = phone;
         this.name = name;
     }
@@ -67,6 +75,16 @@ public class UserEntity implements Serializable {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public String getUserType()
+    {
+        return userType;
+    }
+
+    public void setUserType(String userType)
+    {
+        this.userType = userType;
     }
 
     public String getPhone() {

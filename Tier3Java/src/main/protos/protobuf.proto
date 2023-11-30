@@ -11,6 +11,25 @@ service UserService{
   rpc SearchUsers(SearchUsersProto) returns (UsersProto);
   rpc UpdateUser(UserProto) returns (UserProto);
   rpc DeleteUser(FindUserProto) returns (Void);
+
+  rpc AddDatePeriodToScheduleOfCaretaker(DatePeriodOfCaretaker) returns (Void);
+  rpc DeleteDatePeriodToScheduleOfCaretaker(DatePeriodOfCaretaker) returns (Void);
+  rpc GetScheduleOfCaretaker(CareTakerScheduleRequest) returns (CaretakerSchedule);
+}
+
+message CareTakerScheduleRequest{
+  string caretakerEmail = 1;
+  int32 month = 2;
+}
+
+message CaretakerSchedule{
+  repeated DatePeriodOfCaretaker schedule = 1;
+}
+
+message DatePeriodOfCaretaker{
+  string caretakerEmail = 1;
+  google.protobuf.Timestamp startDate = 2;
+  google.protobuf.Timestamp endDate = 3;
 }
 
 service AnnouncementService{

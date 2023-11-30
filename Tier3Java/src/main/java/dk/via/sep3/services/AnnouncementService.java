@@ -6,6 +6,7 @@ import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.AnnouncementMapper;
 import dk.via.sep3.shared.AnnouncementEntity;
 import dk.via.sep3.shared.PetEntity;
+import dk.via.sep3.shared.UserEntity;
 import dk.via.sep3.utils.TimestampConverter;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
@@ -37,8 +38,17 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
 
     public void createAnnouncement(AnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
     {
+        UserEntity petOwner = userDAO.findUser(request.getPetOwnerEmail());
+
+        if(!petOwner.getUserType().equals("CareTaker"))
+        {
+            responseObserver.onError(GrpcError.constructException("Only caretaker can create an announcement."));
+            return;
+        }
+
+
         AnnouncementEntity announcement = new AnnouncementEntity(
-                userDAO.findUser(request.getPetOwnerEmail()),
+                petOwner,
                 request.getDescription(),
                 TimestampConverter.toLocalDateTime(request.getTimeStart()),
                 TimestampConverter.toLocalDateTime(request.getTimeFinish()),
@@ -48,7 +58,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
                         request.getPet().getWeight(),
                         request.getPet().getIsVaccinated(),
                         request.getPet().getDescription(),
-                        userDAO.findUser(request.getPetOwnerEmail())
+                        petOwner
                 ),
                 request.getPostalCode()
         );
@@ -56,7 +66,10 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         AnnouncementEntity announcementRespond = announcementDAO.createAnnouncement(announcement);
 
         if(announcementRespond == null)
+        {
             responseObserver.onError(GrpcError.constructException("Announcement with such id already exists"));
+            return;
+        }
 
         responseObserver.onNext(AnnouncementMapper.mapToProto(announcementRespond));
         responseObserver.onCompleted();

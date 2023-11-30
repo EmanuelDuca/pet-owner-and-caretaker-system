@@ -14,9 +14,9 @@ public class PetServiceEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToOne
-    private CareTakerEntity careTaker;
+    private UserEntity careTaker;
     @OneToOne
-    private PetOwnerEntity petOwner;
+    private UserEntity petOwner;
     @OneToOne
     private AnnouncementEntity announcement;
 
@@ -25,7 +25,7 @@ public class PetServiceEntity
 
     private ServiceStatus status;
 
-    public PetServiceEntity(int id, CareTakerEntity careTaker, PetOwnerEntity petOwner, AnnouncementEntity announcement, ServiceStatus status)
+    public PetServiceEntity(int id, UserEntity careTaker, UserEntity petOwner, AnnouncementEntity announcement, ServiceStatus status)
     {
         this.id = id;
         this.careTaker = careTaker;
@@ -34,7 +34,7 @@ public class PetServiceEntity
         this.status = status;
     }
 
-    public PetServiceEntity(CareTakerEntity careTaker, PetOwnerEntity petOwner, AnnouncementEntity announcement)
+    public PetServiceEntity(UserEntity careTaker, UserEntity petOwner, AnnouncementEntity announcement)
     {
         this.id = id;
         this.careTaker = careTaker;
@@ -58,12 +58,12 @@ public class PetServiceEntity
         this.feedback = feedback;
     }
 
-    public CareTakerEntity getCareTaker()
+    public UserEntity getCareTaker()
     {
         return careTaker;
     }
 
-    public PetOwnerEntity getPetOwner()
+    public UserEntity getPetOwner()
     {
         return petOwner;
     }
