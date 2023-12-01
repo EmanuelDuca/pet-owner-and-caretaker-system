@@ -14,13 +14,7 @@
     <Authorized>
         <div class="page">
             <div class="sidebar">
-                @if (context.User.IsInRole("PetOwner"))
-                {
-                    <PetOwnerNavMenu/>
-                }else if (context.User.IsInRole("CareTaker"))
-                {
-                    <CareTakerNavMenu/>
-                }
+                <NavMenu Actor="@context.User.Claims.First(claim => claim.Type.Equals(ClaimTypes.Actor)).Value"/>
             </div>
 
             <main>
@@ -52,4 +46,14 @@
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
     }
+    
+    /*
+                @if (context.User.IsInRole("PetOwner"))
+                {
+                    <PetOwnerNavMenu/>
+                }
+                else if (context.User.IsInRole("CareTaker"))
+                {
+                    <CareTakerNavMenu/>
+                }*/
 }

@@ -37,7 +37,7 @@ public class UserController : ControllerBase
             new Claim("RealName", user.Name ?? string.Empty),
             new Claim("Age", user.Age.ToString() ?? string.Empty),
             new Claim("PhoneNumber", user.PhoneNumber ?? string.Empty),
-            new Claim(ClaimTypes.Role,user.Type)
+            new Claim(ClaimTypes.Actor,user.Type)
         };
 
         return claims.ToList();
