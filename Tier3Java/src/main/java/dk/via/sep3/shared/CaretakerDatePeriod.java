@@ -43,6 +43,11 @@ public class CaretakerDatePeriod
 
     }
 
+    public void setCareTaker(UserEntity careTaker)
+    {
+        this.careTaker = careTaker;
+    }
+
     public void setStartDate(LocalDate startDate)
     {
         this.startDate = startDate;
@@ -66,6 +71,29 @@ public class CaretakerDatePeriod
     public LocalDate getStartDate()
     {
         return startDate;
+    }
+
+    public static boolean isPeriodWithinExisting(CaretakerDatePeriod existingPeriod, LocalDate startDate, LocalDate endDate) {
+        return (startDate.isAfter(existingPeriod.getStartDate()))
+                && (endDate.isBefore(existingPeriod.getEndDate()));
+    }
+
+    public static boolean isPeriodCoveringExisting(CaretakerDatePeriod existingPeriod, LocalDate startDate, LocalDate endDate) {
+        return (startDate.isBefore(existingPeriod.getStartDate()) || startDate.isEqual(existingPeriod.getStartDate()))
+                && (endDate.isAfter(existingPeriod.getEndDate()) || endDate.isEqual(existingPeriod.getEndDate()));
+    }
+
+    public static boolean isPeriodOverlapping(CaretakerDatePeriod existingPeriod, LocalDate startDate, LocalDate endDate) {
+        return startDate.isBefore(existingPeriod.getEndDate()) && endDate.isAfter(existingPeriod.getStartDate());
+    }
+
+    public static void handleOverlappingPeriod(CaretakerDatePeriod existingPeriod, LocalDate startDate, LocalDate endDate) {
+        if (startDate.isAfter(existingPeriod.getStartDate())) {
+            existingPeriod.setEndDate(startDate.minusDays(1));
+        }
+        if (endDate.isBefore(existingPeriod.getEndDate())) {
+            existingPeriod.setStartDate(endDate.plusDays(1));
+        }
     }
 
     @Embeddable

@@ -29,19 +29,13 @@ public class TimestampConverter
     }
 
     public static LocalDate toLocalDate(Timestamp timestamp) {
-        long seconds = timestamp.getSeconds();
-        int nanos = timestamp.getNanos();
-
-        Instant instant = Instant.ofEpochSecond(seconds, nanos);
-
-        return LocalDate.ofInstant(instant, ZoneOffset.UTC);
+        Instant instant = Instant.ofEpochSecond(timestamp.getSeconds(), timestamp.getNanos());
+        return LocalDateTime.ofInstant(instant, ZoneOffset.UTC).toLocalDate();
     }
 
     public static Timestamp fromLocalDate(LocalDate localDate) {
-        LocalDateTime localDateTime = localDate.atStartOfDay();
-        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
-        Instant instant = zonedDateTime.toInstant();
-
+        LocalDateTime localDateTime = localDate.atStartOfDay().atZone(ZoneOffset.UTC).toLocalDateTime();
+        Instant instant = localDateTime.toInstant(ZoneOffset.UTC);
         return Timestamp.newBuilder()
                 .setSeconds(instant.getEpochSecond())
                 .setNanos(instant.getNano())

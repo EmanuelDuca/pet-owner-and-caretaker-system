@@ -118,6 +118,9 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         if(!Strings.isNullOrEmpty(request.getUsername()))
             user.setUsername(request.getUsername());
 
+        if(!Strings.isNullOrEmpty(request.getPassword()))
+            user.setPassword(request.getPassword());
+
 
         var updatedUser = userDAO.updateUserInformation(user);
         if(updatedUser == null)
@@ -165,10 +168,9 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     }
 
     @Override
-    @Transactional
     public void deleteDatePeriodToScheduleOfCaretaker(DatePeriodOfCaretaker request, StreamObserver<Void> responseObserver)
     {
-        boolean isDeleted = userDAO.addDatePeriodToScheduleOfCaretaker(
+        boolean isDeleted = userDAO.deleteDatePeriodFromScheduleOfCaretaker(
                 request.getCaretakerEmail(),
                 TimestampConverter.toLocalDate(request.getStartDate()),
                 TimestampConverter.toLocalDate(request.getEndDate())

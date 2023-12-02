@@ -14,6 +14,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static dk.via.sep3.shared.CaretakerDatePeriod.*;
+
 @Repository
 public class UserDAO implements UserDAOInterface {
 
@@ -92,61 +94,74 @@ public class UserDAO implements UserDAOInterface {
     }
 
     @Override
-    public boolean addDatePeriodToScheduleOfCaretaker(String caretakerEmail, LocalDate startDate, LocalDate endDate)
-    {
+    @Transactional
+    public boolean addDatePeriodToScheduleOfCaretaker(String caretakerEmail, LocalDate startDate, LocalDate endDate) {
         var user = findUser(caretakerEmail);
-        if(user == null || !user.getUserType().equals("CareTaker"))
+        if (user == null || !user.getUserType().equals("CareTaker"))
             return false;
+
+        List<CaretakerDatePeriod> existingDatePeriods = caretakerScheduleRepository.findAll().stream()
+                .filter(period -> period.getCareTaker().getEmail().equals(caretakerEmail))
+                .toList();
+
+        for (CaretakerDatePeriod existingPeriod : existingDatePeriods) {
+
+            if (isPeriodWithinExisting(existingPeriod, startDate, endDate))
+                return true;
+            else if (isPeriodCoveringExisting(existingPeriod, startDate, endDate))
+            {
+                caretakerScheduleRepository.delete(existingPeriod);
+            }
+            else if (isPeriodOverlapping(existingPeriod, startDate, endDate))
+            {
+                handleOverlappingPeriod(existingPeriod, startDate, endDate);
+                caretakerScheduleRepository.save(existingPeriod);
+            }
+        }
 
         caretakerScheduleRepository.save(new CaretakerDatePeriod(user, startDate, endDate));
         return true;
     }
 
     @Override
-    public boolean deleteDatePeriodFromScheduleOfCaretaker(String caretakerEmail, LocalDate startDate, LocalDate endDate)
-    {
+    @Transactional
+    public boolean deleteDatePeriodFromScheduleOfCaretaker(String caretakerEmail, LocalDate startDate, LocalDate endDate) {
         var user = findUser(caretakerEmail);
         if (user == null || !user.getUserType().equals("CareTaker"))
             return false;
 
-        List<CaretakerDatePeriod> datePeriods = caretakerScheduleRepository.findAll().stream()
+        List<CaretakerDatePeriod> existingDatePeriods = caretakerScheduleRepository.findAll().stream()
                 .filter(period -> period.getCareTaker().getEmail().equals(caretakerEmail))
-                .filter(period -> (period.getStartDate().isAfter(startDate) || period.getStartDate().isEqual(startDate))
-                        && (period.getEndDate().isBefore(endDate) || period.getEndDate().isEqual(endDate)))
                 .toList();
 
-        for (CaretakerDatePeriod datePeriod : datePeriods)
+        for (CaretakerDatePeriod existingPeriod : existingDatePeriods)
         {
-            LocalDate periodStartDate = datePeriod.getStartDate();
-            LocalDate periodEndDate = datePeriod.getEndDate();
 
-            if (periodStartDate.isBefore(startDate) && periodEndDate.isAfter(endDate))
+            if (isPeriodWithinExisting(existingPeriod, startDate, endDate))
             {
                 // Split the date period into two segments
-                CaretakerDatePeriod firstSegment = new CaretakerDatePeriod(datePeriod.getCareTaker(), periodStartDate, startDate.minusDays(1));
-                CaretakerDatePeriod secondSegment = new CaretakerDatePeriod(datePeriod.getCareTaker(), endDate.plusDays(1), periodEndDate);
+                CaretakerDatePeriod firstSegment = new CaretakerDatePeriod(existingPeriod.getCareTaker(), existingPeriod.getStartDate(), startDate.minusDays(1));
+                CaretakerDatePeriod secondSegment = new CaretakerDatePeriod(existingPeriod.getCareTaker(), endDate.plusDays(1), existingPeriod.getEndDate());
 
                 caretakerScheduleRepository.save(firstSegment);
                 caretakerScheduleRepository.save(secondSegment);
-            } else if (periodStartDate.isBefore(startDate) && periodEndDate.isBefore(endDate))
+            }
+            else if (isPeriodCoveringExisting(existingPeriod, startDate, endDate))
             {
-                // Adjust the end date of the date period
-                datePeriod.setEndDate(startDate.minusDays(1));
-                caretakerScheduleRepository.save(datePeriod);
-            } else if (periodStartDate.isAfter(startDate) && periodEndDate.isAfter(endDate))
+                caretakerScheduleRepository.delete(existingPeriod);
+            }
+            else if (isPeriodOverlapping(existingPeriod, startDate, endDate))
             {
-                // Adjust the start date of the date period
-                datePeriod.setStartDate(endDate.plusDays(1));
-                caretakerScheduleRepository.save(datePeriod);
-            } else if (periodStartDate.isEqual(startDate) && periodEndDate.isEqual(endDate))
-            {
-                // Delete the entire date period
-                caretakerScheduleRepository.delete(datePeriod);
+                handleOverlappingPeriod(existingPeriod, startDate, endDate);
+                caretakerScheduleRepository.save(existingPeriod);
             }
         }
 
         return true;
     }
+
+
+
 
     @Override
     public Collection<CaretakerDatePeriod> getSchedule(String caretakerEmail, int month)

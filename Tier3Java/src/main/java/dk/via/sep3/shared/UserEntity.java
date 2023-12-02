@@ -4,10 +4,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_entity")
-public class UserEntity implements Serializable {
+public class UserEntity implements Serializable
+{
     @Id
     @Column(unique = true)
     protected String email;
@@ -24,7 +27,8 @@ public class UserEntity implements Serializable {
 
     // if want to delete all related entities in related tables automatically
     // This cane be reached via next line
-    //     @OneToMany(mappedBy = "name_of_column_to_reference", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "careTaker", cascade = CascadeType.ALL, orphanRemoval = true)
+    protected Set<CaretakerDatePeriod> datePeriods;
 
 
     public UserEntity(String username, String password) {
@@ -34,6 +38,15 @@ public class UserEntity implements Serializable {
 
 
     public UserEntity() {
+
+
+    }
+
+    public UserEntity(String email, String username, String password, String userType) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.userType = userType;
     }
 
     public UserEntity(String email, String username, String password, String userType, Integer age, String phone, String name) {
@@ -105,5 +118,19 @@ public class UserEntity implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof UserEntity that)) return false;
+        return Objects.equals(email, that.email) && Objects.equals(username, that.username) && Objects.equals(name, that.name) && Objects.equals(password, that.password) && Objects.equals(age, that.age) && Objects.equals(phone, that.phone) && Objects.equals(userType, that.userType);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(email, username, name, password, age, phone, userType);
     }
 }
