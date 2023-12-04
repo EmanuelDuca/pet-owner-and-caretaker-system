@@ -3,7 +3,7 @@ package dk.via.sep3.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="pet")
+@Table(name="pets")
 public class PetEntity {
 
     @Id

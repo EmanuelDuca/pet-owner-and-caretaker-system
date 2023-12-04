@@ -8,39 +8,31 @@ public interface FeedbackProtoOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>.ServiceProto service = 2;</code>
+   * <code>int32 serviceId = 1;</code>
    */
-  boolean hasService();
-  /**
-   * <code>.ServiceProto service = 2;</code>
-   */
-  origin.protobuf.ServiceProto getService();
-  /**
-   * <code>.ServiceProto service = 2;</code>
-   */
-  origin.protobuf.ServiceProtoOrBuilder getServiceOrBuilder();
+  int getServiceId();
 
   /**
-   * <code>string caretakerEmail = 3;</code>
+   * <code>string caretakerEmail = 2;</code>
    */
   java.lang.String getCaretakerEmail();
   /**
-   * <code>string caretakerEmail = 3;</code>
+   * <code>string caretakerEmail = 2;</code>
    */
   com.google.protobuf.ByteString
       getCaretakerEmailBytes();
 
   /**
-   * <code>int32 rating = 4;</code>
+   * <code>int32 rating = 3;</code>
    */
   int getRating();
 
   /**
-   * <code>string feedback = 5;</code>
+   * <code>string feedback = 4;</code>
    */
   java.lang.String getFeedback();
   /**
-   * <code>string feedback = 5;</code>
+   * <code>string feedback = 4;</code>
    */
   com.google.protobuf.ByteString
       getFeedbackBytes();

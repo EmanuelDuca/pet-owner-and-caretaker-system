@@ -8,26 +8,26 @@ public interface CaretakerScheduleOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>repeated .DatePeriodOfCaretaker schedule = 1;</code>
+   * <code>repeated .DatePeriodProto schedule = 1;</code>
    */
-  java.util.List<origin.protobuf.DatePeriodOfCaretaker> 
+  java.util.List<origin.protobuf.DatePeriodProto> 
       getScheduleList();
   /**
-   * <code>repeated .DatePeriodOfCaretaker schedule = 1;</code>
+   * <code>repeated .DatePeriodProto schedule = 1;</code>
    */
-  origin.protobuf.DatePeriodOfCaretaker getSchedule(int index);
+  origin.protobuf.DatePeriodProto getSchedule(int index);
   /**
-   * <code>repeated .DatePeriodOfCaretaker schedule = 1;</code>
+   * <code>repeated .DatePeriodProto schedule = 1;</code>
    */
   int getScheduleCount();
   /**
-   * <code>repeated .DatePeriodOfCaretaker schedule = 1;</code>
+   * <code>repeated .DatePeriodProto schedule = 1;</code>
    */
-  java.util.List<? extends origin.protobuf.DatePeriodOfCaretakerOrBuilder> 
+  java.util.List<? extends origin.protobuf.DatePeriodProtoOrBuilder> 
       getScheduleOrBuilderList();
   /**
-   * <code>repeated .DatePeriodOfCaretaker schedule = 1;</code>
+   * <code>repeated .DatePeriodProto schedule = 1;</code>
    */
-  origin.protobuf.DatePeriodOfCaretakerOrBuilder getScheduleOrBuilder(
+  origin.protobuf.DatePeriodProtoOrBuilder getScheduleOrBuilder(
       int index);
 }

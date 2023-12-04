@@ -149,7 +149,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
 
     @Override
     @Transactional
-    public void addDatePeriodToScheduleOfCaretaker(DatePeriodOfCaretaker request, StreamObserver<Void> responseObserver)
+    public void addDatePeriodToScheduleOfCaretaker(DatePeriodProto request, StreamObserver<Void> responseObserver)
     {
         boolean isAdded = userDAO.addDatePeriodToScheduleOfCaretaker(
                 request.getCaretakerEmail(),
@@ -168,7 +168,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     }
 
     @Override
-    public void deleteDatePeriodToScheduleOfCaretaker(DatePeriodOfCaretaker request, StreamObserver<Void> responseObserver)
+    public void deleteDatePeriodFromScheduleOfCaretaker(DatePeriodProto request, StreamObserver<Void> responseObserver)
     {
         boolean isDeleted = userDAO.deleteDatePeriodFromScheduleOfCaretaker(
                 request.getCaretakerEmail(),
@@ -186,30 +186,30 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         responseObserver.onCompleted();
     }
 
-    @Override
-    @Transactional
-    public void getScheduleOfCaretaker(CareTakerScheduleRequest request, StreamObserver<CaretakerSchedule> responseObserver)
-    {
-        var result = userDAO.getSchedule(request.getCaretakerEmail(), request.getMonth());
-
-        if(result == null)
-        {
-            responseObserver.onError(GrpcError.constructException("Can't get schedule"));
-            return;
-        }
-
-        responseObserver.onNext(CaretakerSchedule.newBuilder()
-                .addAllSchedule(
-                        result.stream().map(dp ->
-                            DatePeriodOfCaretaker.newBuilder()
-                                    .setCaretakerEmail(dp.getCareTaker().getEmail())
-                                    .setStartDate(TimestampConverter.fromLocalDate(dp.getStartDate()))
-                                    .setEndDate(TimestampConverter.fromLocalDate(dp.getEndDate()))
-                                    .build()
-                        ).toList()
-                )
-                .build()
-        );
-        responseObserver.onCompleted();
-    }
+//    @Override
+//    @Transactional
+//    public void getScheduleOfCaretaker(FindCareTakerScheduleProto request, StreamObserver<DatePeriodProto> responseObserver)
+//    {
+//        var result = userDAO.getSchedule(request.getCaretakerEmail(), request.getMonth());
+//
+//        if(result == null)
+//        {
+//            responseObserver.onError(GrpcError.constructException("Can't get schedule"));
+//            return;
+//        }
+//
+//        responseObserver.onNext(DatePeriodProto.newBuilder()
+//                .addAllSchedule(
+//                        result.stream().map(dp ->
+//                                DatePeriodProto.newBuilder()
+//                                    .setCaretakerEmail(dp.getCareTaker().getEmail())
+//                                    .setStartDate(TimestampConverter.fromLocalDate(dp.getStartDate()))
+//                                    .setEndDate(TimestampConverter.fromLocalDate(dp.getEndDate()))
+//                                    .build()
+//                        ).toList()
+//                )
+//                .build()
+//        );
+//        responseObserver.onCompleted();
+//    }
 }

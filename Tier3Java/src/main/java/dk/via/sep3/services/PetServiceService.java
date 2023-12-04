@@ -157,7 +157,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     {
 
         careServiceDAO.giveFeedback(new FeedbackEntity(
-                careServiceDAO.findServiceById(request.getService().getId()),
+                careServiceDAO.findServiceById(request.getServiceId()),
                 userDao.findUser(request.getCaretakerEmail()),
                 (short) request.getRating(),
                 request.getFeedback()));

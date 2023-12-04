@@ -3,8 +3,8 @@
 
 package origin.protobuf;
 
-public interface DatePeriodOfCaretakerOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:DatePeriodOfCaretaker)
+public interface DatePeriodProtoOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:DatePeriodProto)
     com.google.protobuf.MessageOrBuilder {
 
   /**

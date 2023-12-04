@@ -3,8 +3,8 @@
 
 package origin.protobuf;
 
-public interface CareTakerScheduleRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:CareTakerScheduleRequest)
+public interface FindCareTakerScheduleProtoOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:FindCareTakerScheduleProto)
     com.google.protobuf.MessageOrBuilder {
 
   /**
