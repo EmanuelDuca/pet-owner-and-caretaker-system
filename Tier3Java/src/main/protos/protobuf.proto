@@ -43,6 +43,7 @@ service NotificationService{
   rpc UpdateCareTakerPreferencesService (Void) returns (Void);
   rpc FindCareTakerPreferencesService (Void ) returns (Void);
 
+
   rpc AddNotificationService (Void) returns (Void);
   rpc DeleteNotificationService (Void) returns (Void);
   rpc GetNotificationsService (Void) returns (Void);
