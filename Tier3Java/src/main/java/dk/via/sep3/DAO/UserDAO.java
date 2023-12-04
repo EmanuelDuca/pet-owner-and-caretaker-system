@@ -114,8 +114,15 @@ public class UserDAO implements UserDAOInterface {
             }
             else if (isPeriodOverlapping(existingPeriod, startDate, endDate))
             {
-                handleOverlappingPeriod(existingPeriod, startDate, endDate);
+                if (startDate.isBefore(existingPeriod.getStartDate())) {
+                    existingPeriod.setStartDate(startDate);
+                }
+                if (endDate.isAfter(existingPeriod.getEndDate())) {
+                    existingPeriod.setEndDate(endDate);
+                }
+
                 caretakerScheduleRepository.save(existingPeriod);
+                return true;
             }
         }
 
@@ -152,7 +159,12 @@ public class UserDAO implements UserDAOInterface {
             }
             else if (isPeriodOverlapping(existingPeriod, startDate, endDate))
             {
-                handleOverlappingPeriod(existingPeriod, startDate, endDate);
+                if (startDate.isAfter(existingPeriod.getStartDate())) {
+                    existingPeriod.setEndDate(startDate.minusDays(1));
+                }
+                if (endDate.isBefore(existingPeriod.getEndDate())) {
+                    existingPeriod.setStartDate(endDate.plusDays(1));
+                }
                 caretakerScheduleRepository.save(existingPeriod);
             }
         }
@@ -171,6 +183,7 @@ public class UserDAO implements UserDAOInterface {
             return null;
 
         return caretakerScheduleRepository.findAll().stream()
+                .filter(dp -> dp.getStartDate().getYear() == LocalDate.now().getYear())
                 .filter(dp -> dp.getStartDate().getMonthValue() == month)
                 .toList();
     }

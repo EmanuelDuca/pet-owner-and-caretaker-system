@@ -29,14 +29,6 @@ public class CaretakerDatePeriod
         this.endDate = endDate;
     }
 
-    public CaretakerDatePeriod(UserEntity careTaker, LocalDate startDate)
-    {
-        id = new CaretakerTimePeriodId(careTaker.getEmail(), startDate);
-        this.careTaker = careTaker;
-        this.startDate = startDate;
-        this.endDate = startDate;
-    }
-
 
     public CaretakerDatePeriod()
     {
@@ -85,15 +77,6 @@ public class CaretakerDatePeriod
 
     public static boolean isPeriodOverlapping(CaretakerDatePeriod existingPeriod, LocalDate startDate, LocalDate endDate) {
         return startDate.isBefore(existingPeriod.getEndDate()) && endDate.isAfter(existingPeriod.getStartDate());
-    }
-
-    public static void handleOverlappingPeriod(CaretakerDatePeriod existingPeriod, LocalDate startDate, LocalDate endDate) {
-        if (startDate.isAfter(existingPeriod.getStartDate())) {
-            existingPeriod.setEndDate(startDate.minusDays(1));
-        }
-        if (endDate.isBefore(existingPeriod.getEndDate())) {
-            existingPeriod.setStartDate(endDate.plusDays(1));
-        }
     }
 
     @Embeddable
