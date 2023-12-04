@@ -5,5 +5,7 @@ namespace Application.DaoInterface;
 
 public interface ICareServiceRequestDao
 {
-    Task OfferAsync(string initiatorEmail, int announcementId, string recipient);
+    Task OfferAsync(CreateOfferCareDto dto);
+    Task AcceptAsync(int requestId);
+    Task EndAsync(int serviceId);
 }

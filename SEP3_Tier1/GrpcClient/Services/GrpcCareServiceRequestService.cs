@@ -11,16 +11,18 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
 {
     private readonly ServiceService.ServiceServiceClient careRequestClient;
 
-    public async Task OfferAsync(string initiatorEmail, int announcementId, string recipientEmail)
+    public async Task OfferAsync(CreateOfferCareDto dto)
     {
         try
         {
             await careRequestClient
                 .RequestStartServiceAsync(new ServiceRequestProto
                 {
-                    AnnouncementId = announcementId,
-                    InitiatorEmail = initiatorEmail,
-                    RecipientEmail = recipientEmail
+                    AnnouncementId = dto.AnnouncementId,
+                    InitiatorEmail = dto.InitiatorId,
+                    RecipientEmail = dto.RecipientId,
+                    Id = dto.Id,
+                    // TODO Status = dto.RequestEnum
                 });
         }
         catch (RpcException e)
@@ -166,5 +168,6 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
             throw new Exception(e.Message);
         }
     }
-    
+
+
 }

@@ -4,10 +4,12 @@
 @using Domain.Models
 @using Blazored.LocalStorage
 @using Newtonsoft.Json
+@using System.Security.Claims
+@using Domain.Models.Enums
 @inject IAnnouncementService AnnouncementService
 @inject ILocalStorageService LocalStorageService
 @inject IPexelsService ImageService
-@* @attribute [Authorize] *@
+@attribute [Authorize]
 
 <div class="d-flex flex-row">
     <div class="search-container w-100">
@@ -59,7 +61,7 @@
             @foreach (var announcement in announcements!)
             {
                 <AnnouncementComponent 
-                    Announcement="announcement"/>
+                    Announcement="announcement" OnClickCallback="() => OfferServiceRequest(announcement)"/>
             }
         }
     </div>
@@ -67,6 +69,10 @@
 
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    private string OwnerEmail;
+    
     private List<Announcement>? announcements;
     private List<PetType.Type> filteredPetTypes = new();
     private string classDropDown = "dropdown-content";
@@ -75,8 +81,8 @@
     
     private DateTime? startDate;
     private DateTime? endDate;
-    private String postalCode;
-    private String userName;
+    private string postalCode;
+    private string userName;
 
     private bool IsFilterShown
     {
@@ -96,6 +102,12 @@
 {
     protected override async Task OnInitializedAsync()
     {
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        OwnerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+    // userPets = ..
+
+        
         SearchAnnouncementDto dto = new SearchAnnouncementDto();
         announcements = (await AnnouncementService.GetAsync(dto)).ToList();
     }
@@ -132,5 +144,50 @@
         
         announcements = (await AnnouncementService.GetAsync(dto)).ToList();
         //Console.WriteLine(JsonConvert.SerializeObject(announcements));
+    }
+
+    private async Task OfferServiceRequest(Announcement announcement)
+    {
+        
+        CreateRequestServiceDto dto = new CreateRequestServiceDto
+        {
+            InitiatorEmail = OwnerEmail,
+            AnnouncementId = announcement.Id,
+            RequestEnum = (int)RequestEnum.SENT,
+            CreationDateTime = DateTime.Now,
+        };
+        
+        try
+        {
+            await AnnouncementService.CreateRequest(dto);
+            SuccessMessage("Profile was deleted");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            ErrorMessage(e);
+        }
+        
+    Console.WriteLine($"Announcement name: {JsonConvert.SerializeObject(announcement)}");
+    }
+    
+    private void SuccessMessage(String message)
+    {
+        NotificationService.Notify(new NotificationMessage()
+        {
+            Severity = NotificationSeverity.Success,
+            Duration = 6000,
+            Detail = message
+        });
+    }
+
+    private void ErrorMessage(Exception e)
+    {
+        NotificationService.Notify(new NotificationMessage()
+        {
+            Severity = NotificationSeverity.Error,
+            Duration = 6000,
+            Detail = e.Message
+        });
     }
 }
