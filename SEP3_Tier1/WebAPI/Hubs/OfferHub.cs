@@ -4,10 +4,9 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace WebAPI;
 
-[Authorize]
+// [Authorize]
 public class OfferHub : Hub<IOfferClient>
 {
-    private int count = 0;
     public async Task SendMessage(string user, string message)
     {
         // await Clients.All.Receive("New",$"Thanks, {Context.UserIdentifier.ToString()}, though {Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)}");
@@ -20,7 +19,8 @@ public class OfferHub : Hub<IOfferClient>
     {
         // await Clients.All.Receive("New",$"Thanks, {Context.UserIdentifier.ToString()}, though {Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)}");
         // await Clients.All.SendAsync("New", user, message);
-        await Clients.All.Notify(++count);
+        await Clients.All.Notify();
+        Console.WriteLine();
         // await Clients.Client(Context.ConnectionId)
     }
 }
@@ -28,6 +28,6 @@ public class OfferHub : Hub<IOfferClient>
 public interface IOfferClient
 {
     Task Receive(string user, string message);
-    Task Notify(int numberOfOffers);
+    Task Notify();
 
 }

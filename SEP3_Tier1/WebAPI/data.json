@@ -55,5 +55,40 @@
       "Type": "PetOwner"
     }
   ],
-  "Announcements": []
+  "Announcements": [
+    {
+      "Id": 1,
+      "PetOwner": {
+        "Name": null,
+        "Username": null,
+        "Age": null,
+        "Email": "michael.leo.dk@gmail.com",
+        "PhoneNumber": null,
+        "Password": "password",
+        "Type": null
+      },
+      "StartDate": "2023-12-01T00:00:00+01:00",
+      "EndDate": "2023-12-04T00:00:00+01:00",
+      "PostalCode": "8700",
+      "ServiceDescription": "SVVS",
+      "CreationDateTime": "2023-12-01T13:49:26.4795371+01:00",
+      "Pet": {
+        "Id": 1,
+        "PetName": "X",
+        "PetType": 13,
+        "Weight": 0,
+        "IsVaccinated": false,
+        "Description": "Fat cat",
+        "PetOwner": {
+          "Name": null,
+          "Username": null,
+          "Age": null,
+          "Email": "michael.leo.dk@gmail.com",
+          "PhoneNumber": null,
+          "Password": "password",
+          "Type": null
+        }
+      }
+    }
+  ]
 }

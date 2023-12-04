@@ -4,6 +4,7 @@ using BlazorClient;
 using BlazorClient.Auth;
 using Blazored.LocalStorage;
 using BlazorWASM;
+using BlazorWASM.Pages;
 using Domain.Auth;
 using HttpClients.ClientInterfaces;
 using HttpClients.Implementations;
@@ -25,6 +26,8 @@ builder.Services.AddScoped<IPexelsService, PexelsService>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementHttpClient>();
 builder.Services.AddScoped<IAuthService, JwtAuthAuthHttpService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
+builder.Services.AddScoped<Notification>();
+
 
 AuthorizationPolicies.AddPolicies(builder.Services);
 

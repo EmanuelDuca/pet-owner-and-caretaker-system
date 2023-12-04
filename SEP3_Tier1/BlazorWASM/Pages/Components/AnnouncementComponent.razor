@@ -1,6 +1,8 @@
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using Microsoft.AspNetCore.SignalR.Client
 @inject IPexelsService ImageService
+@inject Notification notification
 
 <div class="card d-flex flex-row">
     <div class="column">
@@ -32,7 +34,7 @@
         <div class="w-100">
             <RadzenText TextStyle="TextStyle.Body1">Service description: @Announcement.ServiceDescription</RadzenText>
         </div>
-        <RadzenButton>Offer your service</RadzenButton>
+        <RadzenButton Click=@(args => Update())>Offer your service</RadzenButton>
     </div>
 </div>
 
@@ -41,11 +43,32 @@
 
     [Parameter]
     public string ImageSrc { get; set; } = null;
+    
+    private HubConnection? hubConnection;
+
 
 
     protected override async Task OnInitializedAsync()
     {
         ImageSrc = await ImageService.SearchPetImage(PetType.NameFromPetType(Announcement.Pet.PetType), 10);
+        // hubConnection = new HubConnectionBuilder()
+        //     .WithUrl("https://localhost:7230/offers") 
+        //     // o =>
+        //     // o.AccessTokenProvider = async () => await Task.FromResult<string?>(await authService.GetJWT()))
+        //     .Build();
+        // await hubConnection.StartAsync();
     }
 
+    private async Task Update()
+    {
+        hubConnection = await notification.GetHubConnection();
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("SendOffer");
+        }
+        else
+        {
+            throw new Exception("hubConnection error");
+        }
+    }
 }

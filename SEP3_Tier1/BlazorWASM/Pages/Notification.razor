@@ -1,54 +1,58 @@
 ﻿@using Microsoft.AspNetCore.SignalR.Client
 @using HttpClients.ClientInterfaces
 @using BlazorClient.Auth
-@inject IAuthService authService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
 
-<div class="notification_circle" @onclick="Update">
-    <div class="notification_number">
+<div class="notification_circle">
+    <div @key="notificationNumber" class="notification_number">
         @notificationNumber
     </div>
 </div>
 
 @code {
-    private int notificationNumber = 0;
-    private HubConnection? hubConnection;
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
-    [Parameter]
-    public Action UpdateInvoke { get; set; }
+    
+    private int notificationNumber = 0;
+    private HubConnection? hubConnection;
+    // private AuthenticationState? authState;
     
     protected override async Task OnInitializedAsync()
     {
-        
     }
 
-    private async Task Update()
+    public async Task Update(AuthenticationState authState, IAuthService authService)
     {
-        Console.WriteLine("Uraaa");
-        AuthenticationState authState = await AuthState;
+        Console.WriteLine("Trying to connect to SignalR...");
+        Console.WriteLine(authState);
         if (authState.User.Identity != null)
         {
-            // hubConnection = new HubConnectionBuilder()
-            // .WithUrl("https://localhost:7230/offers", 
-            //         o =>
-            //             o.AccessTokenProvider = async () => await Task.FromResult<string?>(await authService.GetJWT()))
-            //     .Build();
-            //
-            // hubConnection.On<int>("Receive", (numOfMessages) =>
-            // {
-            //     notificationNumber = numOfMessages;
-            //     InvokeAsync(StateHasChanged);
-            // });
-            //
-            // await hubConnection.StartAsync();
+            hubConnection = new HubConnectionBuilder()
+            .WithUrl("https://localhost:7230/offers") 
+                    // o =>
+                        // o.AccessTokenProvider = async () => await Task.FromResult<string?>(await authService.GetJWT()))
+                .Build();
+            
+            hubConnection.On("Notify", () =>
+            {
+                notificationNumber++;
+                InvokeAsync(StateHasChanged);
+            });
+            
+            await hubConnection.StartAsync();
+            Console.WriteLine("Connected!");
         }
+        while (true)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(5));
+            Console.WriteLine(notificationNumber);
+        }
+        await Update(authState, authService);
     }
-    
-    private async Task InvokeMethod()
+
+    public async Task<HubConnection> GetHubConnection()
     {
-        UpdateInvoke.Invoke();
-        Console.WriteLine("Uraaa2");
+        return hubConnection;
     }
-    
-    // private 
 }

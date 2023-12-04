@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @namespace BlazorWASM.Shared
 @using BlazorWASM.Pages
+@using Microsoft.AspNetCore.Components.Rendering
 
 <div class="page">
     <div class="sidebar">
@@ -9,7 +10,7 @@
 
     <main>
         <div class="top-row px-4">
-            <Notification/>
+            @* <Notification/> *@
             <LoginButtons/>
         </div>
 
@@ -17,5 +18,6 @@
             @Body
         </article>
         <RadzenComponents/>
+        <TestComponent/>
     </main>
 </div>

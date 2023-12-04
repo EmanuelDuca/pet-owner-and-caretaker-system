@@ -6,8 +6,7 @@
 @inject IAuthService AuthService
 @inject IPexelsService ImageService
 @inject ILocalStorageService LocalStorageService
-
-
+@inject Notification notification
 
 <style>
     article::before{
@@ -80,6 +79,9 @@
 </div>
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    
     private string? username;
     private string? email;
     private string? password;
@@ -121,6 +123,7 @@
                 Detail = e.Message
             });
         }
+        await notification.Update(await AuthState, AuthService);
     }
 
     private void HandleEmptyFields()
