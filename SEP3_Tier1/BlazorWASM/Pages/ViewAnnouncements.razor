@@ -5,6 +5,7 @@
 @using Blazored.LocalStorage
 @using Newtonsoft.Json
 @using System.Security.Claims
+@using Domain.Models.Enums
 @inject IAnnouncementService AnnouncementService
 @inject ILocalStorageService LocalStorageService
 @inject IPexelsService ImageService
@@ -60,7 +61,7 @@
             @foreach (var announcement in announcements!)
             {
                 <AnnouncementComponent 
-                    Announcement="announcement" OnClickCallback="OfferServiceRequest"/>
+                    Announcement="announcement" OnClickCallback="() => OfferServiceRequest(announcement)"/>
             }
         }
     </div>
@@ -80,8 +81,8 @@
     
     private DateTime? startDate;
     private DateTime? endDate;
-    private String postalCode;
-    private String userName;
+    private string postalCode;
+    private string userName;
 
     private bool IsFilterShown
     {
@@ -144,10 +145,49 @@
         announcements = (await AnnouncementService.GetAsync(dto)).ToList();
         //Console.WriteLine(JsonConvert.SerializeObject(announcements));
     }
-    
-    private async Task OfferServiceRequest()
+
+    private async Task OfferServiceRequest(Announcement announcement)
     {
         
-        Console.WriteLine("Button clicked in ParentComponent!");
+        CreateRequestServiceDto dto = new CreateRequestServiceDto
+        {
+            InitiatorEmail = OwnerEmail,
+            AnnouncementId = announcement.Id,
+            RequestEnum = (int)RequestEnum.SENT,
+            CreationDateTime = DateTime.Now,
+        };
+        
+        try
+        {
+            await AnnouncementService.CreateRequest(dto);
+            SuccessMessage("Profile was deleted");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            ErrorMessage(e);
+        }
+        
+    Console.WriteLine($"Announcement name: {JsonConvert.SerializeObject(announcement)}");
+    }
+    
+    private void SuccessMessage(String message)
+    {
+        NotificationService.Notify(new NotificationMessage()
+        {
+            Severity = NotificationSeverity.Success,
+            Duration = 6000,
+            Detail = message
+        });
+    }
+
+    private void ErrorMessage(Exception e)
+    {
+        NotificationService.Notify(new NotificationMessage()
+        {
+            Severity = NotificationSeverity.Error,
+            Duration = 6000,
+            Detail = e.Message
+        });
     }
 }

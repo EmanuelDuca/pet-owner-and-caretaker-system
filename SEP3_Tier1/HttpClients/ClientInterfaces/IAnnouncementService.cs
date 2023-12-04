@@ -10,4 +10,5 @@ public interface IAnnouncementService
     Task UpdateAsync(UpdateAnnouncementDto dto);
     Task<Announcement> GetByIdAsync(int id);
     Task DeleteAsync(int id);
+    Task CreateRequest(CreateRequestServiceDto dto);
 }
