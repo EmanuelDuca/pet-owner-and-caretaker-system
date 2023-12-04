@@ -155,7 +155,7 @@ public class UserGrpcServiceTest {
                 .stream().map(d -> new CaretakerDatePeriod(
                         getUser(d.getCaretakerEmail()),
                         TimestampConverter.toLocalDate(d.getStartDate()),
-                        TimestampConverter.toLocalDate(d.getStartDate())
+                        TimestampConverter.toLocalDate(d.getEndDate())
                         )
                 ).toList();
     }
@@ -337,7 +337,11 @@ public class UserGrpcServiceTest {
     @Test
     void addDatePeriodToScheduleOfCaretaker_GivenDatePeriodOverlapsExisting_HappyCase_Test()
     {
-        assertThrows(StatusRuntimeException.class, () -> getSchedule(LocalDate.now().getMonthValue()));
+        createUser(careTaker);
+        awaitCompletion(userExists(careTaker));
+        assertTrue(userExists(careTaker));
+
+        assertTrue(getSchedule(LocalDate.now().getMonthValue()).isEmpty());
 
         existingPeriod.setStartDate(LocalDate.now().withDayOfMonth(3));
         existingPeriod.setEndDate(LocalDate.now().withDayOfMonth(18));
@@ -360,32 +364,118 @@ public class UserGrpcServiceTest {
     }
 
     @Test
-    void addDatePeriodToScheduleOfCaretaker_BadCase_Test()
+    void addDatePeriodToScheduleOfCaretaker_GivenDatePeriodCoversExisting_HappyCase_Test()
     {
-        fail();
+        createUser(careTaker);
+        awaitCompletion(userExists(careTaker));
+        assertTrue(userExists(careTaker));
+
+        assertTrue(getSchedule(LocalDate.now().getMonthValue()).isEmpty());
+
+        existingPeriod.setStartDate(LocalDate.now().withDayOfMonth(3));
+        existingPeriod.setEndDate(LocalDate.now().withDayOfMonth(12));
+        assertDoesNotThrow(() -> addDatePeriod(existingPeriod));
+        assertEquals(1, getSchedule(LocalDate.now().getMonthValue()).size());
+
+
+        givenPeriod.setStartDate(LocalDate.now().withDayOfMonth(1));
+        givenPeriod.setEndDate(LocalDate.now().withDayOfMonth(14));
+        assertDoesNotThrow(() -> addDatePeriod(givenPeriod));
+        assertEquals(1, getSchedule(LocalDate.now().getMonthValue()).size());
+
+        var resultPeriod = getSchedule(LocalDate.now().getMonthValue()).stream()
+                .findFirst().orElseThrow();
+        assertEquals(1, resultPeriod.getStartDate().getDayOfMonth());
+        assertEquals(14, resultPeriod.getEndDate().getDayOfMonth());
+
+        deleteDatePeriod(givenPeriod);
+        assertEquals(0, getSchedule(LocalDate.now().getMonthValue()).size());
     }
 
     @Test
-    void deleteDatePeriodFromScheduleOfCaretaker_HappyCase_Test()
+    void addDatePeriodToScheduleOfCaretaker_BadCase_Test()
     {
-        fail();
+        createUser(petOwner);
+        awaitCompletion(userExists(petOwner));
+        assertTrue(userExists(petOwner));
+
+        existingPeriod.setStartDate(LocalDate.now().withDayOfMonth(3));
+        existingPeriod.setEndDate(LocalDate.now().withDayOfMonth(12));
+
+        assertThrows(StatusRuntimeException.class, () -> addDatePeriod(existingPeriod));
+    }
+
+    @Test
+    void deleteDatePeriodFromScheduleOfCaretaker_NoConflictsWithExisting_HappyCase_Test()
+    {
+        createUser(careTaker);
+        awaitCompletion(userExists(careTaker));
+        assertTrue(userExists(careTaker));
+
+        assertTrue(getSchedule(LocalDate.now().getMonthValue()).isEmpty());
+
+        existingPeriod.setStartDate(LocalDate.now().withDayOfMonth(3));
+        existingPeriod.setEndDate(LocalDate.now().withDayOfMonth(12));
+        assertDoesNotThrow(() -> addDatePeriod(existingPeriod));
+        assertEquals(1, getSchedule(LocalDate.now().getMonthValue()).size());
+
+        deleteDatePeriod(existingPeriod);
+        assertEquals(0, getSchedule(LocalDate.now().getMonthValue()).size());
+    }
+
+    @Test
+    void deleteDatePeriodFromScheduleOfCaretaker_GivenDatePeriodOverlapsExisting_HappyCase_Test()
+    {
+        createUser(careTaker);
+        awaitCompletion(userExists(careTaker));
+        assertTrue(userExists(careTaker));
+
+        assertTrue(getSchedule(LocalDate.now().getMonthValue()).isEmpty());
+
+        existingPeriod.setStartDate(LocalDate.now().withDayOfMonth(3));
+        existingPeriod.setEndDate(LocalDate.now().withDayOfMonth(12));
+        assertDoesNotThrow(() -> addDatePeriod(existingPeriod));
+        assertEquals(1, getSchedule(LocalDate.now().getMonthValue()).size());
+
+
+        givenPeriod.setStartDate(LocalDate.now().withDayOfMonth(6));
+        givenPeriod.setEndDate(LocalDate.now().withDayOfMonth(21));
+        deleteDatePeriod(givenPeriod);
+
+        var resultPeriod = getSchedule(LocalDate.now().getMonthValue()).stream()
+                .findFirst().orElseThrow();
+        assertEquals(3, resultPeriod.getStartDate().getDayOfMonth());
+        assertEquals(5, resultPeriod.getEndDate().getDayOfMonth());
     }
 
     @Test
     void deleteDatePeriodFromScheduleOfCaretaker_BadCase_Test()
     {
-        fail();
+        createUser(petOwner);
+        awaitCompletion(userExists(petOwner));
+        assertTrue(userExists(petOwner));
+
+        existingPeriod.setStartDate(LocalDate.now().withDayOfMonth(3));
+        existingPeriod.setEndDate(LocalDate.now().withDayOfMonth(12));
+
+        assertThrows(StatusRuntimeException.class, () -> deleteDatePeriod(existingPeriod));
     }
 
     @Test
     void getSchedule_HappyCase_Test()
     {
-        fail();
-    }
+        createUser(careTaker);
+        awaitCompletion(userExists(careTaker));
+        assertTrue(userExists(careTaker));
 
-    @Test
-    void getSchedule_BadCase_Test()
-    {
-        fail();
+        existingPeriod.setStartDate(LocalDate.now().withMonth(3));
+        existingPeriod.setEndDate(LocalDate.now().withMonth(3).plusDays(5));
+        addDatePeriod(existingPeriod);
+
+        givenPeriod.setStartDate(LocalDate.now().withMonth(4));
+        givenPeriod.setEndDate(LocalDate.now().withMonth(4).plusDays(5));
+        addDatePeriod(existingPeriod);
+
+        assertEquals(1, getSchedule(3).size());
     }
 }
