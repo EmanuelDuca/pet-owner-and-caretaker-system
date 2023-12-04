@@ -1,7 +1,7 @@
 package dk.via.sep3.mappers;
 
 
-import dk.via.sep3.shared.PetEntity;
+import dk.via.sep3.model.PetEntity;
 import origin.protobuf.*;
 
 public class PetMapper

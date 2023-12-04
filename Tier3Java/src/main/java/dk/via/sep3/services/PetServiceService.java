@@ -7,7 +7,7 @@ import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.FeedbackMapper;
 import dk.via.sep3.mappers.PetServiceMapper;
 import dk.via.sep3.mappers.PetServiceRequestMapper;
-import dk.via.sep3.shared.*;
+import dk.via.sep3.model.*;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
         UserEntity initiator = userDao.findUser(request.getInitiatorEmail());
         UserEntity recipient = userDao.findUser(request.getRecipientEmail());
         AnnouncementEntity announcement = announcementDAO.getAnnouncement(request.getAnnouncementId());
-        var serviceRequest = careServiceRequestDAO.createServiceRequest(new PetServiceRequestEntity(initiator,recipient,announcement));
+        var serviceRequest = careServiceRequestDAO.createServiceRequest(new RequestEntity(initiator,recipient,announcement));
 
         if(serviceRequest == null)
             responseObserver.onError(GrpcError.constructException("Can't offer care service"));
@@ -60,7 +60,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     public void acceptStartService(FindRequestServiceProto request, StreamObserver<Void> responseObserver)
     {
         careServiceRequestDAO.confirmServiceRequest(request.getRequestId());
-        PetServiceRequestEntity serviceRequest = careServiceRequestDAO.getServiceRequestById(request.getRequestId());
+        RequestEntity serviceRequest = careServiceRequestDAO.getServiceRequestById(request.getRequestId());
         UserEntity initiator = userDao.findUser(serviceRequest.getInitiator().getEmail());
         UserEntity recipient = userDao.findUser(serviceRequest.getRecipient().getEmail());
 
@@ -79,7 +79,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
         }
 
 
-        careServiceDAO.createService(new PetServiceEntity(
+        careServiceDAO.createService(new ServiceEntity(
                 careTaker,
                 petOwner,
                 serviceRequest.getAnnouncement()
@@ -104,7 +104,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     @Transactional
     public void searchRequestServices(FindAnnouncementProto request, StreamObserver<RequestServicesProto> responseObserver)
     {
-        Collection<PetServiceRequestEntity> requests = careServiceRequestDAO.searchServiceRequests(request.getId());
+        Collection<RequestEntity> requests = careServiceRequestDAO.searchServiceRequests(request.getId());
 
         if (requests.isEmpty())
         {
@@ -124,7 +124,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     @Transactional
     public void searchServices(SearchServiceProto request, StreamObserver<ServicesProto> responseObserver)
     {
-        Collection<PetServiceEntity> services = careServiceDAO.searchServices(
+        Collection<ServiceEntity> services = careServiceDAO.searchServices(
                 userDao.findUser(request.getCaretakerEmail()),
                 userDao.findUser(request.getPetOwnerEmail()),
                 request.getStatus()

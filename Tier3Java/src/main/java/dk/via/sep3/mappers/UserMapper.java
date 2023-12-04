@@ -2,7 +2,7 @@ package dk.via.sep3.mappers;
 
 import com.google.protobuf.Int32Value;
 import com.google.protobuf.StringValue;
-import dk.via.sep3.shared.UserEntity;
+import dk.via.sep3.model.UserEntity;
 import origin.protobuf.UserProto;
 
 public class UserMapper {

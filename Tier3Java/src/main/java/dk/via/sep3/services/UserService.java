@@ -3,7 +3,7 @@ package dk.via.sep3.services;
 import com.google.common.base.Strings;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.UserMapper;
-import dk.via.sep3.shared.UserEntity;
+import dk.via.sep3.model.UserEntity;
 import dk.via.sep3.utils.TimestampConverter;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
