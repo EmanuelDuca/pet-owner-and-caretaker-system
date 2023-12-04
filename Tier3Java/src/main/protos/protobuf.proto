@@ -29,9 +29,11 @@ service ServiceService{
   rpc AcceptStartService(FindRequestServiceProto) returns (Void);
   rpc DenyStartService(FindRequestServiceProto) returns (Void);
   rpc EndService(FindServiceProto) returns (Void);
+
   rpc SearchRequestServices(FindAnnouncementProto) returns (RequestServicesProto);
   rpc SearchServices(SearchServiceProto) returns (ServicesProto);
   rpc FindService(FindServiceProto) returns (ServiceProto);
+
   rpc AddFeedback(FeedbackProto) returns (Void);
   rpc DeleteFeedback(FindFeedbackProto) returns (Void);
   rpc SearchFeedbacks(FindUserProto) returns (FeedbacksProto);
