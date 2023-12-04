@@ -4,7 +4,7 @@ import com.google.common.base.Strings;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.UserMapper;
 import dk.via.sep3.shared.UserEntity;
-import io.grpc.Status;
+import dk.via.sep3.utils.TimestampConverter;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import origin.protobuf.UserProto;
 import origin.protobuf.Void;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Collection;
 
 @GRpcService
@@ -30,12 +29,16 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     }
 
 
+    @Override
+    @Transactional
     public void createUser(UserProto request, StreamObserver<UserProto> responseObserver) {
-        UserEntity user = UserMapper.mapToShared(request);
+        UserEntity user = UserMapper.mapToEntity(request);
+
         if (userDAO.findUser(user.getEmail()) == null)
         {
             UserEntity createdUser = userDAO.registerUser(user);
-            responseObserver.onNext(UserMapper.mapProto(createdUser));
+            System.out.println(createdUser.getUserType());
+            responseObserver.onNext(UserMapper.mapToProto(createdUser));
             responseObserver.onCompleted();
             return;
         }
@@ -50,7 +53,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         UserEntity loginUser = userDAO.loginUser(request.getEmail(), request.getPassword());
         if (loginUser != null)
         {
-            responseObserver.onNext(UserMapper.mapProto(loginUser));
+            responseObserver.onNext(UserMapper.mapToProto(loginUser));
             responseObserver.onCompleted();
             return;
         }
@@ -58,13 +61,13 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         responseObserver.onError(GrpcError.constructException("Username or password are incorrect."));
 
     }
-    @Transactional
     @Override
+    @Transactional
     public void findUser(FindUserProto request, StreamObserver<UserProto> responseObserver) {
         UserEntity userToFind = userDAO.findUser(request.getEmail());
         if (userToFind != null)
         {
-            responseObserver.onNext(UserMapper.mapProto(userToFind));
+            responseObserver.onNext(UserMapper.mapToProto(userToFind));
             responseObserver.onCompleted();
             return;
         }
@@ -83,7 +86,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
             return;
         }
 
-        var filteredUsers = users.stream().map(UserMapper::mapProto).toList();
+        var filteredUsers = users.stream().map(UserMapper::mapToProto).toList();
 
         UsersProto usersItems = UsersProto.newBuilder().addAllUsers(filteredUsers).build();
 
@@ -115,6 +118,9 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         if(!Strings.isNullOrEmpty(request.getUsername()))
             user.setUsername(request.getUsername());
 
+        if(!Strings.isNullOrEmpty(request.getPassword()))
+            user.setPassword(request.getPassword());
+
 
         var updatedUser = userDAO.updateUserInformation(user);
         if(updatedUser == null)
@@ -123,14 +129,87 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
             return;
         }
 
-        responseObserver.onNext(UserMapper.mapProto(updatedUser));
+        responseObserver.onNext(UserMapper.mapToProto(updatedUser));
         responseObserver.onCompleted();
     }
 
     @Override
-    public void deleteUser(FindUserProto request, StreamObserver<Void> responseObserver) {
+    public void deleteUser(FindUserProto request, StreamObserver<Void> responseObserver)
+    {
+        if(userDAO.findUser(request.getEmail()) == null)
+        {
+            responseObserver.onError(GrpcError.constructException("User was not deleted, because it doesn't exist."));
+            return;
+        }
 
+        userDAO.deleteUser(request.getEmail());
+        responseObserver.onNext(Void.newBuilder().build());
+        responseObserver.onCompleted();
     }
 
+    @Override
+    @Transactional
+    public void addDatePeriodToScheduleOfCaretaker(DatePeriodOfCaretaker request, StreamObserver<Void> responseObserver)
+    {
+        boolean isAdded = userDAO.addDatePeriodToScheduleOfCaretaker(
+                request.getCaretakerEmail(),
+                TimestampConverter.toLocalDate(request.getStartDate()),
+                TimestampConverter.toLocalDate(request.getEndDate())
+                );
 
+        if(!isAdded)
+        {
+            responseObserver.onError(GrpcError.constructException("Time period was not added to the schedule"));
+            return;
+        }
+
+        responseObserver.onNext(Void.newBuilder().build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void deleteDatePeriodToScheduleOfCaretaker(DatePeriodOfCaretaker request, StreamObserver<Void> responseObserver)
+    {
+        boolean isDeleted = userDAO.deleteDatePeriodFromScheduleOfCaretaker(
+                request.getCaretakerEmail(),
+                TimestampConverter.toLocalDate(request.getStartDate()),
+                TimestampConverter.toLocalDate(request.getEndDate())
+        );
+
+        if(!isDeleted)
+        {
+            responseObserver.onError(GrpcError.constructException("Time period was not deleted from the schedule"));
+            return;
+        }
+
+        responseObserver.onNext(Void.newBuilder().build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    @Transactional
+    public void getScheduleOfCaretaker(CareTakerScheduleRequest request, StreamObserver<CaretakerSchedule> responseObserver)
+    {
+        var result = userDAO.getSchedule(request.getCaretakerEmail(), request.getMonth());
+
+        if(result == null)
+        {
+            responseObserver.onError(GrpcError.constructException("Can't get schedule"));
+            return;
+        }
+
+        responseObserver.onNext(CaretakerSchedule.newBuilder()
+                .addAllSchedule(
+                        result.stream().map(dp ->
+                            DatePeriodOfCaretaker.newBuilder()
+                                    .setCaretakerEmail(dp.getCareTaker().getEmail())
+                                    .setStartDate(TimestampConverter.fromLocalDate(dp.getStartDate()))
+                                    .setEndDate(TimestampConverter.fromLocalDate(dp.getEndDate()))
+                                    .build()
+                        ).toList()
+                )
+                .build()
+        );
+        responseObserver.onCompleted();
+    }
 }

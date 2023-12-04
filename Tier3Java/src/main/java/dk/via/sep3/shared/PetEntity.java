@@ -15,6 +15,7 @@ public class PetEntity {
     private boolean isVaccinated;
     private String description = "";
     @ManyToOne
+    @JoinColumn(name = "pet_owner_email", referencedColumnName = "email")
     private UserEntity petOwner;
 
 
