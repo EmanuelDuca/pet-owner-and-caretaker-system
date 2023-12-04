@@ -1,0 +1,11 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=be866998_002D3854_002D4d7f_002D93c6_002Da0bcf4fe211f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="LoginAsync_ValidCredentials_ShouldSetJwtAndInvokeAuthStateChanged #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::2AD71005-C62F-44E4-97C2-A21825692021::net7.0::TestHttpClients.Tests.LoginAsync_ValidCredentials_ShouldSetJwtAndInvokeAuthStateChanged&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cf72b6bd_002D8375_002D4ac5_002Db16d_002Db2866622fd06/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="LoginAsync_ValidCredentials_ShouldSetJwtAndInvokeAuthStateChanged" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::2AD71005-C62F-44E4-97C2-A21825692021::net7.0::TestHttpClients.Tests.LoginAsync_ValidCredentials_ShouldSetJwtAndInvokeAuthStateChanged&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

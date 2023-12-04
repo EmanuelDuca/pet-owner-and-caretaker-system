@@ -14,4 +14,5 @@ public interface IAuthService
     Task EditProfile(UserEditDto dto);
     Task DeleteProfile(string email);
     Action<ClaimsPrincipal> OnAuthStateChanged { get; set; }
+    
 }
