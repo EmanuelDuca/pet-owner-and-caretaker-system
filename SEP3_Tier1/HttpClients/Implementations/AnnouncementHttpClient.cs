@@ -53,7 +53,7 @@ public class AnnouncementHttpClient : IAnnouncementService
         await HttpClientHelper.HandleResponse(response);    
     }
 
-    public async Task CreateRequest(CreateRequestServiceDto dto)
+    public async Task CreateRequest(CreateOfferCareDto dto)
     {
         HttpResponseMessage response = await client.PatchAsJsonAsync($"{START_URI}/request", dto);
         await HttpClientHelper.HandleResponse(response);
