@@ -1,0 +1,52 @@
+@page "/ManageServices"
+@using HttpClients.ClientInterfaces
+@using Domain.Models
+@using System.Security.Claims
+@inject IAnnouncementService AnnouncementService
+@inject NavigationManager navMgr
+@attribute [Authorize]
+
+
+@if (username == null)
+{
+    <label>Loading...</label>
+}
+else
+{
+    <AuthorizeView>
+        <div class="MyProfile-header">
+            <div class="card" @onclick='() => navMgr.NavigateTo($"/MyProfile")'>
+                <RadzenImage Path="https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-16-512.png" Style="width: 100px; height: 100px; border-radius: 50%;"/>
+                <div class="column" Gap="0">
+                    <h3>Salutations, @username !</h3>
+                </div>
+            </div>
+            <div class="card" @onclick='() => navMgr.NavigateTo($"/ManageProfile")' >
+                <RadzenImage Path="https://cdn-icons-png.flaticon.com/512/166/166256.png" Style="width: 100px; height: 100px; border-radius: 50%;"/>
+                <div class="column" Gap="0">
+                    <h3>Edit Profile</h3>
+                </div>
+            </div>
+            <div class="card selected" >
+                <RadzenImage Path="https://cdn-icons-png.flaticon.com/512/166/166256.png" Style="width: 100px; height: 100px; border-radius: 50%;"/>
+                <div class="column" Gap="0">
+                    <h3>Manage Services</h3>
+                </div>
+            </div>
+        </div>
+    </AuthorizeView>
+}
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    
+    private List<Announcement>? announcements;
+    public string? username;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthState;
+        username = authState.User.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value;
+    }
+}
