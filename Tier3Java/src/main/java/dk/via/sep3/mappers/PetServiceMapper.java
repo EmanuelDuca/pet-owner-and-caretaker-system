@@ -1,6 +1,6 @@
 package dk.via.sep3.mappers;
 
-import dk.via.sep3.shared.ServiceEntity;
+import dk.via.sep3.model.ServiceEntity;
 import origin.protobuf.ServiceProto;
 
 public class PetServiceMapper {

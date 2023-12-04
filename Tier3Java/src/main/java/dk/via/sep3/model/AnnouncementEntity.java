@@ -1,11 +1,7 @@
-package dk.via.sep3.shared;
+package dk.via.sep3.model;
 
-
-import com.google.protobuf.Timestamp;
-import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.time.LocalDateTime;
 
 @Entity

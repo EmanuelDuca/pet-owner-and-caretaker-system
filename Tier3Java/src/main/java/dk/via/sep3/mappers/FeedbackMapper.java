@@ -1,10 +1,7 @@
 package dk.via.sep3.mappers;
 
-import dk.via.sep3.shared.FeedbackEntity;
-import dk.via.sep3.shared.PetEntity;
-import dk.via.sep3.shared.UserEntity;
+import dk.via.sep3.model.FeedbackEntity;
 import origin.protobuf.FeedbackProto;
-import origin.protobuf.PetProto;
 
 public class FeedbackMapper
 {

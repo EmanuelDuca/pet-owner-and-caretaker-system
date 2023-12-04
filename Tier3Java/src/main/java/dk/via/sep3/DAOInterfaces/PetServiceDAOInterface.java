@@ -1,8 +1,8 @@
 package dk.via.sep3.DAOInterfaces;
 
-import dk.via.sep3.shared.FeedbackEntity;
-import dk.via.sep3.shared.ServiceEntity;
-import dk.via.sep3.shared.UserEntity;
+import dk.via.sep3.model.FeedbackEntity;
+import dk.via.sep3.model.ServiceEntity;
+import dk.via.sep3.model.UserEntity;
 import origin.protobuf.ServiceStatus;
 
 import java.util.Collection;

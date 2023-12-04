@@ -1,8 +1,8 @@
 package dk.via.sep3.DAOInterfaces;
 
 
-import dk.via.sep3.shared.CalendarEntity;
-import dk.via.sep3.shared.UserEntity;
+import dk.via.sep3.model.CalendarEntity;
+import dk.via.sep3.model.UserEntity;
 
 import java.time.LocalDate;
 import java.util.Collection;

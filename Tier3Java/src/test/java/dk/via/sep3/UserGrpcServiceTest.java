@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.protobuf.StringValue;
 import dk.via.sep3.mappers.UserMapper;
-import dk.via.sep3.shared.CalendarEntity;
-import dk.via.sep3.shared.UserEntity;
+import dk.via.sep3.model.CalendarEntity;
+import dk.via.sep3.model.UserEntity;
 import dk.via.sep3.utils.TimestampConverter;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;

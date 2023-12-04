@@ -3,8 +3,8 @@ package dk.via.sep3.DAO;
 import dk.via.sep3.DAOInterfaces.CaretakerScheduleRepository;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.repository.UserRepository;
-import dk.via.sep3.shared.CalendarEntity;
-import dk.via.sep3.shared.UserEntity;
+import dk.via.sep3.model.CalendarEntity;
+import dk.via.sep3.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
-import static dk.via.sep3.shared.CalendarEntity.*;
+import static dk.via.sep3.model.CalendarEntity.*;
 
 @Repository
 public class UserDAO implements UserDAOInterface {

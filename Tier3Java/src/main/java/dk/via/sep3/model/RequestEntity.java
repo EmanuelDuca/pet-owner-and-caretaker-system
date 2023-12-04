@@ -1,4 +1,4 @@
-package dk.via.sep3.shared;
+package dk.via.sep3.model;
 import origin.protobuf.ServiceRequestProto;
 
 import javax.persistence.*;

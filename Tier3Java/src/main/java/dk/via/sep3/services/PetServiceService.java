@@ -7,7 +7,7 @@ import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.FeedbackMapper;
 import dk.via.sep3.mappers.PetServiceMapper;
 import dk.via.sep3.mappers.PetServiceRequestMapper;
-import dk.via.sep3.shared.*;
+import dk.via.sep3.model.*;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;

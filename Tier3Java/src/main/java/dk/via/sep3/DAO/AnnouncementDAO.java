@@ -3,7 +3,7 @@ package dk.via.sep3.DAO;
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.repository.AnnouncementRepository;
 import dk.via.sep3.repository.PetRepository;
-import dk.via.sep3.shared.AnnouncementEntity;
+import dk.via.sep3.model.AnnouncementEntity;
 import dk.via.sep3.utils.TimestampConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

@@ -4,7 +4,7 @@ import dk.via.sep3.DAOInterfaces.PetServiceRequestDAOInterface;
 import dk.via.sep3.repository.AnnouncementRepository;
 import dk.via.sep3.repository.PetServiceRequestRepository;
 import dk.via.sep3.repository.UserRepository;
-import dk.via.sep3.shared.RequestEntity;
+import dk.via.sep3.model.RequestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import origin.protobuf.ServiceRequestProto;
