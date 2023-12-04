@@ -1,10 +1,10 @@
 package dk.via.sep3.DAOInterfaces;
 
 
+import dk.via.sep3.shared.CaretakerDatePeriod;
 import dk.via.sep3.shared.UserEntity;
-import origin.protobuf.SearchAnnouncementProto;
-import origin.protobuf.SearchUsersProto;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 public interface UserDAOInterface {
@@ -21,4 +21,9 @@ public interface UserDAOInterface {
     Collection<UserEntity> getAllUsers();
 
     Collection<UserEntity> getUsers(String userType);
+
+    boolean addDatePeriodToScheduleOfCaretaker(String caretakerEmail, LocalDate startDate, LocalDate endDate);
+
+    boolean deleteDatePeriodFromScheduleOfCaretaker(String caretakerEmail, LocalDate startDate, LocalDate endDate);
+    Collection<CaretakerDatePeriod> getSchedule(String caretakerEmail, int month);
 }

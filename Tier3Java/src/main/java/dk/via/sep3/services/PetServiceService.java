@@ -64,17 +64,20 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
         UserEntity initiator = userDao.findUser(serviceRequest.getInitiator().getEmail());
         UserEntity recipient = userDao.findUser(serviceRequest.getRecipient().getEmail());
 
-        CareTakerEntity careTaker;
-        PetOwnerEntity petOwner;
+        UserEntity careTaker;
+        UserEntity petOwner;
 
-        if (initiator instanceof CareTakerEntity) {
-            careTaker = (CareTakerEntity) initiator;
-            petOwner = (PetOwnerEntity) recipient;
+        if(initiator.getUserType().equals("CareTaker"))
+        {
+            careTaker = initiator;
+            petOwner = recipient;
         }
-        else {
-            petOwner = (PetOwnerEntity) initiator;
-            careTaker = (CareTakerEntity) recipient;
+        else
+        {
+            careTaker = recipient;
+            petOwner = initiator;
         }
+
 
         careServiceDAO.createService(new PetServiceEntity(
                 careTaker,
@@ -122,8 +125,8 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     public void searchServices(SearchServiceProto request, StreamObserver<ServicesProto> responseObserver)
     {
         Collection<PetServiceEntity> services = careServiceDAO.searchServices(
-                new CareTakerEntity(userDao.findUser(request.getCaretakerEmail())),
-                new PetOwnerEntity(userDao.findUser(request.getPetOwnerEmail())),
+                userDao.findUser(request.getCaretakerEmail()),
+                userDao.findUser(request.getPetOwnerEmail()),
                 request.getStatus()
         );
 
@@ -155,7 +158,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
 
         careServiceDAO.giveFeedback(new FeedbackEntity(
                 careServiceDAO.findServiceById(request.getService().getId()),
-                (CareTakerEntity) userDao.findUser(request.getCaretakerEmail()),
+                userDao.findUser(request.getCaretakerEmail()),
                 (short) request.getRating(),
                 request.getFeedback()));
     }
@@ -169,7 +172,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     @Override
     public void searchFeedbacks(FindUserProto request, StreamObserver<FeedbacksProto> responseObserver)
     {
-        var feedbacks = careServiceDAO.getFeedbacks((CareTakerEntity) userDao.findUser(request.getEmail()))
+        var feedbacks = careServiceDAO.getFeedbacks(userDao.findUser(request.getEmail()))
                 .stream()
                 .map(FeedbackMapper::mapToProto).toList();
 
