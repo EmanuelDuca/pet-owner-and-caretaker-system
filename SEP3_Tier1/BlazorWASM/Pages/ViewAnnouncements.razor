@@ -149,9 +149,9 @@
     private async Task OfferServiceRequest(Announcement announcement)
     {
         
-        CreateRequestServiceDto dto = new CreateRequestServiceDto
+        CreateOfferCareDto dto = new CreateOfferCareDto
         {
-            InitiatorEmail = OwnerEmail,
+            InitiatorId = OwnerEmail,
             AnnouncementId = announcement.Id,
             RequestEnum = (int)RequestEnum.SENT,
             CreationDateTime = DateTime.Now,
