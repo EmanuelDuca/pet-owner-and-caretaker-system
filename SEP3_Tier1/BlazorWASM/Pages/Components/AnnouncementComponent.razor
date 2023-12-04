@@ -32,7 +32,7 @@
         <div class="w-100">
             <RadzenText TextStyle="TextStyle.Body1">Service description: @Announcement.ServiceDescription</RadzenText>
         </div>
-        <RadzenButton>Offer your service</RadzenButton>
+        <RadzenButton Click="() => OnClick()">Offer your service</RadzenButton>
     </div>
 </div>
 
@@ -41,11 +41,19 @@
 
     [Parameter]
     public string ImageSrc { get; set; } = null;
+    
+    //The Code bellow is used for testing Create service
+    [Parameter] public EventCallback OnClickCallback { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
         ImageSrc = await ImageService.SearchPetImage(PetType.NameFromPetType(Announcement.Pet.PetType), 10);
+    }
+    
+    private async Task OnClick()
+    {
+        await OnClickCallback.InvokeAsync();
     }
 
 }

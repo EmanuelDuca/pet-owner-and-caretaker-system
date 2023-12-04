@@ -2,8 +2,8 @@
 
 public class CreateRequestServiceDto
 {
-    public int InitiatorId { get; set; }
-    public int RecipientId { get; set; }
+    public string InitiatorEmail { get; set; }
+    public string RecipientEmail { get; set; }
     public int Id { get; set; }
     public int AnnouncementId { get; set; }
     public int RequestEnum { get; set; }
