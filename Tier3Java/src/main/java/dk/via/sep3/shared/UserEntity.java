@@ -2,8 +2,6 @@ package dk.via.sep3.shared;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -28,7 +26,7 @@ public class UserEntity implements Serializable
     // if want to delete all related entities in related tables automatically
     // This cane be reached via next line
     @OneToMany(mappedBy = "careTaker", cascade = CascadeType.ALL, orphanRemoval = true)
-    protected Set<CaretakerDatePeriod> datePeriods;
+    protected Set<CalendarEntity> datePeriods;
 
 
     public UserEntity(String username, String password) {

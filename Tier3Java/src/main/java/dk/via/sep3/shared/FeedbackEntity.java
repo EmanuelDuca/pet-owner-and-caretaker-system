@@ -14,7 +14,7 @@ public class FeedbackEntity {
 
     @OneToOne
     @MapsId("serviceId")
-    private PetServiceEntity service;
+    private ServiceEntity service;
 
     @OneToOne
     @MapsId("caretakerEmail")
@@ -24,7 +24,7 @@ public class FeedbackEntity {
     private String feedback;
 
 
-    public FeedbackEntity(PetServiceEntity service, UserEntity caretaker, short rating, String feedback)
+    public FeedbackEntity(ServiceEntity service, UserEntity caretaker, short rating, String feedback)
     {
         this.service = service;
         this.caretaker = caretaker;
@@ -38,7 +38,7 @@ public class FeedbackEntity {
     }
 
 
-    public PetServiceEntity getService()
+    public ServiceEntity getService()
     {
         return service;
     }

@@ -4,10 +4,9 @@ import dk.via.sep3.DAOInterfaces.PetServiceRequestDAOInterface;
 import dk.via.sep3.repository.AnnouncementRepository;
 import dk.via.sep3.repository.PetServiceRequestRepository;
 import dk.via.sep3.repository.UserRepository;
-import dk.via.sep3.shared.PetServiceRequestEntity;
+import dk.via.sep3.shared.RequestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import origin.protobuf.SearchServiceProto;
 import origin.protobuf.ServiceRequestProto;
 
 import javax.transaction.Transactional;
@@ -29,7 +28,7 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
     }
     @Override
     @Transactional
-    public PetServiceRequestEntity createServiceRequest(PetServiceRequestEntity careServiceEntity)
+    public RequestEntity createServiceRequest(RequestEntity careServiceEntity)
     {
         if(!userRepository.existsById(careServiceEntity.getInitiator().getEmail())
         || !userRepository.existsById(careServiceEntity.getRecipient().getEmail())
@@ -41,7 +40,7 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
 
     @Override
     @Transactional
-    public Collection<PetServiceRequestEntity> searchServiceRequests(int announcementId)
+    public Collection<RequestEntity> searchServiceRequests(int announcementId)
     {
         return repository.findAll()
                 .stream()
@@ -77,7 +76,7 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
 
     @Override
     @Transactional
-    public PetServiceRequestEntity getServiceRequestById(int serviceRequestId)
+    public RequestEntity getServiceRequestById(int serviceRequestId)
     {
         return repository.getReferenceById(serviceRequestId);
     }

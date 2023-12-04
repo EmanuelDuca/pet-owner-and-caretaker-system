@@ -1,12 +1,10 @@
 package dk.via.sep3.mappers;
 
-import dk.via.sep3.shared.PetServiceEntity;
-import dk.via.sep3.shared.PetServiceRequestEntity;
+import dk.via.sep3.shared.ServiceEntity;
 import origin.protobuf.ServiceProto;
-import origin.protobuf.ServiceRequestProto;
 
 public class PetServiceMapper {
-    public static ServiceProto mapToProto(PetServiceEntity serviceEntity)
+    public static ServiceProto mapToProto(ServiceEntity serviceEntity)
     {
         return ServiceProto.newBuilder()
                 .setCaretakerEmail(serviceEntity.getCareTaker().getEmail())

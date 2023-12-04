@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.protobuf.StringValue;
 import dk.via.sep3.mappers.UserMapper;
-import dk.via.sep3.shared.CaretakerDatePeriod;
+import dk.via.sep3.shared.CalendarEntity;
 import dk.via.sep3.shared.UserEntity;
 import dk.via.sep3.utils.TimestampConverter;
 import io.grpc.ManagedChannel;
@@ -22,8 +22,8 @@ public class UserGrpcServiceTest {
     private static UserEntity careTaker;
     private static UserEntity petOwner;
 
-    private static CaretakerDatePeriod existingPeriod;
-    private static CaretakerDatePeriod givenPeriod;
+    private static CalendarEntity existingPeriod;
+    private static CalendarEntity givenPeriod;
 
     @BeforeAll
     public static void setUpClass() {
@@ -44,8 +44,8 @@ public class UserGrpcServiceTest {
         if(userExists(petOwner))
             deleteUser(petOwner);
 
-        existingPeriod = new CaretakerDatePeriod();
-        givenPeriod = new CaretakerDatePeriod();
+        existingPeriod = new CalendarEntity();
+        givenPeriod = new CalendarEntity();
         existingPeriod.setCareTaker(careTaker);
         givenPeriod.setCareTaker(careTaker);
     }
@@ -108,7 +108,7 @@ public class UserGrpcServiceTest {
         }
     }
 
-    private void addDatePeriod(CaretakerDatePeriod datePeriod)
+    private void addDatePeriod(CalendarEntity datePeriod)
     {
         var protoDatePeriod = DatePeriodOfCaretaker
                 .newBuilder()
@@ -120,7 +120,7 @@ public class UserGrpcServiceTest {
         userStub.addDatePeriodToScheduleOfCaretaker(protoDatePeriod);
     }
 
-    private void deleteDatePeriod(CaretakerDatePeriod datePeriod)
+    private void deleteDatePeriod(CalendarEntity datePeriod)
     {
         var protoDatePeriod = DatePeriodOfCaretaker
                 .newBuilder()
@@ -142,7 +142,7 @@ public class UserGrpcServiceTest {
         return UserMapper.mapToEntity(userStub.logIn(userProto));
     }
 
-    private Collection<CaretakerDatePeriod> getSchedule(int monthValue)
+    private Collection<CalendarEntity> getSchedule(int monthValue)
     {
         var protoRequest = CareTakerScheduleRequest
                 .newBuilder()
@@ -152,7 +152,7 @@ public class UserGrpcServiceTest {
 
         return userStub.getScheduleOfCaretaker(protoRequest)
                 .getScheduleList()
-                .stream().map(d -> new CaretakerDatePeriod(
+                .stream().map(d -> new CalendarEntity(
                         getUser(d.getCaretakerEmail()),
                         TimestampConverter.toLocalDate(d.getStartDate()),
                         TimestampConverter.toLocalDate(d.getEndDate())

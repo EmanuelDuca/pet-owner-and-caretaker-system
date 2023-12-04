@@ -3,7 +3,7 @@ package dk.via.sep3.DAO;
 import dk.via.sep3.DAOInterfaces.CaretakerScheduleRepository;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.repository.UserRepository;
-import dk.via.sep3.shared.CaretakerDatePeriod;
+import dk.via.sep3.shared.CalendarEntity;
 import dk.via.sep3.shared.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,9 +12,8 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static dk.via.sep3.shared.CaretakerDatePeriod.*;
+import static dk.via.sep3.shared.CalendarEntity.*;
 
 @Repository
 public class UserDAO implements UserDAOInterface {
@@ -100,11 +99,11 @@ public class UserDAO implements UserDAOInterface {
         if (user == null || !user.getUserType().equals("CareTaker"))
             return false;
 
-        List<CaretakerDatePeriod> existingDatePeriods = caretakerScheduleRepository.findAll().stream()
+        List<CalendarEntity> existingDatePeriods = caretakerScheduleRepository.findAll().stream()
                 .filter(period -> period.getCareTaker().getEmail().equals(caretakerEmail))
                 .toList();
 
-        for (CaretakerDatePeriod existingPeriod : existingDatePeriods) {
+        for (CalendarEntity existingPeriod : existingDatePeriods) {
 
             if (isPeriodWithinExisting(existingPeriod, startDate, endDate))
                 return true;
@@ -126,7 +125,7 @@ public class UserDAO implements UserDAOInterface {
             }
         }
 
-        caretakerScheduleRepository.save(new CaretakerDatePeriod(user, startDate, endDate));
+        caretakerScheduleRepository.save(new CalendarEntity(user, startDate, endDate));
         return true;
     }
 
@@ -137,18 +136,18 @@ public class UserDAO implements UserDAOInterface {
         if (user == null || !user.getUserType().equals("CareTaker"))
             return false;
 
-        List<CaretakerDatePeriod> existingDatePeriods = caretakerScheduleRepository.findAll().stream()
+        List<CalendarEntity> existingDatePeriods = caretakerScheduleRepository.findAll().stream()
                 .filter(period -> period.getCareTaker().getEmail().equals(caretakerEmail))
                 .toList();
 
-        for (CaretakerDatePeriod existingPeriod : existingDatePeriods)
+        for (CalendarEntity existingPeriod : existingDatePeriods)
         {
 
             if (isPeriodWithinExisting(existingPeriod, startDate, endDate))
             {
                 // Split the date period into two segments
-                CaretakerDatePeriod firstSegment = new CaretakerDatePeriod(existingPeriod.getCareTaker(), existingPeriod.getStartDate(), startDate.minusDays(1));
-                CaretakerDatePeriod secondSegment = new CaretakerDatePeriod(existingPeriod.getCareTaker(), endDate.plusDays(1), existingPeriod.getEndDate());
+                CalendarEntity firstSegment = new CalendarEntity(existingPeriod.getCareTaker(), existingPeriod.getStartDate(), startDate.minusDays(1));
+                CalendarEntity secondSegment = new CalendarEntity(existingPeriod.getCareTaker(), endDate.plusDays(1), existingPeriod.getEndDate());
 
                 caretakerScheduleRepository.save(firstSegment);
                 caretakerScheduleRepository.save(secondSegment);
@@ -176,7 +175,7 @@ public class UserDAO implements UserDAOInterface {
 
 
     @Override
-    public Collection<CaretakerDatePeriod> getSchedule(String caretakerEmail, int month)
+    public Collection<CalendarEntity> getSchedule(String caretakerEmail, int month)
     {
         var user = findUser(caretakerEmail);
         if (user == null || !user.getUserType().equals("CareTaker"))
