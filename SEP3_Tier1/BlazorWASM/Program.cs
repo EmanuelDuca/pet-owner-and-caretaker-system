@@ -26,7 +26,7 @@ builder.Services.AddScoped<IPexelsService, PexelsService>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementHttpClient>();
 builder.Services.AddScoped<IAuthService, JwtAuthAuthHttpService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
-builder.Services.AddScoped<Notification>();
+builder.Services.AddSingleton<Notification>();
 
 
 AuthorizationPolicies.AddPolicies(builder.Services);
