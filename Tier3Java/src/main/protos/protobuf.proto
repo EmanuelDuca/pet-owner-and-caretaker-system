@@ -162,13 +162,13 @@ message SearchUsersProto{
 }
 
 message SearchAnnouncementProto{
-  google.protobuf.StringValue petOwnerUsername = 1;
-  google.protobuf.Timestamp timeStart = 2;
-  google.protobuf.Timestamp timeFinish = 3;
-  google.protobuf.StringValue postalCode = 4;
-  google.protobuf.StringValue petType = 5;
-  google.protobuf.Int32Value petWeight = 6;
-  google.protobuf.BoolValue petIsVaccinated = 7;
+  google.protobuf.Timestamp timeStart = 1;
+  google.protobuf.Timestamp timeFinish = 2;
+  google.protobuf.StringValue postalCode = 3;
+  repeated google.protobuf.StringValue petTypes = 4;
+  google.protobuf.Int32Value petWeight = 5;
+  google.protobuf.BoolValue petIsVaccinated = 6;
+  google.protobuf.StringValue petOwnerEmail = 7;
 }
 
 message SearchServiceProto{

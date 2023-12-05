@@ -26,7 +26,7 @@ public class UserHttpClient : IUserService
 
     public async Task<IEnumerable<Pet>> GetPetsOfUser(string userEmail)
     {
-        HttpResponseMessage response = await client.GetAsync($"{START_URI}/pets");
+        HttpResponseMessage response = await client.GetAsync($"{START_URI}/pets/{userEmail}");
         string responseContent = await HttpClientHelper.HandleResponse(response);
         return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<Pet>>(responseContent);
     }

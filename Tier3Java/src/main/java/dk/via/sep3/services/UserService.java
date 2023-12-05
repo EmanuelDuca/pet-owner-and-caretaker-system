@@ -205,6 +205,8 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
             return;
         }
 
+        System.out.println(pets);
+
         var petsProto = pets.stream().map(PetMapper::mapToProto).toList();
 
         PetsProto petsItems = PetsProto.newBuilder().addAllPets(petsProto).build();

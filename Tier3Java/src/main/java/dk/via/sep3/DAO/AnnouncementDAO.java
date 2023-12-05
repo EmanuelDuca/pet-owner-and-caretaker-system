@@ -1,5 +1,6 @@
 package dk.via.sep3.DAO;
 
+import com.google.protobuf.StringValue;
 import dk.via.sep3.DAOInterfaces.AnnouncementDAOInterface;
 import dk.via.sep3.repository.AnnouncementRepository;
 import dk.via.sep3.repository.PetRepository;
@@ -65,8 +66,9 @@ public class AnnouncementDAO implements AnnouncementDAOInterface
     {
         return announcementRepository.findAll()
                 .stream()
-                .filter(a -> !searchDto.hasPetOwnerUsername() || searchDto.getPetOwnerUsername().getValue().equals(a.getPetOwner().getEmail()))
-                .filter(a -> !searchDto.hasPetType() || searchDto.getPetType().getValue().equals(a.getPet().getPetType()))
+                .filter(a -> !searchDto.hasPetOwnerEmail() || searchDto.getPetOwnerEmail().getValue().equals(a.getPetOwner().getEmail()))
+                .filter(a -> searchDto.getPetTypesCount() == 0 ||
+                        searchDto.getPetTypesList().contains(StringValue.of(a.getPet().getPetType())))
 
                 .filter(a -> !searchDto.hasTimeFinish() && !searchDto.hasTimeStart() ||
                             TimestampConverter.toLocalDateTime(searchDto.getTimeFinish()).isBefore(a.getFinishDate()) &&

@@ -10,6 +10,8 @@ public class SearchAnnouncementDto : SearchDto
     public string? DescriptionContains { get; set; }
     public string? PostalCode { get; set; }
     public string? UserEmail { get; set; }
+    public bool? IsVaccinated { get; set; }
+    public int? LessThanPetWeight { get; set; }
 
     public IEnumerable<PetType.Type>? PetTypes { get; set; }
 }
