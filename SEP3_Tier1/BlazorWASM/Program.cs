@@ -24,6 +24,7 @@ builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<IPexelsService, PexelsService>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementHttpClient>();
 builder.Services.AddScoped<IAuthService, JwtAuthAuthHttpService>();
+builder.Services.AddScoped<IUserService, UserHttpClient>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
 
 AuthorizationPolicies.AddPolicies(builder.Services);

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "shedules")
 public class CalendarEntity
 {
     @EmbeddedId
