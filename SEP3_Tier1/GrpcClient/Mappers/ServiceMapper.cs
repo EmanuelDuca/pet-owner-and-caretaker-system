@@ -43,6 +43,18 @@ public class ServiceMapper
         return serviceRequest;
     }
     
+    public async Task<Feedback> MapToEntity(FeedbackProto proto)
+    {
+        var feedback = new Feedback()
+        {
+            feedback = proto.Feedback,
+            rating = proto.Rating,
+            caretakerEmail = proto.CaretakerEmail,
+            serviceId = proto.ServiceId
+        };
+        return feedback;
+    }
+    
     public async Task<IEnumerable<Service>> MapToEntityList(ServicesProto proto)
     {
         return await Task.WhenAll(proto.Services
@@ -51,6 +63,11 @@ public class ServiceMapper
     public async Task<IEnumerable<ServiceRequest>> MapToEntityList(RequestServicesProto proto)
     {
         return await Task.WhenAll(proto.RequestServices
+            .Select(async requestService => await MapToEntity(requestService)));
+    }
+    public async Task<IEnumerable<Feedback>> MapToEntityList(FeedbacksProto proto)
+    {
+        return await Task.WhenAll(proto.Feedback
             .Select(async requestService => await MapToEntity(requestService)));
     }
 }

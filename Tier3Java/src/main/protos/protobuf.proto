@@ -114,7 +114,7 @@ message ServiceProto{
 message FeedbackProto{
   int32 serviceId = 1;
   string caretakerEmail = 2;
-  int32 rating = 3;
+  double rating = 3;
   string feedback= 4;
 }
 

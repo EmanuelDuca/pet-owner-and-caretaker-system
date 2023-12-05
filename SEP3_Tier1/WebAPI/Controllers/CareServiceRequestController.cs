@@ -60,7 +60,7 @@ public class CareServiceRequestController : ControllerBase
     {
         try
         {
-            await logic.AcceptOffer(requestId);
+            await logic.DenyOffer(requestId);
             // _hubContext.Clients.All.SendAsync("ReceiveMessage", "Change made");
             return Ok();
         }
@@ -76,8 +76,7 @@ public class CareServiceRequestController : ControllerBase
     {
         try
         {
-            await logic.AcceptOffer(serviceId);
-            // _hubContext.Clients.All.SendAsync("ReceiveMessage", "Change made");
+            await logic.EndOffer(serviceId);
             return Ok();
         }
         catch (Exception e)
@@ -87,6 +86,87 @@ public class CareServiceRequestController : ControllerBase
         }
     }
     
+    // GetRequestsAsync
+    [HttpPost("requests")]
+    public async Task<ActionResult> GetRequestsAsync([FromBody] int announcementId)
+    {
+        try
+        {
+            var services = await logic.GetRequestsAsync(announcementId);
+            return Ok(services);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    // GetServiceAsync
+    [HttpPost("service")]
+    public async Task<ActionResult> GetServiceAsync([FromBody] int serviceId)
+    {
+        try
+        {
+            var service = await logic.GetServiceAsync(serviceId);
+            return Ok(service);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    // AddFeedbackAsync
+    [HttpPost("feedback")]
+    public async Task<ActionResult> AddFeedbackAsync([FromBody] Feedback feedback)
+    {
+        try
+        {
+            await logic.AddFeedbackAsync(feedback);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    // DeleteFeedbackAsync
+    [HttpDelete("feedback")]
+    public async Task<ActionResult> DeleteFeedbackAsync([FromBody] int serviceId, string email)
+    {
+        try
+        {
+            await logic.DeleteFeedbackAsync(serviceId, email);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    // GetFeedbacks
+    [HttpGet("feedback")]
+    public async Task<ActionResult> GetFeedbacks([FromQuery] string email)
+    {
+        try
+        {
+            var feedbacks = await logic.GetFeedbacks(email);
+            return Ok(feedbacks);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    // GetServicesAsync
     [HttpPost("services")]
     public async Task<ActionResult> GetServicesAsync([FromBody] SearchServicesDto dto)
     {

@@ -94,12 +94,12 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
     {
         try
         {
-            await careRequestClient
+            var RequestServicesProto = await careRequestClient
                 .SearchRequestServicesAsync(new FindAnnouncementProto()
                 {
-                    //TODO
+                    Id = announcementId
                 });
-            return null;
+            return await mapper.MapToEntityList(RequestServicesProto);
         }
         catch (RpcException e)
         {
@@ -111,12 +111,12 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
     {
         try
         {
-            await careRequestClient
+            var proto = await careRequestClient
                 .FindServiceAsync(new FindServiceProto()
                 {
                     ServiceId = serviceId
                 });
-            return null; //TODO
+            return await mapper.MapToEntity(proto);
         }
         catch (RpcException e)
         {
@@ -147,17 +147,17 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
     }
     
-    public async Task AddFeedbackAsync(string feedback, int rating,  string email, int serviceId)
+    public async Task AddFeedbackAsync(Feedback feedback)
     {
         try
         {
             await careRequestClient
                 .AddFeedbackAsync(new FeedbackProto()
                 {
-                    Feedback = feedback,
-                    Rating = rating,
-                    ServiceId = serviceId,
-                    CaretakerEmail = email
+                    Feedback = feedback.feedback,
+                    Rating = feedback.rating,
+                    ServiceId = feedback.serviceId,
+                    CaretakerEmail = feedback.caretakerEmail
                 });
         }
         catch (RpcException e)
@@ -183,22 +183,20 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
     }
     
-    //Should be nullable as well,
-    public async Task GetFeedbacks(string email)
+    public async Task<IEnumerable<Feedback>> GetFeedbacks(string email)
     {
         try
         {
-            await careRequestClient
+            var protos = await careRequestClient
                 .SearchFeedbacksAsync(new FindUserProto()
                 {
                     Email = email
                 });
+            return await mapper.MapToEntityList(protos);
         }
         catch (RpcException e)
         {
             throw new Exception(e.Message);
         }
     }
-
-
 }
