@@ -1,33 +1,30 @@
-@page "/Login"
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs
+@using Blazored.LocalStorage
 @inject NavigationManager navMgr
 @inject IAuthService authService
 
+<style>
+    body{
+        background-image: url("img/login_background.jpg");
+            background-size: cover;
+    }
+    
+</style>
+
 <AuthorizeView>
     <NotAuthorized>
-        <div class="card">
-            <h3>Please login</h3>
-            <div class="field">
-                <label>Email :</label>
-                <input type="text" @bind="email"/>
+        <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+            <div class="row align-items-center g-lg-5 py-5">
+              <div class="col-lg-7 text-center text-lg-start">
+                <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Pet Mixer Software</h1>
+                <p class="col-lg-10 fs-4">A program that helps you to find somebody that can take care of your pet. Or you can be the person that can provide such a services.</p>
+              </div>
+              <div class="col-md-10 mx-auto col-lg-5">
+                <LoginView></LoginView>
+              </div>
             </div>
-            <div class="field">
-                <label style="text-align: center">Password:</label>
-                <input type="password" @bind="password"/>
-            </div>
-            @if (!string.IsNullOrEmpty(errorLabel))
-            {
-                <div class="field">
-                    <label style="color: red">
-                        @errorLabel
-                    </label>
-                </div>
-            }
-            <div class="field">
-                <button class="loginbtn" @onclick="LoginAsync">Log in</button>
-            </div>
-        </div>
+          </div>
     </NotAuthorized>
     <Authorized>
         <div class="card">
@@ -37,22 +34,5 @@
 </AuthorizeView>
 
 @code {
-    private string email;
-    private string password;
-    private string errorLabel;
-
-    private async Task LoginAsync()
-    {
-        errorLabel = "";
-        try
-        {
-            await authService.LoginAsync(new UserLoginDto(email, password));
-            navMgr.NavigateTo("/");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            errorLabel = $"Error: {e.Message}";
-        }
-    }
+    
 }

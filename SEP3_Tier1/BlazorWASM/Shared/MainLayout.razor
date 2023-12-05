@@ -1,21 +1,60 @@
 ﻿@inherits LayoutComponentBase
 @namespace BlazorWASM.Shared
 @using BlazorWASM.Pages
+@using System.Security.Claims
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu/>
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <Notification/>
-            <LoginButtons/>
+
+<AuthorizeView>
+    
+    <NotAuthorized>
+        <Login></Login>
+    </NotAuthorized>
+    
+    <Authorized>
+        <div class="page">
+            <div class="sidebar">
+                <NavMenu Actor="@context.User.Claims.First(claim => claim.Type.Equals(ClaimTypes.Actor)).Value"/>
+            </div>
+
+            <main>
+                <div class="top-row px-4">
+                    <Notification/>
+                    <LoginButtons/>
+                </div>
+
+                <article class="content px-4">
+                    @Body
+                </article>
+                <RadzenComponents/>
+            </main>
         </div>
+    </Authorized>
 
-        <article class="content px-4">
-            @Body
-        </article>
-        <RadzenComponents/>
-    </main>
-</div>
+</AuthorizeView>
+
+
+
+
+
+@code
+{
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+    }
+    
+    /*
+                @if (context.User.IsInRole("PetOwner"))
+                {
+                    <PetOwnerNavMenu/>
+                }
+                else if (context.User.IsInRole("CareTaker"))
+                {
+                    <CareTakerNavMenu/>
+                }*/
+}

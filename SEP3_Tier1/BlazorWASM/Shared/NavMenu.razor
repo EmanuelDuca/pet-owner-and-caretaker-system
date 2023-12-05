@@ -8,46 +8,60 @@
 </div>
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="CreateAnnouncement">
-                <span class="oi oi-plus" aria-hidden="true"></span> Create announcement
-            </NavLink>
-        </div>
-        
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="ViewAnnouncements">
-                <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Search announcements
-            </NavLink>
-        </div>
-        
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="MyProfile">
-                <span class="oi oi-person" aria-hidden="true"></span> My profile
-            </NavLink>
-        </div>
-        
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="MyProfile">
-                <span class="oi oi-people" aria-hidden="true"></span> Search caretakers
-            </NavLink>
-        </div>
-        
-         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="RemoteTest">
-                <span class="oi oi-ban" aria-hidden="true"></span> Test
-            </NavLink>
-        </div>
+        @if (Actor.Equals("PetOwner"))
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="CreateAnnouncement">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Create announcement
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="ViewAnnouncements">
+                    <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Search announcements
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="MyProfile">
+                    <span class="oi oi-person" aria-hidden="true"></span> My profile
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="MyProfile">
+                    <span class="oi oi-people" aria-hidden="true"></span> Search caretakers
+                </NavLink>
+            </div>
+        }
+        else if (Actor.Equals("CareTaker"))
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="ViewAnnouncements">
+                    <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Search announcements
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="MyProfile">
+                    <span class="oi oi-person" aria-hidden="true"></span> My profile
+                </NavLink>
+            </div>
+        }
     </nav>
 </div>
 
 @code {
+    [Parameter] 
+    public string Actor { get; set; }
+    
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;

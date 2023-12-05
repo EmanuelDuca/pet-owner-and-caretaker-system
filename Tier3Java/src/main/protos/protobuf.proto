@@ -11,25 +11,9 @@ service UserService{
   rpc SearchUsers(SearchUsersProto) returns (UsersProto);
   rpc UpdateUser(UserProto) returns (UserProto);
   rpc DeleteUser(FindUserProto) returns (Void);
-
-  rpc AddDatePeriodToScheduleOfCaretaker(DatePeriodOfCaretaker) returns (Void);
-  rpc DeleteDatePeriodToScheduleOfCaretaker(DatePeriodOfCaretaker) returns (Void);
-  rpc GetScheduleOfCaretaker(CareTakerScheduleRequest) returns (CaretakerSchedule);
-}
-
-message CareTakerScheduleRequest{
-  string caretakerEmail = 1;
-  int32 month = 2;
-}
-
-message CaretakerSchedule{
-  repeated DatePeriodOfCaretaker schedule = 1;
-}
-
-message DatePeriodOfCaretaker{
-  string caretakerEmail = 1;
-  google.protobuf.Timestamp startDate = 2;
-  google.protobuf.Timestamp endDate = 3;
+  rpc AddDatePeriodToScheduleOfCaretaker(DatePeriodProto) returns (Void);
+  rpc DeleteDatePeriodFromScheduleOfCaretaker(DatePeriodProto) returns (Void);
+  rpc GetScheduleOfCaretaker(FindCareTakerScheduleProto) returns (DatePeriodProto);
 }
 
 service AnnouncementService{
@@ -45,12 +29,26 @@ service ServiceService{
   rpc AcceptStartService(FindRequestServiceProto) returns (Void);
   rpc DenyStartService(FindRequestServiceProto) returns (Void);
   rpc EndService(FindServiceProto) returns (Void);
+
   rpc SearchRequestServices(FindAnnouncementProto) returns (RequestServicesProto);
   rpc SearchServices(SearchServiceProto) returns (ServicesProto);
   rpc FindService(FindServiceProto) returns (ServiceProto);
+
   rpc AddFeedback(FeedbackProto) returns (Void);
   rpc DeleteFeedback(FindFeedbackProto) returns (Void);
   rpc SearchFeedbacks(FindUserProto) returns (FeedbacksProto);
+}
+
+service NotificationService{
+  rpc AddCareTakerPreferencesService (Void) returns (Void);
+  rpc DeleteCareTakerPreferencesService (Void) returns (Void);
+  rpc UpdateCareTakerPreferencesService (Void) returns (Void);
+  rpc FindCareTakerPreferencesService (Void ) returns (Void);
+
+
+  rpc AddNotificationService (Void) returns (Void);
+  rpc DeleteNotificationService (Void) returns (Void);
+  rpc GetNotificationsService (Void) returns (Void);
 }
 
 message LoginUserProto{
@@ -123,6 +121,12 @@ enum ServiceStatus{
   DONE = 2;
 }
 
+message DatePeriodProto{
+  string caretakerEmail = 1;
+  google.protobuf.Timestamp startDate = 2;
+  google.protobuf.Timestamp endDate = 3;
+}
+
 message UsersProto{
   repeated UserProto users = 1;
 }
@@ -142,6 +146,10 @@ message ServicesProto{
 message FeedbacksProto
 {
   repeated FeedbackProto feedback=1;
+}
+
+message CaretakerSchedule{
+  repeated DatePeriodProto schedule = 1;
 }
 
 message SearchUsersProto{
@@ -185,6 +193,11 @@ message FindRequestServiceProto{
 message FindFeedbackProto{
   string caretakerEmail = 1;
   int32 serviceId = 2;
+}
+
+message FindCareTakerScheduleProto{
+  string caretakerEmail = 1;
+  int32 month = 2;
 }
 
 message Void{}

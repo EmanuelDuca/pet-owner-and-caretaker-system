@@ -105,6 +105,7 @@
             HandleEmptyFields();
             if (isLoginView)
                 await AuthService.LoginAsync(new UserLoginDto(email!, password!));
+                
             else
             {
                 string type = userType == 1 ? "PetOwner" : "CareTaker";

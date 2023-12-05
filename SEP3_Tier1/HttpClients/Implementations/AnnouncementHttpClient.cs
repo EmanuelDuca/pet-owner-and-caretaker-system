@@ -52,4 +52,10 @@ public class AnnouncementHttpClient : IAnnouncementService
         HttpResponseMessage response = await client.DeleteAsync($"{START_URI}/{id}");
         await HttpClientHelper.HandleResponse(response);    
     }
+
+    public async Task CreateRequest(CreateOfferCareDto dto)
+    {
+        HttpResponseMessage response = await client.PatchAsJsonAsync($"{START_URI}/communication/offer", dto);
+        await HttpClientHelper.HandleResponse(response);
+    }
 }
