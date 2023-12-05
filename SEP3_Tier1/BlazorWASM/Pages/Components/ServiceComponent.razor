@@ -1,0 +1,83 @@
+@using Domain.Models
+@using Domain.Models.Enums
+@using HttpClients.ClientInterfaces
+@inject IPexelsService ImageService
+
+<div class="card d-flex flex-row">
+    <div class="column">
+        @if (string.IsNullOrEmpty(ImageSrc))
+        {
+            <div class="rounded-image skeleton"></div>
+        }
+        else
+        {
+            <div class="rounded-image">
+                <img src="@ImageSrc" loading="lazy"/>
+            </div>
+        }
+    </div>
+    <div class="column announcement-data d-flex flex-column flex-grow-1">
+        <div class="inside-card">
+            <h3><span style="color: rgb(166,165,165);">Service for @Service.Announcement.Pet.PetType @Service.Announcement.Pet.PetName</span></h3>
+            <h4><span style="color: #9AD0C2;">@value</span></h4>
+            <RadzenText TextStyle="TextStyle.Body1">CareTaker: @Service.CareTaker.Email</RadzenText>
+            <div class="d-flex flex-row">
+                <div style="margin-right: 15px">PetType: @Service.Announcement.Pet.PetType</div>
+                <div>Pet Name: @Service.Announcement.Pet.PetName</div>
+            </div>
+            <RadzenText TextStyle="TextStyle.Body1">Postal Code: @Service.Announcement.PostalCode</RadzenText>
+            <div class="d-flex flex-row">
+                <div style="margin-right: 15px">From: @Service.Announcement.StartDate.ToShortDateString()</div>
+                <div>To: @(Service.Announcement.EndDate.ToShortDateString())</div>
+            </div>
+            <div class="w-100">
+                <RadzenText TextStyle="TextStyle.Body1">Service description: @Service.Announcement.ServiceDescription</RadzenText>
+            </div>
+        </div>
+        
+        <div>
+            <RadzenButton Click="() => OnClick()">End Service</RadzenButton>
+        </div>
+        
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Service Service { get; set; }
+    
+    [Parameter]
+    public string ImageSrc { get; set; } = null;
+    
+    string value = "Select State";
+    IEnumerable<string> companyNames;
+    
+    [Parameter] public EventCallback OnClickCallback { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        ImageSrc = await ImageService.SearchPetImage(PetType.NameFromPetType(Service.Announcement.Pet.PetType), 10);
+        companyNames = new[] { "Planned", "In Progress", "Done" };
+
+        switch (Service.Status)
+        {
+            case ServiceEnum.PLANNED:
+                value = "Planned";
+                break;
+            case ServiceEnum.IN_PROGRESS:
+                value = "In Progress";
+                break;
+            case ServiceEnum.DONE:
+                value = "Done";
+                break;
+        }
+    }
+    
+    private async Task OnClick()
+    {
+        await OnClickCallback.InvokeAsync();
+    }
+    
+    
+}
