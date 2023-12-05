@@ -1,5 +1,6 @@
 @inject IAnnouncementService announcementService
 @inject IAuthService AuthService
+@inject IUserService UserService
 @inject IJSRuntime JsRuntime
 @inject ILocalStorageService localStorageService
 
@@ -154,8 +155,6 @@
         ClaimsPrincipal user = authState.User;
         userClaims = user.Claims;
         ownerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
-    // userPets = ..
-
 
         announcementInputs.StartDate = DateTime.Today;
         announcementInputs.EndDate = DateTime.Today.AddDays(3);

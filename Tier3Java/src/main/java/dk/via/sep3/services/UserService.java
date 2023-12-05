@@ -189,6 +189,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     }
 
     @Override
+    @Transactional
     public void searchPets(FindUserProto request, StreamObserver<PetsProto> responseObserver)
     {
         Collection<PetEntity> pets = userDAO.getPets(request.getEmail());
