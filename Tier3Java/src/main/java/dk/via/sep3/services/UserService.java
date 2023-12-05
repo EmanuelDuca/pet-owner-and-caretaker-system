@@ -186,30 +186,35 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         responseObserver.onCompleted();
     }
 
-//    @Override
-//    @Transactional
-//    public void getScheduleOfCaretaker(FindCareTakerScheduleProto request, StreamObserver<DatePeriodProto> responseObserver)
-//    {
-//        var result = userDAO.getSchedule(request.getCaretakerEmail(), request.getMonth());
-//
-//        if(result == null)
-//        {
-//            responseObserver.onError(GrpcError.constructException("Can't get schedule"));
-//            return;
-//        }
-//
-//        responseObserver.onNext(DatePeriodProto.newBuilder()
-//                .addAllSchedule(
-//                        result.stream().map(dp ->
-//                                DatePeriodProto.newBuilder()
-//                                    .setCaretakerEmail(dp.getCareTaker().getEmail())
-//                                    .setStartDate(TimestampConverter.fromLocalDate(dp.getStartDate()))
-//                                    .setEndDate(TimestampConverter.fromLocalDate(dp.getEndDate()))
-//                                    .build()
-//                        ).toList()
-//                )
-//                .build()
-//        );
-//        responseObserver.onCompleted();
-//    }
+    @Override
+    public void searchPets(FindUserProto request, StreamObserver<PetsProto> responseObserver) {
+
+    }
+
+    @Override
+    @Transactional
+    public void getScheduleOfCaretaker(FindCareTakerScheduleProto request, StreamObserver<CaretakerSchedule> responseObserver)
+    {
+        var result = userDAO.getSchedule(request.getCaretakerEmail(), request.getMonth());
+
+        if(result == null)
+        {
+            responseObserver.onError(GrpcErrorService.constructException("Can't get schedule"));
+            return;
+        }
+
+        responseObserver.onNext(CaretakerSchedule.newBuilder()
+                .addAllSchedule(
+                        result.stream().map(dp ->
+                                DatePeriodProto.newBuilder()
+                                    .setCaretakerEmail(dp.getCareTaker().getEmail())
+                                    .setStartDate(TimestampConverter.fromLocalDate(dp.getStartDate()))
+                                    .setEndDate(TimestampConverter.fromLocalDate(dp.getEndDate()))
+                                    .build()
+                        ).toList()
+                )
+                .build()
+        );
+        responseObserver.onCompleted();
+    }
 }

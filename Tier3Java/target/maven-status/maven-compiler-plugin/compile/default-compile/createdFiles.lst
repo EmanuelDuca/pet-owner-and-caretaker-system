@@ -59,6 +59,7 @@ origin\protobuf\DatePeriodProto.class
 origin\protobuf\ServiceServiceGrpc$ServiceServiceImplBase.class
 origin\protobuf\AnnouncementServiceGrpc.class
 origin\protobuf\FindServiceProto.class
+origin\protobuf\PetsProtoOrBuilder.class
 dk\via\sep3\Sep3Application.class
 origin\protobuf\RequestServicesProto$1.class
 origin\protobuf\UserServiceGrpc$MethodHandlers.class
@@ -77,6 +78,7 @@ origin\protobuf\FeedbackProto$Builder.class
 origin\protobuf\LoginUserProto$Builder.class
 dk\via\sep3\utils\TimestampConverter.class
 origin\protobuf\ServiceRequestProto$Builder.class
+origin\protobuf\PetsProto$Builder.class
 origin\protobuf\ServiceServiceGrpc$ServiceServiceBlockingStub.class
 dk\via\sep3\repository\RequestRepository.class
 origin\protobuf\AnnouncementServiceGrpc$AnnouncementServiceBlockingStub.class
@@ -98,6 +100,7 @@ origin\protobuf\LoginUserProto$1.class
 origin\protobuf\ServiceProtoOrBuilder.class
 origin\protobuf\UserProto.class
 dk\via\sep3\DAOInterfaces\AnnouncementDAOInterface.class
+origin\protobuf\PetsProto.class
 origin\protobuf\UsersProtoOrBuilder.class
 origin\protobuf\FeedbacksProto$1.class
 origin\protobuf\FindServiceProtoOrBuilder.class
@@ -119,6 +122,7 @@ origin\protobuf\DatePeriodProtoOrBuilder.class
 origin\protobuf\SearchAnnouncementProto$Builder.class
 origin\protobuf\AnnouncementServiceGrpc$AnnouncementServiceStub.class
 dk\via\sep3\mappers\AnnouncementMapper.class
+origin\protobuf\PetsProto$1.class
 origin\protobuf\CaretakerSchedule$1.class
 dk\via\sep3\DAO\AnnouncementDAO.class
 origin\protobuf\ServiceProto$Builder.class

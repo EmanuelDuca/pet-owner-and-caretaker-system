@@ -110,7 +110,7 @@ public class UserGrpcServiceTest {
 
     private void addDatePeriod(CalendarEntity datePeriod)
     {
-        var protoDatePeriod = DatePeriodOfCaretaker
+        var protoDatePeriod = DatePeriodProto
                 .newBuilder()
                 .setCaretakerEmail(datePeriod.getCareTaker().getEmail())
                 .setStartDate(TimestampConverter.fromLocalDate(datePeriod.getStartDate()))
@@ -122,14 +122,14 @@ public class UserGrpcServiceTest {
 
     private void deleteDatePeriod(CalendarEntity datePeriod)
     {
-        var protoDatePeriod = DatePeriodOfCaretaker
+        var protoDatePeriod = DatePeriodProto
                 .newBuilder()
                 .setCaretakerEmail(datePeriod.getCareTaker().getEmail())
                 .setStartDate(TimestampConverter.fromLocalDate(datePeriod.getStartDate()))
                 .setEndDate(TimestampConverter.fromLocalDate(datePeriod.getEndDate()))
                 .build();
 
-        userStub.deleteDatePeriodToScheduleOfCaretaker(protoDatePeriod);
+        userStub.deleteDatePeriodFromScheduleOfCaretaker(protoDatePeriod);
     }
 
     private UserEntity loginUser(UserEntity user)
@@ -144,7 +144,7 @@ public class UserGrpcServiceTest {
 
     private Collection<CalendarEntity> getSchedule(int monthValue)
     {
-        var protoRequest = CareTakerScheduleRequest
+        var protoRequest = FindCareTakerScheduleProto
                 .newBuilder()
                 .setMonth(monthValue)
                 .setCaretakerEmail(careTaker.getEmail())

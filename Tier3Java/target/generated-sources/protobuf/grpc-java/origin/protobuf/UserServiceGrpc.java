@@ -100,6 +100,18 @@ public final class UserServiceGrpc {
               origin.protobuf.Void.getDefaultInstance()))
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
+  public static final io.grpc.MethodDescriptor<origin.protobuf.FindUserProto,
+      origin.protobuf.PetsProto> METHOD_SEARCH_PETS =
+      io.grpc.MethodDescriptor.<origin.protobuf.FindUserProto, origin.protobuf.PetsProto>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName(generateFullMethodName(
+              "UserService", "SearchPets"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              origin.protobuf.FindUserProto.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              origin.protobuf.PetsProto.getDefaultInstance()))
+          .build();
+  @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<origin.protobuf.DatePeriodProto,
       origin.protobuf.Void> METHOD_ADD_DATE_PERIOD_TO_SCHEDULE_OF_CARETAKER =
       io.grpc.MethodDescriptor.<origin.protobuf.DatePeriodProto, origin.protobuf.Void>newBuilder()
@@ -125,15 +137,15 @@ public final class UserServiceGrpc {
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<origin.protobuf.FindCareTakerScheduleProto,
-      origin.protobuf.DatePeriodProto> METHOD_GET_SCHEDULE_OF_CARETAKER =
-      io.grpc.MethodDescriptor.<origin.protobuf.FindCareTakerScheduleProto, origin.protobuf.DatePeriodProto>newBuilder()
+      origin.protobuf.CaretakerSchedule> METHOD_GET_SCHEDULE_OF_CARETAKER =
+      io.grpc.MethodDescriptor.<origin.protobuf.FindCareTakerScheduleProto, origin.protobuf.CaretakerSchedule>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
               "UserService", "GetScheduleOfCaretaker"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               origin.protobuf.FindCareTakerScheduleProto.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              origin.protobuf.DatePeriodProto.getDefaultInstance()))
+              origin.protobuf.CaretakerSchedule.getDefaultInstance()))
           .build();
 
   /**
@@ -207,6 +219,13 @@ public final class UserServiceGrpc {
 
     /**
      */
+    public void searchPets(origin.protobuf.FindUserProto request,
+        io.grpc.stub.StreamObserver<origin.protobuf.PetsProto> responseObserver) {
+      asyncUnimplementedUnaryCall(METHOD_SEARCH_PETS, responseObserver);
+    }
+
+    /**
+     */
     public void addDatePeriodToScheduleOfCaretaker(origin.protobuf.DatePeriodProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.Void> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_ADD_DATE_PERIOD_TO_SCHEDULE_OF_CARETAKER, responseObserver);
@@ -222,7 +241,7 @@ public final class UserServiceGrpc {
     /**
      */
     public void getScheduleOfCaretaker(origin.protobuf.FindCareTakerScheduleProto request,
-        io.grpc.stub.StreamObserver<origin.protobuf.DatePeriodProto> responseObserver) {
+        io.grpc.stub.StreamObserver<origin.protobuf.CaretakerSchedule> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_GET_SCHEDULE_OF_CARETAKER, responseObserver);
     }
 
@@ -271,6 +290,13 @@ public final class UserServiceGrpc {
                 origin.protobuf.Void>(
                   this, METHODID_DELETE_USER)))
           .addMethod(
+            METHOD_SEARCH_PETS,
+            asyncUnaryCall(
+              new MethodHandlers<
+                origin.protobuf.FindUserProto,
+                origin.protobuf.PetsProto>(
+                  this, METHODID_SEARCH_PETS)))
+          .addMethod(
             METHOD_ADD_DATE_PERIOD_TO_SCHEDULE_OF_CARETAKER,
             asyncUnaryCall(
               new MethodHandlers<
@@ -289,7 +315,7 @@ public final class UserServiceGrpc {
             asyncUnaryCall(
               new MethodHandlers<
                 origin.protobuf.FindCareTakerScheduleProto,
-                origin.protobuf.DatePeriodProto>(
+                origin.protobuf.CaretakerSchedule>(
                   this, METHODID_GET_SCHEDULE_OF_CARETAKER)))
           .build();
     }
@@ -363,6 +389,14 @@ public final class UserServiceGrpc {
 
     /**
      */
+    public void searchPets(origin.protobuf.FindUserProto request,
+        io.grpc.stub.StreamObserver<origin.protobuf.PetsProto> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(METHOD_SEARCH_PETS, getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
     public void addDatePeriodToScheduleOfCaretaker(origin.protobuf.DatePeriodProto request,
         io.grpc.stub.StreamObserver<origin.protobuf.Void> responseObserver) {
       asyncUnaryCall(
@@ -380,7 +414,7 @@ public final class UserServiceGrpc {
     /**
      */
     public void getScheduleOfCaretaker(origin.protobuf.FindCareTakerScheduleProto request,
-        io.grpc.stub.StreamObserver<origin.protobuf.DatePeriodProto> responseObserver) {
+        io.grpc.stub.StreamObserver<origin.protobuf.CaretakerSchedule> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_GET_SCHEDULE_OF_CARETAKER, getCallOptions()), request, responseObserver);
     }
@@ -448,6 +482,13 @@ public final class UserServiceGrpc {
 
     /**
      */
+    public origin.protobuf.PetsProto searchPets(origin.protobuf.FindUserProto request) {
+      return blockingUnaryCall(
+          getChannel(), METHOD_SEARCH_PETS, getCallOptions(), request);
+    }
+
+    /**
+     */
     public origin.protobuf.Void addDatePeriodToScheduleOfCaretaker(origin.protobuf.DatePeriodProto request) {
       return blockingUnaryCall(
           getChannel(), METHOD_ADD_DATE_PERIOD_TO_SCHEDULE_OF_CARETAKER, getCallOptions(), request);
@@ -462,7 +503,7 @@ public final class UserServiceGrpc {
 
     /**
      */
-    public origin.protobuf.DatePeriodProto getScheduleOfCaretaker(origin.protobuf.FindCareTakerScheduleProto request) {
+    public origin.protobuf.CaretakerSchedule getScheduleOfCaretaker(origin.protobuf.FindCareTakerScheduleProto request) {
       return blockingUnaryCall(
           getChannel(), METHOD_GET_SCHEDULE_OF_CARETAKER, getCallOptions(), request);
     }
@@ -536,6 +577,14 @@ public final class UserServiceGrpc {
 
     /**
      */
+    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.PetsProto> searchPets(
+        origin.protobuf.FindUserProto request) {
+      return futureUnaryCall(
+          getChannel().newCall(METHOD_SEARCH_PETS, getCallOptions()), request);
+    }
+
+    /**
+     */
     public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.Void> addDatePeriodToScheduleOfCaretaker(
         origin.protobuf.DatePeriodProto request) {
       return futureUnaryCall(
@@ -552,7 +601,7 @@ public final class UserServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.DatePeriodProto> getScheduleOfCaretaker(
+    public com.google.common.util.concurrent.ListenableFuture<origin.protobuf.CaretakerSchedule> getScheduleOfCaretaker(
         origin.protobuf.FindCareTakerScheduleProto request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_GET_SCHEDULE_OF_CARETAKER, getCallOptions()), request);
@@ -565,9 +614,10 @@ public final class UserServiceGrpc {
   private static final int METHODID_SEARCH_USERS = 3;
   private static final int METHODID_UPDATE_USER = 4;
   private static final int METHODID_DELETE_USER = 5;
-  private static final int METHODID_ADD_DATE_PERIOD_TO_SCHEDULE_OF_CARETAKER = 6;
-  private static final int METHODID_DELETE_DATE_PERIOD_FROM_SCHEDULE_OF_CARETAKER = 7;
-  private static final int METHODID_GET_SCHEDULE_OF_CARETAKER = 8;
+  private static final int METHODID_SEARCH_PETS = 6;
+  private static final int METHODID_ADD_DATE_PERIOD_TO_SCHEDULE_OF_CARETAKER = 7;
+  private static final int METHODID_DELETE_DATE_PERIOD_FROM_SCHEDULE_OF_CARETAKER = 8;
+  private static final int METHODID_GET_SCHEDULE_OF_CARETAKER = 9;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -610,6 +660,10 @@ public final class UserServiceGrpc {
           serviceImpl.deleteUser((origin.protobuf.FindUserProto) request,
               (io.grpc.stub.StreamObserver<origin.protobuf.Void>) responseObserver);
           break;
+        case METHODID_SEARCH_PETS:
+          serviceImpl.searchPets((origin.protobuf.FindUserProto) request,
+              (io.grpc.stub.StreamObserver<origin.protobuf.PetsProto>) responseObserver);
+          break;
         case METHODID_ADD_DATE_PERIOD_TO_SCHEDULE_OF_CARETAKER:
           serviceImpl.addDatePeriodToScheduleOfCaretaker((origin.protobuf.DatePeriodProto) request,
               (io.grpc.stub.StreamObserver<origin.protobuf.Void>) responseObserver);
@@ -620,7 +674,7 @@ public final class UserServiceGrpc {
           break;
         case METHODID_GET_SCHEDULE_OF_CARETAKER:
           serviceImpl.getScheduleOfCaretaker((origin.protobuf.FindCareTakerScheduleProto) request,
-              (io.grpc.stub.StreamObserver<origin.protobuf.DatePeriodProto>) responseObserver);
+              (io.grpc.stub.StreamObserver<origin.protobuf.CaretakerSchedule>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -661,6 +715,7 @@ public final class UserServiceGrpc {
               .addMethod(METHOD_SEARCH_USERS)
               .addMethod(METHOD_UPDATE_USER)
               .addMethod(METHOD_DELETE_USER)
+              .addMethod(METHOD_SEARCH_PETS)
               .addMethod(METHOD_ADD_DATE_PERIOD_TO_SCHEDULE_OF_CARETAKER)
               .addMethod(METHOD_DELETE_DATE_PERIOD_FROM_SCHEDULE_OF_CARETAKER)
               .addMethod(METHOD_GET_SCHEDULE_OF_CARETAKER)
