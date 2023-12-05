@@ -53,7 +53,70 @@
       "PhoneNumber": null,
       "Password": "password",
       "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "Dan",
+      "Age": null,
+      "Email": "dan@gmail.com",
+      "PhoneNumber": null,
+      "Password": "1111",
+      "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "Sevastian",
+      "Age": null,
+      "Email": "sevaS@gmail.com",
+      "PhoneNumber": null,
+      "Password": "111",
+      "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "Emanuel",
+      "Age": null,
+      "Email": "em@gmail.com",
+      "PhoneNumber": null,
+      "Password": "1111",
+      "Type": "CareTaker"
+    },
+    {
+      "Name": null,
+      "Username": "ivanova",
+      "Age": null,
+      "Email": "ivanova@gmail.com",
+      "PhoneNumber": null,
+      "Password": "1111",
+      "Type": "CareTaker"
     }
   ],
-  "Announcements": []
+  "Announcements": [
+    {
+      "Id": 1,
+      "PetOwner": {
+        "Name": null,
+        "Username": null,
+        "Age": 29,
+        "Email": "ionv@gmail.com",
+        "PhoneNumber": "123123123123",
+        "Password": "1111",
+        "Type": null
+      },
+      "StartDate": "2023-12-07T00:00:00",
+      "EndDate": "2023-12-09T00:00:00",
+      "PostalCode": "8700",
+      "ServiceDescription": "Some description",
+      "CreationDateTime": "2023-12-04T14:22:14.2908255+01:00",
+      "Pet": {
+        "Id": 0,
+        "PetName": "Maxim",
+        "PetType": 0,
+        "Weight": 8,
+        "IsVaccinated": false,
+        "Description": "description of Dog",
+        "PetOwner": null
+      }
+    }
+  ]
 }

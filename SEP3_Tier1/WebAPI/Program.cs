@@ -21,12 +21,12 @@ builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
 
 //When using GRPc
-// builder.Services.AddScoped<IUserDao, GrpcUserService>();
-// builder.Services.AddScoped<IAnnouncementDao, GrpcAnnouncementService>();
+builder.Services.AddScoped<IUserDao, GrpcUserService>();
+builder.Services.AddScoped<IAnnouncementDao, GrpcAnnouncementService>();
 
 //When savind to file
-builder.Services.AddScoped<IUserDao, UserFileDao>();
-builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
+// builder.Services.AddScoped<IUserDao, UserFileDao>();
+// builder.Services.AddScoped<IAnnouncementDao, AnnouncementFileDao>();
 
 
 
@@ -59,7 +59,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateAudience = true,
         ValidAudience = builder.Configuration["Jwt:Audience"],
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
 
@@ -68,6 +68,7 @@ AuthorizationPolicies.AddPolicies(builder.Services);
 
 var app = builder.Build();
 
+app.UseAuthentication();
 
 if (app.Environment.IsDevelopment())
 {
@@ -75,15 +76,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthentication();
-
-app.UseCors(policy => policy
-    .AllowAnyHeader()
+app.UseCors(x => x
     .AllowAnyMethod()
-    .AllowAnyOrigin());
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(d => true)
+    .AllowCredentials()
+);
 
-app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseHttpsRedirection();
+
 
 app.MapControllers();
 app.MapHub<MyHub>("myhub");
