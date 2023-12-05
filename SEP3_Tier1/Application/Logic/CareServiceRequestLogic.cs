@@ -9,6 +9,11 @@ public class CareServiceRequestLogic : ICareServiceRequestLogic
 {
     private readonly ICareServiceRequestDao careServiceRequestDao;
     
+    public CareServiceRequestLogic(ICareServiceRequestDao dao)
+    {
+        this.careServiceRequestDao = dao;
+    }
+    
     public async Task OfferCare(CreateOfferCareDto dto)
     {
         await careServiceRequestDao.OfferAsync(dto);

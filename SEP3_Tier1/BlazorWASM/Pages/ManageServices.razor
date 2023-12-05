@@ -50,7 +50,7 @@ else
             {
                 @foreach (var service in services!)
                 {
-                    <ServiceComponent Service="service" OnClickCallback="() => ChangeStatus()"/>
+                    <ServiceComponent Service="service" OnClickCallback="() => ChangeStatus(service)"/>
                 }
             }
         </div>
@@ -70,12 +70,27 @@ else
         AuthenticationState authState = await AuthState;
         username = authState.User.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value;
         Email = authState.User.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+        try
+        {
+            services = (await AnnouncementService.GetServicesAsync(
+                new SearchServicesDto()
+                {
+                    petOwnerEmail = Email
+                })
+                ).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("You don't have any services");
+        }
+
         services = GenerateDumyData();
     }
 
-    private async Task ChangeStatus()
+    private async Task ChangeStatus(Service service)
     {
         Console.WriteLine("Button Was pressed for End Service");
+        navMgr.NavigateTo($"/Feedback/{service.Id}");
     }
 
     private List<Service> GenerateDumyData()

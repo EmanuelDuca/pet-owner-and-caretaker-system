@@ -37,7 +37,7 @@ public class AnnouncementHttpClient : IAnnouncementService
     public async Task<Announcement> GetByIdAsync(int id)
     {
         HttpResponseMessage response = await client.GetAsync($"{START_URI}/{id}");
-        string content =  await HttpClientHelper.HandleResponse(response);   
+        string content = await HttpClientHelper.HandleResponse(response);   
         return await HttpClientHelper.GenerateObjectFromJson<Announcement>(content);
     }
 
@@ -52,10 +52,19 @@ public class AnnouncementHttpClient : IAnnouncementService
         HttpResponseMessage response = await client.DeleteAsync($"{START_URI}/{id}");
         await HttpClientHelper.HandleResponse(response);    
     }
-
-    public async Task CreateRequest(CreateOfferCareDto dto)
+    
+    public async Task<IEnumerable<Service>> GetServicesAsync(SearchServicesDto dto)
     {
-        HttpResponseMessage response = await client.PatchAsJsonAsync($"{START_URI}/communication/offer", dto);
+        HttpResponseMessage response = await client.PostAsJsonAsync("/communication/services", dto);
+        string responseContent = await HttpClientHelper.HandleResponse(response);
+        return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<Service>>(responseContent);
+    }
+
+    public async Task CreateRequestAsync(CreateOfferCareDto dto)
+    {
+        HttpResponseMessage response = await client.PostAsJsonAsync($"/communication/offer", dto);
+        Console.WriteLine("IMPORTANT");
+        Console.WriteLine(response);
         await HttpClientHelper.HandleResponse(response);
     }
 }

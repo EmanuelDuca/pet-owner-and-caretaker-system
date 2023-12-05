@@ -15,8 +15,6 @@ public class AnnouncementMapper
         this.userService = userService;
         PetMapper = new PetMapper(this.userService);
     }
-
-    
     
     public async Task<Announcement> MapToEntity(AnnouncementProto proto)
     {

@@ -1,6 +1,7 @@
 ﻿using Application.DaoInterface;
 using Domain.DTOs;
 using Domain.Models;
+using Domain.Models.Enums;
 using Grpc.Core;
 using GrpcClient.Mappers;
 using Microsoft.VisualBasic.CompilerServices;
@@ -10,6 +11,12 @@ namespace GrpcClient.Services;
 public class GrpcCareServiceRequestService : ICareServiceRequestDao
 {
     private readonly ServiceService.ServiceServiceClient careRequestClient;
+    private UserMapper mapper;
+
+    public GrpcCareServiceRequestService(ServiceService.ServiceServiceClient careRequestClient)
+    {
+        this.careRequestClient = careRequestClient;
+    }
 
     public async Task OfferAsync(CreateOfferCareDto dto)
     {
@@ -21,7 +28,6 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
                     AnnouncementId = dto.AnnouncementId,
                     InitiatorEmail = dto.InitiatorId,
                     RecipientEmail = dto.RecipientId,
-                    Id = dto.Id,
                     // TODO Status = dto.RequestEnum
                 });
         }
@@ -79,15 +85,16 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
     }
     
-    public async Task GetRequestsAsync(int announcementId)
+    public async Task<IEnumerable<ServiceRequest>> GetRequestsAsync(int announcementId)
     {
         try
         {
             await careRequestClient
                 .SearchRequestServicesAsync(new FindAnnouncementProto()
                 {
-                    Id = announcementId
+                    //TODO
                 });
+            return null;
         }
         catch (RpcException e)
         {
@@ -95,15 +102,16 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
     }
     
-    public async Task GetServiceAsync(int serviceId)
+    public async Task<Service> GetServiceAsync(int serviceId)
     {
         try
         {
             await careRequestClient
-                .SearchServicesAsync(new SearchServiceProto()
+                .FindServiceAsync(new FindServiceProto()
                 {
-                    // TODO
+                    ServiceId = serviceId
                 });
+            return null; //TODO
         }
         catch (RpcException e)
         {
@@ -111,15 +119,19 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
     }
     
-    public async Task GetServicesAsync(SearchServicesDto dto)
+    public async Task<IEnumerable<Service>> GetServicesAsync(SearchServicesDto dto)
     {
         try
         {
             await careRequestClient
                 .SearchServicesAsync(new SearchServiceProto()
                 {
-                     // TODO
+                     Status = (ServiceStatus) (int) dto.status!,
+                     CaretakerEmail = dto.caretakerEmail,
+                     PetOwnerEmail = dto.petOwnerEmail
                 });
+            return null;
+            // return await mapper
         }
         catch (RpcException e)
         {
