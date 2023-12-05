@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.google.protobuf.StringValue;
 import dk.via.sep3.mappers.UserMapper;
 import dk.via.sep3.model.CalendarEntity;
+import dk.via.sep3.model.PetEntity;
 import dk.via.sep3.model.UserEntity;
 import dk.via.sep3.utils.TimestampConverter;
 import io.grpc.ManagedChannel;
@@ -165,6 +166,15 @@ public class UserGrpcServiceTest {
         var userProto = UserMapper.mapToProto(userEntity);
 
         return UserMapper.mapToEntity(userStub.updateUser(userProto));
+    }
+
+    private Collection<PetEntity> getPetsOfUser(UserEntity user)
+    {
+        FindUserProto userRequest = FindUserProto.newBuilder()
+                .setEmail(user.getEmail())
+                .build();
+        var pets = userStub.searchPets(userRequest);
+        return null;
     }
 
     private Collection<UserEntity> searchUsers(SearchUsersProto search)
@@ -465,6 +475,24 @@ public class UserGrpcServiceTest {
     void getSchedule_HappyCase_Test()
     {
         createUser(careTaker);
+        awaitCompletion(userExists(careTaker));
+        assertTrue(userExists(careTaker));
+
+        existingPeriod.setStartDate(LocalDate.now().withMonth(3));
+        existingPeriod.setEndDate(LocalDate.now().withMonth(3).plusDays(5));
+        addDatePeriod(existingPeriod);
+
+        givenPeriod.setStartDate(LocalDate.now().withMonth(4));
+        givenPeriod.setEndDate(LocalDate.now().withMonth(4).plusDays(5));
+        addDatePeriod(existingPeriod);
+
+        assertEquals(1, getSchedule(3).size());
+    }
+
+    @Test
+    void getPets_HappyCase_Test()
+    {
+        createUser(petOwner);
         awaitCompletion(userExists(careTaker));
         assertTrue(userExists(careTaker));
 

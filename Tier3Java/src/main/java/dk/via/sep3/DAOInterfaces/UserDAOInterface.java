@@ -2,6 +2,7 @@ package dk.via.sep3.DAOInterfaces;
 
 
 import dk.via.sep3.model.CalendarEntity;
+import dk.via.sep3.model.PetEntity;
 import dk.via.sep3.model.UserEntity;
 
 import java.time.LocalDate;
@@ -26,4 +27,5 @@ public interface UserDAOInterface {
 
     boolean deleteDatePeriodFromScheduleOfCaretaker(String caretakerEmail, LocalDate startDate, LocalDate endDate);
     Collection<CalendarEntity> getSchedule(String caretakerEmail, int month);
+    Collection<PetEntity> getPets(String email);
 }

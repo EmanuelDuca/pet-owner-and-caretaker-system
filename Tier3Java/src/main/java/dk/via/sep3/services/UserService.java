@@ -2,7 +2,9 @@ package dk.via.sep3.services;
 
 import com.google.common.base.Strings;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
+import dk.via.sep3.mappers.PetMapper;
 import dk.via.sep3.mappers.UserMapper;
+import dk.via.sep3.model.PetEntity;
 import dk.via.sep3.model.UserEntity;
 import dk.via.sep3.utils.TimestampConverter;
 import io.grpc.stub.StreamObserver;
@@ -187,8 +189,27 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     }
 
     @Override
-    public void searchPets(FindUserProto request, StreamObserver<PetsProto> responseObserver) {
+    public void searchPets(FindUserProto request, StreamObserver<PetsProto> responseObserver)
+    {
+        Collection<PetEntity> pets = userDAO.getPets(request.getEmail());
 
+        if(pets == null)
+        {
+            responseObserver.onError(GrpcErrorService.constructException("You are not a pet owner, mf"));
+            return;
+        }
+
+        if (pets.isEmpty()) {
+            responseObserver.onError(GrpcErrorService.constructException("No pets"));
+            return;
+        }
+
+        var petsProto = pets.stream().map(PetMapper::mapToProto).toList();
+
+        PetsProto petsItems = PetsProto.newBuilder().addAllPets(petsProto).build();
+
+        responseObserver.onNext(petsItems);
+        responseObserver.onCompleted();
     }
 
     @Override

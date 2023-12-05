@@ -2,6 +2,8 @@ package dk.via.sep3.DAO;
 
 import dk.via.sep3.DAOInterfaces.CaretakerScheduleRepository;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
+import dk.via.sep3.model.PetEntity;
+import dk.via.sep3.repository.PetRepository;
 import dk.via.sep3.repository.UserRepository;
 import dk.via.sep3.model.CalendarEntity;
 import dk.via.sep3.model.UserEntity;
@@ -19,12 +21,14 @@ import static dk.via.sep3.model.CalendarEntity.*;
 public class UserDAO implements UserDAOInterface {
 
     private final UserRepository userRepository;
+    private final PetRepository petRepository;
     private final CaretakerScheduleRepository caretakerScheduleRepository;
 
     @Autowired
-    public UserDAO(UserRepository userRepository, CaretakerScheduleRepository caretakerScheduleRepository) {
+    public UserDAO(UserRepository userRepository, PetRepository petRepository, CaretakerScheduleRepository caretakerScheduleRepository) {
 
         this.userRepository = userRepository;
+        this.petRepository = petRepository;
         this.caretakerScheduleRepository = caretakerScheduleRepository;
     }
 
@@ -185,6 +189,18 @@ public class UserDAO implements UserDAOInterface {
                 .filter(dp -> dp.getStartDate().getYear() == LocalDate.now().getYear())
                 .filter(dp -> dp.getStartDate().getMonthValue() == month)
                 .toList();
+    }
+
+    @Override
+    public Collection<PetEntity> getPets(String email)
+    {
+        var user = findUser(email);
+        if (user == null || !user.getUserType().equals("PetOwner"))
+            return null;
+
+
+        return petRepository.findAll().stream()
+                .filter(p -> p.getPetOwner().getEmail().equals(email)).toList();
     }
 
 

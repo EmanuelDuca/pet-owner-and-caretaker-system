@@ -42,9 +42,9 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
     {
         UserEntity petOwner = userDAO.findUser(request.getPetOwnerEmail());
 
-        if(!petOwner.getUserType().equals("CareTaker"))
+        if(!petOwner.getUserType().equals("PetOwner"))
         {
-            responseObserver.onError(GrpcErrorService.constructException("Only caretaker can create an announcement."));
+            responseObserver.onError(GrpcErrorService.constructException("Only pet owner can create an announcement."));
             return;
         }
 
