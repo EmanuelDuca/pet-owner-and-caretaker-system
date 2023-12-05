@@ -15,23 +15,25 @@ public class CareServiceRequestController : ControllerBase
     
     // private readonly IHubContext<AnnouncementHub> _hubContext;
 
-    // public CommunicationController(IHubContext<AnnouncementHub> hubContext, ICommunicationLogic logic)
-    // {
-    //     _hubContext = hubContext;
-    //     this.logic = logic;
-    // }
+    public CareServiceRequestController(/*IHubContext<AnnouncementHub> hubContext,*/ ICareServiceRequestLogic logic)
+    {
+        // _hubContext = hubContext;
+        this.logic = logic;
+    }
     
     [HttpPost("offer")]
-    public async Task<ActionResult> OfferCare(CreateOfferCareDto dto)
+    public async Task<ActionResult> OfferCare([FromBody] CreateOfferCareDto dto)
     {
         try
         {
+            Console.WriteLine(dto);
             await logic.OfferCare(dto);
             // _hubContext.Clients.All.SendAsync("ReceiveMessage", "Change made");
             return Ok();
         }
         catch (Exception e)
         {
+            Console.WriteLine(e.StackTrace);
             Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }

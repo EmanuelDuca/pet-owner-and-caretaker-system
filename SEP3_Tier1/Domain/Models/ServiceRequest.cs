@@ -1,4 +1,6 @@
-﻿namespace Domain.Models;
+﻿using Domain.Models.Enums;
+
+namespace Domain.Models;
 
 public class ServiceRequest
 {
@@ -6,6 +8,5 @@ public class ServiceRequest
     public User Recipient { get; set; }
     public int Id { get; set; }
     public Announcement Announcement { get; set; }
-    public int RequestEnum { get; set; }
-    public DateTime CreationDateTime { get; set; }
+    public RequestEnum RequestEnum { get; set; }
 }

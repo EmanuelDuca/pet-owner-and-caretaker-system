@@ -162,11 +162,12 @@
             AnnouncementId = announcement.Id,
             RequestEnum = (int)RequestEnum.SENT,
             CreationDateTime = DateTime.Now,
+            RecipientId = announcement.PetOwner.Email,
         };
         
         try
         {
-            await AnnouncementService.CreateRequest(dto);
+            await AnnouncementService.CreateRequestAsync(dto);
             SuccessMessage("Profile was deleted");
         }
         catch (Exception e)

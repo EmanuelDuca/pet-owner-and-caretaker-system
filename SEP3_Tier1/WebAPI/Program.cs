@@ -19,10 +19,12 @@ builder.Services.AddScoped<FileContext>();
 
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAnnouncementLogic, AnnouncementLogic>();
+builder.Services.AddScoped<ICareServiceRequestLogic, CareServiceRequestLogic>();
 
 //When using GRPc
 builder.Services.AddScoped<IUserDao, GrpcUserService>();
 builder.Services.AddScoped<IAnnouncementDao, GrpcAnnouncementService>();
+builder.Services.AddScoped<ICareServiceRequestDao, GrpcCareServiceRequestService>();
 
 //When savind to file
 // builder.Services.AddScoped<IUserDao, UserFileDao>();
@@ -40,6 +42,10 @@ builder.Services.AddGrpcClient<UserService.UserServiceClient>(o =>
     o.Address = new Uri("http://localhost:9090");
 });
 builder.Services.AddGrpcClient<AnnouncementService.AnnouncementServiceClient>(o =>
+{
+    o.Address = new Uri("http://localhost:9090");
+});
+builder.Services.AddGrpcClient<ServiceService.ServiceServiceClient>(o =>
 {
     o.Address = new Uri("http://localhost:9090");
 });
