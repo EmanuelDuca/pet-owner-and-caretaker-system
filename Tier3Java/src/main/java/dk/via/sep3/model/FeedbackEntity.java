@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "service_feedback")
+@Table(name = "feedback")
 public class FeedbackEntity {
 
     @EmbeddedId

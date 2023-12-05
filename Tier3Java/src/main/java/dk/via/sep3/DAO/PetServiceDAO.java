@@ -2,7 +2,7 @@ package dk.via.sep3.DAO;
 
 import dk.via.sep3.DAOInterfaces.PetServiceDAOInterface;
 import dk.via.sep3.repository.FeedbackRepository;
-import dk.via.sep3.repository.PetServiceRepository;
+import dk.via.sep3.repository.ServiceRepository;
 import dk.via.sep3.model.FeedbackEntity;
 import dk.via.sep3.model.ServiceEntity;
 import dk.via.sep3.model.UserEntity;
@@ -17,11 +17,11 @@ import java.util.Collection;
 @Repository
 public class PetServiceDAO implements PetServiceDAOInterface
 {
-    private final PetServiceRepository repository;
+    private final ServiceRepository repository;
     private final FeedbackRepository feedbackRepository;
 
     @Autowired
-    public PetServiceDAO(PetServiceRepository repository, FeedbackRepository feedbackRepository)
+    public PetServiceDAO(ServiceRepository repository, FeedbackRepository feedbackRepository)
     {
         this.repository = repository;
         this.feedbackRepository = feedbackRepository;

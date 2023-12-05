@@ -44,7 +44,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
 
         if(!petOwner.getUserType().equals("CareTaker"))
         {
-            responseObserver.onError(GrpcError.constructException("Only caretaker can create an announcement."));
+            responseObserver.onError(GrpcErrorService.constructException("Only caretaker can create an announcement."));
             return;
         }
 
@@ -69,7 +69,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
 
         if(announcementRespond == null)
         {
-            responseObserver.onError(GrpcError.constructException("Announcement with such id already exists"));
+            responseObserver.onError(GrpcErrorService.constructException("Announcement with such id already exists"));
             return;
         }
 
@@ -87,7 +87,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
 
         if (announcements.isEmpty())
         {
-            responseObserver.onError(GrpcError.constructException("No such announcements"));
+            responseObserver.onError(GrpcErrorService.constructException("No such announcements"));
             return;
         }
 
@@ -112,7 +112,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
 
         if(announcement == null)
         {
-            responseObserver.onError(GrpcError.constructException("Announcement with id " + request.getId() + " is not found"));
+            responseObserver.onError(GrpcErrorService.constructException("Announcement with id " + request.getId() + " is not found"));
             return;
         }
 
@@ -151,7 +151,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         var updatedAnnouncement = announcementDAO.updateAnnouncement(announcement);
         if(updatedAnnouncement == null)
         {
-            responseObserver.onError(GrpcError.constructException("Announcement was not updated"));
+            responseObserver.onError(GrpcErrorService.constructException("Announcement was not updated"));
             return;
         }
         responseObserver.onNext(AnnouncementMapper.mapToProto(updatedAnnouncement));

@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "care_service")
+@Table(name = "services")
 public class ServiceEntity
 {
     @Id

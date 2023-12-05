@@ -5,8 +5,8 @@ import dk.via.sep3.DAOInterfaces.PetServiceDAOInterface;
 import dk.via.sep3.DAOInterfaces.PetServiceRequestDAOInterface;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.mappers.FeedbackMapper;
-import dk.via.sep3.mappers.PetServiceMapper;
-import dk.via.sep3.mappers.PetServiceRequestMapper;
+import dk.via.sep3.mappers.ServiceMapper;
+import dk.via.sep3.mappers.RequestMapper;
 import dk.via.sep3.model.*;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
@@ -26,7 +26,7 @@ import javax.transaction.Transactional;
 import java.util.Collection;
 
 @GRpcService
-public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
+public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
 {
     private final UserDAOInterface userDao;
     private final AnnouncementDAOInterface announcementDAO;
@@ -34,7 +34,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     private final PetServiceDAOInterface careServiceDAO;
 
     @Autowired
-    public PetServiceService(UserDAOInterface userDao, AnnouncementDAOInterface announcementDAO, PetServiceRequestDAOInterface careServiceRequestDAO, PetServiceDAOInterface careServiceDAO)
+    public ServiceService(UserDAOInterface userDao, AnnouncementDAOInterface announcementDAO, PetServiceRequestDAOInterface careServiceRequestDAO, PetServiceDAOInterface careServiceDAO)
     {
         this.userDao = userDao;
         this.announcementDAO = announcementDAO;
@@ -52,7 +52,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
         var serviceRequest = careServiceRequestDAO.createServiceRequest(new RequestEntity(initiator,recipient,announcement));
 
         if(serviceRequest == null)
-            responseObserver.onError(GrpcError.constructException("Can't offer care service"));
+            responseObserver.onError(GrpcErrorService.constructException("Can't offer care service"));
     }
 
     @Override
@@ -108,12 +108,12 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
 
         if (requests.isEmpty())
         {
-            responseObserver.onError(GrpcError.constructException("No such requests"));
+            responseObserver.onError(GrpcErrorService.constructException("No such requests"));
             return;
         }
 
         Collection<ServiceRequestProto> requestsCollection = requests
-                .stream().map(PetServiceRequestMapper::mapToProto).toList();
+                .stream().map(RequestMapper::mapToProto).toList();
 
         RequestServicesProto requestsProtoItems = RequestServicesProto.newBuilder().addAllRequestServices(requestsCollection).build();
         responseObserver.onNext(requestsProtoItems);
@@ -132,12 +132,12 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
 
         if (services.isEmpty())
         {
-            responseObserver.onError(GrpcError.constructException("No such services"));
+            responseObserver.onError(GrpcErrorService.constructException("No such services"));
             return;
         }
 
         Collection<ServiceProto> servicessCollection = services
-                .stream().map(PetServiceMapper::mapToProto).toList();
+                .stream().map(ServiceMapper::mapToProto).toList();
 
         ServicesProto servicesProtoItems = ServicesProto.newBuilder().addAllServices(servicessCollection).build();
         responseObserver.onNext(servicesProtoItems);
@@ -148,7 +148,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     @Transactional
     public void findService(FindServiceProto request, StreamObserver<ServiceProto> responseObserver)
     {
-        responseObserver.onNext(PetServiceMapper.mapToProto(careServiceDAO.findServiceById(request.getServiceId())));
+        responseObserver.onNext(ServiceMapper.mapToProto(careServiceDAO.findServiceById(request.getServiceId())));
         responseObserver.onCompleted();
     }
 
@@ -157,7 +157,7 @@ public class PetServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     {
 
         careServiceDAO.giveFeedback(new FeedbackEntity(
-                careServiceDAO.findServiceById(request.getService().getId()),
+                careServiceDAO.findServiceById(request.getServiceId()),
                 userDao.findUser(request.getCaretakerEmail()),
                 (short) request.getRating(),
                 request.getFeedback()));

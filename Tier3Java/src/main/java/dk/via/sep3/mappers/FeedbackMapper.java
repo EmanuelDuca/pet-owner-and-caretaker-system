@@ -11,7 +11,7 @@ public class FeedbackMapper
                 .setFeedback(entity.getFeedback())
                 .setRating(entity.getRating())
                 .setCaretakerEmail(entity.getCaretaker().getEmail())
-                .setService(PetServiceMapper.mapToProto(entity.getService()))
+                .setServiceId(entity.getService().getId())
                 .build();
     }
 

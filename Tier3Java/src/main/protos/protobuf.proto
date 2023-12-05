@@ -30,27 +30,24 @@ service ServiceService{
   rpc AcceptStartService(FindRequestServiceProto) returns (Void);
   rpc DenyStartService(FindRequestServiceProto) returns (Void);
   rpc EndService(FindServiceProto) returns (Void);
-
   rpc SearchRequestServices(FindAnnouncementProto) returns (RequestServicesProto);
   rpc SearchServices(SearchServiceProto) returns (ServicesProto);
   rpc FindService(FindServiceProto) returns (ServiceProto);
-
   rpc AddFeedback(FeedbackProto) returns (Void);
   rpc DeleteFeedback(FindFeedbackProto) returns (Void);
   rpc SearchFeedbacks(FindUserProto) returns (FeedbacksProto);
 }
 
-service NotificationService{
-  rpc AddCareTakerPreferencesService (Void) returns (Void);
-  rpc DeleteCareTakerPreferencesService (Void) returns (Void);
-  rpc UpdateCareTakerPreferencesService (Void) returns (Void);
-  rpc FindCareTakerPreferencesService (Void ) returns (Void);
-
-
-  rpc AddNotificationService (Void) returns (Void);
-  rpc DeleteNotificationService (Void) returns (Void);
-  rpc GetNotificationsService (Void) returns (Void);
-}
+//service NotificationService{
+//  rpc AddCareTakerPreferencesService (Void) returns (Void);
+//  rpc DeleteCareTakerPreferencesService (Void) returns (Void);
+//  rpc UpdateCareTakerPreferencesService (Void) returns (Void);
+//  rpc FindCareTakerPreferencesService (Void ) returns (Void);
+//
+//  rpc AddNotificationService (Void) returns (Void);
+//  rpc DeleteNotificationService (Void) returns (Void);
+//  rpc GetNotificationsService (Void) returns (Void);
+//}
 
 message LoginUserProto{
   string email = 1;
@@ -114,10 +111,10 @@ message ServiceProto{
 }
 
 message FeedbackProto{
-  int32 service = 2;
-  string caretakerEmail = 3;
-  int32 rating = 4;
-  string feedback= 5;
+  int32 serviceId = 1;
+  string caretakerEmail = 2;
+  int32 rating = 3;
+  string feedback= 4;
 }
 
 enum ServiceStatus{
