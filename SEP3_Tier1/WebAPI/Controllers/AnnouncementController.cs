@@ -31,23 +31,7 @@ public class AnnouncementController : ControllerBase
             return StatusCode(404, e.Message);
         }
     }
-
-    [HttpGet]
-    public async Task<ActionResult> GetAsync([FromQuery] SearchAnnouncementDto dto)
-    {
-        try
-        {
-            Console.WriteLine(dto);
-            Console.WriteLine(JsonConvert.SerializeObject(dto));
-            var announcements = await logic.GetAsync(dto);
-            return Ok(announcements);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return StatusCode(500, e.Message);
-        }
-    }
+    
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<Announcement>> GetByIdAsync([FromRoute] int id)
@@ -64,7 +48,6 @@ public class AnnouncementController : ControllerBase
         }
     }
     
-    //Bellow will use Post request to filter the Announcements
     [HttpPost("filter")]
     public async Task<ActionResult> GetAnnouncementsByPreferenceAsync([FromBody] SearchAnnouncementDto dto)
     {

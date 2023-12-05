@@ -86,9 +86,20 @@ public class GrpcUserService : IUserDao
         }
     }
 
-    public Task DeleteAsync(string email)
+    public async Task DeleteAsync(string email)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await userServiceClient.DeleteUserAsync(
+                new FindUserProto
+                {
+                    Email = email
+                });
+        }
+        catch (RpcException e)
+        {
+            throw new Exception(e.Status.Detail);
+        }
     }
 
     private UserProto UserProtoGenerator(User user)

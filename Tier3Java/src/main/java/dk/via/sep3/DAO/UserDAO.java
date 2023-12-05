@@ -194,9 +194,14 @@ public class UserDAO implements UserDAOInterface {
     @Override
     public Collection<PetEntity> getPets(String email)
     {
+        System.out.println(email);
         var user = findUser(email);
-        if (user == null || !user.getUserType().equals("PetOwner"))
+        System.out.println(user.getUserType());
+        System.out.println(user.getEmail());
+        if (user == null || !user.getUserType().equals("PetOwner")){
             return null;
+        }
+
 
 
         return petRepository.findAll().stream()

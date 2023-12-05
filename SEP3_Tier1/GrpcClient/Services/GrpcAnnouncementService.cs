@@ -82,8 +82,8 @@ public class GrpcAnnouncementService : IAnnouncementDao
             {
                 PetOwnerEmail = dto.UserEmail,
                 PostalCode = dto.PostalCode,
-                TimeStart = dto.EndTime == null? null : Timestamp.FromDateTime(dto.StartTime!.Value),
-                TimeFinish = dto.EndTime == null? null : Timestamp.FromDateTime(dto.EndTime!.Value),
+                TimeStart = dto.EndTime == null? null : TimestampConverter.FromDateTime(dto.StartTime!.Value),
+                TimeFinish = dto.EndTime == null? null : TimestampConverter.FromDateTime(dto.EndTime!.Value),
                 PetIsVaccinated = dto.IsVaccinated,
                 PetWeight = dto.LessThanPetWeight
             };
@@ -113,7 +113,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
                 TimeFinish = TimestampConverter.FromDateTime(dto.EndDate!.Value),
                 PostalCode = dto.PostalCode,
                 Description = dto.ServiceDescription,
-                Pet = await mapper.PetMapper.MapToProto(dto.Pet!)
+                Pet = dto.Pet == null? null : await mapper.PetMapper.MapToProto(dto.Pet)
             };
             AnnouncementProto updated = await announcementServiceClient.UpdateAnnouncementAsync(request);
             if (updated.Id != request.Id)
