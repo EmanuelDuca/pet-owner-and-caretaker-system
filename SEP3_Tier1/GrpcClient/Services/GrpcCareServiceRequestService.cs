@@ -27,7 +27,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
     
@@ -79,16 +79,14 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
     }
     
-    //TODO ask Dan: if int id is given as null, will all the requests be returned?
-    //And what is FindService?
-    public async Task GetRequestsAsync(int/*?*/ requestId)
+    public async Task GetRequestsAsync(int announcementId)
     {
         try
         {
             await careRequestClient
                 .SearchRequestServicesAsync(new FindAnnouncementProto()
                 {
-                    Id = requestId
+                    Id = announcementId
                 });
         }
         catch (RpcException e)
@@ -97,7 +95,23 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
     }
     
-    public async Task GetServicesAsync(int/*?*/ serviceId)
+    public async Task GetServiceAsync(int serviceId)
+    {
+        try
+        {
+            await careRequestClient
+                .SearchServicesAsync(new SearchServiceProto()
+                {
+                    // TODO
+                });
+        }
+        catch (RpcException e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+    
+    public async Task GetServicesAsync(SearchServicesDto dto)
     {
         try
         {
@@ -113,7 +127,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
     }
     
-    public async Task AddFeedbackAsync(string feedback, int rating,  string email)
+    public async Task AddFeedbackAsync(string feedback, int rating,  string email, int serviceId)
     {
         try
         {
@@ -122,10 +136,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
                 {
                     Feedback = feedback,
                     Rating = rating,
-                    Service = new ServiceProto()
-                    {
-                        //TODO Why not simply serviceId?
-                    },
+                    Service = serviceId,
                     CaretakerEmail = email
                 });
         }

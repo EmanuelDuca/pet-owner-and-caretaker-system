@@ -13,6 +13,15 @@ public class JwtAuthAuthHttpService : IAuthService
     private readonly HttpClient client;
     public static string? Jwt { get; private set; }
     private readonly string START_URI = "users";
+    public async Task GetUsers(SearchUsersDto dto)
+    {
+        HttpResponseMessage response = await client.GetAsync($"{START_URI}");
+        await HttpClientHelper.HandleResponse(response);
+
+        Jwt = null;
+        OnAuthStateChanged.Invoke(new ClaimsPrincipal());
+    }
+
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
 
     public JwtAuthAuthHttpService(HttpClient client)

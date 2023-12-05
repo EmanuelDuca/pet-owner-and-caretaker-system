@@ -53,6 +53,22 @@ public class CareServiceRequestController : ControllerBase
         }
     }
     
+    [HttpPost("deny")]
+    public async Task<ActionResult> DenyOffer(int requestId)
+    {
+        try
+        {
+            await logic.AcceptOffer(requestId);
+            // _hubContext.Clients.All.SendAsync("ReceiveMessage", "Change made");
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
     [HttpPost("end")]
     public async Task<ActionResult> EndOffer(int serviceId)
     {

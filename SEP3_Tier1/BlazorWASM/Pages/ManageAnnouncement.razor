@@ -6,6 +6,7 @@
 @using Domain.DTOs
 @using HttpClients.ClientInterfaces
 @inject IAnnouncementService announcementService
+
 @inject ILocalStorageService localStorageService
 @attribute [Authorize]
 
@@ -21,7 +22,7 @@
 }
 else
 {
-    <ManageAnnouncementComponent Announcement="@announcement" OnSubmitAction="() => UpdateAnnouncement()" 
+    <ManageAnnouncementComponent Announcement="@announcement" OnSubmitAction="@(() => UpdateAnnouncement())" 
                                  ActionName="Save Changes" ForPage="ManageAnnouncement" />
 }
 
@@ -49,6 +50,7 @@ else
         backgroundImageUrl = await localStorageService.GetItemAsStringAsync("backgroundImage");
         ClaimsPrincipal user = authState.User;
         userClaims = user.Claims;
+        string userEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
         
         try
         {
@@ -58,8 +60,7 @@ else
         {
             Console.WriteLine(e);
         }
-
-    // userPets = ..
+        
         
     }
     
