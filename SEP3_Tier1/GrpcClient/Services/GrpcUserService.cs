@@ -15,11 +15,13 @@ public class GrpcUserService : IUserDao
 {
     private UserService.UserServiceClient userServiceClient;
     private UserMapper mapper;
+    private PetMapper petMapper;
 
     public GrpcUserService(UserService.UserServiceClient userServiceClient)
     {
         this.userServiceClient = userServiceClient;
         mapper = new UserMapper();
+        petMapper = new PetMapper(this);
     }
     
     public async Task<User> CreateAsync(User user)
@@ -121,6 +123,22 @@ public class GrpcUserService : IUserDao
             };
             UsersProto users = await userServiceClient.SearchUsersAsync(request);
             return await mapper.MapToEntityList(users);
+        }
+        catch (RpcException e)
+        {
+            throw new Exception(e.Status.Detail);
+        }
+    }
+
+    public async Task<IEnumerable<Pet>> GetPetsOfUserAsync(string email)
+    {
+        try
+        { 
+            PetsProto pets = await userServiceClient.SearchPetsAsync(new FindUserProto()
+            {
+                Email = email
+            });
+            return await petMapper.MapToEntityList(pets);
         }
         catch (RpcException e)
         {
