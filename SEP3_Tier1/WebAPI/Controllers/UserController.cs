@@ -140,4 +140,19 @@ public class UserController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpGet("pets/{email}")]
+    public async Task<ActionResult> GetPetsOfUserAsync([FromRoute] string email)
+    {
+        try
+        {
+            var users = await userLogic.GetPetsOfUserAsync(email);
+            return Ok(users);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

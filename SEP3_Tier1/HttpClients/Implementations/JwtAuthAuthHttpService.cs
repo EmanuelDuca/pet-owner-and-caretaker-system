@@ -13,14 +13,7 @@ public class JwtAuthAuthHttpService : IAuthService
     private readonly HttpClient client;
     public static string? Jwt { get; private set; }
     private readonly string START_URI = "users";
-    public async Task GetUsers(SearchUsersDto dto)
-    {
-        HttpResponseMessage response = await client.GetAsync($"{START_URI}");
-        await HttpClientHelper.HandleResponse(response);
-
-        Jwt = null;
-        OnAuthStateChanged.Invoke(new ClaimsPrincipal());
-    }
+    
 
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
 
@@ -39,7 +32,6 @@ public class JwtAuthAuthHttpService : IAuthService
         ClaimsPrincipal principal = CreateClaimsPrincipal();
         
         OnAuthStateChanged.Invoke(principal);
-        // Console.WriteLine(Jwt);
     }
 
     public async Task<string> GetJWT()
@@ -70,27 +62,6 @@ public class JwtAuthAuthHttpService : IAuthService
     public Task<ClaimsPrincipal> GetAuthAsync()
     {
         return Task.FromResult(CreateClaimsPrincipal());
-    }
-
-    public async Task EditProfile(UserEditDto dto)
-    {
-        HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/edit", dto);
-        string responseContent = await HttpClientHelper.HandleResponse(responseMessage);
-        
-        Jwt = responseContent;
-
-        ClaimsPrincipal principal = CreateClaimsPrincipal();
-        
-        OnAuthStateChanged.Invoke(principal);
-    }
-
-    public async Task DeleteProfile(string email)
-    {
-        HttpResponseMessage response = await client.DeleteAsync($"{START_URI}/{email}");
-        await HttpClientHelper.HandleResponse(response);
-
-        Jwt = null;
-        OnAuthStateChanged.Invoke(new ClaimsPrincipal());
     }
 
     private ClaimsPrincipal CreateClaimsPrincipal()

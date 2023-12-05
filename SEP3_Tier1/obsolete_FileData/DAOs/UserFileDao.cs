@@ -75,4 +75,9 @@ public class UserFileDao : IUserDao
     {
         throw new NotImplementedException();
     }
+
+    public Task<IEnumerable<Pet>> GetPetsOfUserAsync(string email)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -84,7 +84,7 @@ public class UserLogic : IUserLogic
         };
 
         User updated = await userDao.UpdateAsync(tempUser);
-        return await Task.FromResult(updated);
+        return updated;
     }
 
     public async Task DeleteUser(string email)
@@ -95,5 +95,10 @@ public class UserLogic : IUserLogic
     public async Task<IEnumerable<User>> GetAsync(SearchUsersDto parameters)
     {
         return await userDao.GetAsync(parameters);
+    }
+
+    public async Task<IEnumerable<Pet>> GetPetsOfUserAsync(string email)
+    {
+        return await userDao.GetPetsOfUserAsync(email);
     }
 }
