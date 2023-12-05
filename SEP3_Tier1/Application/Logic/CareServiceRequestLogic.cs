@@ -33,4 +33,9 @@ public class CareServiceRequestLogic : ICareServiceRequestLogic
     {
         await careServiceRequestDao.EndAsync(requestId);
     }
+
+    public async Task<IEnumerable<Service>> GetServicesAsync(SearchServicesDto dto)
+    {
+        return await careServiceRequestDao.GetServicesAsync(dto);
+    }
 }

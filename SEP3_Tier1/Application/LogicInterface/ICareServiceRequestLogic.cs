@@ -9,4 +9,5 @@ public interface ICareServiceRequestLogic
     Task AcceptOffer(int requestId);
     Task EndOffer(int serviceId);
     Task DenyOffer(int requestId);
+    Task<IEnumerable<Service>> GetServicesAsync(SearchServicesDto dto);
 }

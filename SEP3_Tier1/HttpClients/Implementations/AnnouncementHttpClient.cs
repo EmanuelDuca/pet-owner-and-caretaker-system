@@ -62,7 +62,7 @@ public class AnnouncementHttpClient : IAnnouncementService
 
     public async Task CreateRequestAsync(CreateOfferCareDto dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync($"/communication/offer", dto);
+        HttpResponseMessage response = await client.PostAsJsonAsync("/communication/offer", dto);
         Console.WriteLine("IMPORTANT");
         Console.WriteLine(response);
         await HttpClientHelper.HandleResponse(response);

@@ -172,8 +172,8 @@ message SearchAnnouncementProto{
 }
 
 message SearchServiceProto{
-  string caretakerEmail = 1;
-  string petOwnerEmail = 2;
+  google.protobuf.StringValue caretakerEmail = 1;
+  google.protobuf.StringValue petOwnerEmail = 2;
   ServiceStatus status = 3;
 }
 

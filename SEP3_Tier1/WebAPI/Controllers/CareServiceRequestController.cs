@@ -86,4 +86,20 @@ public class CareServiceRequestController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpPost("services")]
+    public async Task<ActionResult> GetServicesAsync([FromBody] SearchServicesDto dto)
+    {
+        try
+        {
+            var services = await logic.GetServicesAsync(dto);
+            // _hubContext.Clients.All.SendAsync("ReceiveMessage", "Change made");
+            return Ok(services);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

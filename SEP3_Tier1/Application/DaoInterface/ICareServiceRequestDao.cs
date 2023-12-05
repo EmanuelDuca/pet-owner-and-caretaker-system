@@ -9,6 +9,6 @@ public interface ICareServiceRequestDao
     Task AcceptAsync(int requestId);
     Task EndAsync(int serviceId);
     Task DenyAsync(int requestId);
-    // Task DenyAsync(int requestId); //TODO
-    
+    Task<IEnumerable<Service>> GetServicesAsync(SearchServicesDto dto);
+
 }

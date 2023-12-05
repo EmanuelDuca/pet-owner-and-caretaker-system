@@ -11,11 +11,16 @@ namespace GrpcClient.Services;
 public class GrpcCareServiceRequestService : ICareServiceRequestDao
 {
     private readonly ServiceService.ServiceServiceClient careRequestClient;
-    private UserMapper mapper;
+    private readonly IUserDao userService;
+    private readonly IAnnouncementDao announcementService;
+    private ServiceMapper mapper;
 
-    public GrpcCareServiceRequestService(ServiceService.ServiceServiceClient careRequestClient)
+    public GrpcCareServiceRequestService(ServiceService.ServiceServiceClient careRequestClient, IUserDao userDao, IAnnouncementDao announcementDao)
     {
         this.careRequestClient = careRequestClient;
+        this.userService = userDao;
+        this.announcementService = announcementDao;
+        mapper = new ServiceMapper(userService, announcementService);
     }
 
     public async Task OfferAsync(CreateOfferCareDto dto)
@@ -123,19 +128,22 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
     {
         try
         {
-            await careRequestClient
-                .SearchServicesAsync(new SearchServiceProto()
-                {
-                     Status = (ServiceStatus) (int) dto.status!,
-                     CaretakerEmail = dto.caretakerEmail,
-                     PetOwnerEmail = dto.petOwnerEmail
-                });
-            return null;
-            // return await mapper
+            var serviceProto = new SearchServiceProto()
+            {
+                CaretakerEmail = dto.caretakerEmail,
+                PetOwnerEmail = dto.petOwnerEmail
+            };
+
+            if (dto.status != null)
+                serviceProto.Status = (ServiceStatus)(int)dto.status;
+            
+            ServicesProto services = await careRequestClient
+                .SearchServicesAsync(serviceProto);
+            return await mapper.MapToEntityList(services);
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
     

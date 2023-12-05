@@ -75,16 +75,17 @@ else
             services = (await AnnouncementService.GetServicesAsync(
                 new SearchServicesDto()
                 {
-                    petOwnerEmail = Email
+                    petOwnerEmail = Email,
+                    status = null,
+                    caretakerEmail = null
                 })
                 ).ToList();
         }
         catch (Exception e)
         {
-            Console.WriteLine("You don't have any services");
+            Console.WriteLine("You don't have any services" + Email);
         }
-
-        services = GenerateDumyData();
+        // services = GenerateDummyData();
     }
 
     private async Task ChangeStatus(Service service)
@@ -93,7 +94,7 @@ else
         navMgr.NavigateTo($"/Feedback/{service.Id}");
     }
 
-    private List<Service> GenerateDumyData()
+    private List<Service> GenerateDummyData()
     {
         List<Service> demo = new List<Service>();
 

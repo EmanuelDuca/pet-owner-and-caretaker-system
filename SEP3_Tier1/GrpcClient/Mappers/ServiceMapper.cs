@@ -42,4 +42,15 @@ public class ServiceMapper
         };
         return serviceRequest;
     }
+    
+    public async Task<IEnumerable<Service>> MapToEntityList(ServicesProto proto)
+    {
+        return await Task.WhenAll(proto.Services
+            .Select(async service => await MapToEntity(service)));
+    }
+    public async Task<IEnumerable<ServiceRequest>> MapToEntityList(RequestServicesProto proto)
+    {
+        return await Task.WhenAll(proto.RequestServices
+            .Select(async requestService => await MapToEntity(requestService)));
+    }
 }
