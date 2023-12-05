@@ -11,18 +11,45 @@
     },
     {
       "Name": null,
-      "Username": "em",
+      "Username": "vs",
       "Age": null,
-      "Email": "em@gmail.com",
+      "Email": "sv",
       "PhoneNumber": null,
-      "Password": "1111",
-      "Type": "CareTaker"
+      "Password": "dbs",
+      "Type": "PetOwner"
     },
     {
       "Name": null,
-      "Username": "Sevastian",
+      "Username": "sv",
       "Age": null,
-      "Email": "sevastian@gmail.com",
+      "Email": "michael.leo@gmail.com",
+      "PhoneNumber": null,
+      "Password": "password",
+      "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "svvsvs",
+      "Age": null,
+      "Email": "michael.lsvo.dk@gmail.com",
+      "PhoneNumber": null,
+      "Password": "password",
+      "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "svvsd",
+      "Age": null,
+      "Email": "michael.lsvk@gmail.com",
+      "PhoneNumber": null,
+      "Password": "password",
+      "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "cubeco",
+      "Age": null,
+      "Email": "michael.leo.dk@gmail.com",
       "PhoneNumber": null,
       "Password": "password",
       "Type": "PetOwner"
@@ -34,65 +61,31 @@
       "PetOwner": {
         "Name": null,
         "Username": null,
-        "Age": null,
+        "Age": 29,
         "Email": "ionv@gmail.com",
-        "PhoneNumber": null,
+        "PhoneNumber": "123123123123",
         "Password": "1111",
-        "Type": null
-      },
-      "StartDate": "2023-11-30T00:00:00+01:00",
-      "EndDate": "2023-12-03T00:00:00+01:00",
-      "PostalCode": "8700",
-      "ServiceDescription": "des",
-      "CreationDateTime": "2023-11-30T12:59:56.7301375+01:00",
-      "Pet": {
-        "Id": 1,
-        "PetName": "X",
-        "PetType": 13,
-        "Weight": 0,
-        "IsVaccinated": false,
-        "Description": "Fat cat",
-        "PetOwner": {
-          "Name": null,
-          "Username": null,
-          "Age": null,
-          "Email": "ionv@gmail.com",
-          "PhoneNumber": null,
-          "Password": "1111",
-          "Type": null
-        }
-      }
-    },
-    {
-      "Id": 2,
-      "PetOwner": {
-        "Name": null,
-        "Username": null,
-        "Age": null,
-        "Email": "sevastian@gmail.com",
-        "PhoneNumber": null,
-        "Password": "password",
         "Type": null
       },
       "StartDate": "2023-12-04T00:00:00+01:00",
       "EndDate": "2023-12-07T00:00:00+01:00",
-      "PostalCode": "8934",
-      "ServiceDescription": "Oifnorigouerg",
-      "CreationDateTime": "2023-12-04T13:30:56.4024107+01:00",
+      "PostalCode": "8700",
+      "ServiceDescription": "Some description",
+      "CreationDateTime": "2023-12-04T14:22:14.2908255+01:00",
       "Pet": {
         "Id": 0,
-        "PetName": "GOLD",
-        "PetType": 11,
-        "Weight": 3,
+        "PetName": "Max",
+        "PetType": 0,
+        "Weight": 8,
         "IsVaccinated": false,
-        "Description": "Fegweg",
+        "Description": "description of Dog",
         "PetOwner": {
           "Name": null,
           "Username": null,
-          "Age": null,
-          "Email": "sevastian@gmail.com",
-          "PhoneNumber": null,
-          "Password": "password",
+          "Age": 29,
+          "Email": "ionv@gmail.com",
+          "PhoneNumber": "123123123123",
+          "Password": "1111",
           "Type": null
         }
       }

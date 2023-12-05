@@ -1,6 +1,6 @@
 package dk.via.sep3.DAOInterfaces;
 
-import dk.via.sep3.shared.AnnouncementEntity;
+import dk.via.sep3.model.AnnouncementEntity;
 import origin.protobuf.SearchAnnouncementProto;
 
 import java.util.Collection;

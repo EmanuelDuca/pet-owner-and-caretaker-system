@@ -8,9 +8,19 @@ namespace Application.Logic;
 public class CareServiceRequestLogic : ICareServiceRequestLogic
 {
     private readonly ICareServiceRequestDao careServiceRequestDao;
-
-    public async Task OfferCare(string initiatorEmail, int announcementId, string recipientEmail)
+    
+    public async Task OfferCare(CreateOfferCareDto dto)
     {
-        await careServiceRequestDao.OfferAsync(initiatorEmail, announcementId, recipientEmail);
+        await careServiceRequestDao.OfferAsync(dto);
+    }
+
+    public async Task AcceptOffer(int requestId)
+    {
+        await careServiceRequestDao.AcceptAsync(requestId);
+    }
+
+    public async Task EndOffer(int serviceId)
+    {
+        await careServiceRequestDao.EndAsync(serviceId);
     }
 }

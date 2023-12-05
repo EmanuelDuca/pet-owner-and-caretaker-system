@@ -3,9 +3,9 @@ package dk.via.sep3.DAO;
 import dk.via.sep3.DAOInterfaces.PetServiceDAOInterface;
 import dk.via.sep3.repository.FeedbackRepository;
 import dk.via.sep3.repository.PetServiceRepository;
-import dk.via.sep3.shared.FeedbackEntity;
-import dk.via.sep3.shared.PetServiceEntity;
-import dk.via.sep3.shared.UserEntity;
+import dk.via.sep3.model.FeedbackEntity;
+import dk.via.sep3.model.ServiceEntity;
+import dk.via.sep3.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
@@ -29,7 +29,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
 
     @Override
     @Transactional
-    public PetServiceEntity createService(PetServiceEntity service)
+    public ServiceEntity createService(ServiceEntity service)
     {
         if(repository.exists(Example.of(service)))
             return null;
@@ -48,7 +48,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
 
     @Override
     @Transactional
-    public PetServiceEntity findServiceById(int serviceId)
+    public ServiceEntity findServiceById(int serviceId)
     {
         return repository.getReferenceById(serviceId);
     }
@@ -56,7 +56,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
     @Override
     @Transactional
 
-    public Collection<PetServiceEntity> searchServices(UserEntity careTaker, UserEntity petOwner, ServiceStatus status)
+    public Collection<ServiceEntity> searchServices(UserEntity careTaker, UserEntity petOwner, ServiceStatus status)
     {
         return repository.findAll()
                 .stream()

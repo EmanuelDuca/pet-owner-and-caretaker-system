@@ -1,8 +1,8 @@
 package dk.via.sep3.DAOInterfaces;
 
 
-import dk.via.sep3.shared.CaretakerDatePeriod;
-import dk.via.sep3.shared.UserEntity;
+import dk.via.sep3.model.CalendarEntity;
+import dk.via.sep3.model.UserEntity;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -25,5 +25,5 @@ public interface UserDAOInterface {
     boolean addDatePeriodToScheduleOfCaretaker(String caretakerEmail, LocalDate startDate, LocalDate endDate);
 
     boolean deleteDatePeriodFromScheduleOfCaretaker(String caretakerEmail, LocalDate startDate, LocalDate endDate);
-    Collection<CaretakerDatePeriod> getSchedule(String caretakerEmail, int month);
+    Collection<CalendarEntity> getSchedule(String caretakerEmail, int month);
 }

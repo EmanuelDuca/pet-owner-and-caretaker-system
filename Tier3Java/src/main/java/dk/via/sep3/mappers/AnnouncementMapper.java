@@ -1,6 +1,6 @@
 package dk.via.sep3.mappers;
 
-import dk.via.sep3.shared.AnnouncementEntity;
+import dk.via.sep3.model.AnnouncementEntity;
 import dk.via.sep3.utils.TimestampConverter;
 import origin.protobuf.AnnouncementProto;
 

@@ -30,6 +30,12 @@ public class JwtAuthAuthHttpService : IAuthService
         ClaimsPrincipal principal = CreateClaimsPrincipal();
         
         OnAuthStateChanged.Invoke(principal);
+        // Console.WriteLine(Jwt);
+    }
+
+    public async Task<string> GetJWT()
+    {
+        return Jwt;
     }
 
     public Task LogoutAsync()

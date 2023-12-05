@@ -19,6 +19,7 @@
 
             <main>
                 <div class="top-row px-4">
+                    <Notification/>
                     <LoginButtons/>
                 </div>
 
@@ -46,14 +47,4 @@
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
     }
-    
-    /*
-                @if (context.User.IsInRole("PetOwner"))
-                {
-                    <PetOwnerNavMenu/>
-                }
-                else if (context.User.IsInRole("CareTaker"))
-                {
-                    <CareTakerNavMenu/>
-                }*/
 }

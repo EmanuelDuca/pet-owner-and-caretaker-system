@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.SignalR.Client
+@using HttpClients.ClientInterfaces
+@using BlazorClient.Auth
+@inject IAuthService authService
+
+<div class="notification_circle" @onclick="Update">
+    <div class="notification_number">
+        @notificationNumber
+    </div>
+</div>
+
+@code {
+    private int notificationNumber = 0;
+    private HubConnection? hubConnection;
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    [Parameter]
+    public Action UpdateInvoke { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+
+    private async Task Update()
+    {
+        Console.WriteLine("Uraaa");
+        AuthenticationState authState = await AuthState;
+        if (authState.User.Identity != null)
+        {
+            // hubConnection = new HubConnectionBuilder()
+            // .WithUrl("https://localhost:7230/offers", 
+            //         o =>
+            //             o.AccessTokenProvider = async () => await Task.FromResult<string?>(await authService.GetJWT()))
+            //     .Build();
+            //
+            // hubConnection.On<int>("Receive", (numOfMessages) =>
+            // {
+            //     notificationNumber = numOfMessages;
+            //     InvokeAsync(StateHasChanged);
+            // });
+            //
+            // await hubConnection.StartAsync();
+        }
+    }
+    
+    private async Task InvokeMethod()
+    {
+        UpdateInvoke.Invoke();
+        Console.WriteLine("Uraaa2");
+    }
+    
+    // private 
+}
