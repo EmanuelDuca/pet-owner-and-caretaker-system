@@ -1,10 +1,8 @@
-dk\via\sep3\mappers\PetServiceMapper.class
 origin\protobuf\FeedbackProto$1.class
 origin\protobuf\ServicesProtoOrBuilder.class
 dk\via\sep3\repository\AnnouncementRepository.class
 origin\protobuf\SearchServiceProto$1.class
 origin\protobuf\ServiceRequestProto.class
-dk\via\sep3\mappers\PetServiceRequestMapper.class
 origin\protobuf\ServicesProto.class
 origin\protobuf\Void.class
 origin\protobuf\CaretakerSchedule$Builder.class
@@ -12,6 +10,7 @@ dk\via\sep3\repository\FeedbackRepository.class
 dk\via\sep3\DAO\UserDAO.class
 origin\protobuf\UsersProto.class
 origin\protobuf\Void$1.class
+dk\via\sep3\mappers\RequestMapper.class
 origin\protobuf\UserServiceGrpc$UserServiceDescriptorSupplier.class
 origin\protobuf\FindAnnouncementProto$Builder.class
 origin\protobuf\SearchAnnouncementProtoOrBuilder.class
@@ -27,13 +26,14 @@ dk\via\sep3\repository\UserRepository.class
 dk\via\sep3\services\AnnouncementService.class
 origin\protobuf\FindUserProto$Builder.class
 origin\protobuf\AnnouncementProto.class
-dk\via\sep3\services\GrpcError.class
 origin\protobuf\FindRequestServiceProto.class
+dk\via\sep3\repository\PreferenceRepository.class
 origin\protobuf\AnnouncementServiceGrpc$AnnouncementServiceDescriptorSupplier.class
 origin\protobuf\FeedbacksProtoOrBuilder.class
 dk\via\sep3\mappers\UserMapper.class
 origin\protobuf\DatePeriodProto$Builder.class
 origin\protobuf\DatePeriodProto$1.class
+dk\via\sep3\mappers\PreferenceMapper.class
 origin\protobuf\FindFeedbackProto.class
 origin\protobuf\FindCareTakerScheduleProto$1.class
 origin\protobuf\SearchServiceProto.class
@@ -43,6 +43,7 @@ dk\via\sep3\DAOInterfaces\CaretakerScheduleRepository.class
 origin\protobuf\FindRequestServiceProto$1.class
 origin\protobuf\FindAnnouncementProtoOrBuilder.class
 origin\protobuf\AnnouncementsProtoOrBuilder.class
+dk\via\sep3\mappers\CalendarMapper.class
 origin\protobuf\ServiceRequestProto$Status$1.class
 origin\protobuf\FindUserProto.class
 origin\protobuf\SearchAnnouncementProto$1.class
@@ -61,7 +62,6 @@ origin\protobuf\FindServiceProto.class
 dk\via\sep3\Sep3Application.class
 origin\protobuf\RequestServicesProto$1.class
 origin\protobuf\UserServiceGrpc$MethodHandlers.class
-dk\via\sep3\repository\PetServiceRequestRepository.class
 origin\protobuf\ServiceStatus$1.class
 origin\protobuf\FindCareTakerScheduleProto$Builder.class
 origin\protobuf\UserServiceGrpc$UserServiceStub.class
@@ -78,6 +78,7 @@ origin\protobuf\LoginUserProto$Builder.class
 dk\via\sep3\utils\TimestampConverter.class
 origin\protobuf\ServiceRequestProto$Builder.class
 origin\protobuf\ServiceServiceGrpc$ServiceServiceBlockingStub.class
+dk\via\sep3\repository\RequestRepository.class
 origin\protobuf\AnnouncementServiceGrpc$AnnouncementServiceBlockingStub.class
 dk\via\sep3\DAO\PetServiceDAO.class
 origin\protobuf\AnnouncementsProto$Builder.class
@@ -85,10 +86,11 @@ origin\protobuf\FindAnnouncementProto$1.class
 origin\protobuf\RequestServicesProto.class
 origin\protobuf\ServiceServiceGrpc$ServiceServiceFutureStub.class
 origin\protobuf\SearchAnnouncementProto.class
-dk\via\sep3\repository\PetServiceRepository.class
 origin\protobuf\CaretakerSchedule.class
 origin\protobuf\FindUserProtoOrBuilder.class
 origin\protobuf\ServiceProto.class
+dk\via\sep3\services\GrpcErrorService.class
+dk\via\sep3\repository\ServiceRepository.class
 origin\protobuf\ServiceServiceGrpc.class
 dk\via\sep3\services\UserService.class
 origin\protobuf\RequestServicesProto$Builder.class
@@ -117,15 +119,16 @@ origin\protobuf\DatePeriodProtoOrBuilder.class
 origin\protobuf\SearchAnnouncementProto$Builder.class
 origin\protobuf\AnnouncementServiceGrpc$AnnouncementServiceStub.class
 dk\via\sep3\mappers\AnnouncementMapper.class
-dk\via\sep3\services\PetServiceService.class
 origin\protobuf\CaretakerSchedule$1.class
 dk\via\sep3\DAO\AnnouncementDAO.class
 origin\protobuf\ServiceProto$Builder.class
 origin\protobuf\FindAnnouncementProto.class
+dk\via\sep3\mappers\ServiceMapper.class
 origin\protobuf\UserProtoOrBuilder.class
 origin\protobuf\UserServiceGrpc.class
 origin\protobuf\FeedbackProto.class
 origin\protobuf\CaretakerScheduleOrBuilder.class
+dk\via\sep3\repository\CalendarRepository.class
 origin\protobuf\ServiceServiceGrpc$MethodHandlers.class
 origin\protobuf\UserServiceGrpc$UserServiceFutureStub.class
 origin\protobuf\SearchServiceProtoOrBuilder.class
@@ -140,6 +143,7 @@ origin\protobuf\SearchUsersProto.class
 origin\protobuf\ServiceRequestProtoOrBuilder.class
 origin\protobuf\LoginUserProtoOrBuilder.class
 origin\protobuf\AnnouncementServiceGrpc$MethodHandlers.class
+dk\via\sep3\services\ServiceService.class
 origin\protobuf\Protobuf$1.class
 dk\via\sep3\DAOInterfaces\PetServiceRequestDAOInterface.class
 origin\protobuf\ServicesProto$Builder.class

@@ -44,7 +44,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         }
 
 
-        responseObserver.onError(GrpcError.constructException("User with this email already exists"));
+        responseObserver.onError(GrpcErrorService.constructException("User with this email already exists"));
     }
 
     @Transactional
@@ -58,7 +58,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
             return;
         }
 
-        responseObserver.onError(GrpcError.constructException("Username or password are incorrect."));
+        responseObserver.onError(GrpcErrorService.constructException("Username or password are incorrect."));
 
     }
     @Override
@@ -72,7 +72,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
             return;
         }
 
-        responseObserver.onError(GrpcError.constructException("There is no user with such an email"));
+        responseObserver.onError(GrpcErrorService.constructException("There is no user with such an email"));
 
 
     }
@@ -82,7 +82,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         Collection<UserEntity> users = userDAO.getUsers(request.getType().getValue());
 
         if (users.isEmpty()) {
-            responseObserver.onError(GrpcError.constructException("No such users"));
+            responseObserver.onError(GrpcErrorService.constructException("No such users"));
             return;
         }
 
@@ -102,7 +102,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
 
         if(user == null)
         {
-            responseObserver.onError(GrpcError.constructException("User with email " + request.getEmail() + " is not found"));
+            responseObserver.onError(GrpcErrorService.constructException("User with email " + request.getEmail() + " is not found"));
             return;
         }
 
@@ -125,7 +125,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         var updatedUser = userDAO.updateUserInformation(user);
         if(updatedUser == null)
         {
-            responseObserver.onError(GrpcError.constructException("User was not updated."));
+            responseObserver.onError(GrpcErrorService.constructException("User was not updated."));
             return;
         }
 
@@ -138,7 +138,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     {
         if(userDAO.findUser(request.getEmail()) == null)
         {
-            responseObserver.onError(GrpcError.constructException("User was not deleted, because it doesn't exist."));
+            responseObserver.onError(GrpcErrorService.constructException("User was not deleted, because it doesn't exist."));
             return;
         }
 
@@ -159,7 +159,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
 
         if(!isAdded)
         {
-            responseObserver.onError(GrpcError.constructException("Time period was not added to the schedule"));
+            responseObserver.onError(GrpcErrorService.constructException("Time period was not added to the schedule"));
             return;
         }
 
@@ -178,7 +178,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
 
         if(!isDeleted)
         {
-            responseObserver.onError(GrpcError.constructException("Time period was not deleted from the schedule"));
+            responseObserver.onError(GrpcErrorService.constructException("Time period was not deleted from the schedule"));
             return;
         }
 
