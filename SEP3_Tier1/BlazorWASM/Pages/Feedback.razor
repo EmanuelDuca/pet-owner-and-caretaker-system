@@ -1,0 +1,40 @@
+@page "/Feedback/{announcementId:int}"
+@using Domain.Models
+<h3>Feedback</h3>
+
+<div class="content">
+    @if (announcement == null)
+    {
+        <label>@message</label>
+    }
+    else
+    {
+        <div class="d-flex flex-row justify-content-center">
+                <div class="card small-card">
+                    <RadzenTextBox @bind="feedbackGood" class="w-100" />
+                    <RadzenTextBox @bind="feedbackBad" class="w-100" />
+                    <Stars @bind-Rating="myRating"/>
+                    <p>You rated it: @myRating</p>
+                    <button class="icon-button" @onclick="SubmitFeedback">
+                        <span class="oi oi-trash"></span>
+                    </button>
+                </div>
+                <AnnouncementComponent Announcement="announcement"/>
+        </div>
+    }
+</div>
+
+
+@code {
+    private Announcement? announcement;
+    [Parameter] public int announcementId { get; init; }
+    private string message = "Loading...";
+    private string feedbackGood = "";
+    private string feedbackBad = "";
+    private double myRating = 0;
+
+    private async Task SubmitFeedback()
+    {
+        
+    }
+}

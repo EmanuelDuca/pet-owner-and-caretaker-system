@@ -26,6 +26,12 @@ public class PetMapper
         };
     }
     
+    public async Task<IEnumerable<Pet>> MapToEntityList(PetsProto proto)
+    {
+        return await Task.WhenAll(proto.Pets
+            .Select(async pet => await MapToEntity(pet)));
+    }
+    
     public async Task<PetProto> MapToProto(Pet pet)
     {
         return new PetProto()

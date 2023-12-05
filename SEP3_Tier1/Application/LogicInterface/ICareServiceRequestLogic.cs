@@ -8,4 +8,5 @@ public interface ICareServiceRequestLogic
     Task OfferCare(CreateOfferCareDto dto);
     Task AcceptOffer(int requestId);
     Task EndOffer(int serviceId);
+    Task DenyOffer(int requestId);
 }

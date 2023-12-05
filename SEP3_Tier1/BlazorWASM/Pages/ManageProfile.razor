@@ -4,7 +4,8 @@
 @using HttpClients.ClientInterfaces
 @using Newtonsoft.Json
 @inject NavigationManager navMgr
-@inject IAuthService userService
+@inject IAuthService authService
+@inject IUserService userService
 @attribute [Authorize]
 
 @if (Email == null)
@@ -170,7 +171,7 @@ else
     Email = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
     Password = user.Claims.FirstOrDefault(c => c.Type.Equals("Password"))!.Value;
     PhoneNumber = user.Claims.FirstOrDefault(c => c.Type.Equals("PhoneNumber"))!.Value;
-    string numString = user.Claims.FirstOrDefault(c => c.Type.Equals("Age")).Value;
+    string? numString = user.Claims.FirstOrDefault(c => c.Type.Equals("Age"))?.Value;
     if (string.IsNullOrEmpty(numString))
     {
       Age = null;

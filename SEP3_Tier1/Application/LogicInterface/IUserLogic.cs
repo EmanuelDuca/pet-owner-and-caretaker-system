@@ -11,4 +11,5 @@ public interface IUserLogic
     Task DeleteUser(string email);
     Task<IEnumerable<User>> GetAsync(SearchUsersDto parameters);
 
+    Task<IEnumerable<Pet>> GetPetsOfUserAsync(string email);
 }
