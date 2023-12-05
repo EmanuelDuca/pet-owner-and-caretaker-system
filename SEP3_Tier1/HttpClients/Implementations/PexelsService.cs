@@ -1,5 +1,6 @@
 ﻿using HttpClients.ClientInterfaces;
 using PexelsDotNetSDK.Api;
+using PexelsDotNetSDK.Models;
 
 namespace HttpClients.Implementations;
 

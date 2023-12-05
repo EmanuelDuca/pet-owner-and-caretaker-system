@@ -1,7 +1,10 @@
 using Application.DaoInterface;
 using Domain.Models;
+using Google.Protobuf.Collections;
+using Google.Protobuf.WellKnownTypes;
 using GrpcClient.Mappers;
 using GrpcClient.Utils;
+using Microsoft.Extensions.Primitives;
 
 namespace GrpcClient.Services;
 using Domain.DTOs;
@@ -75,10 +78,18 @@ public class GrpcAnnouncementService : IAnnouncementDao
     {
         try
         {
-            var request = new SearchAnnouncementProto();
+            var request = new SearchAnnouncementProto()
+            {
+                PetOwnerEmail = dto.UserEmail,
+                PostalCode = dto.PostalCode,
+                TimeStart = dto.EndTime == null? null : Timestamp.FromDateTime(dto.StartTime!.Value),
+                TimeFinish = dto.EndTime == null? null : Timestamp.FromDateTime(dto.EndTime!.Value),
+                PetIsVaccinated = dto.IsVaccinated,
+                PetWeight = dto.LessThanPetWeight
+            };
 
-            if (!string.IsNullOrEmpty(dto.PostalCode))
-                request.PostalCode = dto.PostalCode;
+            request.PetTypes.AddRange(dto.PetTypes == null ? new RepeatedField<string>()
+                : new RepeatedField<string>() { dto.PetTypes!.Select(PetType.NameFromPetType) });
             
             AnnouncementsProto announcements = await announcementServiceClient.SearchAnnouncementsAsync(request);
             return await mapper.MapToEntityList(announcements);

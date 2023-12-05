@@ -67,6 +67,7 @@ public class GrpcUserService : IUserDao
         }
         catch (RpcException e)
         {
+            Console.WriteLine(e.Message);
             throw new Exception(e.Message);
         }
     }

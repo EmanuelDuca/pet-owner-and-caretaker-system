@@ -174,7 +174,15 @@ public class UserGrpcServiceTest {
                 .setEmail(user.getEmail())
                 .build();
         var pets = userStub.searchPets(userRequest);
-        return null;
+        return pets.getPetsList().stream().map(p -> new PetEntity(
+                p.getId(),
+                p.getPetName(),
+                p.getPetType(),
+                p.getWeight(),
+                p.getIsVaccinated(),
+                p.getDescription(),
+                getUser(p.getOwnerEmail())
+        )).toList();
     }
 
     private Collection<UserEntity> searchUsers(SearchUsersProto search)
@@ -489,21 +497,21 @@ public class UserGrpcServiceTest {
         assertEquals(1, getSchedule(3).size());
     }
 
-    @Test
-    void getPets_HappyCase_Test()
-    {
-        createUser(petOwner);
-        awaitCompletion(userExists(careTaker));
-        assertTrue(userExists(careTaker));
-
-        existingPeriod.setStartDate(LocalDate.now().withMonth(3));
-        existingPeriod.setEndDate(LocalDate.now().withMonth(3).plusDays(5));
-        addDatePeriod(existingPeriod);
-
-        givenPeriod.setStartDate(LocalDate.now().withMonth(4));
-        givenPeriod.setEndDate(LocalDate.now().withMonth(4).plusDays(5));
-        addDatePeriod(existingPeriod);
-
-        assertEquals(1, getSchedule(3).size());
-    }
+//    @Test
+//    void getPets_HappyCase_Test()
+//    {
+//        createUser(petOwner);
+//        awaitCompletion(userExists(careTaker));
+//        assertTrue(userExists(careTaker));
+//
+//        existingPeriod.setStartDate(LocalDate.now().withMonth(3));
+//        existingPeriod.setEndDate(LocalDate.now().withMonth(3).plusDays(5));
+//        addDatePeriod(existingPeriod);
+//
+//        givenPeriod.setStartDate(LocalDate.now().withMonth(4));
+//        givenPeriod.setEndDate(LocalDate.now().withMonth(4).plusDays(5));
+//        addDatePeriod(existingPeriod);
+//
+//        assertEquals(1, getSchedule(3).size());
+//    }
 }

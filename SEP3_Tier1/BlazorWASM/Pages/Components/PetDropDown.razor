@@ -1,53 +1,37 @@
 @using Domain.Models
+@using HttpClients.ClientInterfaces
 
 
 <RadzenDropDown 
-    @bind-Value=@Value TValue="Pet" 
-    Placeholder="@(Pets.Any()? $"Choose" : "Empty")" 
+    @bind-Value=@Value TValue="Pet"
+    Placeholder="@(Pets == null || Pets.Any() ? $"Choose" : "Empty")" 
     Data="@Pets" TextProperty="PetName" 
-    Change="() => Console.WriteLine(Value.PetName)"/>
+    Change="() => Console.WriteLine(Value?.PetName)"/>
 
 
 @code {
-    public IEnumerable<Pet> Pets { get; set; }
-    // [Inject]
-    // public IPetService PetService { get; set; }
+    public IEnumerable<Pet>? Pets { get; set; } = new List<Pet>();
+    [Inject]
+    public IUserService UserService { get; set; }
     
     [Parameter]
     public string OwnerEmail{ get; set; }
     
-    public Pet Value { get; set; }
+    public Pet? Value { get; set; } = new Pet()     ;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine(OwnerEmail);
-        Pets = new List<Pet>
+        try
         {
-            new()
+            Pets = await UserService.GetPetsOfUser(OwnerEmail);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            if (Pets == null || !Pets.Any())
             {
-                Id = 1,
-                IsVaccinated = true,
-                PetName = "Cherry",
-                PetType = PetType.Type.Dog,
-                Description = "Finwaropigrg"
-            },
-            new()
-            {
-                Id = 1,
-                IsVaccinated = true,
-                PetName = "X",
-                PetType = PetType.Type.Canary,
-                Description = "Fat cat"
-            },
-            new()
-            {
-                Id = 1,
-                IsVaccinated = true,
-                PetName = "Pollo",
-                PetType = PetType.Type.Chinchilla,
-                Description = "It's Hugo"
+                Value = null;
             }
-        };
-    // Pets = await PetService.GetPetsByOwnerEmailAsync(OwnerEmail);
+        }
     }
 }

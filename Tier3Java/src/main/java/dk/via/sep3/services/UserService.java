@@ -189,6 +189,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     }
 
     @Override
+    @Transactional
     public void searchPets(FindUserProto request, StreamObserver<PetsProto> responseObserver)
     {
         Collection<PetEntity> pets = userDAO.getPets(request.getEmail());
@@ -203,6 +204,8 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
             responseObserver.onError(GrpcErrorService.constructException("No pets"));
             return;
         }
+
+        System.out.println(pets);
 
         var petsProto = pets.stream().map(PetMapper::mapToProto).toList();
 
