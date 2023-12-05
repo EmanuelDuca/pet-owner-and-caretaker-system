@@ -23,4 +23,9 @@ public class CareServiceRequestLogic : ICareServiceRequestLogic
     {
         await careServiceRequestDao.EndAsync(serviceId);
     }
+    
+    public async Task DenyOffer(int requestId)
+    {
+        await careServiceRequestDao.EndAsync(requestId);
+    }
 }

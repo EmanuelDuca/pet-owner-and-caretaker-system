@@ -13,6 +13,7 @@ public interface IAuthService
     Task<ClaimsPrincipal> GetAuthAsync();
     Task EditProfile(UserEditDto dto);
     Task DeleteProfile(string email);
+    Task GetUsers(SearchUsersDto dto);
     Action<ClaimsPrincipal> OnAuthStateChanged { get; set; }
     
 }
