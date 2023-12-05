@@ -62,7 +62,6 @@
                     <fieldset class="field mt-0">
                         <label>Type:</label>
                         @{
-                            // var types = Enum.GetValues(typeof(PetType)).Cast<PetType>();
                             <RadzenDropDown Data="PetType.PetTypesWithNames"
                                             @bind-Value="Announcement.Pet.PetType"
                                             Style="width: var(--inputs-width);"
@@ -172,10 +171,10 @@
     public Action OnSubmitAction { get; set; }
     
     [Parameter]
-    public String ActionName { get; set; }
+    public string ActionName { get; set; }
     
     [Parameter]
-    public String ForPage { get; set; }
+    public string ForPage { get; set; }
     
     private string ValidatorStyles = "position: relative; width: 20%; margin-left: auto; display: block;";
     private bool isNewPet;

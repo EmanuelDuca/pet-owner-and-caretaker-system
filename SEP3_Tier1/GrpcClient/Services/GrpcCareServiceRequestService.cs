@@ -27,7 +27,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
     

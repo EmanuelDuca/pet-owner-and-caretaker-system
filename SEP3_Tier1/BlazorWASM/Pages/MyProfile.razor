@@ -7,7 +7,7 @@
 @inject NavigationManager navMgr
 @attribute [Authorize]
 
-@if (username == null)
+@if (email == null)
 {
     <label>Loading...</label>
 }
@@ -17,13 +17,13 @@ else
         <div class="MyProfile-header">
             <div class="card selected">
                 <RadzenImage Path="https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-16-512.png" Style="width: 100px; height: 100px; border-radius: 50%;"/>
-                <div class="column" Gap="0">
-                    <h3>Salutations, @username !</h3>
+                <div class="column">
+                    <h3>Salutations, @email !</h3>
                 </div>
             </div>
             <div class="card" @onclick='() => navMgr.NavigateTo($"/ManageProfile")' >
                 <RadzenImage Path="https://cdn-icons-png.flaticon.com/512/166/166256.png" Style="width: 100px; height: 100px; border-radius: 50%;"/>
-                <div class="column" Gap="0">
+                <div class="column">
                     <h3>Edit Profile</h3>
                 </div>
             </div>
@@ -41,7 +41,7 @@ else
         <div class="content">
             @if (announcements == null)
             {
-                <label>Loading...</label>
+                <label>@message</label>
             }
             else
             {
@@ -71,13 +71,48 @@ else
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
 
-    public string? username;
+    private string? email;
+    private string message = "Locading...";
 
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthState;
-        username = authState.User.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value;
-        announcements = (await AnnouncementService.GetAsync(new SearchAnnouncementDto(){Username = username})).ToList();
+        email = authState.User.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+
+        try
+        {
+            announcements = (await AnnouncementService.GetAsync(
+                new SearchAnnouncementDto
+                {
+                    UserEmail = email
+                })
+                ).ToList();
+        }
+        catch (Exception e)
+        {
+            message = "You don't have announcements.";
+        }
+        
+    }
+
+    private void NavigateTo(string address)
+    {
+        try
+        {
+            switch (address)
+            {
+                case "ManageProfile":
+                    navMgr.NavigateTo($"/ManageProfile");
+                    break;
+                case "MyProfile":
+                    navMgr.NavigateTo($"/MyProfile");
+                    break;
+            }
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
     
     private void OpenEditAnnouncement(int announcementId)
@@ -90,7 +125,6 @@ else
         {
             Console.WriteLine(e);
         }
-        navMgr.NavigateTo($"/ManageAnnouncement/{announcementId}");
     }
 
     private async Task DeleteAnnouncement(int announcementId)
