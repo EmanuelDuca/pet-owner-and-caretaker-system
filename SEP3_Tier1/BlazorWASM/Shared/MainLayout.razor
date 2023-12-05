@@ -47,14 +47,4 @@
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
     }
-    
-    /*
-                @if (context.User.IsInRole("PetOwner"))
-                {
-                    <PetOwnerNavMenu/>
-                }
-                else if (context.User.IsInRole("CareTaker"))
-                {
-                    <CareTakerNavMenu/>
-                }*/
 }

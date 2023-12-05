@@ -1,22 +1,11 @@
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using System.Text;
 using Application.DaoInterface;
-using Domain;
-using Domain.DTOs;
-using Grpc.Net.Client;
 using Domain.Models;
 using GrpcClient.Mappers;
 using GrpcClient.Utils;
-using HttpClients.ClientInterfaces;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 
 namespace GrpcClient.Services;
 using Domain.DTOs;
 using Grpc.Core;
-using Grpc.Net.Client;
-using GrpcClient;
 
 public class GrpcAnnouncementService : IAnnouncementDao
 {
@@ -60,13 +49,25 @@ public class GrpcAnnouncementService : IAnnouncementDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
 
-    public Task<Announcement> GetByIdAsync(int id)
+    public async Task<Announcement> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var announcementProto = await announcementServiceClient.FindAnnouncementAsync(new FindAnnouncementProto()
+            {
+                Id = id
+            });
+
+            return await mapper.MapToEntity(announcementProto);
+        }
+        catch (RpcException e)
+        {
+            throw new Exception(e.Status.Detail);
+        }
     }
 
 
@@ -84,7 +85,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
 
@@ -111,7 +112,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
         
     }
@@ -129,7 +130,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
     

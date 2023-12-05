@@ -55,5 +55,40 @@
       "Type": "PetOwner"
     }
   ],
-  "Announcements": []
+  "Announcements": [
+    {
+      "Id": 1,
+      "PetOwner": {
+        "Name": null,
+        "Username": null,
+        "Age": 29,
+        "Email": "ionv@gmail.com",
+        "PhoneNumber": "123123123123",
+        "Password": "1111",
+        "Type": null
+      },
+      "StartDate": "2023-12-04T00:00:00+01:00",
+      "EndDate": "2023-12-07T00:00:00+01:00",
+      "PostalCode": "8700",
+      "ServiceDescription": "Some description",
+      "CreationDateTime": "2023-12-04T14:22:14.2908255+01:00",
+      "Pet": {
+        "Id": 0,
+        "PetName": "Max",
+        "PetType": 0,
+        "Weight": 8,
+        "IsVaccinated": false,
+        "Description": "description of Dog",
+        "PetOwner": {
+          "Name": null,
+          "Username": null,
+          "Age": 29,
+          "Email": "ionv@gmail.com",
+          "PhoneNumber": "123123123123",
+          "Password": "1111",
+          "Type": null
+        }
+      }
+    }
+  ]
 }
