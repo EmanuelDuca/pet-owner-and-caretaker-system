@@ -17,6 +17,15 @@
       "PhoneNumber": null,
       "Password": "1111",
       "Type": "CareTaker"
+    },
+    {
+      "Name": null,
+      "Username": "Sevastian",
+      "Age": null,
+      "Email": "sevastian@gmail.com",
+      "PhoneNumber": null,
+      "Password": "password",
+      "Type": "PetOwner"
     }
   ],
   "Announcements": [
@@ -50,6 +59,40 @@
           "Email": "ionv@gmail.com",
           "PhoneNumber": null,
           "Password": "1111",
+          "Type": null
+        }
+      }
+    },
+    {
+      "Id": 2,
+      "PetOwner": {
+        "Name": null,
+        "Username": null,
+        "Age": null,
+        "Email": "sevastian@gmail.com",
+        "PhoneNumber": null,
+        "Password": "password",
+        "Type": null
+      },
+      "StartDate": "2023-12-04T00:00:00+01:00",
+      "EndDate": "2023-12-07T00:00:00+01:00",
+      "PostalCode": "8934",
+      "ServiceDescription": "Oifnorigouerg",
+      "CreationDateTime": "2023-12-04T13:30:56.4024107+01:00",
+      "Pet": {
+        "Id": 0,
+        "PetName": "GOLD",
+        "PetType": 11,
+        "Weight": 3,
+        "IsVaccinated": false,
+        "Description": "Fegweg",
+        "PetOwner": {
+          "Name": null,
+          "Username": null,
+          "Age": null,
+          "Email": "sevastian@gmail.com",
+          "PhoneNumber": null,
+          "Password": "password",
           "Type": null
         }
       }

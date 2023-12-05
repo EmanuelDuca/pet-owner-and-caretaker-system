@@ -53,7 +53,7 @@
     <div class="content">
         @if (announcements == null)
         {
-            <label>Loading...</label>
+            <label>@message</label>
         }
         else
         {
@@ -71,6 +71,7 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
     private string OwnerEmail;
+    private string message = "Loading...";
     
     private List<Announcement>? announcements;
     private List<PetType.Type> filteredPetTypes = new();
@@ -80,8 +81,8 @@
     
     private DateTime? startDate;
     private DateTime? endDate;
-    private String postalCode;
-    private String userName;
+    private string postalCode;
+    private string userName;
 
     private bool IsFilterShown
     {
@@ -104,11 +105,17 @@
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
         OwnerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
-    // userPets = ..
-
         
         SearchAnnouncementDto dto = new SearchAnnouncementDto();
-        announcements = (await AnnouncementService.GetAsync(dto)).ToList();
+
+        try
+        {
+            announcements = (await AnnouncementService.GetAsync(dto)).ToList();
+        }
+        catch (Exception e)
+        {
+            message = e.Message;
+        }
     }
     
     public void Search()

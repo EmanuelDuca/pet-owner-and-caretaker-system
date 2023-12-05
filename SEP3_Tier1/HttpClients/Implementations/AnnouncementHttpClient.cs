@@ -29,7 +29,7 @@ public class AnnouncementHttpClient : IAnnouncementService
 
     public async Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto? dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync(START_URI+"/filter", dto);
+        HttpResponseMessage response = await client.PostAsJsonAsync(START_URI + "/filter", dto);
         string responseContent = await HttpClientHelper.HandleResponse(response);
         return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<Announcement>>(responseContent);
     }

@@ -36,6 +36,8 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         this.userDAO = userDAO;
     }
 
+    @Override
+    @Transactional
     public void createAnnouncement(AnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
     {
         UserEntity petOwner = userDAO.findUser(request.getPetOwnerEmail());
@@ -75,7 +77,11 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         responseObserver.onCompleted();
     }
 
-    public void findAnnouncements(SearchAnnouncementProto request, StreamObserver<AnnouncementsProto> responseObserver)
+
+
+    @Override
+    @Transactional
+    public void searchAnnouncements(SearchAnnouncementProto request, StreamObserver<AnnouncementsProto> responseObserver)
     {
         Collection<AnnouncementEntity> announcements = request == null? announcementDAO.getAllAnnouncements() : announcementDAO.getAnnouncements(request);
 
@@ -93,7 +99,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
         responseObserver.onCompleted();
     }
     @Transactional
-    public void getAnnouncement(FindAnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
+    public void findAnnouncement(FindAnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
     {
         responseObserver.onNext(AnnouncementMapper.mapToProto(announcementDAO.getAnnouncement(request.getId())));
         responseObserver.onCompleted();

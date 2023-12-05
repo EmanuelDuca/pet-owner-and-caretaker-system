@@ -49,7 +49,7 @@ public class GrpcUserService : IUserDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
 
@@ -79,7 +79,7 @@ public class GrpcUserService : IUserDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
 
@@ -124,7 +124,7 @@ public class GrpcUserService : IUserDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
 }
