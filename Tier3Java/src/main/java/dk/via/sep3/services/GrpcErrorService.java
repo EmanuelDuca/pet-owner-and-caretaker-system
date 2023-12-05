@@ -2,7 +2,7 @@ package dk.via.sep3.services;
 
 import io.grpc.Status;
 
-public class GrpcError
+public class GrpcErrorService
 {
     public static Throwable constructException(String message)
     {

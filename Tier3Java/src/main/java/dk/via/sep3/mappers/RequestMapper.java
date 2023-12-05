@@ -4,7 +4,7 @@ import dk.via.sep3.model.RequestEntity;
 import origin.protobuf.ServiceRequestProto;
 
 
-public class PetServiceRequestMapper {
+public class RequestMapper {
     public static ServiceRequestProto mapToProto(RequestEntity serviceRequestEntity)
     {
         return ServiceRequestProto.newBuilder()
