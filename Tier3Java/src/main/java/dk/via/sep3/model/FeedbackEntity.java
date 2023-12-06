@@ -30,6 +30,7 @@ public class FeedbackEntity {
         this.caretaker = caretaker;
         this.rating = rating;
         this.feedback = feedback;
+        this.feedbackId = new FeedbackId(service.getId(), caretaker.getEmail());
     }
 
     public FeedbackEntity()
