@@ -87,8 +87,8 @@ public class CareServiceRequestController : ControllerBase
     }
     
     // GetRequestsAsync
-    [HttpPost("requests")]
-    public async Task<ActionResult<IEnumerable<ServiceRequest>>> GetRequestsAsync([FromBody] int announcementId)
+    [HttpGet("requests/{announcementId:int}")]
+    public async Task<ActionResult<IEnumerable<ServiceRequest>>> GetRequestsAsync(int announcementId)
     {
         try
         {
@@ -103,7 +103,7 @@ public class CareServiceRequestController : ControllerBase
     }
     
     // GetServiceAsync
-    [HttpPost("service")]
+    [HttpGet("service/{serviceId:int}")]
     public async Task<ActionResult> GetServiceAsync([FromBody] int serviceId)
     {
         try
@@ -135,7 +135,7 @@ public class CareServiceRequestController : ControllerBase
     }
     
     // DeleteFeedbackAsync
-    [HttpDelete("feedback")]
+    [HttpDelete("feedback/{serviceId:int}&{email:int}")]
     public async Task<ActionResult> DeleteFeedbackAsync([FromBody] int serviceId, string email)
     {
         try

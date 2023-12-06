@@ -8,6 +8,8 @@ public class RequestMapper {
     public static ServiceRequestProto mapToProto(RequestEntity serviceRequestEntity)
     {
         return ServiceRequestProto.newBuilder()
+                .setId(serviceRequestEntity.getId())
+                .setStatus(serviceRequestEntity.getStatus())
                 .setInitiatorEmail(serviceRequestEntity.getInitiator().getEmail())
                 .setRecipientEmail(serviceRequestEntity.getRecipient().getEmail())
                 .setAnnouncementId(serviceRequestEntity.getAnnouncement().getId())

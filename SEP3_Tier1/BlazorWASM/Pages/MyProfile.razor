@@ -4,6 +4,7 @@
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @inject IAnnouncementService AnnouncementService
+@inject ICareServiceService CareService
 @inject NavigationManager navMgr
 @attribute [Authorize]
 
@@ -36,8 +37,7 @@ else
         </div>
     </AuthorizeView>
     <div class="d-flex flex-row">
-        <div class="sidebar filter-area">
-        </div>
+        <div class="sidebar filter-area"></div>
         <div class="content">
             @if (announcements == null)
             {
@@ -45,19 +45,27 @@ else
             }
             else
             {
-                @foreach (var announcement in announcements!)
+                if (userType == "PetOwner")
                 {
-                    <div class="d-flex flex-row justify-content-center">
-                        <div class="card small-card">
-                            <button class="icon-button" @onclick="() => OpenEditAnnouncement(announcement.Id)">
-                                <span class="oi oi-pencil"></span>
-                            </button>
-                            <button class="icon-button" @onclick="() => DeleteAnnouncement(announcement.Id)">
-                                <span class="oi oi-trash"></span>
-                            </button>
+                    @foreach (var announcement in announcements!)
+                    {
+                        <div class="d-flex flex-row justify-content-center">
+                            <div class="card small-card">
+                                <button class="icon-button" @onclick="() => OpenEditAnnouncement(announcement.Id)">
+                                    <span class="oi oi-pencil"></span>
+                                </button>
+                                <button class="icon-button" @onclick="() => DeleteAnnouncement(announcement.Id)">
+                                    <span class="oi oi-trash"></span>
+                                </button>
+                            </div>
+                            
+                            <AnnouncementComponent Announcement="announcement"/>
                         </div>
-                        <AnnouncementComponent Announcement="announcement"/>
-                    </div>
+                    }
+                }
+                else if(userType == "CareTaker")
+                {
+                    
                 }
             }
         </div>
@@ -73,28 +81,42 @@ else
 
     private string? email;
     private string? username;
+    private string? userType;
     private string message = "Loading...";
+
+    private IEnumerable<ServiceRequest>? serviceRequests;
 
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthState;
         email = authState.User.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
         username = authState.User.Identity!.Name;
-
+        userType = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Actor))!.Value;
+        
         try
         {
-            announcements = (await AnnouncementService.GetAsync(
-                new SearchAnnouncementDto
-                {
-                    UserEmail = email
-                })
-                ).ToList();
+            if (userType == "PetOwner")
+            {
+                announcements = (await AnnouncementService.GetAsync(
+                    new SearchAnnouncementDto
+                    {
+                        UserEmail = email
+                    })
+                    ).ToList();
+
+                await UpdateServiceRequestsByAnnouncement(announcements.FirstOrDefault()!.Id);
+            }
         }
         catch (Exception e)
         {
             message = "You don't have announcements.";
         }
         
+    }
+
+    private async Task UpdateServiceRequestsByAnnouncement(int announcementId)
+    {
+        serviceRequests = await CareService.GetRequestsAsync(announcementId);
     }
 
     private void OpenEditAnnouncement(int announcementId)

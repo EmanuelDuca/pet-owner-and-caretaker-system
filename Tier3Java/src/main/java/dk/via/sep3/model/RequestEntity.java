@@ -58,6 +58,11 @@ public class RequestEntity
         return id;
     }
 
+    public ServiceRequestProto.Status getStatus()
+    {
+        return status;
+    }
+
     public AnnouncementEntity getAnnouncement()
     {
         return announcement;

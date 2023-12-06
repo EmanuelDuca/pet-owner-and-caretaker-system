@@ -49,7 +49,6 @@ public class ServiceMapper
         {
             feedback = proto.Feedback,
             rating = proto.Rating,
-            caretakerEmail = proto.CaretakerEmail,
             serviceId = proto.ServiceId
         };
         return feedback;

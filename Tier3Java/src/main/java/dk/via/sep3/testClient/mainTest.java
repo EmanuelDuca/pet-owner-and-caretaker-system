@@ -1,16 +1,12 @@
 package dk.via.sep3.testClient;
 
 
-import com.google.protobuf.StringValue;
-import com.google.protobuf.Timestamp;
-import dk.via.sep3.mappers.AnnouncementMapper;
-import dk.via.sep3.utils.TimestampConverter;
-import io.grpc.*;
-import origin.protobuf.*;
-
-import java.lang.String;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import origin.protobuf.AnnouncementServiceGrpc;
+import origin.protobuf.ServiceRequestProto;
+import origin.protobuf.ServiceServiceGrpc;
+import origin.protobuf.UserServiceGrpc;
 
 public class mainTest
 {

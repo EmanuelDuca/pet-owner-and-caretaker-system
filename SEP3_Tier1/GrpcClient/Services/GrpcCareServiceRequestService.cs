@@ -54,7 +54,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
     
@@ -70,7 +70,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
     
@@ -86,7 +86,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
     
@@ -94,16 +94,21 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
     {
         try
         {
-            var RequestServicesProto = await careRequestClient
+            var requestServicesProto = await careRequestClient
                 .SearchRequestServicesAsync(new FindAnnouncementProto()
                 {
                     Id = announcementId
                 });
-            return await mapper.MapToEntityList(RequestServicesProto);
+            
+            foreach (var serviceRequestProto in requestServicesProto.RequestServices)
+            {
+                Console.WriteLine($"request id: {serviceRequestProto.Id}");
+            }
+            return await mapper.MapToEntityList(requestServicesProto);
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
     
@@ -120,7 +125,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
     
@@ -156,13 +161,12 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
                 {
                     Feedback = feedback.feedback,
                     Rating = feedback.rating,
-                    ServiceId = feedback.serviceId,
-                    CaretakerEmail = feedback.caretakerEmail
+                    ServiceId = feedback.serviceId
                 });
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
     
@@ -173,13 +177,12 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
             await careRequestClient
                 .DeleteFeedbackAsync(new FindFeedbackProto()
                 {
-                    ServiceId = serviceId,
-                    CaretakerEmail = email
+                    ServiceId = serviceId
                 });
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
     
@@ -196,7 +199,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
         }
         catch (RpcException e)
         {
-            throw new Exception(e.Message);
+            throw new Exception(e.Status.Detail);
         }
     }
 }

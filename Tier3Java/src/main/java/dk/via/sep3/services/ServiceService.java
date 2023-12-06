@@ -127,7 +127,10 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
         Collection<ServiceRequestProto> requestsCollection = requests
                 .stream().map(RequestMapper::mapToProto).toList();
 
+
         RequestServicesProto requestsProtoItems = RequestServicesProto.newBuilder().addAllRequestServices(requestsCollection).build();
+
+        requestsProtoItems.getRequestServicesList().forEach(r -> System.out.println("Id: " + r.getId()));
         responseObserver.onNext(requestsProtoItems);
         responseObserver.onCompleted();
     }
@@ -170,7 +173,7 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
 
         careServiceDAO.giveFeedback(new FeedbackEntity(
                 careServiceDAO.findServiceById(request.getServiceId()),
-                (double) request.getRating(),
+                request.getRating(),
                 request.getFeedback()));
 
         responseObserver.onNext(Void.newBuilder().build());

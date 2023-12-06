@@ -41,3 +41,58 @@
     box-shadow: inset 0px 0px 3px rgba(0,0,0,0.1);
     width: 100%;
 }
+
+.request-action{
+    border-width: 0;
+    outline: white;
+    color: white;
+    border-radius: 5px;
+}
+
+
+#deny-request{
+    background-color: #d92e2e;
+}
+
+#accept-request{
+    background-color: #11ad11;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+.button-requests {
+    cursor: pointer;
+    background-color: #0a53be;
+    color: white;
+    outline: white;
+    padding: 5px;
+    user-select: none;
+    width: fit-content;
+    border-radius: 5px;
+}
+
+
+/* Hide the content by default */
+.requests-container {
+    display: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px black solid;
+    padding: 5px;
+    padding-top: 0px;
+    width: 25%;
+    background-image: url("img/pet_back_pattern.jpg");
+    background-size: cover;
+}
+
+.request{
+    width: 100%;
+    margin-top: 10px;
+}
+
+input[type="checkbox"]:checked ~ .requests-container {
+    display: flex;
+    justify-content: center;
+}
