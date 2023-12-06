@@ -100,6 +100,7 @@ else
   
     private string Email;
     private string Username;
+    private string Name;
     private string? PhoneNumber;
   private int? Age;
   private string Password;
@@ -167,7 +168,7 @@ else
 
   private void FetchDataFromClaims(ClaimsPrincipal user)
   {
-    Username = user.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value;
+    Username = user.Claims.First(claim => claim.Type.Equals(ClaimTypes.NameIdentifier)).Value;
     Email = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
     Password = user.Claims.FirstOrDefault(c => c.Type.Equals("Password"))!.Value;
     PhoneNumber = user.Claims.FirstOrDefault(c => c.Type.Equals("PhoneNumber"))!.Value;

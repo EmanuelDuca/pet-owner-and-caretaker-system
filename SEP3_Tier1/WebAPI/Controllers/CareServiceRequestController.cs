@@ -88,7 +88,7 @@ public class CareServiceRequestController : ControllerBase
     
     // GetRequestsAsync
     [HttpPost("requests")]
-    public async Task<ActionResult> GetRequestsAsync([FromBody] int announcementId)
+    public async Task<ActionResult<IEnumerable<ServiceRequest>>> GetRequestsAsync([FromBody] int announcementId)
     {
         try
         {
