@@ -60,8 +60,10 @@
         {
             @foreach (var announcement in announcements!)
             {
-                <AnnouncementComponent 
-                    Announcement="announcement" OnClickCallback="() => OfferServiceRequest(announcement)"/>
+                <AnnouncementComponent
+                    Announcement="announcement" 
+                    ShowOfferButton='Actor.Equals("CareTaker") ? true : false' 
+                    OnClickCallback="() => OfferServiceRequest(announcement)"/>
             }
         }
     </div>
@@ -73,6 +75,7 @@
     public Task<AuthenticationState> AuthState { get; set; } = null!;
     private string OwnerEmail;
     private string message = "Loading...";
+    private string Actor;
     
     private List<Announcement>? announcements;
     private List<PetType.Type> filteredPetTypes = new();
@@ -106,6 +109,7 @@
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
         OwnerEmail = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+        Actor = user.Claims.First(claim => claim.Type.Equals(ClaimTypes.Actor)).Value;
         
         SearchAnnouncementDto dto = new SearchAnnouncementDto();
 
@@ -168,7 +172,7 @@
         try
         {
             await AnnouncementService.CreateRequestAsync(dto);
-            SuccessMessage("Profile was deleted");
+            SuccessMessage("Request was saved");
         }
         catch (Exception e)
         {
