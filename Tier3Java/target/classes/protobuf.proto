@@ -113,7 +113,6 @@ message ServiceProto{
 
 message FeedbackProto{
   int32 serviceId = 1;
-  string caretakerEmail = 2;
   double rating = 3;
   string feedback= 4;
 }
@@ -194,7 +193,6 @@ message FindRequestServiceProto{
 }
 
 message FindFeedbackProto{
-  string caretakerEmail = 1;
   int32 serviceId = 2;
 }
 

@@ -99,12 +99,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
                 {
                     Id = announcementId
                 });
-            
-            foreach (var serviceRequestProto in requestServicesProto.RequestServices)
-            {
-                Console.WriteLine($"request id: {serviceRequestProto.Id}");
-            }
-            return await mapper.MapToEntityList(requestServicesProto);
+            return await mapper.MapToEntityList(RequestServicesProto);
         }
         catch (RpcException e)
         {
@@ -161,7 +156,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
                 {
                     Feedback = feedback.feedback,
                     Rating = feedback.rating,
-                    ServiceId = feedback.serviceId
+                    ServiceId = feedback.serviceId,
                 });
         }
         catch (RpcException e)
@@ -177,7 +172,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
             await careRequestClient
                 .DeleteFeedbackAsync(new FindFeedbackProto()
                 {
-                    ServiceId = serviceId
+                    ServiceId = serviceId,
                 });
         }
         catch (RpcException e)

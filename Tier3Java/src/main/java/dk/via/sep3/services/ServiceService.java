@@ -140,8 +140,8 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     public void searchServices(SearchServiceProto request, StreamObserver<ServicesProto> responseObserver)
     {
         Collection<ServiceEntity> services = careServiceDAO.searchServices(
-                request.hasCaretakerEmail()? userDao.findUser(request.getCaretakerEmail().getValue()) : null,
-                request.hasPetOwnerEmail()? userDao.findUser(request.getPetOwnerEmail().getValue()) : null,
+                request.hasCaretakerEmail()? request.getCaretakerEmail().getValue() : null,
+                request.hasPetOwnerEmail()? request.getPetOwnerEmail().getValue() : null,
                 request.getStatus()
         );
 

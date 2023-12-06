@@ -56,12 +56,12 @@ public class PetServiceDAO implements PetServiceDAOInterface
     @Override
     @Transactional
 
-    public Collection<ServiceEntity> searchServices(UserEntity careTaker, UserEntity petOwner, ServiceStatus status)
+    public Collection<ServiceEntity> searchServices(String careTaker, String petOwner, ServiceStatus status)
     {
         return repository.findAll()
                 .stream()
-                .filter(s -> careTaker == null || careTaker.equals(s.getCareTaker()))
-                .filter(s -> petOwner == null || petOwner.equals(s.getPetOwner()))
+                .filter(s -> careTaker == null || careTaker.equals(s.getCareTaker().getEmail()))
+                .filter(s -> petOwner == null || petOwner.equals(s.getPetOwner().getEmail()))
                 .filter(s -> status == null || status.equals(s.getStatus()))
                 .toList();
 

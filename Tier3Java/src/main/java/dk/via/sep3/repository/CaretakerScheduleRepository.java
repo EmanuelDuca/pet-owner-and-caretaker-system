@@ -1,4 +1,4 @@
-package dk.via.sep3.DAOInterfaces;
+package dk.via.sep3.repository;
 
 import dk.via.sep3.model.CalendarEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

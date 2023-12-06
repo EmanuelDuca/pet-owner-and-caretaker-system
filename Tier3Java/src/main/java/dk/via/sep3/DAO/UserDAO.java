@@ -1,6 +1,6 @@
 package dk.via.sep3.DAO;
 
-import dk.via.sep3.DAOInterfaces.CaretakerScheduleRepository;
+import dk.via.sep3.repository.CaretakerScheduleRepository;
 import dk.via.sep3.DAOInterfaces.UserDAOInterface;
 import dk.via.sep3.model.PetEntity;
 import dk.via.sep3.repository.PetRepository;
