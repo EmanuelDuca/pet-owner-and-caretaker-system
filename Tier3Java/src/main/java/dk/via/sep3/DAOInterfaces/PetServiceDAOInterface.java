@@ -1,5 +1,6 @@
 package dk.via.sep3.DAOInterfaces;
 
+import dk.via.sep3.model.AnnouncementEntity;
 import dk.via.sep3.model.FeedbackEntity;
 import dk.via.sep3.model.ServiceEntity;
 import dk.via.sep3.model.UserEntity;
@@ -17,4 +18,6 @@ public interface PetServiceDAOInterface
     Collection<FeedbackEntity> getFeedbacks(UserEntity careTaker);
 
     void deleteFeedback(int serviceId);
+
+    boolean exists(AnnouncementEntity announcement, UserEntity careTaker, UserEntity recipient);
 }

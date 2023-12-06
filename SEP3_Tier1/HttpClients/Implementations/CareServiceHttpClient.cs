@@ -44,6 +44,7 @@ public class CareServiceHttpClient : ICareServiceService
     {
         HttpResponseMessage responseMessage = await client.GetAsync($"{START_URI}/requests/{announcementId}");
         string json = await HttpClientHelper.HandleResponse(responseMessage);
+        Console.WriteLine(json);
         return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<ServiceRequest>>(json);
     }
 

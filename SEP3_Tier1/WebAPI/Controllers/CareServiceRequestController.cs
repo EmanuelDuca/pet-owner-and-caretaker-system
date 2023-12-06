@@ -40,7 +40,7 @@ public class CareServiceRequestController : ControllerBase
     }
     
     [HttpPost("accept")]
-    public async Task<ActionResult> AcceptOffer(int requestId)
+    public async Task<ActionResult> AcceptOffer([FromBody] int requestId)
     {
         try
         {
@@ -56,7 +56,7 @@ public class CareServiceRequestController : ControllerBase
     }
     
     [HttpPost("deny")]
-    public async Task<ActionResult> DenyOffer(int requestId)
+    public async Task<ActionResult> DenyOffer([FromBody] int requestId)
     {
         try
         {

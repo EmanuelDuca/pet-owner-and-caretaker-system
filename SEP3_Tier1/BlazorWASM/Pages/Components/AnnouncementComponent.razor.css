@@ -76,15 +76,13 @@ input[type="checkbox"] {
 
 /* Hide the content by default */
 .requests-container {
-    display: none;
+    display: none !important;
     border-radius: 5px;
     margin-top: 10px;
     border: 1px black solid;
     padding: 5px;
     padding-top: 0px;
     width: 25%;
-    background-image: url("img/pet_back_pattern.jpg");
-    background-size: cover;
 }
 
 .request{
@@ -93,6 +91,6 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked ~ .requests-container {
-    display: flex;
+    display: flex !important;
     justify-content: center;
 }

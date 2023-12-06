@@ -9,7 +9,7 @@ public interface PetServiceRequestDAOInterface
     RequestEntity createServiceRequest(RequestEntity serviceEntity);
     Collection<RequestEntity> searchServiceRequests(int announcementId);
     boolean deleteServiceRequests(int announcementId);
-    void confirmServiceRequest(int serviceId);
-    void denyServiceRequest(int serviceId);
+    boolean confirmServiceRequest(int serviceId);
+    boolean denyServiceRequest(int serviceId);
     RequestEntity getServiceRequestById(int serviceRequestId);
 }

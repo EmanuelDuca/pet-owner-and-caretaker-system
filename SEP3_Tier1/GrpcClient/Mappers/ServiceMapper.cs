@@ -40,6 +40,7 @@ public class ServiceMapper
             Recipient = (PetOwner) (await userService.GetByEmailAsync(proto.RecipientEmail))!,
             RequestEnum = (RequestEnum) (int) proto.Status
         };
+        Console.WriteLine($"Proto got: {proto.Id} Entity:{serviceRequest.Id}");
         return serviceRequest;
     }
     

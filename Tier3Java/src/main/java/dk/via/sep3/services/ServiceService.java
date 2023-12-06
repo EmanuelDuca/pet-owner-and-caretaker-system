@@ -65,13 +65,13 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     @Transactional
     public void acceptStartService(FindRequestServiceProto request, StreamObserver<Void> responseObserver)
     {
-        careServiceRequestDAO.confirmServiceRequest(request.getRequestId());
         RequestEntity serviceRequest = careServiceRequestDAO.getServiceRequestById(request.getRequestId());
         UserEntity initiator = userDao.findUser(serviceRequest.getInitiator().getEmail());
         UserEntity recipient = userDao.findUser(serviceRequest.getRecipient().getEmail());
 
         UserEntity careTaker;
         UserEntity petOwner;
+
 
         if(initiator.getUserType().equals("CareTaker"))
         {
@@ -82,6 +82,18 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
         {
             careTaker = recipient;
             petOwner = initiator;
+        }
+
+        if(careServiceDAO.exists(serviceRequest.getAnnouncement(), careTaker, recipient))
+        {
+            responseObserver.onError(GrpcErrorService.constructException("Service already exists"));
+            return;
+        }
+
+        if(!careServiceRequestDAO.confirmServiceRequest(request.getRequestId()))
+        {
+            responseObserver.onError(GrpcErrorService.constructException("Service request with id: " + request.getRequestId() + " doesn't exis"));
+            return;
         }
 
 
@@ -98,7 +110,12 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     @Transactional
     public void denyStartService(FindRequestServiceProto request, StreamObserver<Void> responseObserver)
     {
-        careServiceRequestDAO.denyServiceRequest(request.getRequestId());
+        if(!careServiceRequestDAO.denyServiceRequest(request.getRequestId()))
+        {
+            responseObserver.onError(GrpcErrorService.constructException("Service request with id: " + request.getRequestId() + " doesn't exis"));
+            return;
+        }
+
         responseObserver.onNext(Void.newBuilder().build());
         responseObserver.onCompleted();
     }
@@ -171,10 +188,18 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     public void addFeedback(FeedbackProto request, StreamObserver<Void> responseObserver)
     {
 
-        careServiceDAO.giveFeedback(new FeedbackEntity(
-                careServiceDAO.findServiceById(request.getServiceId()),
-                request.getRating(),
-                request.getFeedback()));
+        try
+        {
+            careServiceDAO.giveFeedback(new FeedbackEntity(
+                    careServiceDAO.findServiceById(request.getServiceId()),
+                    request.getRating(),
+                    request.getFeedback()));
+        }
+        catch (Exception e)
+        {
+            responseObserver.onError(GrpcErrorService.constructException(e.getMessage()));
+            return;
+        }
 
         responseObserver.onNext(Void.newBuilder().build());
         responseObserver.onCompleted();

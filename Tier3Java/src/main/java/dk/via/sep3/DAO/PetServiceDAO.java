@@ -1,6 +1,7 @@
 package dk.via.sep3.DAO;
 
 import dk.via.sep3.DAOInterfaces.PetServiceDAOInterface;
+import dk.via.sep3.model.AnnouncementEntity;
 import dk.via.sep3.repository.FeedbackRepository;
 import dk.via.sep3.repository.ServiceRepository;
 import dk.via.sep3.model.FeedbackEntity;
@@ -71,6 +72,9 @@ public class PetServiceDAO implements PetServiceDAOInterface
     @Transactional
     public void giveFeedback(FeedbackEntity feedback)
     {
+        if(feedbackRepository.exists(Example.of(feedback)))
+            throw new RuntimeException("Feedback for this service already exists");
+
         var service = repository.getReferenceById(feedback.getService().getId());
         service.setFeedback(feedback);
         feedbackRepository.save(feedback);
@@ -91,6 +95,13 @@ public class PetServiceDAO implements PetServiceDAOInterface
     public void deleteFeedback(int feedbackId)
     {
         feedbackRepository.deleteById(new FeedbackEntity.FeedbackId(feedbackId));
+    }
+
+    @Override
+    @Transactional
+    public boolean exists(AnnouncementEntity announcement, UserEntity careTaker, UserEntity petowner)
+    {
+        return repository.exists(Example.of(new ServiceEntity(careTaker, petowner, announcement)));
     }
 
 

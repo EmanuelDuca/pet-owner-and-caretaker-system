@@ -6,6 +6,7 @@ import dk.via.sep3.repository.RequestRepository;
 import dk.via.sep3.repository.UserRepository;
 import dk.via.sep3.model.RequestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
 import origin.protobuf.ServiceRequestProto;
 
@@ -35,6 +36,11 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
         || !announcementRepository.existsById(careServiceEntity.getAnnouncement().getId()))
             return null;
 
+        if(repository.exists(Example.of(new RequestEntity(careServiceEntity.getInitiator(), careServiceEntity.getRecipient(), careServiceEntity.getAnnouncement()))))
+        {
+            return null;
+        }
+
         return repository.save(careServiceEntity);
     }
 
@@ -58,20 +64,28 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
 
     @Override
     @Transactional
-    public void confirmServiceRequest(int serviceId)
+    public boolean confirmServiceRequest(int serviceId)
     {
+        if(!repository.existsById(serviceId))
+            return false;
+
         var serviceToUpdate = repository.getReferenceById(serviceId);
         serviceToUpdate.setStatus(ServiceRequestProto.Status.ACCEPTED);
         repository.save(serviceToUpdate);
+        return false;
     }
 
     @Override
     @Transactional
-    public void denyServiceRequest(int serviceId)
+    public boolean denyServiceRequest(int serviceId)
     {
+        if(!repository.existsById(serviceId))
+            return false;
+
         var serviceToUpdate = repository.getReferenceById(serviceId);
         serviceToUpdate.setStatus(ServiceRequestProto.Status.DENIED);
         repository.save(serviceToUpdate);
+        return true;
     }
 
     @Override
