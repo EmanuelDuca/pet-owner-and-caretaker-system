@@ -5,7 +5,6 @@ using Domain.Models.Enums;
 using Grpc.Core;
 using GrpcClient.Mappers;
 using Microsoft.VisualBasic.CompilerServices;
-using Newtonsoft.Json;
 
 namespace GrpcClient.Services;
 
@@ -100,9 +99,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
                 {
                     Id = announcementId
                 });
-            var list = await mapper.MapToEntityList(requestServicesProto);
-            
-            return list;
+            return await mapper.MapToEntityList(requestServicesProto);
         }
         catch (RpcException e)
         {

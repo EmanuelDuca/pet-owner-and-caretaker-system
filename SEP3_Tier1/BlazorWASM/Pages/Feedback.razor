@@ -1,35 +1,27 @@
-@page "/Feedback/{announcementId:int}"
+@page "/Feedback/{serviceId:int}"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @inject IAnnouncementService AnnouncementService
 <h3>Feedback</h3>
 
 <div class="content">
-    @if (announcement == null)
-    {
-        <label>@message</label>
-    }
-    else
-    {
         <div class="d-flex flex-row justify-content-center">
                 <div class="card small-card">
-                    <RadzenTextBox @bind="feedbackGood" class="w-100" />
-                    <RadzenTextBox @bind="feedbackBad" class="w-100" />
-                    <Stars @bind-Rating="myRating"/>
+                    @* <RadzenTextBox @bind="feedbackGood" class="w-100" /> *@
+                    @* <RadzenTextBox @bind="feedbackBad" class="w-100" /> *@
+                    <Stars publicRating="myRating" CurrentValueChanged="OnChange"/>
                     <p>You rated it: @myRating</p>
                     <button class="icon-button" @onclick="SubmitFeedback">
                         <span class="oi oi-trash"></span>
                     </button>
                 </div>
-                <AnnouncementComponent Announcement="announcement"/>
         </div>
-    }
 </div>
 
 
 @code {
-    private Announcement? announcement;
-    [Parameter] public int announcementId { get; init; }
+    private Service? service;
+    [Parameter] public int serviceId { get; init; }
     private string message = "Loading...";
     private string feedbackGood = "";
     private string feedbackBad = "";
@@ -37,18 +29,17 @@
     
     protected override async Task OnInitializedAsync()
     {
-        try
-        {   
-            announcement = await AnnouncementService.GetByIdAsync(announcementId);
-        }
-        catch (Exception e)
-        {
-            message = "Didn't get an announcement by id";
-        }
+        Console.WriteLine("we are new new");
     }
     
     private async Task SubmitFeedback()
     {
         
     }
+
+    private void OnChange(double rating)
+    {
+        myRating = rating;
+    }
+
 }

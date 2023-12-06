@@ -104,7 +104,7 @@ public class CareServiceRequestController : ControllerBase
     
     // GetServiceAsync
     [HttpGet("service/{serviceId:int}")]
-    public async Task<ActionResult> GetServiceAsync([FromBody] int serviceId)
+    public async Task<ActionResult> GetServiceAsync([FromQuery] int serviceId)
     {
         try
         {

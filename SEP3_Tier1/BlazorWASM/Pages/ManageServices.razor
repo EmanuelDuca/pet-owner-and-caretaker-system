@@ -58,14 +58,15 @@ else
 }
 
 @code {
+
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
-    
+
     private string message = "Loading...";
     private List<Service>? services;
     public string? username;
     public string Email;
-    
+
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthState;
@@ -86,7 +87,7 @@ else
         {
             message = "You don't have services.";
         }
-        // services = GenerateDummyData();
+    // services = GenerateDummyData();
     }
 
     private async Task ChangeStatus(Service service)
@@ -133,7 +134,7 @@ else
                 Weight = 5,
             }
         };
-        
+
         demo.Add(new Service()
         {
             PetOwner = petOwner,
@@ -143,4 +144,5 @@ else
         });
         return demo;
     }
+
 }
