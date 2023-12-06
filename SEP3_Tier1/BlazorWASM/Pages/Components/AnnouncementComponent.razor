@@ -32,7 +32,10 @@
         <div class="w-100">
             <RadzenText TextStyle="TextStyle.Body1">Service description: @Announcement.ServiceDescription</RadzenText>
         </div>
-        <RadzenButton Click="() => OnClick()">Offer your service</RadzenButton>
+        @if (ShowOfferButton == true)
+        {
+            <RadzenButton Click="() => OnClick()">Offer your service</RadzenButton>
+        }
     </div>
 </div>
 
@@ -41,10 +44,11 @@
 
     [Parameter]
     public string ImageSrc { get; set; } = null;
+    [Parameter]
+    public bool ShowOfferButton { get; set; }
     
     //The Code bellow is used for testing Create service
     [Parameter] public EventCallback OnClickCallback { get; set; }
-
 
     protected override async Task OnInitializedAsync()
     {
