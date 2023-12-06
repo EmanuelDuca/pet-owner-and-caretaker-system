@@ -73,6 +73,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
     {
         var service = repository.getReferenceById(feedback.getService().getId());
         service.setFeedback(feedback);
+        feedbackRepository.save(feedback);
         repository.save(service);
     }
 
@@ -81,15 +82,15 @@ public class PetServiceDAO implements PetServiceDAOInterface
     public Collection<FeedbackEntity> getFeedbacks(UserEntity careTaker)
     {
         return feedbackRepository.findAll().stream()
-                .filter(f -> f.getCaretaker().equals(careTaker))
+                .filter(f -> f.getService().getCareTaker().equals(careTaker))
                 .toList();
     }
 
     @Override
     @Transactional
-    public void deleteFeedback(int feedbackId, String caretakerEmail)
+    public void deleteFeedback(int feedbackId)
     {
-        feedbackRepository.deleteById(new FeedbackEntity.FeedbackId(feedbackId, caretakerEmail));
+        feedbackRepository.deleteById(new FeedbackEntity.FeedbackId(feedbackId));
     }
 
 

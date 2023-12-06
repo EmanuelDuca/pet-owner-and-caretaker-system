@@ -170,8 +170,7 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
 
         careServiceDAO.giveFeedback(new FeedbackEntity(
                 careServiceDAO.findServiceById(request.getServiceId()),
-                userDao.findUser(request.getCaretakerEmail()),
-                (short) request.getRating(),
+                (double) request.getRating(),
                 request.getFeedback()));
 
         responseObserver.onNext(Void.newBuilder().build());
@@ -181,7 +180,7 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     @Override
     public void deleteFeedback(FindFeedbackProto request, StreamObserver<Void> responseObserver)
     {
-        careServiceDAO.deleteFeedback(request.getServiceId(), request.getCaretakerEmail());
+        careServiceDAO.deleteFeedback(request.getServiceId());
 
         responseObserver.onNext(Void.newBuilder().build());
         responseObserver.onCompleted();

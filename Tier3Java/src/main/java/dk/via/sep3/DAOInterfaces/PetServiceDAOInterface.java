@@ -16,5 +16,5 @@ public interface PetServiceDAOInterface
     void giveFeedback(FeedbackEntity feedback);
     Collection<FeedbackEntity> getFeedbacks(UserEntity careTaker);
 
-    void deleteFeedback(int serviceId, String caretakerEmail);
+    void deleteFeedback(int serviceId);
 }

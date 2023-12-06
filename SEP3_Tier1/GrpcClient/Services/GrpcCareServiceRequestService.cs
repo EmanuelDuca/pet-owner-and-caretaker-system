@@ -33,7 +33,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
                     AnnouncementId = dto.AnnouncementId,
                     InitiatorEmail = dto.InitiatorId,
                     RecipientEmail = dto.RecipientId,
-                    // TODO Status = dto.RequestEnum
+                    Status = ServiceRequestProto.Types.Status.Sent
                 });
         }
         catch (RpcException e)

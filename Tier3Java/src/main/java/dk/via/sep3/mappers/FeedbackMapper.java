@@ -10,7 +10,6 @@ public class FeedbackMapper
         return FeedbackProto.newBuilder()
                 .setFeedback(entity.getFeedback())
                 .setRating(entity.getRating())
-                .setCaretakerEmail(entity.getCaretaker().getEmail())
                 .setServiceId(entity.getService().getId())
                 .build();
     }

@@ -16,21 +16,16 @@ public class FeedbackEntity {
     @MapsId("serviceId")
     private ServiceEntity service;
 
-    @OneToOne
-    @MapsId("caretakerEmail")
-    private UserEntity caretaker;
-
-    private short rating;
+    private double rating;
     private String feedback;
 
 
-    public FeedbackEntity(ServiceEntity service, UserEntity caretaker, short rating, String feedback)
+    public FeedbackEntity(ServiceEntity service, double rating, String feedback)
     {
         this.service = service;
-        this.caretaker = caretaker;
         this.rating = rating;
         this.feedback = feedback;
-        this.feedbackId = new FeedbackId(service.getId(), caretaker.getEmail());
+        this.feedbackId = new FeedbackId(service.getId());
     }
 
     public FeedbackEntity()
@@ -38,18 +33,12 @@ public class FeedbackEntity {
 
     }
 
-
     public ServiceEntity getService()
     {
         return service;
     }
 
-    public UserEntity getCaretaker()
-    {
-        return caretaker;
-    }
-
-    public short getRating()
+    public double getRating()
     {
         return rating;
     }
@@ -63,12 +52,10 @@ public class FeedbackEntity {
     public static class FeedbackId implements Serializable
     {
         private int serviceId;
-        private String caretakerEmail;
 
-        public FeedbackId(int serviceId, String caretakerEmail)
+        public FeedbackId(int serviceId)
         {
             this.serviceId = serviceId;
-            this.caretakerEmail = caretakerEmail;
         }
 
         public FeedbackId()

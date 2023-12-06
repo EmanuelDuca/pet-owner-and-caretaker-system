@@ -31,7 +31,7 @@ public class CareServiceRequestLogic : ICareServiceRequestLogic
     
     public async Task DenyOffer(int requestId)
     {
-        await careServiceRequestDao.EndAsync(requestId);
+        await careServiceRequestDao.DenyAsync(requestId);
     }
 
     public async Task<IEnumerable<ServiceRequest>> GetRequestsAsync(int announcementId)
