@@ -157,7 +157,6 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
                     Feedback = feedback.feedback,
                     Rating = feedback.rating,
                     ServiceId = feedback.serviceId,
-                    CaretakerEmail = feedback.caretakerEmail
                 });
         }
         catch (RpcException e)
@@ -174,7 +173,6 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
                 .DeleteFeedbackAsync(new FindFeedbackProto()
                 {
                     ServiceId = serviceId,
-                    CaretakerEmail = email
                 });
         }
         catch (RpcException e)

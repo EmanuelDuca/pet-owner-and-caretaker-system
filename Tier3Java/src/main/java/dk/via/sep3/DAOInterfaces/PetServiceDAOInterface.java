@@ -12,7 +12,7 @@ public interface PetServiceDAOInterface
     ServiceEntity createService(ServiceEntity service);
     void endService(int serviceId);
     ServiceEntity findServiceById(int serviceId);
-    Collection<ServiceEntity> searchServices(UserEntity careTaker, UserEntity petOwner, ServiceStatus status);
+    Collection<ServiceEntity> searchServices(String careTaker, String petOwner, ServiceStatus status);
     void giveFeedback(FeedbackEntity feedback);
     Collection<FeedbackEntity> getFeedbacks(UserEntity careTaker);
 
