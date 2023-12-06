@@ -99,7 +99,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
                 {
                     Id = announcementId
                 });
-            return await mapper.MapToEntityList(RequestServicesProto);
+            return await mapper.MapToEntityList(requestServicesProto);
         }
         catch (RpcException e)
         {
