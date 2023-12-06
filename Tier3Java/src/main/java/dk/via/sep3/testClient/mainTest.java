@@ -23,14 +23,14 @@ public class mainTest
         ServiceServiceGrpc.ServiceServiceBlockingStub serviceBlockingStub = ServiceServiceGrpc.newBlockingStub(managedChannel);
 
 
-        FindUserProto userRequest = FindUserProto.newBuilder()
-                .setEmail("allan1@gmail.com")
-                .build();
-        try {
-            userStub.deleteUser(userRequest);
-        } catch (StatusRuntimeException e) {
-            System.out.println(e.getMessage());
-        }
+        ServiceRequestProto serviceProto = ServiceRequestProto
+                .newBuilder()
+                .setAnnouncementId(1)
+                        .setInitiatorEmail("michael.leo.dk@gmail.com")
+                                .setRecipientEmail("sevastian@gmail.com")
+                                        .build();
+        serviceBlockingStub.requestStartService(serviceProto);
+
 
         // Test add date period
 //        userStub.addDatePeriodToScheduleOfCaretaker(

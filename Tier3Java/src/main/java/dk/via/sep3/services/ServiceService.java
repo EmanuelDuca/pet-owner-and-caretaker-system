@@ -52,7 +52,13 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
         var serviceRequest = careServiceRequestDAO.createServiceRequest(new RequestEntity(initiator,recipient,announcement));
 
         if(serviceRequest == null)
+        {
             responseObserver.onError(GrpcErrorService.constructException("Can't offer care service"));
+            return;
+        }
+
+        responseObserver.onNext(Void.newBuilder().build());
+        responseObserver.onCompleted();
     }
 
     @Override
@@ -84,6 +90,8 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
                 petOwner,
                 serviceRequest.getAnnouncement()
         ));
+        responseObserver.onNext(Void.newBuilder().build());
+        responseObserver.onCompleted();
     }
 
     @Override
@@ -91,6 +99,8 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     public void denyStartService(FindRequestServiceProto request, StreamObserver<Void> responseObserver)
     {
         careServiceRequestDAO.denyServiceRequest(request.getRequestId());
+        responseObserver.onNext(Void.newBuilder().build());
+        responseObserver.onCompleted();
     }
 
     @Override
@@ -98,6 +108,8 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     public void endService(FindServiceProto request, StreamObserver<Void> responseObserver)
     {
         careServiceDAO.endService(request.getServiceId());
+        responseObserver.onNext(Void.newBuilder().build());
+        responseObserver.onCompleted();
     }
 
     @Override
@@ -161,12 +173,18 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
                 userDao.findUser(request.getCaretakerEmail()),
                 (short) request.getRating(),
                 request.getFeedback()));
+
+        responseObserver.onNext(Void.newBuilder().build());
+        responseObserver.onCompleted();
     }
 
     @Override
     public void deleteFeedback(FindFeedbackProto request, StreamObserver<Void> responseObserver)
     {
         careServiceDAO.deleteFeedback(request.getServiceId(), request.getCaretakerEmail());
+
+        responseObserver.onNext(Void.newBuilder().build());
+        responseObserver.onCompleted();
     }
 
     @Override
