@@ -73,6 +73,7 @@ else
         Email = authState.User.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
         try
         {
+            /*
             services = (await AnnouncementService.GetServicesAsync(
                 new SearchServicesDto()
                 {
@@ -81,12 +82,14 @@ else
                     caretakerEmail = null
                 })
                 ).ToList();
+                */
         }
         catch (Exception e)
         {
             message = "You don't have services.";
+            Console.WriteLine(e);
         }
-        // services = GenerateDummyData();
+        services = GenerateDummyData();
     }
 
     private async Task ChangeStatus(Service service)

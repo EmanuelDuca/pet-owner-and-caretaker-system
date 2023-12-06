@@ -103,12 +103,12 @@ public class CareServiceRequestController : ControllerBase
     }
     
     // GetServiceAsync
-    [HttpPost("service")]
-    public async Task<ActionResult> GetServiceAsync([FromBody] int serviceId)
+    [HttpGet("service/{id:int}")]
+    public async Task<ActionResult<Service>> GetServiceAsync([FromRoute] int id)
     {
         try
         {
-            var service = await logic.GetServiceAsync(serviceId);
+            var service = await logic.GetServiceAsync(id);
             return Ok(service);
         }
         catch (Exception e)
