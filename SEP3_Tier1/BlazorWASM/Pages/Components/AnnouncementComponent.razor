@@ -40,15 +40,18 @@
     </div>
     
     <div class="action d-flex flex-column align-items-center justify-content-center">
-        @if (ShowOfferButton)
+            @if (ShowOfferButton)
             {
                 <RadzenButton Click="OnClick">Offer your service</RadzenButton>
             }
-            else
+            
+            @if(ShowRequestsButton)
             {
-                <input type="checkbox" id="toggle"/>
-                <label for="toggle" class="button-requests">Requests</label>
-                @if (serviceRequests != null && serviceRequests.Any())
+                <button class="button-requests" @onclick="ToggleRequests">
+                    @(shouldShowRequests ? "Hide requests" : "Show requests")
+                </button>
+
+                @if (shouldShowRequests)
                 {
                     <div class="requests-container flex-column">
                         @if (serviceRequests != null)
@@ -57,10 +60,18 @@
                             {
                                 User caretaker = request.Announcement.PetOwner.Email == request.Initiator.Email ? request.Recipient : request.Initiator;
                                 <div class="request d-flex flex-row justify-content-between align-items-center">
-                                    <b style="color: white; font-size: 1.2rem; -webkit-text-stroke: 1px black">
-                                        @($"{caretaker.Username}")
-                                    </b>
-                                        <span class="oi oi-star" style="color: gold"></span>
+                                    <div class="request-caretaker-info d-flex flex-column justify-content-center">
+                                        <b style="color: black; font-size: 1.2rem;">
+                                            @($"{caretaker.Username}")
+                                        </b>
+                                        <text>
+                                            @(GetAverageRating(averageRatings[caretaker.Email]))
+                                            <span class="oi oi-star" style="color: gold"></span>
+                                            @($"({averageRatings[caretaker.Email].Length})")
+                                            
+                                        </text>
+                                    </div>
+                                    
                                     <div>
                                         <button id="accept-request" class="request-action" onclick="@(() => AcceptRequest(request.Id))">
                                             Accept
@@ -72,6 +83,10 @@
                                     </div>
                                 </div>
                             }
+                        }
+                        else
+                        {
+                            <label>None</label>
                         }
                     </div>
                 }
@@ -86,11 +101,19 @@
     public string ImageSrc { get; set; } = null;
     [Parameter]
     public bool ShowOfferButton { get; set; }
+    
+    [Parameter]
+    public bool ShowRequestsButton { get; set; }
 
     private IEnumerable<ServiceRequest>? serviceRequests;
 
     //The Code bellow is used for testing Create service
     [Parameter] public EventCallback OnClickCallback { get; set; }
+    
+    Dictionary<string, Feedback[]> averageRatings = new();
+    
+    bool shouldShowRequests = false;
+
 
 
     protected override async Task OnInitializedAsync()
@@ -100,17 +123,58 @@
         {
             serviceRequests = await CareService.GetRequestsAsync(Announcement.Id);
             serviceRequests = serviceRequests.Where(r => r.RequestEnum == RequestEnum.SENT);
+            foreach (var request in serviceRequests)
+            {
+                User caretaker = request.Announcement.PetOwner.Email == request.Initiator.Email ? request.Recipient : request.Initiator;
+                averageRatings[caretaker.Email] = await GetRatings(caretaker.Email);
+            }
         }
         catch (Exception e)
         {
-            Console.WriteLine("opfaeriog");
+            Console.WriteLine(e.StackTrace);
+            Console.WriteLine(e.Message);
         }
     }
     
-    async Task<string> GetAverageRating(string caretakerEmail)
+    private async Task GetRequests()
     {
-        var feedbacks = await CareService.GetFeedbacks(caretakerEmail);
-        return $"{feedbacks.Average(f => f.Rating)}";
+        serviceRequests = await CareService.GetRequestsAsync(Announcement.Id);
+        serviceRequests = serviceRequests.Where(r => r.RequestEnum == RequestEnum.SENT);
+        var enumerable = serviceRequests as ServiceRequest[] ?? serviceRequests.ToArray();
+        foreach (var request in enumerable)
+        {
+            User caretaker = request.Announcement.PetOwner.Email == request.Initiator.Email ? request.Recipient : request.Initiator;
+            averageRatings[caretaker.Email] = await GetRatings(caretaker.Email);
+        }
+        shouldShowRequests = serviceRequests != null && enumerable.Any();
+    }
+    
+    private async Task ToggleRequests()
+    {
+        if (serviceRequests == null || !serviceRequests.Any())
+        {
+            await GetRequests();
+        }
+        else
+        {
+            shouldShowRequests = !shouldShowRequests;
+        }
+    }
+    
+    private async Task<Feedback[]> GetRatings(string caretakerEmail)
+    {
+        return (await CareService.GetFeedbacks(caretakerEmail)).ToArray();
+    }
+    
+    private double GetAverageRating(Feedback[] feedbacks)
+    {
+        double average = 0;
+        foreach (var f in feedbacks)
+        {
+            average += f.Rating != 0? f.Rating : 1;
+        }
+
+        return average / (!feedbacks.Any()? 1 : feedbacks.Length);
     }
 
     private async Task AcceptRequest(int requestId)

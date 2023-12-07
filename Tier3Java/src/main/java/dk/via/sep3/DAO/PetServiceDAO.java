@@ -86,7 +86,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
     public Collection<FeedbackEntity> getFeedbacks(UserEntity careTaker)
     {
         return feedbackRepository.findAll().stream()
-                .filter(f -> f.getService().getCareTaker().equals(careTaker))
+                .filter(f -> f.getService().getCareTaker().getEmail().equals(careTaker.getEmail()))
                 .toList();
     }
 

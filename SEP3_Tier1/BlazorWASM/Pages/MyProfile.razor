@@ -39,13 +39,13 @@ else
     <div class="d-flex flex-row">
         <div class="sidebar filter-area"></div>
         <div class="content">
-            @if (announcements == null)
+            @if (userType == "PetOwner")
             {
-                <label>@message</label>
-            }
-            else
-            {
-                if (userType == "PetOwner")
+                if (announcements == null)
+                {
+                    <label>@message</label>
+                }
+                else
                 {
                     @foreach (var announcement in announcements!)
                     {
@@ -58,15 +58,15 @@ else
                                     <span class="oi oi-trash"></span>
                                 </button>
                             </div>
-                            
-                            <AnnouncementComponent Announcement="announcement"/>
+
+                            <AnnouncementComponent Announcement="announcement" ShowRequestsButton="true"/>
                         </div>
                     }
                 }
-                else if(userType == "CareTaker")
-                {
-                    
-                }
+            }
+            else if(userType == "CareTaker")
+            {
+                
             }
         </div>
     </div>

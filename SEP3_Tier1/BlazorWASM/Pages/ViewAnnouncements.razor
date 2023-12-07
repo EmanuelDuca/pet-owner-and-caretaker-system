@@ -62,7 +62,8 @@
             {
                 <AnnouncementComponent
                     Announcement="announcement" 
-                    ShowOfferButton='Actor.Equals("CareTaker") ? true : false' 
+                    ShowOfferButton='Actor.Equals("CareTaker")'
+                    ShowRequestsButton='@false'
                     OnClickCallback="() => OfferServiceRequest(announcement)"/>
             }
         }
