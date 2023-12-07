@@ -151,8 +151,8 @@ public class CareServiceRequestController : ControllerBase
     }
     
     // GetFeedbacks
-    [HttpGet("feedback")]
-    public async Task<ActionResult> GetFeedbacks([FromQuery] string email)
+    [HttpGet("feedback/{email}")]
+    public async Task<ActionResult> GetFeedbacks([FromRoute] string email)
     {
         try
         {

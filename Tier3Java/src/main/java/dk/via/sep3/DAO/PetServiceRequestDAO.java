@@ -36,7 +36,9 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
         || !announcementRepository.existsById(careServiceEntity.getAnnouncement().getId()))
             return null;
 
-        if(repository.exists(Example.of(new RequestEntity(careServiceEntity.getInitiator(), careServiceEntity.getRecipient(), careServiceEntity.getAnnouncement()))))
+        if(repository.findAll().stream().anyMatch(serviceRequest -> serviceRequest.getAnnouncement().getId() == careServiceEntity.getAnnouncement().getId() &&
+                serviceRequest.getInitiator().getEmail().equals(careServiceEntity.getInitiator().getEmail()) &&
+                        serviceRequest.getRecipient().getEmail().equals(careServiceEntity.getRecipient().getEmail())))
         {
             return null;
         }

@@ -2,8 +2,7 @@
 
 public class Feedback
 {
-    public int serviceId { get; set; }
-    public string caretakerEmail { get; set; }
-    public double rating { get; set; }
-    public string feedback { get; set; }
+    public int ServiceId { get; set; }
+    public double Rating { get; set; }
+    public string FeedbackText { get; set; }
 }

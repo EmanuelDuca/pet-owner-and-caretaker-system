@@ -92,7 +92,7 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
 
         if(!careServiceRequestDAO.confirmServiceRequest(request.getRequestId()))
         {
-            responseObserver.onError(GrpcErrorService.constructException("Service request with id: " + request.getRequestId() + " doesn't exis"));
+            responseObserver.onError(GrpcErrorService.constructException("Service request with id: " + request.getRequestId() + " doesn't exist"));
             return;
         }
 
@@ -112,7 +112,7 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
     {
         if(!careServiceRequestDAO.denyServiceRequest(request.getRequestId()))
         {
-            responseObserver.onError(GrpcErrorService.constructException("Service request with id: " + request.getRequestId() + " doesn't exis"));
+            responseObserver.onError(GrpcErrorService.constructException("Service request with id: " + request.getRequestId() + " doesn't exist"));
             return;
         }
 

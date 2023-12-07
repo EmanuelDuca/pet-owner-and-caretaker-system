@@ -72,7 +72,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
     @Transactional
     public void giveFeedback(FeedbackEntity feedback)
     {
-        if(feedbackRepository.exists(Example.of(feedback)))
+        if(feedbackRepository.findAll().stream().anyMatch(f -> f.getService().getId() == feedback.getService().getId()))
             throw new RuntimeException("Feedback for this service already exists");
 
         var service = repository.getReferenceById(feedback.getService().getId());
@@ -101,7 +101,12 @@ public class PetServiceDAO implements PetServiceDAOInterface
     @Transactional
     public boolean exists(AnnouncementEntity announcement, UserEntity careTaker, UserEntity petowner)
     {
-        return repository.exists(Example.of(new ServiceEntity(careTaker, petowner, announcement)));
+        return repository.findAll().stream().anyMatch(service ->
+                service.getCareTaker().getEmail().equals(careTaker.getEmail()) &&
+                        service.getPetOwner().getEmail().equals(petowner.getEmail()) &&
+                        announcement.getId() == announcement.getId()
+
+        );
     }
 
 

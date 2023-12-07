@@ -154,9 +154,9 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
             await careRequestClient
                 .AddFeedbackAsync(new FeedbackProto()
                 {
-                    Feedback = feedback.feedback,
-                    Rating = feedback.rating,
-                    ServiceId = feedback.serviceId,
+                    Feedback = feedback.FeedbackText,
+                    Rating = feedback.Rating,
+                    ServiceId = feedback.ServiceId,
                 });
         }
         catch (RpcException e)
