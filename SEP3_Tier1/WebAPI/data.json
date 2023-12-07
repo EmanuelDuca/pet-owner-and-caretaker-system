@@ -53,6 +53,15 @@
       "PhoneNumber": null,
       "Password": "password",
       "Type": "PetOwner"
+    },
+    {
+      "Name": null,
+      "Username": "owner",
+      "Age": null,
+      "Email": "owner",
+      "PhoneNumber": null,
+      "Password": "owner",
+      "Type": "PetOwner"
     }
   ],
   "Announcements": [

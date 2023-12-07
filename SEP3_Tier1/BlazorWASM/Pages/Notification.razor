@@ -5,7 +5,7 @@
 @attribute [Authorize]
 
 <div class="notification_circle">
-    <div @key="notificationNumber" class="notification_number">
+    <div @key="notificationNumber" class="notification_number" @onclick="OnClick">
         @notificationNumber
     </div>
 </div>
@@ -20,6 +20,11 @@
     
     protected override async Task OnInitializedAsync()
     {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl("https://localhost:7230/offers") 
+    // o =>
+    // o.AccessTokenProvider = async () => await Task.FromResult<string?>(await authService.GetJWT()))
+            .Build();
     }
 
     public async Task Update(AuthenticationState authState, IAuthService authService)
@@ -28,12 +33,6 @@
         Console.WriteLine(authState);
         if (authState.User.Identity != null)
         {
-            hubConnection = new HubConnectionBuilder()
-            .WithUrl("https://localhost:7230/offers") 
-                    // o =>
-                        // o.AccessTokenProvider = async () => await Task.FromResult<string?>(await authService.GetJWT()))
-                .Build();
-            
             hubConnection.On("Notify", () =>
             {
                 notificationNumber++;
@@ -55,4 +54,10 @@
     {
         return hubConnection;
     }
+
+    private void OnClick()
+    {
+        hubConnection.SendAsync("Notify");
+    }
+
 }
