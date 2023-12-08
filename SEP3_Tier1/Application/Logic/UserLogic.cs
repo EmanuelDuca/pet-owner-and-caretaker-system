@@ -84,7 +84,6 @@ public class UserLogic : IUserLogic
             Name = editDto.Name ?? existing.Name
         };
 
-        Console.WriteLine($"From logic layer: {JsonSerializer.Serialize(tempUser)}");
         User updated = await userDao.UpdateAsync(tempUser);
         return updated;
     }

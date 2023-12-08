@@ -16,7 +16,6 @@ public class UserMapper
                     Email = dto.Email,
                     Password = dto.Password,
                     Age = dto.Age,
-                    Name = dto.Username,
                     Type = dto.Type,
                     PhoneNumber = dto.Phone
                 };
@@ -28,7 +27,6 @@ public class UserMapper
                     Email = dto.Email,
                     Password = dto.Password,
                     Age = dto.Age,
-                    Name = dto.Username,
                     Type = dto.Type,
                     PhoneNumber = dto.Phone
                 };

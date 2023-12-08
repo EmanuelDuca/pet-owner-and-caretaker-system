@@ -122,14 +122,9 @@ else
   {
     try
     {
-      Console.WriteLine($"Email of user to edit: {Email}");
-      Console.WriteLine($"New phone value to change: {PhoneNumber}");
-      Console.WriteLine($"Name value to change: {Name}");
       UserEditDto dto = new UserEditDto(Email);
       AddInfoInDtoOObject(dto);
       
-      //For Debugging
-      Console.WriteLine(JsonConvert.SerializeObject(dto));
       await userService.EditProfile(dto);
       SuccessMessage("Profile was updated");
     }
@@ -176,7 +171,7 @@ else
 
   private void FetchDataFromClaims(ClaimsPrincipal user)
   {
-    Username = user.Claims.First(claim => claim.Type.Equals(ClaimTypes.NameIdentifier)).Value;
+    Username = user.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value;
     Email = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
     Password = user.Claims.FirstOrDefault(c => c.Type.Equals("Password"))!.Value;
     Name = user.Claims.FirstOrDefault(c => c.Type.Equals("Name"))!.Value;
