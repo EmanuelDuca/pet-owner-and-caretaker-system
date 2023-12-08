@@ -53,7 +53,7 @@ public class UserMapper
             .Select(async user => await MapToEntity(user)));
     }
     
-    public static UserProto UserProtoGenerator(User user)
+    public UserProto MapToProto(User user)
     {
         string type = "";
         if (user is PetOwner)
@@ -69,10 +69,18 @@ public class UserMapper
             Username = user.Username,
             Password = user.Password,
             Email = user.Email,
-            Type = type,
-            Age = user.Age!.Value,
-            Phone = user.PhoneNumber
+            Type = type
         };
+
+        if (!string.IsNullOrEmpty(user.PhoneNumber))
+            request.Phone = user.PhoneNumber;
+        
+        if (user.Age != null && user.Age != 0)
+            request.Age = user.Age;
+        
+        if (!string.IsNullOrEmpty(user.Name))
+            request.Name = user.Name;
+            
         return request;
     }
 }

@@ -4,6 +4,7 @@ using Application.LogicInterface;
 using Domain.DTOs;
 using Domain.Models;
 using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Application.Logic;
 
@@ -72,7 +73,7 @@ public class UserLogic : IUserLogic
             throw new Exception("User with given email does not exist");
         }
         
-        User tempUser = new User()
+        User tempUser = new User
         {
             Username = editDto.UserName ?? existing.Username,
             Email = existing.Email,
@@ -83,6 +84,7 @@ public class UserLogic : IUserLogic
             Name = editDto.Name ?? existing.Name
         };
 
+        Console.WriteLine($"From logic layer: {JsonSerializer.Serialize(tempUser)}");
         User updated = await userDao.UpdateAsync(tempUser);
         return updated;
     }

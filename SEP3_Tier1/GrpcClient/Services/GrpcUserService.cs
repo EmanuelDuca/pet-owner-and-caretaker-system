@@ -45,7 +45,7 @@ public class GrpcUserService : IUserDao
             //     Type = type
             // };
         
-            UserProto grpcUserToCreate = await userServiceClient.CreateUserAsync(UserProtoGenerator(user));
+            UserProto grpcUserToCreate = await userServiceClient.CreateUserAsync(mapper.MapToProto(user));
             Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
             return await mapper.MapToEntity(grpcUserToCreate);
         }
@@ -76,7 +76,7 @@ public class GrpcUserService : IUserDao
     {
         try
         {
-            UserProto grpcUserToCreate = await userServiceClient.UpdateUserAsync(UserProtoGenerator(user));
+            UserProto grpcUserToCreate = await userServiceClient.UpdateUserAsync(mapper.MapToProto(user));
             Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
             return await mapper.MapToEntity(grpcUserToCreate);
         }
@@ -102,26 +102,6 @@ public class GrpcUserService : IUserDao
         }
     }
 
-    private UserProto UserProtoGenerator(User user)
-    {
-        string type = "";
-        if (user is PetOwner)
-        {
-            type = "PetOwner";
-        }else if (user is CareTaker)
-        {
-            type = "CareTaker";
-        }
-        
-        var request = new UserProto
-        {
-            Username = user.Username,
-            Password = user.Password,
-            Email = user.Email,
-            Type = type
-        };
-        return request;
-    }
     
     public async Task<IEnumerable<User>> GetAsync(SearchUsersDto parameters)
     {

@@ -41,11 +41,6 @@ else
           <br/>
           <form class="needs-validation" novalidate="">
             <div class="row g-3">
-                
-              <div class="col-12">
-                <label for="Username" class="form-label">Username</label>
-                <input type="text" class="form-control" @bind="Username">
-              </div>
                   
               <div class="col-12">
                 <label for="email" class="form-label">Email <span class="text-body-secondary">(Can't Be Changed)</span></label>
@@ -56,6 +51,16 @@ else
                 <label for="phone" class="form-label">Password</label>
                 <input type="text" class="form-control" @bind="Password">
               </div>
+              
+              <div class="col-12">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username"class="form-control" @bind="Username">
+              </div>
+              
+              <div class="col-12">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" class="form-control" @bind="Name">
+              </div>
                   
               <div class="col-12">
                 <label for="phone" class="form-label">Phone Number</label>
@@ -65,7 +70,7 @@ else
               <div class="col-md-3">
                 <label for="zip" class="form-label">Age</label>
                 <br/>
-                <RadzenNumeric @bind-Value="Age" Style="width: var(--inputs-width)" Name="PetWeight"/>
+                <RadzenNumeric @bind-Value="Age" Style="width: var(--inputs-width)"/>
               </div>
             </div>
                   
@@ -102,8 +107,8 @@ else
     private string Username;
     private string Name;
     private string? PhoneNumber;
-  private int? Age;
-  private string Password;
+    private int? Age;
+    private string Password;
     
     protected override async Task OnInitializedAsync()
     {
@@ -117,6 +122,9 @@ else
   {
     try
     {
+      Console.WriteLine($"Email of user to edit: {Email}");
+      Console.WriteLine($"New phone value to change: {PhoneNumber}");
+      Console.WriteLine($"Name value to change: {Name}");
       UserEditDto dto = new UserEditDto(Email);
       AddInfoInDtoOObject(dto);
       
@@ -171,6 +179,7 @@ else
     Username = user.Claims.First(claim => claim.Type.Equals(ClaimTypes.NameIdentifier)).Value;
     Email = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
     Password = user.Claims.FirstOrDefault(c => c.Type.Equals("Password"))!.Value;
+    Name = user.Claims.FirstOrDefault(c => c.Type.Equals("Name"))!.Value;
     PhoneNumber = user.Claims.FirstOrDefault(c => c.Type.Equals("PhoneNumber"))!.Value;
     string? numString = user.Claims.FirstOrDefault(c => c.Type.Equals("Age"))?.Value;
     if (string.IsNullOrEmpty(numString))
