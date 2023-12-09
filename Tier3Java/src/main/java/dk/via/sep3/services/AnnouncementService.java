@@ -41,14 +41,11 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
     public void createAnnouncement(AnnouncementProto request, StreamObserver<AnnouncementProto> responseObserver)
     {
         UserEntity petOwner = userDAO.findUser(request.getPetOwnerEmail());
-
         if(!petOwner.getUserType().equals("PetOwner"))
         {
             responseObserver.onError(GrpcErrorService.constructException("Only pet owner can create an announcement."));
             return;
         }
-
-
         AnnouncementEntity announcement = new AnnouncementEntity(
                 petOwner,
                 request.getDescription(),
@@ -72,7 +69,6 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
             responseObserver.onError(GrpcErrorService.constructException("Announcement with such id already exists"));
             return;
         }
-
         responseObserver.onNext(AnnouncementMapper.mapToProto(announcementRespond));
         responseObserver.onCompleted();
     }
