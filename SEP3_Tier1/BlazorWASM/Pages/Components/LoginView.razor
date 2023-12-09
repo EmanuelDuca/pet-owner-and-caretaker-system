@@ -21,7 +21,7 @@
     {
         <h5>Register</h5>
         <div class="field">
-            <input type="text" @bind="username" placeholder="Username"/>
+            <input type="text" @bind="username" placeholder="Username" @ref="inputUsername" @onkeyup="@(e => HandleKeyPress(e, inputUsername))"/>
             <span class="focus-input"></span>
             <span class="symbol-input">
                 <i class="fa fa-user" aria-hidden="true"></i>
@@ -33,14 +33,14 @@
         <h5>Login</h5>
     }
     <div class="field">
-        <input type="email" @bind="email" placeholder="Email"/>
+        <input type="email" @bind="email" placeholder="Email" @ref="inputEmail" @onkeyup="@(e => HandleKeyPress(e, inputEmail))"/>
         <span class="focus-input"></span>
         <span class="symbol-input">
             <i class="fa fa-envelope" aria-hidden="true"></i>
         </span>
     </div>
     <div class="field">
-        <input type="password" @bind="password" placeholder="Password"/>
+        <input type="password" @bind="password" placeholder="Password" @ref="inputPassword" @onkeyup="@(e => HandleKeyPress(e, inputPassword))"/>
         <span class="focus-input"></span>
         <span class="symbol-input">
             <i class="fa fa-key" aria-hidden="true"></i>
@@ -88,13 +88,35 @@
     
     private bool backgroundIsLoaded;
     private string backgroundImageUrl;
-    
 
+    private ElementReference inputPassword;
+    private ElementReference inputUsername;
+    private ElementReference inputEmail;
+
+}
+
+@functions
+{
     protected override async Task OnInitializedAsync()
     {
         backgroundImageUrl = await ImageService.SearchPetImage();
         await LocalStorageService.SetItemAsStringAsync("backgroundImage", backgroundImageUrl);
         Console.WriteLine(backgroundImageUrl);
+    }
+
+    private async void HandleKeyPress(KeyboardEventArgs e, ElementReference element)
+    {
+        if(e.Key != "Enter")
+            return;
+
+        if (element.Equals(inputUsername))
+            await inputEmail.FocusAsync();
+        
+        if (element.Equals(inputEmail))
+            await inputPassword.FocusAsync();
+        
+        if (element.Equals(inputPassword))
+            await LoginAsync();
     }
 
 
