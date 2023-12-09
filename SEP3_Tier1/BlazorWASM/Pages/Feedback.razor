@@ -1,20 +1,35 @@
 @page "/Feedback/{serviceId:int}"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using ButtonType = MudBlazor.ButtonType
+@using Variant = MudBlazor.Variant
 @inject IAnnouncementService AnnouncementService
+@inject ICareServiceService CareService
 <h3>Feedback</h3>
+
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+</style>
 
 <div class="content">
         <div class="d-flex flex-row justify-content-center">
-                <div class="card small-card">
-                    @* <RadzenTextBox @bind="feedbackGood" class="w-100" /> *@
-                    @* <RadzenTextBox @bind="feedbackBad" class="w-100" /> *@
-                    <Stars publicRating="myRating" CurrentValueChanged="OnChange"/>
-                    <p>You rated it: @myRating</p>
-                    <button class="icon-button" @onclick="SubmitFeedback">
-                        <span class="oi oi-trash"></span>
-                    </button>
+            <div class="card small-card d-flex justify-content-center align-items-center">
+                <h5 class="mb-5">Leave feedback</h5>
+                <RadzenTextBox Style="margin-inline: 5px" Placeholder="Enter you feedback here" @bind-Value="feedback"/>
+                <div class="d-flex align-items-center justify-content-center">
+                    <MudRating Size="Size.Large" Class="m-3" SelectedValue="myRating" SelectedValueChanged="args => myRating = args"/>
+                    <span class="material-symbols-outlined fs-1">
+                    @ratingSmile[myRating]
+                    </span>
                 </div>
+                <MudButton Variant="Variant.Filled" Style="background-color: var(--accent-color); color: white; width: 100%" Color="Color.Primary" @onclick="SubmitFeedback">Submit</MudButton>
+            </div>
         </div>
 </div>
 
@@ -23,23 +38,39 @@
     private Service? service;
     [Parameter] public int serviceId { get; init; }
     private string message = "Loading...";
-    private string feedbackGood = "";
-    private string feedbackBad = "";
-    private double myRating = 0;
-    
+    private string feedback;
+    private int myRating = 3;
+    private Dictionary<int, string> ratingSmile = null!;
+
     protected override async Task OnInitializedAsync()
     {
         Console.WriteLine("we are new new");
+        ratingSmile = new Dictionary<int, string>();
+        ratingSmile[0] = "sentiment_extremely_dissatisfied";
+        ratingSmile[1] = "sentiment_stressed";
+        ratingSmile[2] = "sentiment_dissatisfied";
+        ratingSmile[3] = "sentiment_neutral";
+        ratingSmile[4] = "sentiment_satisfied";
+        ratingSmile[5] = "sentiment_very_satisfied";
     }
     
     private async Task SubmitFeedback()
     {
-        
-    }
+        try
+        {
+            await CareService.GiveFeedbackAsync(new Domain.Models.Feedback()
+            {
+                FeedbackText = feedback,
+                Rating = myRating,
+                ServiceId = serviceId
+            });
+            
+            await CareService.EndServiceAsync(serviceId);
 
-    private void OnChange(double rating)
-    {
-        myRating = rating;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
-
 }
