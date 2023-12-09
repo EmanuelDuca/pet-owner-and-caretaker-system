@@ -5,6 +5,7 @@
 @using Domain.DTOs
 @using Domain.Models.Enums
 @inject IAnnouncementService AnnouncementService
+@inject ICareServiceService CareService
 @inject NavigationManager navMgr
 @attribute [Authorize]
 
@@ -74,7 +75,7 @@ else
         Email = authState.User.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
         try
         {
-            services = (await AnnouncementService.GetServicesAsync(
+            services = (await CareService.GetServicesAsync(
                 new SearchServicesDto()
                 {
                     petOwnerEmail = Email,
@@ -85,9 +86,9 @@ else
         }
         catch (Exception e)
         {
+            Console.WriteLine(e.Message);
             message = "You don't have services.";
         }
-    // services = GenerateDummyData();
     }
 
     private async Task ChangeStatus(Service service)

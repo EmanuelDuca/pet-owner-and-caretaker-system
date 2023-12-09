@@ -54,7 +54,7 @@
                 @if (shouldShowRequests)
                 {
                     <div class="requests-container flex-column">
-                        @if (serviceRequests != null)
+                        @if (serviceRequests != null || !averageRatings.Any())
                         {
                             @foreach (var request in serviceRequests)
                             {
@@ -121,7 +121,7 @@
         ImageSrc = await ImageService.SearchPetImage(PetType.NameFromPetType(Announcement.Pet.PetType), 10);
         try
         {
-            serviceRequests = await CareService.GetRequestsAsync(Announcement.Id);
+            serviceRequests = await CareService.GetServiceOffersAsync(Announcement.Id);
             serviceRequests = serviceRequests.Where(r => r.RequestEnum == RequestEnum.SENT);
             foreach (var request in serviceRequests)
             {
@@ -138,7 +138,7 @@
     
     private async Task GetRequests()
     {
-        serviceRequests = await CareService.GetRequestsAsync(Announcement.Id);
+        serviceRequests = await CareService.GetServiceOffersAsync(Announcement.Id);
         serviceRequests = serviceRequests.Where(r => r.RequestEnum == RequestEnum.SENT);
         var enumerable = serviceRequests as ServiceRequest[] ?? serviceRequests.ToArray();
         foreach (var request in enumerable)
@@ -181,12 +181,12 @@
     {
         try
         {
-            await CareService.AcceptAsync(requestId);
+            await CareService.AcceptServiceAsync(requestId);
             foreach (var request in serviceRequests!.Where(r => r.Id != requestId))
             {
                 await DenyRequest(request.Id);
             }
-            serviceRequests = await CareService.GetRequestsAsync(Announcement.Id);
+            serviceRequests = await CareService.GetServiceOffersAsync(Announcement.Id);
             serviceRequests = serviceRequests.Where(r => r.RequestEnum == RequestEnum.SENT);
             StateHasChanged();
         }
@@ -200,7 +200,7 @@
     
     private async Task DenyRequest(int requestId)
     {
-        await CareService.DenyAsync(requestId);
+        await CareService.DenyServiceAsync(requestId);
         serviceRequests = serviceRequests!.Where(r => r.Id != requestId).AsEnumerable();
         StateHasChanged();
     }

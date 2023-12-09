@@ -144,20 +144,6 @@ public class GrpcAnnouncementService : IAnnouncementDao
             throw new Exception(e.Status.Detail);
         }
     }
-    
-    
-
-    public async Task OfferAsync(CareTaker caretaker)
-    {
-        try
-        {
-            
-        }
-        catch (RpcException e)
-        {
-            throw new Exception(e.Message);
-        }
-    }
 }
     
 

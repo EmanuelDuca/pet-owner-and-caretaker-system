@@ -6,7 +6,9 @@
 @using Newtonsoft.Json
 @using System.Security.Claims
 @using Domain.Models.Enums
+@using Variant = Radzen.Variant
 @inject IAnnouncementService AnnouncementService
+@inject ICareServiceService CareService
 @inject ILocalStorageService LocalStorageService
 @inject IPexelsService ImageService
 @attribute [Authorize]
@@ -172,7 +174,7 @@
         
         try
         {
-            await AnnouncementService.CreateRequestAsync(dto);
+            await CareService.OfferServiceAsync(dto);
             SuccessMessage("Request was saved");
         }
         catch (Exception e)

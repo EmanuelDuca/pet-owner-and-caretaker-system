@@ -16,31 +16,31 @@ public class CareServiceHttpClient : ICareServiceService
         this.client = client;
     }
 
-    public async Task OfferAsync(CreateOfferCareDto offerDto)
+    public async Task OfferServiceAsync(CreateOfferCareDto offerDto)
     {
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/offer", offerDto);
         await HttpClientHelper.HandleResponse(responseMessage);
     }
 
-    public async Task AcceptAsync(int requestId)
+    public async Task AcceptServiceAsync(int requestId)
     {
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/accept", requestId);
         await HttpClientHelper.HandleResponse(responseMessage);
     }
 
-    public async Task EndAsync(int serviceId)
+    public async Task EndServiceAsync(int serviceId)
     {
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/end", serviceId);
         await HttpClientHelper.HandleResponse(responseMessage);
     }
 
-    public async Task DenyAsync(int requestId)
+    public async Task DenyServiceAsync(int requestId)
     {
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/deny", requestId);
         await HttpClientHelper.HandleResponse(responseMessage);
     }
 
-    public async Task<IEnumerable<ServiceRequest>> GetRequestsAsync(int announcementId)
+    public async Task<IEnumerable<ServiceRequest>> GetServiceOffersAsync(int announcementId)
     {
         HttpResponseMessage responseMessage = await client.GetAsync($"{START_URI}/requests/{announcementId}");
         string json = await HttpClientHelper.HandleResponse(responseMessage);
@@ -57,12 +57,12 @@ public class CareServiceHttpClient : ICareServiceService
 
     public async Task<IEnumerable<Service>> GetServicesAsync(SearchServicesDto dto)
     {
-        HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/feedback", dto);
+        HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/services", dto);
         string json = await HttpClientHelper.HandleResponse(responseMessage);
         return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<Service>>(json);
     }
 
-    public async Task AddFeedbackAsync(Feedback feedback)
+    public async Task GiveFeedbackAsync(Feedback feedback)
     {
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/feedback", feedback);
         await HttpClientHelper.HandleResponse(responseMessage);

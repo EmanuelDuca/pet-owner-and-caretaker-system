@@ -63,7 +63,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
                 .stream()
                 .filter(s -> careTaker == null || careTaker.equals(s.getCareTaker().getEmail()))
                 .filter(s -> petOwner == null || petOwner.equals(s.getPetOwner().getEmail()))
-                .filter(s -> status == null || status.equals(s.getStatus()))
+                .filter(s -> status == ServiceStatus.UNRECOGNIZED || status.equals(s.getStatus()))
                 .toList();
 
     }

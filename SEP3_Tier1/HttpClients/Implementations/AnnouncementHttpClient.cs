@@ -52,25 +52,4 @@ public class AnnouncementHttpClient : IAnnouncementService
         HttpResponseMessage response = await client.DeleteAsync($"{START_URI}/{id}");
         await HttpClientHelper.HandleResponse(response);    
     }
-    
-    public async Task<IEnumerable<Service>> GetServicesAsync(SearchServicesDto dto)
-    {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/communication/services", dto);
-        string responseContent = await HttpClientHelper.HandleResponse(response);
-        return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<Service>>(responseContent);
-    }
-
-    public async Task CreateRequestAsync(CreateOfferCareDto dto)
-    {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/communication/offer", dto);
-        await HttpClientHelper.HandleResponse(response);
-    }
-    
-    public async Task<Service> GetServiceAsync(int serviceId)
-    {
-        HttpResponseMessage response = await client.GetAsync("/communication/service/" + serviceId);
-        Console.WriteLine("TEST");
-        string responseContent = await HttpClientHelper.HandleResponse(response);
-        return await HttpClientHelper.GenerateObjectFromJson<Service>(responseContent);
-    }
 }

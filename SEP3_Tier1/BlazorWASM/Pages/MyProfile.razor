@@ -116,7 +116,7 @@ else
 
     private async Task UpdateServiceRequestsByAnnouncement(int announcementId)
     {
-        serviceRequests = await CareService.GetRequestsAsync(announcementId);
+        serviceRequests = await CareService.GetServiceOffersAsync(announcementId);
     }
 
     private void OpenEditAnnouncement(int announcementId)

@@ -131,7 +131,8 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
             var serviceProto = new SearchServiceProto()
             {
                 CaretakerEmail = dto.caretakerEmail,
-                PetOwnerEmail = dto.petOwnerEmail
+                PetOwnerEmail = dto.petOwnerEmail,
+                Status = (ServiceStatus)(-1)
             };
 
             if (dto.status != null)
@@ -139,6 +140,7 @@ public class GrpcCareServiceRequestService : ICareServiceRequestDao
             
             ServicesProto services = await careRequestClient
                 .SearchServicesAsync(serviceProto);
+            
             return await mapper.MapToEntityList(services);
         }
         catch (RpcException e)

@@ -5,14 +5,14 @@ namespace HttpClients.ClientInterfaces;
 
 public interface ICareServiceService
 {
-    Task OfferAsync(CreateOfferCareDto offerDto);
-    Task AcceptAsync(int requestId);
-    Task EndAsync(int serviceId);
-    Task DenyAsync(int requestId);
-    Task<IEnumerable<ServiceRequest>> GetRequestsAsync(int announcementId);
+    Task OfferServiceAsync(CreateOfferCareDto offerDto);
+    Task AcceptServiceAsync(int requestId);
+    Task EndServiceAsync(int serviceId);
+    Task DenyServiceAsync(int requestId);
+    Task<IEnumerable<ServiceRequest>> GetServiceOffersAsync(int announcementId);
     Task<Service> GetServiceAsync(int serviceId);
     Task<IEnumerable<Service>> GetServicesAsync(SearchServicesDto dto);
-    Task AddFeedbackAsync(Feedback feedback);
+    Task GiveFeedbackAsync(Feedback feedback);
     Task DeleteFeedbackAsync(int serviceId, string email);
     Task<IEnumerable<Feedback>> GetFeedbacks(string email);
 }
