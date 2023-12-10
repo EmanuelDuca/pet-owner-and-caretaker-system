@@ -25,8 +25,6 @@ public class AnnouncementLogic : IAnnouncementLogic
         {
             throw new UserNotFoundException(dto.OwnerEmail);
         }
-    
-        
         ValidateData(dto.StartDate, dto.EndDate, dto.PostalCode);
         Announcement toCreate = new Announcement
         {
@@ -48,7 +46,6 @@ public class AnnouncementLogic : IAnnouncementLogic
         };
         toCreate.Pet.PetOwner = toCreate.PetOwner;
         Announcement announcement = await announcementDao.CreateAsync(toCreate);
-        
         return announcement;
     }
 

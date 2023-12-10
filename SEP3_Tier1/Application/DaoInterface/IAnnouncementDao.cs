@@ -5,7 +5,7 @@ namespace Application.DaoInterface;
 
 public interface IAnnouncementDao
 {
-    // Task<Announcement> CreateAsync(AnnouncementCreationDto dto);
+    //Task<Announcement> CreateAsync(AnnouncementCreationDto dto);
     Task<IEnumerable<Announcement>> GetAsync(SearchAnnouncementDto dto);
     Task<Announcement> GetByIdAsync(int id);
     Task UpdateAsync(UpdateAnnouncementDto updateAnnouncement);

@@ -167,22 +167,17 @@
         try
         {
             CreatePetDto createPetDto;
-
             if (isNewPet)
-                createPetDto = new CreatePetDto
-                {
+                createPetDto = new CreatePetDto{
                     PetName = announcementInputs.PetName,
                     PetType = announcementInputs.PetType,
                     Weight = announcementInputs.PetWeight,
                     Description = announcementInputs.PetDescription
                 };
-            else
-            {
+            else{
                 createPetDto = new CreatePetDto(PetList.Value);
             }
-
-            CreateAnnouncementDto dto = new CreateAnnouncementDto
-            {
+            CreateAnnouncementDto dto = new CreateAnnouncementDto{
                 OwnerEmail = ownerEmail,
                 StartDate = announcementInputs.StartDate,
                 EndDate = announcementInputs.EndDate,
@@ -191,7 +186,6 @@
                 PetDto = createPetDto
             };
             await announcementService.CreateAsync(dto);
-
             NotificationService.Notify(new NotificationMessage()
             {
                 Severity = NotificationSeverity.Success,
