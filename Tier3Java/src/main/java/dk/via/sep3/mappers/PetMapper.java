@@ -9,6 +9,7 @@ public class PetMapper
     public static PetProto mapToProto(PetEntity petEntity)
     {
         return PetProto.newBuilder()
+                .setId(petEntity.getId())
                 .setPetName(petEntity.getPetName())
                 .setPetType(petEntity.getPetType())
                 .setWeight(petEntity.getWeight())

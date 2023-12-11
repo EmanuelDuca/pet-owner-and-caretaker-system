@@ -66,7 +66,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
                 Id = id
             });
             
-            Console.WriteLine($"Announcement fro get: {announcementProto.Pet.Id}");
+            Console.WriteLine($"Announcement from get: {announcementProto.Pet.Id}");
 
             return await mapper.MapToEntity(announcementProto);
         }
