@@ -80,4 +80,16 @@ public class CareServiceHttpClient : ICareServiceService
         string json = await HttpClientHelper.HandleResponse(responseMessage);
         return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<Feedback>>(json);
     }
+
+    public async Task<double> GetCaretakerFeedback(string email)
+    {
+        var feedbacks = await GetFeedbacks(email) as Feedback[] ?? (await GetFeedbacks(email)).ToArray();
+        double average = 0;
+        foreach (var f in feedbacks)
+        {
+            average += f.Rating != 0? f.Rating : 1;
+        }
+
+        return average / (!feedbacks.Any()? 1 : feedbacks.Length);
+    }
 }

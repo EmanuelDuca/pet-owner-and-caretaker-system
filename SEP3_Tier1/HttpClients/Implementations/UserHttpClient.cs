@@ -19,7 +19,7 @@ public class UserHttpClient : IUserService
     }
     public async Task<IEnumerable<User>> GetUsers(SearchUsersDto dto)
     {
-        HttpResponseMessage response = await client.GetAsync($"{START_URI}");
+        HttpResponseMessage response = await client.GetAsync($"{START_URI}" + await HttpClientHelper.ConstructQuery(dto));
         string responseContent = await HttpClientHelper.HandleResponse(response);
         return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<User>>(responseContent);
     }

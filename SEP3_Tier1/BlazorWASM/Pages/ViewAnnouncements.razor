@@ -14,11 +14,6 @@
 @attribute [Authorize]
 
 <div class="d-flex flex-row">
-    <div class="search-container w-100">
-        <RadzenTextBox Placeholder="Search..." id="searchInput" class="w-100"/>
-        <span class="oi oi-magnifying-glass" id="searchIcon" @onclick="Search"></span>
-    </div>
-    
     
     <div class="dropdown">
         <RadzenButton Style="margin-left: 8px; min-width: 160px;" Click="@(_ => ShowDropDownContent())">Select filters</RadzenButton>
@@ -32,22 +27,22 @@
                 Chips="true"
                 ValueProperty="Value"
                 SelectAllText="Select all types"
-                Style="width: 100%; max-width: 400px; margin-bottom: 8px" />
-        
+                Style="width: 100%; max-width: 400px; margin-bottom: 8px"/>
+
             <RadzenCheckBox @bind-Value=@isVaccinatedFilter/>
-            <RadzenLabel Text="Vaccinated" Style="margin-left: 8px; vertical-align: middle;" />
-            <br />
-            <RadzenLabel Text="From Date" Style="margin-left: 8px; vertical-align: middle;" />
-            <RadzenDatePicker @bind-Value=@startDate />
-            <RadzenLabel Text="To Date" Style="margin-left: 8px; vertical-align: middle;" />
-            <RadzenDatePicker @bind-Value=@endDate />
-            <RadzenLabel Text="Postal Code" Style="margin-left: 8px; vertical-align: middle;" />
-            <RadzenAutoComplete @bind-Value=@postalCode TextProperty="Postal Code" Style="width: 15rem" />
-            <RadzenButton Variant="Variant.Flat" Shade="Shade.Dark" Click=@(args => FilterAnnouncements()) Text="Apply Filters" ButtonStyle="ButtonStyle.Primary" />
+            <RadzenLabel Text="Vaccinated" Style="margin-left: 8px; vertical-align: middle;"/>
+            <br/>
+            <RadzenLabel Text="From Date" Style="margin-left: 8px; vertical-align: middle;"/>
+            <RadzenDatePicker @bind-Value=@startDate/>
+            <RadzenLabel Text="To Date" Style="margin-left: 8px; vertical-align: middle;"/>
+            <RadzenDatePicker @bind-Value=@endDate/>
+            <RadzenLabel Text="Postal Code" Style="margin-left: 8px; vertical-align: middle;"/>
+            <RadzenAutoComplete @bind-Value=@postalCode TextProperty="Postal Code" Style="width: 15rem"/>
+            <RadzenButton Variant="Variant.Flat" Shade="Shade.Dark" Click=@(args => FilterAnnouncements()) Text="Apply Filters" ButtonStyle="ButtonStyle.Primary"/>
         </div>
-        
+
     </div>
-    
+
 </div>
 
 <div class="d-flex flex-row">
@@ -126,22 +121,12 @@
         }
     }
     
-    public void Search()
-    {
-        Console.WriteLine("pressed");   
-        Console.WriteLine(filteredPetTypes.Count);   
-    }
 
     public void ShowDropDownContent()
     {
         IsFilterShown = !IsFilterShown;
     }
     
-    public void OnDropDownChange()
-    {
-        Console.WriteLine(filteredPetTypes);   
-        Console.WriteLine("petType");   
-    }
     
     private async void FilterAnnouncements()
     {

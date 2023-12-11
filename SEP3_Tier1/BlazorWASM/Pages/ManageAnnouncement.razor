@@ -5,6 +5,7 @@
 @using BlazorWASM.Validators
 @using Domain.DTOs
 @using HttpClients.ClientInterfaces
+@using Newtonsoft.Json
 @inject IAnnouncementService announcementService
 
 @inject ILocalStorageService localStorageService
@@ -55,6 +56,8 @@ else
         try
         {
             announcement = await announcementService.GetByIdAsync(Id);
+            Console.WriteLine(JsonConvert.SerializeObject(announcement));
+
         }
         catch (Exception e)
         {
@@ -68,9 +71,13 @@ else
     {
         try
         {
-            UpdateAnnouncementDto dto = new UpdateAnnouncementDto(Id);
-            dto.Pet = new Pet();
+            UpdateAnnouncementDto dto = new UpdateAnnouncementDto(Id)
+            {
+                Pet = announcement!.Pet
+            };
             
+            Console.WriteLine(JsonConvert.SerializeObject(dto));
+
             dto = FetchDataFromAnnouncementComponent(dto, announcement);
             
             await announcementService.UpdateAsync(dto);
@@ -79,7 +86,7 @@ else
             {
                 Severity = NotificationSeverity.Success,
                 Duration = 6000,
-                Detail = "Announcement is created"
+                Detail = "Announcement is updated"
             });
         }
         catch (Exception e)

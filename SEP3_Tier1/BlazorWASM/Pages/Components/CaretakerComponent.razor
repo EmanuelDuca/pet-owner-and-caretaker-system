@@ -1,50 +1,31 @@
-﻿@* @using Domain.Models *@
-@* <h3>CaretakerComponent</h3> *@
-@* *@
-@* <div class="card d-flex flex-row"> *@
-@*     <div class="column"> *@
-@*         @if (string.IsNullOrEmpty(ImageSrc)) *@
-@*         { *@
-@*             <div class="rounded-image skeleton"></div> *@
-@*         } *@
-@*         else *@
-@*         { *@
-@*             <div class="rounded-image"> *@
-@*                 <img src="@ImageSrc" loading="lazy"/> *@
-@*             </div> *@
-@*         } *@
-@*     </div> *@
-@*     <div class="column announcement-data d-flex flex-column flex-grow-1"> *@
-@*         <div class="inside-card"> *@
-@*             <h3><span style="color: rgb(166,165,165);">@(new PetType(){Value = Announcement.Pet.PetType}.Name)</span>  @(Announcement.Pet.PetName)</h3> *@
-@*             <RadzenText TextStyle="TextStyle.Body1">Description: @Announcement.Pet.Description</RadzenText> *@
-@*             <div class="d-flex flex-row"> *@
-@*                 <div style="margin-right: 15px">Weight: @Announcement.Pet.Weight</div> *@
-@*                 <div>Vaccinated: @(Announcement.Pet.IsVaccinated ? "Yes" : "No")</div> *@
-@*             </div> *@
-@*             <RadzenText TextStyle="TextStyle.Body1">Postal Code: @Announcement.PostalCode</RadzenText> *@
-@*             <div class="d-flex flex-row"> *@
-@*                 <div style="margin-right: 15px">From: @Announcement.StartDate.ToShortDateString()</div> *@
-@*                 <div>To: @(Announcement.EndDate.ToShortDateString())</div> *@
-@*             </div> *@
-@*         </div> *@
-@*         <div class="w-100"> *@
-@*             <RadzenText TextStyle="TextStyle.Body1">Service description: @Announcement.ServiceDescription</RadzenText> *@
-@*         </div> *@
-@*         <RadzenButton>Offer your service</RadzenButton> *@
-@*     </div> *@
-@* </div> *@
-@* *@
-@* @code { *@
-@*     [Parameter] public CareTaker Announcement { get; set; } *@
-@* *@
-@*     [Parameter] *@
-@*     public string ImageSrc { get; set; } = null; *@
-@* *@
-@* *@
-@*     protected override async Task OnInitializedAsync() *@
-@*     { *@
-@*         ImageSrc = await ImageService.SearchPetImage(PetType.NameFromPetType(Announcement.Pet.PetType), 10); *@
-@*     } *@
-@* *@
-@* } *@
+﻿@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject ICareServiceService CareService
+<h3>CaretakerComponent</h3>
+<link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css">
+<script src="https://cdn.metroui.org.ua/current/metro.js"></script>
+
+<div class="card d-flex flex-row">
+    <h2>@Caretaker.</h2>
+    <p>Age: @(Caretaker.Age == null? "--" : Caretaker.Age)</p>
+    <p>Age: @(Caretaker.Name ?? "--")</p>
+    <p>Age: @(Caretaker.PhoneNumber ?? "--")</p>
+    <input data-role="rating"
+        data-value="@rating"
+        data-message="(@ratingNumber)"
+        data-static="true">
+</div>
+
+@code {
+    [Parameter] public User Caretaker { get; set; }
+
+    private double rating;
+    private int ratingNumber;
+
+    protected override async Task OnInitializedAsync()
+    {
+        rating = await CareService.GetCaretakerFeedback(Caretaker.Email);
+        ratingNumber = (await CareService.GetFeedbacks(Caretaker.Email)).Count();
+    }
+
+}

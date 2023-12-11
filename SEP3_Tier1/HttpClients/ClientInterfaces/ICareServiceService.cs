@@ -15,4 +15,5 @@ public interface ICareServiceService
     Task GiveFeedbackAsync(Feedback feedback);
     Task DeleteFeedbackAsync(int serviceId, string email);
     Task<IEnumerable<Feedback>> GetFeedbacks(string email);
+    Task<double> GetCaretakerFeedback(string email);
 }

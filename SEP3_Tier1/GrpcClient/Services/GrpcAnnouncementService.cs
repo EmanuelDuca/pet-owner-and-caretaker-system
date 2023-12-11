@@ -5,6 +5,7 @@ using Google.Protobuf.WellKnownTypes;
 using GrpcClient.Mappers;
 using GrpcClient.Utils;
 using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json;
 
 namespace GrpcClient.Services;
 using Domain.DTOs;
@@ -64,6 +65,8 @@ public class GrpcAnnouncementService : IAnnouncementDao
             {
                 Id = id
             });
+            
+            Console.WriteLine($"Announcement fro get: {announcementProto.Pet.Id}");
 
             return await mapper.MapToEntity(announcementProto);
         }
@@ -78,7 +81,7 @@ public class GrpcAnnouncementService : IAnnouncementDao
     {
         try
         {
-            var request = new SearchAnnouncementProto()
+            var request = new SearchAnnouncementProto
             {
                 PetOwnerEmail = dto.UserEmail,
                 PostalCode = dto.PostalCode,
@@ -112,9 +115,12 @@ public class GrpcAnnouncementService : IAnnouncementDao
                 TimeStart = TimestampConverter.FromDateTime(dto.StartDate!.Value),
                 TimeFinish = TimestampConverter.FromDateTime(dto.EndDate!.Value),
                 PostalCode = dto.PostalCode,
-                Description = dto.ServiceDescription,
-                Pet = dto.Pet == null? null : await mapper.PetMapper.MapToProto(dto.Pet)
+                Description = dto.ServiceDescription
             };
+
+            if (dto.Pet != null)
+                request.Pet = await mapper.PetMapper.MapToProto(dto.Pet!);
+            
             AnnouncementProto updated = await announcementServiceClient.UpdateAnnouncementAsync(request);
             if (updated.Id != request.Id)
             {

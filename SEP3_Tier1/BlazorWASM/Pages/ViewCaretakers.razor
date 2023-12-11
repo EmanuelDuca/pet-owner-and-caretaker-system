@@ -1,116 +1,99 @@
-﻿@* @page "/ViewCaretakers" *@
-@* @using Domain.Models *@
-@* @using Domain.DTOs *@
-@* @using HttpClients.ClientInterfaces *@
-@* @using Newtonsoft.Json *@
-@* @inject IAuthService UserService *@
-@* <h3>ViewCaretakers</h3> *@
-@* *@
-@* <div class="d-flex flex-row"> *@
-@*     <div class="search-container w-100"> *@
-@*         <RadzenTextBox Placeholder="Search..." id="searchInput" class="w-100"/> *@
-@*         <span class="oi oi-magnifying-glass" id="searchIcon" @onclick="Search"></span> *@
-@*     </div> *@
-@*      *@
-@*      *@
-@*     <div class="dropdown"> *@
-@*         <RadzenButton Style="margin-left: 8px; min-width: 160px;" Click="@(_ => ShowDropDownContent())">Select filters</RadzenButton> *@
-@*         <div class="@classDropDown"> *@
-@*             <RadzenLabel Text="From Date" Style="margin-left: 8px; vertical-align: middle;" /> *@
-@*             <RadzenDatePicker @bind-Value=@startDate /> *@
-@*             <RadzenLabel Text="To Date" Style="margin-left: 8px; vertical-align: middle;" /> *@
-@*             <RadzenDatePicker @bind-Value=@endDate /> *@
-@*             <RadzenLabel Text="Age" Style="margin-left: 8px; vertical-align: middle;" /> *@
-@*             <RadzenNumeric @bind-Value=@age /> *@
-@*             <RadzenButton Variant="Variant.Flat" Shade="Shade.Dark" Click=@(args => FilterAnnouncements()) Text="Apply Filters" ButtonStyle="ButtonStyle.Primary" /> *@
-@*         </div> *@
-@*     </div> *@
-@* </div> *@
-@* *@
-@* <div class="d-flex flex-row"> *@
-@*     <div class="sidebar filter-area"> *@
-@*     </div> *@
-@*     <div class="content"> *@
-@*         @if (announcements == null) *@
-@*         { *@
-@*             <label>Loading...</label> *@
-@*         } *@
-@*         else *@
-@*         { *@
-@*             @foreach (var announcement in announcements!) *@
-@*             { *@
-@*                 <CaretakerComponent  *@
-@*                     Announcement="announcement"/> *@
-@*             } *@
-@*         } *@
-@*     </div> *@
-@* </div> *@
-@* *@
-@* *@
-@* *@
-@* @code { *@
-@*     private List<CareTaker>? caretakers; *@
-@*     private string classDropDown = "dropdown-content"; *@
-@*     private bool isFilterShown; *@
-@*      *@
-@*     private DateTime? startDate; *@
-@*     private DateTime? endDate; *@
-@*     private int age; *@
-@*     private String userName; *@
-@* *@
-@*     private bool IsFilterShown *@
-@*     { *@
-@*         get => isFilterShown; *@
-@*         set *@
-@*         { *@
-@*             isFilterShown = value; *@
-@*             classDropDown = "dropdown-content"; *@
-@*             if (isFilterShown) *@
-@*                 classDropDown += " show"; *@
-@*             Console.WriteLine(classDropDown); *@
-@*         } *@
-@*     } *@
-@* } *@
-@* *@
-@* @functions *@
-@* { *@
-@*     protected override async Task OnInitializedAsync() *@
-@*     { *@
-@*         SearchUsersDto dto = new SearchUsersDto(); *@
-@*         caretakers = (await UserService.GetAsync(dto)).ToList(); *@
-@*     } *@
-@*      *@
-@*     public void Search() *@
-@*     { *@
-@*         Console.WriteLine("pressed");    *@
-@*         Console.WriteLine(filteredPetTypes.Count);    *@
-@*     } *@
-@* *@
-@*     public void ShowDropDownContent() *@
-@*     { *@
-@*         IsFilterShown = !IsFilterShown; *@
-@*     } *@
-@*      *@
-@*     public void OnDropDownChange() *@
-@*     { *@
-@*         Console.WriteLine(filteredPetTypes);    *@
-@*         Console.WriteLine("petType");    *@
-@*     } *@
-@*      *@
-@*     private async void FilterAnnouncements() *@
-@*     { *@
-@*          *@
-@*         SearchAnnouncementDto dto = new SearchAnnouncementDto *@
-@*         { *@
-@*             PetTypes = filteredPetTypes, *@
-@*             StartTime = startDate, *@
-@*             EndTime = endDate, *@
-@*             PostalCode = postalCode, *@
-@*         }; *@
-@* *@
-@*         Console.WriteLine($"$Dto object converted to JSON:\n{JsonConvert.SerializeObject(dto)}"); *@
-@*          *@
-@*         announcements = (await AnnouncementService.GetAsync(dto)).ToList(); *@
-@*     //Console.WriteLine(JsonConvert.SerializeObject(announcements)); *@
-@*     } *@
-@* } *@
+﻿@page "/ViewCaretakers"
+@using Domain.Models
+@using Domain.DTOs
+@using HttpClients.ClientInterfaces
+@using Newtonsoft.Json
+@using Variant = Radzen.Variant
+@inject IAuthService AuthService
+@inject IUserService UserService
+<h3>ViewCaretakers</h3>
+
+<div class="d-flex flex-row">
+    <div class="dropdown">
+        <RadzenButton Style="margin-left: 8px; min-width: 160px;" Click="@(_ => ShowDropDownContent())">Select filters</RadzenButton>
+        <div class="@classDropDown">
+            <RadzenLabel Text="From Date" Style="margin-left: 8px; vertical-align: middle;" />
+            <RadzenDatePicker @bind-Value=@startDate />
+            <RadzenLabel Text="To Date" Style="margin-left: 8px; vertical-align: middle;" />
+            <RadzenDatePicker @bind-Value=@endDate />
+            <RadzenLabel Text="Age" Style="margin-left: 8px; vertical-align: middle;" />
+            <RadzenNumeric @bind-Value=@age />
+            <RadzenButton Variant="Variant.Flat" Shade="Shade.Dark" Click=@(args => FilterCaretakers()) Text="Apply Filters" ButtonStyle="ButtonStyle.Primary" />
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-row">
+    <div class="sidebar filter-area">
+    </div>
+    <div class="content">
+        @if (caretakers == null)
+        {
+            <label>Loading...</label>
+        }
+        else
+        {
+            @foreach (var caretaker in caretakers!)
+            {
+                <CaretakerComponent Caretaker="caretaker"/>
+            }
+        }
+    </div>
+</div>
+
+
+
+@code {
+    private List<User>? caretakers;
+    private string classDropDown = "dropdown-content";
+    private bool isFilterShown;
+
+    private DateTime? startDate;
+    private DateTime? endDate;
+    private int age;
+    private String userName;
+
+    private bool IsFilterShown
+    {
+        get => isFilterShown;
+        set
+        {
+            isFilterShown = value;
+            classDropDown = "dropdown-content";
+            if (isFilterShown)
+                classDropDown += " show";
+            Console.WriteLine(classDropDown);
+        }
+    }
+}
+
+@functions
+{
+    protected override async Task OnInitializedAsync()
+    {
+        SearchUsersDto dto = new SearchUsersDto
+        {
+            Type = "CareTaker"
+        };
+        
+        caretakers = (await UserService.GetUsers(dto)).ToList();
+    }
+    
+    public void ShowDropDownContent()
+    {
+        IsFilterShown = !IsFilterShown;
+    }
+
+    private async void FilterCaretakers()
+    {
+
+        SearchUsersDto dto = new SearchUsersDto()
+        {
+            Type = "CareTaker",
+            Age = age,
+            Name = userName
+        };
+        
+        caretakers = (await UserService.GetUsers(dto)).ToList();
+    }
+}

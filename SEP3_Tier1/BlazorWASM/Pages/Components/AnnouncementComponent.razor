@@ -65,7 +65,7 @@
                                             @($"{caretaker.Username}")
                                         </b>
                                         <text>
-                                            @(GetAverageRating(averageRatings[caretaker.Email]))
+                                            @(CareService.GetCaretakerFeedback(caretaker.Email))
                                             <span class="oi oi-star" style="color: gold"></span>
                                             @($"({averageRatings[caretaker.Email].Length})")
                                             
@@ -164,17 +164,6 @@
     private async Task<Feedback[]> GetRatings(string caretakerEmail)
     {
         return (await CareService.GetFeedbacks(caretakerEmail)).ToArray();
-    }
-    
-    private double GetAverageRating(Feedback[] feedbacks)
-    {
-        double average = 0;
-        foreach (var f in feedbacks)
-        {
-            average += f.Rating != 0? f.Rating : 1;
-        }
-
-        return average / (!feedbacks.Any()? 1 : feedbacks.Length);
     }
 
     private async Task AcceptRequest(int requestId)
