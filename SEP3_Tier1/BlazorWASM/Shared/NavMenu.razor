@@ -12,28 +12,28 @@
     <nav class="flex-column">
         @if (Actor.Equals("PetOwner"))
         {
-            <div class="nav-item px-3">
+            <div class="nav-item">
                 <NavLink class="nav-link" href="CreateAnnouncement">
-                    <span class="oi oi-plus" aria-hidden="true"></span> Create announcement
+                    <span class="navbar-icon material-symbols-outlined" aria-hidden="true">note_stack_add</span> Create announcement
                 </NavLink>
             </div>
             
-            <div class="nav-item px-3">
+            <div class="nav-item">
                 <NavLink class="nav-link" href="ViewCaretakers">
-                    <span class="oi oi-plus" aria-hidden="true"></span> Find caretaker
+                      <span class="navbar-icon material-symbols-outlined" aria-hidden="true">groups</span> Find caretaker
                 </NavLink>
             </div>
         }
         
-        <div class="nav-item px-3">
+        <div class="nav-item">
             <NavLink class="nav-link" href="ViewAnnouncements">
-                <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Search announcements
+                 <span class="navbar-icon material-symbols-outlined" aria-hidden="true">search</span> Search announcements
             </NavLink>
         </div>
         
-        <div class="nav-item px-3">
+        <div class="nav-item">
             <NavLink class="nav-link" href="MyProfile">
-                <span class="oi oi-person" aria-hidden="true"></span> My profile
+                 <span class="navbar-icon material-symbols-outlined" aria-hidden="true">account_circle</span> My profile
             </NavLink>
         </div>
         

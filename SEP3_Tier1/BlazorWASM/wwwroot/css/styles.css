@@ -77,3 +77,102 @@ main{
 }
 
 
+
+
+[rating-stars] {
+    text-align:left;
+    font-style:normal;
+    display:inline-block;
+    position: relative;
+    unicode-bidi: bidi-override;
+}
+[rating-stars]::before {
+    display:block;
+    content: '★★★★★';
+    color: #eee;
+}
+[rating-stars]::after {
+    white-space:nowrap;
+    position:absolute;
+    top:0;
+    left:0;
+    content: '★★★★★';
+    width: 0;
+    color: #ff8c00;
+    overflow:hidden;
+    height:100%;
+}
+
+[rating-stars^="0.1"]::after{width:2%}
+[rating-stars^="0.2"]::after{width:4%}
+[rating-stars^="0.3"]::after{width:6%}
+[rating-stars^="0.4"]::after{width:8%}
+[rating-stars^="0.5"]::after{width:10%}
+[rating-stars^="0.6"]::after{width:12%}
+[rating-stars^="0.7"]::after{width:14%}
+[rating-stars^="0.8"]::after{width:16%}
+[rating-stars^="0.9"]::after{width:18%}
+[rating-stars^="1"]::after{width:20%}
+[rating-stars^="1.1"]::after{width:22%}
+[rating-stars^="1.2"]::after{width:24%}
+[rating-stars^="1.3"]::after{width:26%}
+[rating-stars^="1.4"]::after{width:28%}
+[rating-stars^="1.5"]::after{width:30%}
+[rating-stars^="1.6"]::after{width:32%}
+[rating-stars^="1.7"]::after{width:34%}
+[rating-stars^="1.8"]::after{width:36%}
+[rating-stars^="1.9"]::after{width:38%}
+[rating-stars^="2"]::after{width:40%}
+[rating-stars^="2.1"]::after{width:42%}
+[rating-stars^="2.2"]::after{width:44%}
+[rating-stars^="2.3"]::after{width:46%}
+[rating-stars^="2.4"]::after{width:48%}
+[rating-stars^="2.5"]::after{width:50%}
+[rating-stars^="2.6"]::after{width:52%}
+[rating-stars^="2.7"]::after{width:54%}
+[rating-stars^="2.8"]::after{width:56%}
+[rating-stars^="2.9"]::after{width:58%}
+[rating-stars^="3"]::after{width:60%}
+[rating-stars^="3.1"]::after{width:62%}
+[rating-stars^="3.2"]::after{width:64%}
+[rating-stars^="3.3"]::after{width:66%}
+[rating-stars^="3.4"]::after{width:68%}
+[rating-stars^="3.5"]::after{width:70%}
+[rating-stars^="3.6"]::after{width:72%}
+[rating-stars^="3.7"]::after{width:74%}
+[rating-stars^="3.8"]::after{width:76%}
+[rating-stars^="3.9"]::after{width:78%}
+[rating-stars^="4"]::after{width:80%}
+[rating-stars^="4.1"]::after{width:82%}
+[rating-stars^="4.2"]::after{width:84%}
+[rating-stars^="4.3"]::after{width:86%}
+[rating-stars^="4.4"]::after{width:88%}
+[rating-stars^="4.5"]::after{width:90%}
+[rating-stars^="4.6"]::after{width:92%}
+[rating-stars^="4.7"]::after{width:94%}
+[rating-stars^="4.8"]::after{width:96%}
+[rating-stars^="4.9"]::after{width:98%}
+[rating-stars^="5"]::after{width:100%}
+
+
+/*DROPDOWN*/
+.dropdown {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropdown-content {
+    margin-top: 20px;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    top: 100%;
+    box-shadow: 0px 8px 16px 5px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 10px;
+    border-radius: 6px;
+}
+

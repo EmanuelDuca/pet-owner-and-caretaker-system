@@ -127,7 +127,7 @@ public class UserController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult> GetAsync(SearchUsersDto parameters)
+    public async Task<ActionResult> GetAsync([FromQuery] SearchUsersDto parameters)
     {
         try
         {

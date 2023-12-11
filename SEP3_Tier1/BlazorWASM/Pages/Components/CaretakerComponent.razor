@@ -1,19 +1,16 @@
 ﻿@using Domain.Models
 @using HttpClients.ClientInterfaces
 @inject ICareServiceService CareService
-<h3>CaretakerComponent</h3>
-<link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css">
-<script src="https://cdn.metroui.org.ua/current/metro.js"></script>
 
-<div class="card d-flex flex-row">
-    <h2>@Caretaker.</h2>
+<div class="card d-flex flex-column m-auto">
+    <h2 class="text-center">@Caretaker.Username</h2>
     <p>Age: @(Caretaker.Age == null? "--" : Caretaker.Age)</p>
-    <p>Age: @(Caretaker.Name ?? "--")</p>
-    <p>Age: @(Caretaker.PhoneNumber ?? "--")</p>
-    <input data-role="rating"
-        data-value="@rating"
-        data-message="(@ratingNumber)"
-        data-static="true">
+    <p>Name: @(Caretaker.Name ?? "--")</p>
+    <p>Phone: @(Caretaker.PhoneNumber ?? "--")</p>
+    <div class="rating d-flex align-items-center justify-content-center fs-2">
+        <i rating-stars="@rating"></i>
+        <text class="fs-4 ms-2">@($"({ratingNumber})")</text>
+    </div>
 </div>
 
 @code {

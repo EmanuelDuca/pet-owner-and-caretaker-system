@@ -6,26 +6,24 @@
 @using Variant = Radzen.Variant
 @inject IAuthService AuthService
 @inject IUserService UserService
-<h3>ViewCaretakers</h3>
 
 <div class="d-flex flex-row">
     <div class="dropdown">
-        <RadzenButton Style="margin-left: 8px; min-width: 160px;" Click="@(_ => ShowDropDownContent())">Select filters</RadzenButton>
-        <div class="@classDropDown">
-            <RadzenLabel Text="From Date" Style="margin-left: 8px; vertical-align: middle;" />
-            <RadzenDatePicker @bind-Value=@startDate />
-            <RadzenLabel Text="To Date" Style="margin-left: 8px; vertical-align: middle;" />
-            <RadzenDatePicker @bind-Value=@endDate />
-            <RadzenLabel Text="Age" Style="margin-left: 8px; vertical-align: middle;" />
-            <RadzenNumeric @bind-Value=@age />
-            <RadzenButton Variant="Variant.Flat" Shade="Shade.Dark" Click=@(args => FilterCaretakers()) Text="Apply Filters" ButtonStyle="ButtonStyle.Primary" />
-        </div>
+        <RadzenButton Style="min-width: 160px;" Click="@(_ => isFilterShown = !isFilterShown)">Select filters</RadzenButton>
+        @if (isFilterShown)
+        {
+            <div class="dropdown-content">
+                <RadzenLabel Text="Age" Style="margin-left: 8px; vertical-align: middle;"/>
+                <RadzenNumeric Style="margin-bottom: 5px"
+                    @bind-Value=@age/>
+                <RadzenButton Style="margin-top: 10px; white-space: nowrap;"
+                              Variant="Variant.Flat" Shade="Shade.Dark" Click=@(args => FilterCaretakers()) Text="Apply Filters" ButtonStyle="ButtonStyle.Primary"/>
+            </div>
+        }
     </div>
 </div>
 
 <div class="d-flex flex-row">
-    <div class="sidebar filter-area">
-    </div>
     <div class="content">
         @if (caretakers == null)
         {
@@ -42,29 +40,15 @@
 </div>
 
 
-
 @code {
+
     private List<User>? caretakers;
-    private string classDropDown = "dropdown-content";
     private bool isFilterShown;
 
     private DateTime? startDate;
     private DateTime? endDate;
     private int age;
-    private String userName;
-
-    private bool IsFilterShown
-    {
-        get => isFilterShown;
-        set
-        {
-            isFilterShown = value;
-            classDropDown = "dropdown-content";
-            if (isFilterShown)
-                classDropDown += " show";
-            Console.WriteLine(classDropDown);
-        }
-    }
+    private string userName;
 }
 
 @functions
@@ -75,14 +59,24 @@
         {
             Type = "CareTaker"
         };
+
+        try
+        {
+            caretakers = (await UserService.GetUsers(dto)).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            NotificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Duration = 6000,
+                Detail = e.Message
+            });
+        }
         
-        caretakers = (await UserService.GetUsers(dto)).ToList();
     }
-    
-    public void ShowDropDownContent()
-    {
-        IsFilterShown = !IsFilterShown;
-    }
+   
 
     private async void FilterCaretakers()
     {
@@ -94,6 +88,19 @@
             Name = userName
         };
         
-        caretakers = (await UserService.GetUsers(dto)).ToList();
+        try
+        {
+            caretakers = (await UserService.GetUsers(dto)).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            NotificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Duration = 6000,
+                Detail = e.Message
+            });
+        }
     }
 }
