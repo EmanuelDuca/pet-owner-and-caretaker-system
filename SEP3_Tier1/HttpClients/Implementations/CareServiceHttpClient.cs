@@ -9,7 +9,7 @@ namespace HttpClients.Implementations;
 public class CareServiceHttpClient : ICareServiceService
 {
     private readonly HttpClient client;
-    private readonly string START_URI = "/communication";
+    private readonly string START_URI = "/care_service";
 
     public CareServiceHttpClient(HttpClient client)
     {
@@ -24,19 +24,19 @@ public class CareServiceHttpClient : ICareServiceService
 
     public async Task AcceptServiceAsync(int requestId)
     {
-        HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/accept", requestId);
+        HttpResponseMessage responseMessage = await client.PatchAsJsonAsync($"{START_URI}/offer/accept", requestId);
+        await HttpClientHelper.HandleResponse(responseMessage);
+    }
+    
+    public async Task DenyServiceAsync(int requestId)
+    {
+        HttpResponseMessage responseMessage = await client.PatchAsJsonAsync($"{START_URI}/offer/deny", requestId);
         await HttpClientHelper.HandleResponse(responseMessage);
     }
 
     public async Task EndServiceAsync(int serviceId)
     {
-        HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/end", serviceId);
-        await HttpClientHelper.HandleResponse(responseMessage);
-    }
-
-    public async Task DenyServiceAsync(int requestId)
-    {
-        HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/deny", requestId);
+        HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/service/end", serviceId);
         await HttpClientHelper.HandleResponse(responseMessage);
     }
 

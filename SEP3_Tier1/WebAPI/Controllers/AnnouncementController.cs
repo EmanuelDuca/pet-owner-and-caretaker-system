@@ -48,6 +48,8 @@ public class AnnouncementController : ControllerBase
         }
     }
     
+    
+    // Even though the endpoint should be GET, when query parameters number is to big, it's better to switch to POST which has a body that is easier to use
     [HttpPost("filter")]
     public async Task<ActionResult> GetAnnouncementsByPreferenceAsync([FromBody] SearchAnnouncementDto dto)
     {

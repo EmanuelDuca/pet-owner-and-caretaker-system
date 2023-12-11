@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace WebAPI.Controllers;
 
 [ApiController]
-[Route("communication")]
+[Route("care_service")]
 public class CareServiceRequestController : ControllerBase
 {
     private readonly ICareServiceRequestLogic logic;
@@ -39,7 +39,7 @@ public class CareServiceRequestController : ControllerBase
         }
     }
     
-    [HttpPost("accept")]
+    [HttpPatch("offer/accept")]
     public async Task<ActionResult> AcceptOffer([FromBody] int requestId)
     {
         try
@@ -55,7 +55,7 @@ public class CareServiceRequestController : ControllerBase
         }
     }
     
-    [HttpPost("deny")]
+    [HttpPatch("offer/deny")]
     public async Task<ActionResult> DenyOffer([FromBody] int requestId)
     {
         try
@@ -71,7 +71,7 @@ public class CareServiceRequestController : ControllerBase
         }
     }
     
-    [HttpPost("end")]
+    [HttpPost("service/end")]
     public async Task<ActionResult> EndOffer(int serviceId)
     {
         try
@@ -135,8 +135,8 @@ public class CareServiceRequestController : ControllerBase
     }
     
     // DeleteFeedbackAsync
-    [HttpDelete("feedback/{serviceId:int}&{email:int}")]
-    public async Task<ActionResult> DeleteFeedbackAsync([FromBody] int serviceId, string email)
+    [HttpDelete("feedback/{serviceId:int}&{email}")]
+    public async Task<ActionResult> DeleteFeedbackAsync([FromRoute] int serviceId, [FromRoute] string email)
     {
         try
         {
@@ -166,6 +166,8 @@ public class CareServiceRequestController : ControllerBase
         }
     }
     
+    
+    // Even though the endpoint should be GET, when query parameters number is to big, it's better to switch to POST which has a body that is easier to user
     // GetServicesAsync
     [HttpPost("services")]
     public async Task<ActionResult> GetServicesAsync([FromBody] SearchServicesDto dto)
