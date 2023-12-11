@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import dk.via.sep3.model.AnnouncementEntity;
 
 @Repository
-public interface AnnouncementRepository extends JpaRepository<AnnouncementEntity, Integer> {
+public interface AnnouncementRepository extends JpaRepository<AnnouncementEntity, Integer   > {
 }
