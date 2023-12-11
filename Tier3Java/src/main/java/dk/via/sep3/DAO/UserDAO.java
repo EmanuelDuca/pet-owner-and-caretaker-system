@@ -7,10 +7,13 @@ import dk.via.sep3.repository.PetRepository;
 import dk.via.sep3.repository.UserRepository;
 import dk.via.sep3.model.CalendarEntity;
 import dk.via.sep3.model.UserEntity;
+import dk.via.sep3.utils.PasswordGeneration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -43,13 +46,13 @@ public class UserDAO implements UserDAOInterface {
     }
 
     @Override
-    public UserEntity loginUser(String email, String password)
+    public UserEntity loginUser(String email, String password) throws InvalidKeySpecException, NoSuchAlgorithmException
     {
         if (!userRepository.existsById(email))
             return null;
 
-        if(!userRepository.getReferenceById(email).getPassword().equals(password))
-            return null;
+        if(!PasswordGeneration.verifyPassword(password, userRepository.getReferenceById(email).getPassword()))
+            throw new RuntimeException("Couldn't login, wrong password.");
 
         return userRepository.getReferenceById(email);
     }

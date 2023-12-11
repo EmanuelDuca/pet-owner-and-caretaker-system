@@ -6,7 +6,9 @@ import dk.via.sep3.mappers.PetMapper;
 import dk.via.sep3.mappers.UserMapper;
 import dk.via.sep3.model.PetEntity;
 import dk.via.sep3.model.UserEntity;
+import dk.via.sep3.utils.PasswordGeneration;
 import dk.via.sep3.utils.TimestampConverter;
+import io.grpc.Grpc;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import origin.protobuf.UserProto;
 import origin.protobuf.Void;
 
 import javax.transaction.Transactional;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Collection;
 
 @GRpcService
@@ -35,6 +39,14 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     @Transactional
     public void createUser(UserProto request, StreamObserver<UserProto> responseObserver) {
         UserEntity user = UserMapper.mapToEntity(request);
+        try
+        {
+            user.setPassword(PasswordGeneration.hashPassword(user.getPassword()));
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e)
+        {
+            responseObserver.onError(GrpcErrorService.constructException("Couldn't create user."));
+            return;
+        }
 
         if (userDAO.findUser(user.getEmail()) == null)
         {
@@ -52,7 +64,17 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     @Transactional
     @Override
     public void logIn(LoginUserProto request, StreamObserver<UserProto> responseObserver) {
-        UserEntity loginUser = userDAO.loginUser(request.getEmail(), request.getPassword());
+        UserEntity loginUser = null;
+        try
+        {
+            loginUser = userDAO.loginUser(request.getEmail(), request.getPassword());
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e)
+        {
+            responseObserver.onError(GrpcErrorService.constructException("Couldn't login user."));
+            return;
+        }
+
+
         if (loginUser != null)
         {
             responseObserver.onNext(UserMapper.mapToProto(loginUser));
@@ -61,7 +83,6 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
         }
 
         responseObserver.onError(GrpcErrorService.constructException("Username or password are incorrect."));
-
     }
     @Override
     @Transactional
