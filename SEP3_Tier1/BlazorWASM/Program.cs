@@ -4,6 +4,7 @@ using BlazorClient;
 using BlazorClient.Auth;
 using Blazored.LocalStorage;
 using BlazorWASM;
+using BlazorWASM.Pages.Components;
 using Domain.Auth;
 using HttpClients.ClientInterfaces;
 using HttpClients.Implementations;
@@ -27,7 +28,6 @@ builder.Services.AddScoped<IAuthService, JwtAuthAuthHttpService>();
 builder.Services.AddScoped<IUserService, UserHttpClient>();
 builder.Services.AddScoped<ICareServiceService, CareServiceHttpClient>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
-
 AuthorizationPolicies.AddPolicies(builder.Services);
 
 await builder.Build().RunAsync();
