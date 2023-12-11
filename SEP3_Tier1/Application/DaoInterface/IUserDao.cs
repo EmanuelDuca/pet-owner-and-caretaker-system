@@ -11,4 +11,5 @@ public interface IUserDao
     Task DeleteAsync(string email);
     Task<IEnumerable<User>> GetAsync(SearchUsersDto parameters);
     Task<IEnumerable<Pet>> GetPetsOfUserAsync(string email);
+    Task<User> LoginAsync(string email, string password);
 }

@@ -80,4 +80,9 @@ public class UserFileDao : IUserDao
     {
         throw new NotImplementedException();
     }
+
+    public Task<User> LoginAsync(string email, string password)
+    {
+        throw new NotImplementedException();
+    }
 }

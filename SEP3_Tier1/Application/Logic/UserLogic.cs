@@ -56,14 +56,7 @@ public class UserLogic : IUserLogic
 
     public async Task<User> LoginAsync(UserLoginDto loginDto)
     {
-        User? existing = await userDao.GetByEmailAsync(loginDto.Email);
-        if (existing is null)
-            throw new Exception("Wrong email, user not found.");
-
-        if (!loginDto.Password.Equals(existing.Password))
-            throw new Exception("Wrong password or email.");
-
-        return existing;
+        return await userDao.LoginAsync(loginDto.Email, loginDto.Password);
     }
 
     public async Task<User> EditAsync(UserEditDto editDto)

@@ -121,6 +121,8 @@ public class GrpcUserService : IUserDao
             throw new Exception(e.Status.Detail);
         }
     }
+    
+    
 
     public async Task<IEnumerable<Pet>> GetPetsOfUserAsync(string email)
     {
@@ -134,6 +136,25 @@ public class GrpcUserService : IUserDao
         }
         catch (RpcException e)
         {
+            throw new Exception(e.Status.Detail);
+        }
+    }
+
+    public async Task<User> LoginAsync(string email, string password)
+    {
+        try
+        {
+            var userProto = await userServiceClient.LogInAsync(new LoginUserProto()
+            {
+                Email = email,
+                Password = password
+            });
+
+            return await mapper.MapToEntity(userProto);
+        }
+        catch (RpcException e)
+        {
+            Console.WriteLine(e);
             throw new Exception(e.Status.Detail);
         }
     }
