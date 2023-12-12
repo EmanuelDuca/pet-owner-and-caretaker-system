@@ -28,23 +28,6 @@ public class GrpcUserService : IUserDao
     {
         try
         {
-            // string type = "";
-            // if (user is PetOwner)
-            // {
-            //     type = "PetOwner";
-            // }else if (user is CareTaker)
-            // {
-            //     type = "CareTaker";
-            // }
-            //
-            // var request = new UserProto
-            // {
-            //     Username = user.Username,
-            //     Password = user.Password,
-            //     Email = user.Email,
-            //     Type = type
-            // };
-        
             UserProto grpcUserToCreate = await userServiceClient.CreateUserAsync(mapper.MapToProto(user));
             Console.WriteLine($"Java returned {grpcUserToCreate.Email} {grpcUserToCreate.Username}");
             return await mapper.MapToEntity(grpcUserToCreate);

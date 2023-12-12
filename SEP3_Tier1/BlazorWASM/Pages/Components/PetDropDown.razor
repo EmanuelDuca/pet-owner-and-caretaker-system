@@ -1,5 +1,6 @@
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using Newtonsoft.Json
 
 
 <RadzenDropDown 
@@ -17,13 +18,15 @@
     [Parameter]
     public string OwnerEmail{ get; set; }
     
-    public Pet? Value { get; set; } = new Pet()     ;
+    public Pet? Value { get; set; } = new Pet();
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             Pets = await UserService.GetPetsOfUser(OwnerEmail);
+            Console.WriteLine(JsonConvert.SerializeObject(Pets));
+            int i = 0;
         }
         catch (Exception e)
         {

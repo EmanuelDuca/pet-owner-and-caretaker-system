@@ -25,7 +25,9 @@
     padding: 0;
 }
 </style>
-   
+@if (!string.IsNullOrEmpty(ownerEmail))
+{
+
     <div class="container-fluid p-0 col-xxl-5 col-lg-6 col-md-10 col-sm-12">
         <RadzenTemplateForm TItem="AnnouncementInputValidators"
                             Data="@announcementInputs" Submit="TryCreateAnnouncement">
@@ -83,7 +85,7 @@
                 <div class="pet-part  mt-3">
                     @if (!isNewPet)
                     {
-                        <PetDropDown OwnerEmail="owner" @ref="PetList"/>
+                        <PetDropDown OwnerEmail="@ownerEmail" @ref="PetList"/>
                     }
                     else
                     {
@@ -130,6 +132,7 @@
             </div>
         </RadzenTemplateForm>
     </div>
+}
 
 
 @code {
