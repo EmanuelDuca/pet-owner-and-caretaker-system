@@ -2,7 +2,7 @@
 @using HttpClients.ClientInterfaces
 @inject ICareServiceService CareService
 
-<div class="card d-flex flex-column m-auto">
+<div class="card d-flex flex-column">
     <h2 class="text-center">@Caretaker.Username</h2>
     <p>Age: @(Caretaker.Age == null? "--" : Caretaker.Age)</p>
     <p>Name: @(Caretaker.Name ?? "--")</p>

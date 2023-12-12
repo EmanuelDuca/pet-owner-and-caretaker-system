@@ -1,11 +1,39 @@
+/* For screens wider than 1100px */
 @media screen and (min-width: 1100px) {
-    .card{
+    .card {
         width: 25% !important;
     }
 }
 
-@media screen and (max-width: 1100px) {
-    .card{
+/* For screens between 701px and 1100px */
+@media screen and (min-width: 701px) and (max-width: 1100px) {
+    .card {
         width: 35% !important;
     }
+}
+
+/* For screens between 601px and 700px */
+@media screen and (min-width: 601px) and (max-width: 700px) {
+    .card {
+        width: 60% !important;
+    }
+}
+
+/* For screens between 501px and 600px */
+@media screen and (min-width: 501px) and (max-width: 600px) {
+    .card {
+        width: 50% !important;
+    }
+}
+
+/* For screens up to 500px */
+@media screen and (max-width: 500px) {
+    .card {
+        width: 70% !important;
+    }
+}
+
+
+.card:last-of-type{
+    margin-bottom: 0;
 }

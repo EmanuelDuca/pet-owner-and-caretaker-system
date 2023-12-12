@@ -9,7 +9,7 @@
 
 <div class="d-flex flex-row">
     <div class="dropdown">
-        <RadzenButton Style="min-width: 160px;" Click="@(_ => isFilterShown = !isFilterShown)">Select filters</RadzenButton>
+        <RadzenButton Style="min-width: 160px; background-color: var(--accent-color)" Click="@(_ => isFilterShown = !isFilterShown)">Select filters</RadzenButton>
         @if (isFilterShown)
         {
             <div class="dropdown-content">
@@ -24,7 +24,7 @@
 </div>
 
 <div class="d-flex flex-row">
-    <div class="content">
+    <div class="content d-flex flex-column align-items-center">
         @if (caretakers == null)
         {
             <label>Loading...</label>
