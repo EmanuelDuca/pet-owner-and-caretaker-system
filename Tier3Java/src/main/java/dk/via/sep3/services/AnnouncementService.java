@@ -19,6 +19,7 @@ import origin.protobuf.SearchAnnouncementProto;
 import origin.protobuf.Void;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @GRpcService
@@ -80,6 +81,8 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
     public void searchAnnouncements(SearchAnnouncementProto request, StreamObserver<AnnouncementsProto> responseObserver)
     {
         Collection<AnnouncementEntity> announcements = request == null? announcementDAO.getAllAnnouncements() : announcementDAO.getAnnouncements(request);
+        announcements = announcements.stream().filter(a -> a.getStartDate().isAfter(LocalDateTime.now())).toList();
+
 
         if (announcements.isEmpty())
         {
