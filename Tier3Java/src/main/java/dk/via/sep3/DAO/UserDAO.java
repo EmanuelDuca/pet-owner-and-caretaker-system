@@ -205,8 +205,6 @@ public class UserDAO implements UserDAOInterface {
             return null;
         }
 
-
-
         return petRepository.findAll().stream()
                 .filter(p -> p.getPetOwner().getEmail().equals(email)).toList();
     }

@@ -145,6 +145,9 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
             if(request.getPet().getIsVaccinated() != pet.isVaccinated())
                 pet.setVaccinated(request.getPet().getIsVaccinated());
 
+            if(request.getPet().getWeight() == 0 || request.getPet().getWeight() != pet.getWeight())
+                pet.setWeight(request.getPet().getWeight());
+
 
             announcement.setPet(pet);
         }
