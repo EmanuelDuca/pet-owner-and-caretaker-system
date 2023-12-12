@@ -97,11 +97,15 @@ public class ServiceService extends ServiceServiceGrpc.ServiceServiceImplBase
         }
 
 
-        careServiceDAO.createService(new ServiceEntity(
+        ServiceEntity service = careServiceDAO.createService(new ServiceEntity(
                 careTaker,
                 petOwner,
                 serviceRequest.getAnnouncement()
         ));
+
+        FinishServiceScheduler serviceToFinishService = new FinishServiceScheduler(careServiceDAO);
+        serviceToFinishService.scheduleServiceEnd(service);
+
         responseObserver.onNext(Void.newBuilder().build());
         responseObserver.onCompleted();
     }

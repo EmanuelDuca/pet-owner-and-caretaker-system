@@ -74,7 +74,7 @@ public class PetServiceRequestDAO implements PetServiceRequestDAOInterface
         var serviceToUpdate = repository.getReferenceById(serviceId);
         serviceToUpdate.setStatus(ServiceRequestProto.Status.ACCEPTED);
         repository.save(serviceToUpdate);
-        return false;
+        return true;
     }
 
     @Override

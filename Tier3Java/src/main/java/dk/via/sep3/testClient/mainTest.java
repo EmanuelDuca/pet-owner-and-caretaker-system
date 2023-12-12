@@ -3,15 +3,12 @@ package dk.via.sep3.testClient;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import origin.protobuf.AnnouncementServiceGrpc;
-import origin.protobuf.ServiceRequestProto;
-import origin.protobuf.ServiceServiceGrpc;
-import origin.protobuf.UserServiceGrpc;
+import origin.protobuf.*;
 
 public class mainTest
 {
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws InterruptedException
     {
         ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
         UserServiceGrpc.UserServiceBlockingStub userStub = UserServiceGrpc.newBlockingStub(managedChannel);
@@ -19,13 +16,14 @@ public class mainTest
         ServiceServiceGrpc.ServiceServiceBlockingStub serviceBlockingStub = ServiceServiceGrpc.newBlockingStub(managedChannel);
 
 
-        ServiceRequestProto serviceProto = ServiceRequestProto
-                .newBuilder()
-                .setAnnouncementId(1)
-                        .setInitiatorEmail("michael.leo.dk@gmail.com")
-                                .setRecipientEmail("sevastian@gmail.com")
-                                        .build();
-        serviceBlockingStub.requestStartService(serviceProto);
+//        ServiceRequestProto serviceProto = ServiceRequestProto
+//                .newBuilder()
+//                .setAnnouncementId(1)
+//                        .setInitiatorEmail("allan2@gmail.com")
+//                                .setRecipientEmail("sevastian@gmail.com")
+//                                        .build();
+//        serviceBlockingStub.requestStartService(serviceProto);
+        serviceBlockingStub.acceptStartService(FindRequestServiceProto.newBuilder().setRequestId(1).build());
 
 
         // Test add date period
