@@ -41,7 +41,7 @@ public class PetMapper
             IsVaccinated = pet.IsVaccinated,
             Weight = pet.Weight,
             PetName = pet.PetName,
-            PetType = PetType.NameFromPetType(pet.PetType),
+            PetType = pet.PetType.ToString(),
             OwnerEmail = pet.PetOwner.Email
         };
     }

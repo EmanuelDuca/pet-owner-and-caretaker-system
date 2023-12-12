@@ -75,10 +75,8 @@ else
             {
                 Pet = announcement!.Pet
             };
-            
-            Console.WriteLine(JsonConvert.SerializeObject(dto));
 
-            dto = FetchDataFromAnnouncementComponent(dto, announcement);
+            dto = FetchDataFromAnnouncementComponent(dto);
             
             await announcementService.UpdateAsync(dto);
 
@@ -102,12 +100,12 @@ else
         }
     }
 
-    private UpdateAnnouncementDto FetchDataFromAnnouncementComponent(UpdateAnnouncementDto dto, Announcement announce)
+    private UpdateAnnouncementDto FetchDataFromAnnouncementComponent(UpdateAnnouncementDto dto)
     {
-        dto.StartDate = announce.StartDate;
-        dto.EndDate = announce.EndDate;
-        dto.PostalCode = announce.PostalCode;
-        dto.ServiceDescription = announce.ServiceDescription;
+        dto.StartDate = announcement.StartDate;
+        dto.EndDate = announcement.EndDate;
+        dto.PostalCode = announcement.PostalCode;
+        dto.ServiceDescription = announcement.ServiceDescription;
         
         //Update Pet
         dto.Pet.PetType = announcement.Pet.PetType;
