@@ -16,7 +16,7 @@
                 <RadzenLabel Text="Age" Style="margin-left: 8px; vertical-align: middle;"/>
                 <RadzenNumeric Style="margin-bottom: 5px"
                     @bind-Value=@age/>
-                <RadzenButton Style="margin-top: 10px; white-space: nowrap;"
+                <RadzenButton Style="margin-top: 10px; white-space: nowrap; background-color: var(--accent-color);"
                               Variant="Variant.Flat" Shade="Shade.Dark" Click=@(args => FilterCaretakers()) Text="Apply Filters" ButtonStyle="ButtonStyle.Primary"/>
             </div>
         }

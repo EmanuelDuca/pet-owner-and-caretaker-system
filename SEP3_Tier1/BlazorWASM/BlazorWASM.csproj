@@ -23,6 +23,8 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\sample-data\weather.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\img\userIcons\userIcon1.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\img\userIcons\userIcon2.png" />
     </ItemGroup>
 
 

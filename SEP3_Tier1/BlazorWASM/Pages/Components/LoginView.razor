@@ -52,8 +52,10 @@
             <label>You are</label>
             <RadzenSelectBar class="rounded-pill w-75" @bind-Value="userType" Size="ButtonSize.ExtraSmall" TValue="int">
                 <Items>
-                    <RadzenSelectBarItem  Text="pet owner" Value="1"/>
-                    <RadzenSelectBarItem Text="caretaker" Value="2"/>
+                    <RadzenSelectBarItem 
+                        Style="color: var(--accent-color) !important;" 
+                                         Text="pet owner" Value="1"/>
+                    <RadzenSelectBarItem Style="color: var(--accent-color) !important;" Text="caretaker" Value="2"/>
                 </Items>
             </RadzenSelectBar>
         </div>

@@ -16,7 +16,7 @@
 <div class="d-flex flex-row justify-content-center">
     
     <div class="dropdown">
-        <RadzenButton Style="min-width: 160px;" Click="@(_ => isFilterShown = !isFilterShown)">Select filters</RadzenButton>
+        <RadzenButton Style="background-color: var(--accent-color);" Click="@(_ => isFilterShown = !isFilterShown)">Select filters</RadzenButton>
         @if (isFilterShown)
         {
             <div class="dropdown-content">
@@ -31,7 +31,7 @@
                     SelectAllText="Select all types"
                     Style="width: 100%; max-width: 400px; margin-bottom: 8px"/>
 
-                <RadzenCheckBox @bind-Value=@isVaccinatedFilter/>
+                <RadzenCheckBox Style="background-color: var(--accent-color);"  @bind-Value=@isVaccinatedFilter/>
                 <RadzenLabel Text="Vaccinated" Style="margin-left: 8px; vertical-align: middle;"/>
                 <br/>
                 <RadzenLabel Text="From Date" Style="margin-left: 8px; vertical-align: middle;"/>
@@ -40,7 +40,7 @@
                 <RadzenDatePicker @bind-Value=@endDate/>
                 <RadzenLabel Text="Postal Code" Style="margin-left: 8px; vertical-align: middle;"/>
                 <RadzenAutoComplete @bind-Value=@postalCode TextProperty="Postal Code" Style="width: 15rem"/>
-                <RadzenButton Variant="Variant.Flat" Shade="Shade.Dark" Click=@(args => FilterAnnouncements()) Text="Apply Filters" ButtonStyle="ButtonStyle.Primary"/>
+                <RadzenButton Variant="Variant.Flat" Shade="Shade.Dark"  Click=@(args => FilterAnnouncements()) Text="Apply Filters" Style="background-color: var(--accent-color);" />
             </div>
         }
 

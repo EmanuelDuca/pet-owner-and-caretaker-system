@@ -2,3 +2,13 @@
     width: 30px;
     cursor: pointer;
 }
+
+span{
+    font-size: xx-large !important;
+    user-select: none;
+    cursor: pointer;
+}
+
+span:hover{
+    color: var(--primary-color);
+}

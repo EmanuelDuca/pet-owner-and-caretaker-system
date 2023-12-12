@@ -103,7 +103,7 @@
                                  Size="ButtonSize.ExtraSmall" TValue="bool"
                                  Style=".valid.modified:not([type=checkbox]) {
                                         outline: none;
-                                    } ">
+                                    } background-color: var(--accent-color);">
                     <Items>
                         <RadzenSelectBarItem Text="Create new pet" Value="true"/>
                         <RadzenSelectBarItem Text="Choose your pet" Value="false"/>
@@ -158,7 +158,7 @@
                 
             }
 
-            <RadzenButton ButtonType="ButtonType.Submit" Style="margin-top: 2rem">@ActionName</RadzenButton>
+            <RadzenButton ButtonType="ButtonType.Submit" Style="margin-top: 2rem; background-color: var(--accent-color);">@ActionName</RadzenButton>
         </div>
     </RadzenTemplateForm>
 </div>

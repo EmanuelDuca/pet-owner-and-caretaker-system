@@ -41,9 +41,7 @@
 }
 
 .login-button:hover{
-    color: var(--text-primary-color);
-    background-color: rgba(var(--accent-color-raw), 0.5);
-    padding: 5px 30px;
+    background-color: var(--primary-color);
     transition: .4s;
 }
 
