@@ -125,7 +125,6 @@
         Console.WriteLine($"$Dto object converted to JSON:\n{JsonConvert.SerializeObject(dto)}");
         
         announcements = (await AnnouncementService.GetAsync(dto)).ToList();
-        //Console.WriteLine(JsonConvert.SerializeObject(announcements));
     }
 
     private async Task OfferServiceRequest(Announcement announcement)
