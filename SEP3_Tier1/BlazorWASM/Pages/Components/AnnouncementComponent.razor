@@ -75,11 +75,11 @@
                                     </div>
                                     
                                     <div>
-                                        <button id="accept-request" class="request-action" onclick="@(() => AcceptRequest(request.Id))">
+                                        <button id="accept-request" class="request-action" onclick="@(async () => await AcceptRequest(request.Id))">
                                             Accept
                                         </button>
 
-                                        <button id="deny-request" class="request-action" onclick="@(() => DenyRequest(request.Id))">
+                                        <button id="deny-request" class="request-action" onclick="@(async () => await DenyRequest(request.Id))">
                                             Deny
                                         </button>
                                     </div>

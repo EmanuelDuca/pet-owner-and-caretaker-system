@@ -104,7 +104,7 @@ public class PetServiceDAO implements PetServiceDAOInterface
         return repository.findAll().stream().anyMatch(service ->
                 service.getCareTaker().getEmail().equals(careTaker.getEmail()) &&
                         service.getPetOwner().getEmail().equals(petowner.getEmail()) &&
-                        announcement.getId() == announcement.getId()
+                        announcement.getId() == service.getAnnouncement().getId()
 
         );
     }
