@@ -2,6 +2,7 @@
 @using Domain.Models.Enums
 @using HttpClients.ClientInterfaces
 @using Newtonsoft.Json
+@using Feedback = Domain.Models.Feedback
 @inject IPexelsService ImageService
 @inject ICareServiceService CareService
 
@@ -178,7 +179,15 @@
     
     private async Task<Feedback[]> GetRatings(string caretakerEmail)
     {
-        return (await CareService.GetFeedbacks(caretakerEmail)).ToArray();
+        try
+        {
+            return (await CareService.GetFeedbacks(caretakerEmail)).ToArray();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new Feedback[]{};
+        }
     }
 
     private async Task AcceptRequest(int requestId)
@@ -197,7 +206,6 @@
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
         }
         
     }
@@ -213,7 +221,6 @@
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
         }
     }
     
