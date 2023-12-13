@@ -73,16 +73,22 @@ else
         AuthenticationState authState = await AuthState;
         username = authState.User.Claims.First(claim => claim.Type.Equals(ClaimTypes.Name)).Value;
         Email = authState.User.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+        string type = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Actor))!.Value;
+
         try
         {
-            services = (await CareService.GetServicesAsync(
-                new SearchServicesDto()
-                {
-                    petOwnerEmail = null,
-                    status = null,
-                    caretakerEmail = Email
-                })
-                ).ToList();
+            var dto = new SearchServicesDto()
+            {
+                status = null
+            };
+            
+            if(type.Equals("PetOwner"))
+                dto.petOwnerEmail = Email;
+            
+            if(type.Equals("CareTaker"))
+                dto.petOwnerEmail = Email;
+            
+            services = (await CareService.GetServicesAsync(dto)).ToList();
         }
         catch (Exception e)
         {
