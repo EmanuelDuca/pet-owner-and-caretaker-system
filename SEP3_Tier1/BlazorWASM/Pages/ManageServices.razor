@@ -78,9 +78,9 @@ else
             services = (await CareService.GetServicesAsync(
                 new SearchServicesDto()
                 {
-                    petOwnerEmail = Email,
+                    petOwnerEmail = null,
                     status = null,
-                    caretakerEmail = null
+                    caretakerEmail = Email
                 })
                 ).ToList();
         }
