@@ -82,7 +82,7 @@ public class AnnouncementService extends AnnouncementServiceGrpc.AnnouncementSer
     public void searchAnnouncements(SearchAnnouncementProto request, StreamObserver<AnnouncementsProto> responseObserver)
     {
         Collection<AnnouncementEntity> announcements = request == null? announcementDAO.getAllAnnouncements() : announcementDAO.getAnnouncements(request);
-        announcements = announcements.stream().filter(a -> a.getFinishDate().toLocalDate().isAfter(LocalDate.now()) &&
+        announcements = announcements.stream().filter(a -> a.getFinishDate().toLocalDate().isAfter(LocalDate.now()) ||
                 a.getStartDate().toLocalDate().equals(LocalDate.now())).toList();
 
 
