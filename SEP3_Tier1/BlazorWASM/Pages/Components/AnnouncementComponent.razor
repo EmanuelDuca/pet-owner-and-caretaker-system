@@ -196,9 +196,17 @@
     
     private async Task DenyRequest(int requestId)
     {
-        await CareService.DenyServiceAsync(requestId);
-        serviceRequests = serviceRequests!.Where(r => r.Id != requestId).AsEnumerable();
-        StateHasChanged();
+        try
+        {
+            await CareService.DenyServiceAsync(requestId);
+            serviceRequests = serviceRequests!.Where(r => r.Id != requestId).AsEnumerable();
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
     
     private async Task OnClick()
