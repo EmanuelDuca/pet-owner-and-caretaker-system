@@ -145,15 +145,23 @@
     
     private async Task GetRequests()
     {
-        serviceRequests = await CareService.GetServiceOffersAsync(Announcement.Id);
-        serviceRequests = serviceRequests.Where(r => r.RequestEnum == RequestEnum.SENT);
-        var enumerable = serviceRequests as ServiceRequest[] ?? serviceRequests.ToArray();
-        foreach (var request in enumerable)
+        try
         {
-            User caretaker = request.Announcement.PetOwner.Email == request.Initiator.Email ? request.Recipient : request.Initiator;
-            averageRatings[caretaker.Email] = await GetRatings(caretaker.Email);
+            serviceRequests = await CareService.GetServiceOffersAsync(Announcement.Id);
+            serviceRequests = serviceRequests.Where(r => r.RequestEnum == RequestEnum.SENT);
+            var enumerable = serviceRequests as ServiceRequest[] ?? serviceRequests.ToArray();
+            foreach (var request in enumerable)
+            {
+                User caretaker = request.Announcement.PetOwner.Email == request.Initiator.Email ? request.Recipient : request.Initiator;
+                averageRatings[caretaker.Email] = await GetRatings(caretaker.Email);
+            }
+            shouldShowRequests = serviceRequests != null && enumerable.Any();
         }
-        shouldShowRequests = serviceRequests != null && enumerable.Any();
+        catch (Exception e)
+        {
+            Console.WriteLine(e.StackTrace);
+            Console.WriteLine(e.Message);
+        }
     }
     
     private async Task ToggleRequests()
@@ -196,9 +204,17 @@
     
     private async Task DenyRequest(int requestId)
     {
-        await CareService.DenyServiceAsync(requestId);
-        serviceRequests = serviceRequests!.Where(r => r.Id != requestId).AsEnumerable();
-        StateHasChanged();
+        try
+        {
+            await CareService.DenyServiceAsync(requestId);
+            serviceRequests = serviceRequests!.Where(r => r.Id != requestId).AsEnumerable();
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
     
     private async Task OnClick()
