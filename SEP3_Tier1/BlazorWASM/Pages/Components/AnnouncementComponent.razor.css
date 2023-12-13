@@ -48,6 +48,7 @@
     color: white;
     transition: 200ms;
     border-radius: 5px;
+    padding: 5px;
 }
 
 .request-action:hover{

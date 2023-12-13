@@ -54,21 +54,22 @@
                 @if (shouldShowRequests)
                 {
                     <div class="requests-container flex-column">
-                        @if (serviceRequests != null || !averageRatings.Any())
+                        @if (serviceRequests != null && averageRatings.Any())
                         {
                             @foreach (var request in serviceRequests)
                             {
                                 User caretaker = request.Announcement.PetOwner.Email == request.Initiator.Email ? request.Recipient : request.Initiator;
+                                LoadCaretakerRating(caretaker.Email);
+                                
                                 <div class="request d-flex flex-row justify-content-between align-items-center">
                                     <div class="request-caretaker-info d-flex flex-column justify-content-center">
                                         <b style="color: black; font-size: 1.2rem;">
                                             @($"{caretaker.Username}")
                                         </b>
                                         <text>
-                                            @(CareService.GetCaretakerFeedback(caretaker.Email))
+                                            @currentCaretakerAverageRating
                                             <span class="oi oi-star" style="color: gold"></span>
                                             @($"({averageRatings[caretaker.Email].Length})")
-                                            
                                         </text>
                                     </div>
                                     
@@ -113,6 +114,7 @@
     Dictionary<string, Feedback[]> averageRatings = new();
     
     bool shouldShowRequests = false;
+    double currentCaretakerAverageRating;
 
 
 
@@ -134,6 +136,11 @@
             Console.WriteLine(e.StackTrace);
             Console.WriteLine(e.Message);
         }
+    }
+
+    private async void LoadCaretakerRating(string caretakerEmail)
+    {
+        currentCaretakerAverageRating = await CareService.GetCaretakerFeedback(caretakerEmail);
     }
     
     private async Task GetRequests()

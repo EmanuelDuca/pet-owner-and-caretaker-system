@@ -88,6 +88,8 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase
     @Transactional
     public void findUser(FindUserProto request, StreamObserver<UserProto> responseObserver) {
         UserEntity userToFind = userDAO.findUser(request.getEmail());
+
+//        userToFind.setPassword(); set password with dummy password but real length
         if (userToFind != null)
         {
             responseObserver.onNext(UserMapper.mapToProto(userToFind));
