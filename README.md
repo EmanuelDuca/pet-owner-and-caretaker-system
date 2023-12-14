@@ -38,5 +38,6 @@ We invite you to be a part of this transformative journey. Whether you're a pet 
 
 
 ## Video with the show case of the system
-[<img src="https://i9.ytimg.com/vi/-uAg18gSnQg/mqdefault.jpg?sqp=CLS656sG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLCCVgY0_ALgloXBESNUq2bu_tqQrA" width="50%">](https://youtu.be/-uAg18gSnQg?si=8yS4yJ2p1xoUbjaK)
+[<img src="https://github.com/MichaelLeo-code/PetMixer/assets/114170185/97c253d9-70c5-4611-bd7d-af94411618c3" width="50%">](https://youtu.be/-uAg18gSnQg?si=8yS4yJ2p1xoUbjaK)
 <br><br>
+
